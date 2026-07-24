@@ -1,0 +1,331 @@
+Number of slides: 15
+
+--- Slide 1 ---
+Layout: Blank
+[TextBox 4]: CELEBRATING 10 YEARS OF IMPACT
+[TextBox 5]: CONNECTING BUSINESSES
+WITH OPPORTUNITIES
+[TextBox 5]: Powering Global Innovation Through High-Impact Business Events
+[TextBox 7]: Corporate Profile  |  Est. 2016  |  www.tresconglobal.com
+
+--- Slide 2 ---
+Layout: Blank
+[TextBox 1]: 01. WHO WE ARE
+[TextBox 1]: Your Partner for Accelerating Business Growth
+[TextBox 3]: OUR VISION
+[TextBox 3]: To be the ultimate global catalyst for emerging technologies and inclusive business leadership.
+[TextBox 3]: We bridge capital, policy, and innovation to build the sustainable digital economy of tomorrow.
+[TextBox 4]: Trescon is a pioneering force in the global business events and services sector. We facilitate key strategic connections that accelerate the adoption of emerging tech and promote international business expansion.
+[TextBox 6]: Global Presence
+[TextBox 6]: Headquartered in Dubai, with a powerful footprint in Bengaluru, Doha, Mauritius, Mangalore, and Manipal to connect local ecosystems globally.
+[TextBox 8]: Proven Scale
+[TextBox 8]: Hosting over 250,000+ delegates, 3,000+ speakers, and 3,500+ tech investors across more than 500+ executed events since 2016.
+[TextBox 10]: The Ecosystem
+[TextBox 10]: A curated trust network uniting 10,000+ private enterprises, 50+ government entities, policy-makers, start-ups, and media partners.
+
+--- Slide 3 ---
+Layout: Blank
+[TextBox 1]: 02. WHY TRESCON
+[TextBox 1]: The Strategic Edge for Reaching Decision-Makers
+[TextBox 4]: Proven C-Suite Reach
+[TextBox 4]: We bring together senior decision-makers, CXOs, and founders with active investment mandates.
+[TextBox 7]: Government Alignment
+[TextBox 7]: Direct collaborations with 50+ government ministries, departments, and public regulators globally.
+[TextBox 10]: Emerging Tech Focus
+[TextBox 10]: Specialized platform building in AI, Web3, Blockchain, Cybersecurity, Cloud, FinTech, and Green Tech.
+[TextBox 13]: Vast Global Scale
+[TextBox 13]: Broad international reach with delegates, partners, and exhibitors representing 120+ countries.
+[TextBox 16]: Capital Matchmaking
+[TextBox 16]: Direct facilitation of start-up deal-flow, connecting founders with 3,500+ active venture capitalists.
+[TextBox 19]: 360° Management
+[TextBox 19]: Fully integrated capability from curation and content production to database outreach, PR, and logistics.
+
+--- Slide 4 ---
+Layout: Blank
+[TextBox 1]: 03. GLOBAL IMPACT IN NUMBERS
+[TextBox 1]: Scale, Connections, and Global Credibility
+[TextBox 3]: 500+
+[TextBox 3]: Events Executed
+[TextBox 3]: From highly targeted roundtables to 10k+ attendee summits.
+[TextBox 5]: 250,000+
+[TextBox 5]: Attendees Hosted
+[TextBox 5]: Engaging senior executives, tech pioneers, and buyers.
+[TextBox 7]: 1M+
+[TextBox 7]: Connections Facilitated
+[TextBox 7]: High-value business matches across global platforms.
+[TextBox 9]: 120+
+[TextBox 9]: Countries Represented
+[TextBox 9]: A truly global footprint across continents.
+[TextBox 11]: 250+
+[TextBox 11]: Global Team Members
+[TextBox 11]: Dedicated professionals in our international offices.
+[TextBox 13]: 3,000+
+[TextBox 13]: Speakers Featured
+[TextBox 13]: Policy-makers, global visionaries, and tech experts.
+[TextBox 15]: 3,500+
+[TextBox 15]: Investors Engaged
+[TextBox 15]: Venture capital, angel networks, HNWIs, and funds.
+[TextBox 17]: 5,000+
+[TextBox 17]: Exhibitors Showcased
+[TextBox 17]: Pioneering tech solution providers showing on stage.
+[TextBox 19]: 100+
+[TextBox 19]: Govt Partnerships
+[TextBox 19]: Served or collaborated with governments worldwide.
+[TextBox 21]: 500+
+[TextBox 21]: Association/Media Partners
+[TextBox 21]: Alliances amplifying our global reach and marketing.
+
+--- Slide 5 ---
+Layout: Blank
+[TextBox 1]: 04. WHAT WE DO
+[TextBox 1]: Three Integrated Event and Business Pillars
+[TextBox 4]: Signature Events
+[TextBox 4]: Summits, Conferences & Expos
+[TextBox 4]: Highly renowned tech events crafted for C-level executives and global solution providers to connect, share knowledge, and discover key commercial trends.
+
+Includes leading series like the World AI Show, World Blockchain Summit, World Cloud Show, CARE, and Dubai FinTech Summit.
+[TextBox 7]: Managed B2B Events
+[TextBox 7]: Curation & Turnkey Management
+[TextBox 7]: End-to-end turnkey services to manage partner-led events or launch new ones. We drive concept creation, speaker curation, operations, database marketing, database building, and PR.
+
+Examples include Bengaluru Skill Summit (with Govt) and Dubai FinTech Summit (with DIFC).
+[TextBox 10]: Bespoke Events
+[TextBox 10]: Targeted Account Matchmaking
+[TextBox 10]: Highly customized B2B engagements designed to drive concrete deal-flow and pipeline.
+
+Includes structured VIP Roundtables, Boardrooms, Roadshows, and closed-door bootcamps connecting tech vendors directly with pre-qualified buyers.
+[TextBox 12]: SUPPORTING PILLAR: EDUCATION & TRAINING  |  Upskilling & Capacity Building
+[TextBox 12]: Empowering professionals and teams through half-day upskilling workshops, full-day intensive bootcamps, and multi-day corporate training programs.
+
+--- Slide 6 ---
+Layout: Blank
+[TextBox 1]: 05. INDUSTRIES WE TRANSFORM
+[TextBox 1]: Driving Innovation Across Key Tech and Economic Verticals
+[TextBox 4]: Artificial Intelligence
+[TextBox 4]: Accelerating Commercial AI adoption, scaling models, and public sector governance strategies.
+[TextBox 7]: Web3 & Blockchain
+[TextBox 7]: Longest-running series exploring decentralized tech, digital assets, and sovereign infrastructure.
+[TextBox 10]: Cybersecurity
+[TextBox 10]: Empowering CISOs to protect complex enterprise operations against new-age digital threats.
+[TextBox 13]: Cloud Computing
+[TextBox 13]: Exploring enterprise virtualization, hybrid multi-cloud systems, and data center optimization.
+[TextBox 16]: Customer Experience
+[TextBox 16]: Reimagining consumer journeys, digital-first engagement, and post-purchase loyalty systems.
+[TextBox 19]: Fintech & Payments
+[TextBox 19]: Connecting global banking pioneers, ethical finance regulators, and digital payment systems.
+[TextBox 22]: Sustainability
+[TextBox 22]: Fostering partnerships in climate action, renewable energy investments, and green economies.
+[TextBox 25]: Smart Manufacturing
+[TextBox 25]: Empowering heavy industries with Industry 4.0 adoption, automation, and smart factory tools.
+[TextBox 28]: Digital & Skill Economy
+[TextBox 28]: Aligning government departments with tech academies to upskill regional talent forces.
+
+--- Slide 7 ---
+Layout: Blank
+[TextBox 1]: 06. OUR GLOBAL PORTFOLIO
+[TextBox 1]: Market-Leading Event Brands Crafted for C-Level Audiences
+[TextBox 4]: AI & EMERGING TECH
+[TextBox 5]: WORLD AI SHOW
+Connecting global AI researchers, enterprise developers, and ministers.
+
+DUBAI AI FESTIVAL
+Enabling digital economies and startup ecosystems.
+[TextBox 8]: WEB3 & DIGITAL ASSETS
+[TextBox 9]: WORLD BLOCKCHAIN SUMMIT
+World's longest-running Web3 series connecting builders and funds.
+
+REG3 SUMMIT
+Focusing on government-led Web3 compliance and sandbox standards.
+[TextBox 12]: FINTECH & CX
+[TextBox 13]: DUBAI FINTECH SUMMIT
+Managed for DIFC, driving cross-border economic growth.
+
+WORLD CX SUMMIT
+Reimagining customer journeys, enterprise marketing, and loyalty.
+[TextBox 16]: CYBERSECURITY & CLOUD
+[TextBox 17]: WORLD CYBER SECURITY SUMMIT
+Focused platform for CISOs to address new-age cybersecurity threats.
+
+WORLD CLOUD SHOW
+Enterprise cloud, data, and virtualization summits.
+
+--- Slide 8 ---
+Layout: Blank
+[TextBox 1]: 07. BUSINESS IMPACT & VALUE CREATION
+[TextBox 1]: Fostering Economic Growth, Deals, and Technology Adoption
+[TextBox 4]: FACILITATING INVESTMENTS
+[TextBox 4]: Bridging Startups & Capital
+[TextBox 4]: Connecting tech founders directly with global VC firms, corporate funds, and angel syndicates. Providing curated deal-flow sessions, fast-pitch tracks, and private matchmaking that shorten funding lifecycles and drive global tech adoption.
+[TextBox 7]: DRIVING TECH ADOPTION
+[TextBox 7]: Enterprise Transformation
+[TextBox 7]: Enabling Fortune 500 enterprises and medium companies to explore, pilot, and deploy emerging technologies. We demystify complex systems (AI, Cloud, Cybersecurity) to speed up implementation.
+[TextBox 10]: PUBLIC-PRIVATE PARTNERSHIPS
+[TextBox 10]: Aligning Regulators & Tech
+[TextBox 10]: Working with over 50+ government entities and regulators to establish sandbox frameworks, upskill talent forces, and create policies that foster inclusive tech leadership and digital transformation.
+[TextBox 13]: STIMULATING LOCAL ECONOMIES
+[TextBox 13]: Inbound Tourism & Business
+[TextBox 13]: Our large-scale international summits draw thousands of high-spending business tourists. We stimulate local hospitality, generate employment, and open regional corridors to foreign direct investment.
+
+--- Slide 9 ---
+Layout: Blank
+[TextBox 1]: 08. GOVERNMENT & ENTERPRISE TRUST
+[TextBox 1]: The Public-Private Trust Ecosystem Curation
+[TextBox 4]: Strategic Advisory Board
+[TextBox 4]: Guiding Our Vision and Quality Standards
+[TextBox 4]: Our advisory board includes distinguished regional leaders who shape our agendas, ensure policy alignment, and maintain high standards of curation:
+
+• DR. EESA MOHAMMED AL BASTAKI – President of the University of Dubai.
+• ENGR. MANSOUR ABDUL LATIF AL OBAID – ICT Committee Chairman.
+• LAILA AL HADHRAMI – Emerging Tech Pioneer.
+[TextBox 7]: High-Level Diplomatic Engagement
+[TextBox 7]: Facilitating Regional Tech Policy Alignments
+[TextBox 7]: We regularly host and facilitate interactions with key state policy makers, enabling cross-border partnerships:
+
+• SHRI DEVENDRA FADNAVIS – Hon. Chief Minister of Maharashtra.
+• DR. AVINASH RAMTOHUL – Hon. Minister of Information Technology, Communication and Innovation, Mauritius.
+• Host regulators including DIFC and Dubai AI Campus.
+[TextBox 10]: VVIP and Corporate Alignment
+[TextBox 10]: Bridging Private Innovation with Public Curation
+[TextBox 10]: We coordinate end-to-end VVIP protocols, ensuring state leaders and corporate CEOs align on key economic transformation strategies.
+
+This trust ecosystem enables us to run highly compliant Sandboxes, FinTech forums, and Cyber Security Summits with direct state support.
+
+--- Slide 10 ---
+Layout: Blank
+[TextBox 1]: 09. TRUSTED BY GLOBAL INSTITUTIONS
+[TextBox 1]: Clients, Regulators, and Strategic Partners Network
+[TextBox 4]: GOVERNMENTS & REGULATORS
+[TextBox 7]: ENTERPRISE & TECH VENDORS
+[TextBox 10]: INVESTORS & VENTURE CAPITAL
+[TextBox 13]: MEDIA & ASSOCIATIONS
+[Rectangle: Rounded Corners 14]: DIFC
+[Rectangle: Rounded Corners 15]: KSDC
+[Rectangle: Rounded Corners 16]: KSDA
+[Rectangle: Rounded Corners 17]: Dubai AI Campus
+[Rectangle: Rounded Corners 18]: Govt of Maharashtra
+[Rectangle: Rounded Corners 19]: Ministry of IT, Mauritius
+[Rectangle: Rounded Corners 20]: Doha Digital Sandboxes
+[Rectangle: Rounded Corners 21]: Microsoft
+[Rectangle: Rounded Corners 22]: Oracle
+[Rectangle: Rounded Corners 23]: AWS
+[Rectangle: Rounded Corners 24]: Huawei
+[Rectangle: Rounded Corners 25]: Palo Alto
+[Rectangle: Rounded Corners 26]: IBM
+[Rectangle: Rounded Corners 27]: Cisco
+[Rectangle: Rounded Corners 28]: Salesforce
+[Rectangle: Rounded Corners 29]: SAP
+[Rectangle: Rounded Corners 30]: Google Cloud
+[Rectangle: Rounded Corners 31]: Dell
+[Rectangle: Rounded Corners 32]: Snowflake
+[Rectangle: Rounded Corners 33]: Fortinet
+[Rectangle: Rounded Corners 34]: CrowdStrike
+[Rectangle: Rounded Corners 35]: Accenture
+[Rectangle: Rounded Corners 36]: Deloitte
+[Rectangle: Rounded Corners 37]: Binance Labs
+[Rectangle: Rounded Corners 38]: Sovereign Wealth Funds
+[Rectangle: Rounded Corners 39]: Dubai Future District
+[Rectangle: Rounded Corners 40]: Antler
+[Rectangle: Rounded Corners 41]: Sequoia Capital
+[Rectangle: Rounded Corners 42]: SoftBank
+[Rectangle: Rounded Corners 43]: MEVP
+[Rectangle: Rounded Corners 44]: Angel Networks
+[Rectangle: Rounded Corners 45]: HNWIs
+[Rectangle: Rounded Corners 46]: Bloomberg
+[Rectangle: Rounded Corners 47]: Forbes ME
+[Rectangle: Rounded Corners 48]: MIT Tech Review
+[Rectangle: Rounded Corners 49]: Coindesk
+[Rectangle: Rounded Corners 50]: Fintech Association
+[Rectangle: Rounded Corners 51]: CNBC Arabia
+[Rectangle: Rounded Corners 52]: Global Blockchain Council
+[Rectangle: Rounded Corners 53]: Futurists Board
+[Rectangle: Rounded Corners 54]: Wired ME
+
+--- Slide 11 ---
+Layout: Blank
+[TextBox 1]: 10. CASE STUDIES & SUCCESS STORIES
+[TextBox 1]: Delivering Measurable Commercial and Policy Outcomes
+[TextBox 4]: Dubai FinTech Summit
+[TextBox 4]: Partner: DIFC (Dubai)
+[TextBox 4]: PROBLEM:
+[TextBox 4]: Elevate Dubai to a top-5 global fintech capital.
+[TextBox 4]: APPROACH:
+[TextBox 4]: Curate a highly strategic international FinTech summit focusing on digital commerce and VC deal-flow.
+[TextBox 4]: OUTCOME:
+[TextBox 4]: Over 10,000+ C-level delegates hosted, drawing major investment corridors to Dubai and securing massive media coverage.
+[TextBox 7]: Bengaluru Skill Summit
+[TextBox 7]: Partner: KSDC & KSDA (Govt)
+[TextBox 7]: PROBLEM:
+[TextBox 7]: Upskill regional youth forces and connect them with international employers.
+[TextBox 7]: APPROACH:
+[TextBox 7]: Build a unified public-private forum with the state skill development department.
+[TextBox 7]: OUTCOME:
+[TextBox 7]: Facilitated direct cross-border talent alignments, including partnerships with Germany's cultural and technology delegation.
+[TextBox 10]: World AI Show
+[TextBox 10]: Partner: Enterprise Tech (Global)
+[TextBox 10]: PROBLEM:
+[TextBox 10]: Enterprise buyers struggling to identify pre-qualified commercial AI solutions.
+[TextBox 10]: APPROACH:
+[TextBox 10]: Launch high-impact regional AI shows (e.g. Jakarta, Dubai) with pre-matched B2B matchmaking.
+[TextBox 10]: OUTCOME:
+[TextBox 10]: Rapid AI procurement cycles, direct regulatory sandboxes, and highly active investor pitching.
+
+--- Slide 12 ---
+Layout: Blank
+[TextBox 1]: 11. WHAT INDUSTRY LEADERS SAY
+[TextBox 1]: Voices of Trust and Impact Across Our Global Network
+[TextBox 3]: "
+[TextBox 4]: It was an absolute pleasure to work with the Trescon team. The platform’s outstanding quality and the team’s professionalism and enthusiasm were truly commendable.
+[TextBox 4]: — Enterprise CXO Partner
+[TextBox 4]: Signature Tech Summit Sponsor
+[TextBox 6]: "
+[TextBox 7]: Trescon’s efforts, well-structured organization, follow-up efforts, and accommodative approach are exceptional. They bridge public targets and private solutions seamlessly.
+[TextBox 7]: — Government Department Head
+[TextBox 7]: Skill Development & Policy Sponsor
+[TextBox 9]: "
+[TextBox 10]: Dubai FinTech Summit has been fantastic - the content, the speakers, everyone absolutely superb. It has been a real success for our regional market expansion.
+[TextBox 10]: — Global Technology Director
+[TextBox 10]: FinTech Solution Provider
+
+--- Slide 13 ---
+Layout: Blank
+[TextBox 1]: 12. WHY PARTNER WITH TRESCON
+[TextBox 1]: Unlocking Commercial Opportunities, Policy Access, and Brand Value
+[TextBox 4]: Direct Market Access
+[TextBox 4]: Accelerated Regional Entry
+[TextBox 4]: Establish instant credibility and build local pipelines in high-growth tech corridors: Middle East, Africa, India, and Southeast Asia. We provide direct pathways to enterprise buyers, startup founders, and local distributors.
+[TextBox 7]: High-ROI Lead Generation
+[TextBox 7]: Prequalified B2B Matchmaking
+[TextBox 7]: Bypass traditional cold outreach. Connect directly with decision-makers who have active mandates to procure technology or deploy capital. Includes closed-door roundtables and pre-matched boardroom sessions.
+[TextBox 10]: Sovereign and Government Access
+[TextBox 10]: Regulatory Alignments
+[TextBox 10]: Align your brand with major national tech initiatives, sandboxes, and smart state programs. Share the stage directly with regional ministers, regulators, and policy makers to shape future business landscapes.
+
+--- Slide 14 ---
+Layout: Blank
+[TextBox 1]: 13. LOOKING AHEAD
+[TextBox 1]: Evolving the Global Innovation and Tech Ecosystem
+[TextBox 4]: Ecosystem Builder
+[TextBox 4]: Moving Beyond Events
+[TextBox 4]: Evolving from a business event organizer into a long-term commercial ecosystem builder. We are establishing dedicated business accelerators and venture bridging platforms that facilitate ongoing cross-border technology adoption and startup investment flow.
+[TextBox 7]: Global Expansion
+[TextBox 7]: Connecting New Corridors
+[TextBox 7]: Expanding our footprint into new rapid-growth technology markets, including Central Europe, Northern Africa, and South America, while deepening our existing leadership in the Middle East and Southeast Asia.
+[TextBox 10]: Climate & CARE Expo
+[TextBox 10]: Accelerating Green Technology
+[TextBox 10]: Scaling up the Climate Action & Renewable Energy (CARE) Expo 2025 to become the premier global platform for policy alignment and technology integration in renewable energy, circular economy, and ESG compliance.
+
+--- Slide 15 ---
+Layout: Blank
+[TextBox 3]: LET'S SHAPE THE FUTURE OF
+BUSINESS, TOGETHER.
+[TextBox 3]: Get in touch to explore global partnership and sponsorship opportunities.
+[TextBox 5]: GLOBAL HEADQUARTERS
+[TextBox 5]: Office 806, 1st Floor, Liberty House,
+DIFC, Dubai, UAE
+[TextBox 5]: Phone: (+971) 4 454 9859  |  info@tresconglobal.com
+[TextBox 6]: INTERNATIONAL OFFICES
+[TextBox 6]: • BENGALURU, INDIA (Pragati Business District)
+• DOHA, QATAR (360nautica)
+• PORT LOUIS, MAURITIUS (Liberty House)
+• MANGALORE & MANIPAL, INDIA
+[TextBox 8]: www.tresconglobal.com  |  Celebrating 10 Years of Excellence

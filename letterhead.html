@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trescon Global - Executive Letterhead Generator</title>
+  <meta name="description" content="Official Trescon Global executive letterhead generator and editor. Create, customize, dynamic regional office footers, and export print-ready A4 PDF documents.">
+  
+  <!-- Google Fonts: Anek Devanagari & Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="letterhead.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- LEFT CONTROL PANEL: EDITOR SIDEBAR -->
+    <aside class="sidebar no-print">
+      <div class="sidebar-brand">
+        <img src="brand_assets/trescon-logo-white-2025.png" alt="Trescon Logo" class="brand-logo-img">
+        <div class="brand-divider"></div>
+        <h2 class="brand-title">Executive Studio</h2>
+      </div>
+
+      <!-- TAB NAVIGATION -->
+      <nav class="sidebar-tabs">
+        <button type="button" class="tab-btn active" data-tab="tab-content">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Content
+        </button>
+        <button type="button" class="tab-btn" data-tab="tab-branding">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1"/></svg>
+          Branding
+        </button>
+        <button type="button" class="tab-btn" data-tab="tab-pages">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Pages
+        </button>
+      </nav>
+
+      <!-- SCROLLABLE TAB PANELS AREA -->
+      <div class="sidebar-scroll-content">
+
+        <!-- TAB 1: LETTER CONTENT -->
+        <div id="tab-content" class="tab-pane active">
+          <section class="editor-group">
+            <h3>Recipient Metadata</h3>
+            <div class="form-row">
+              <div class="form-field flex-1">
+                <label for="input-date">Date</label>
+                <input type="date" id="input-date" class="form-input">
+              </div>
+              <div class="form-field flex-1">
+                <label for="input-recipient-name">Recipient Name</label>
+                <input type="text" id="input-recipient-name" class="form-input" value="Mr. Alex Turner">
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="input-recipient-title">Recipient Title & Company</label>
+              <input type="text" id="input-recipient-title" class="form-input" value="Chief Executive Officer, Apex Global Innovations Ltd.">
+            </div>
+
+            <div class="form-field">
+              <label for="input-recipient-address">Recipient City / Location</label>
+              <input type="text" id="input-recipient-address" class="form-input" value="Bengaluru, Karnataka">
+            </div>
+          </section>
+
+          <section class="editor-group">
+            <h3>Document Body</h3>
+            <div class="form-field">
+              <label for="input-subject">Subject Line</label>
+              <input type="text" id="input-subject" class="form-input" value="Subject: Formal Proposal & Corporate Partnership Engagement">
+            </div>
+
+            <div class="form-field">
+              <label for="input-salutation">Salutation</label>
+              <input type="text" id="input-salutation" class="form-input" value="Dear Mr. Turner,">
+            </div>
+
+            <div class="form-field">
+              <label for="input-body">Letter Body Text</label>
+              <textarea id="input-body" class="form-textarea" rows="7" placeholder="Type or paste letter body content..."></textarea>
+            </div>
+          </section>
+        </div>
+
+        <!-- TAB 2: BRANDING & OFFICE & SIGNATORY -->
+        <div id="tab-branding" class="tab-pane">
+          <section class="editor-group">
+            <h3>Regional Office / Address</h3>
+            <div class="form-field">
+              <label for="office-preset">Office Location Preset</label>
+              <select id="office-preset" class="form-select">
+                <option value="bangalore" selected>Bangalore (HQ)</option>
+                <option value="manipal">Manipal (India)</option>
+                <option value="mangalore">Mangalore (India)</option>
+                <option value="dubai">Dubai (DIFC, UAE)</option>
+                <option value="custom">Custom Address Details</option>
+              </select>
+            </div>
+
+            <div id="custom-address-container" class="custom-address-box hidden">
+              <div class="form-field">
+                <label for="input-address">Address Line</label>
+                <input type="text" id="input-address" class="form-input" placeholder="Office address...">
+              </div>
+              <div class="form-field">
+                <label for="input-contact">Contact Details</label>
+                <input type="text" id="input-contact" class="form-input" placeholder="Phone, Email, Website...">
+              </div>
+            </div>
+          </section>
+
+          <section class="editor-group">
+            <h3>Signatory Details</h3>
+            <div class="form-row">
+              <div class="form-field flex-1">
+                <label for="input-sign-name">Signatory Name</label>
+                <input type="text" id="input-sign-name" class="form-input" value="Mohammed Saleem">
+              </div>
+              <div class="form-field flex-1">
+                <label for="input-sign-title">Signatory Position</label>
+                <input type="text" id="input-sign-title" class="form-input" value="Founder & Chairman">
+              </div>
+            </div>
+          </section>
+
+          <section class="editor-group">
+            <h3>Signature & Watermark</h3>
+            <div class="form-field">
+              <label>Signature Mode</label>
+              <div class="radio-group" style="display:flex; gap:12px; margin-top:4px;">
+                <label style="font-weight:normal; cursor:pointer;"><input type="radio" name="sig-mode" value="physical" checked> Physical Space</label>
+                <label style="font-weight:normal; cursor:pointer;"><input type="radio" name="sig-mode" value="digital"> Digital Image</label>
+              </div>
+            </div>
+
+            <div id="sig-upload-box" class="custom-address-box hidden">
+              <div class="form-field">
+                <label for="input-sig-file">Upload Signature PNG/JPG</label>
+                <input type="file" id="input-sig-file" accept="image/*" class="form-input" style="padding: 6px;">
+              </div>
+              <button type="button" id="btn-clear-sig" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.78rem;">Clear Signature</button>
+            </div>
+
+            <div class="form-field" style="margin-top:10px;">
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                <input type="checkbox" id="toggle-watermark" checked>
+                <span>Show Faint Brand Watermark (3.5% Opacity)</span>
+              </label>
+            </div>
+          </section>
+        </div>
+
+        <!-- TAB 3: PAGES & MULTI-PAGE SUPPORT -->
+        <div id="tab-pages" class="tab-pane">
+          <section class="editor-group">
+            <h3>Multi-Page Continuation</h3>
+            <div class="form-field">
+              <button type="button" id="btn-toggle-page2" class="btn btn-outline" style="width:100%;">
+                + Add Manual Page 2
+              </button>
+            </div>
+            <div id="page2-editor-box" class="custom-address-box hidden">
+              <div class="form-field">
+                <label for="input-body-page2">Page 2 Body Text</label>
+                <textarea id="input-body-page2" class="form-textarea" rows="8" placeholder="Type page 2 content..."></textarea>
+              </div>
+            </div>
+          </section>
+        </div>
+
+      </div>
+
+      <!-- FIXED STICKY ACTION FOOTER -->
+      <footer class="sidebar-footer">
+        <button id="btn-print" class="btn btn-primary" style="padding: 9px 12px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print / Export A4 PDF
+        </button>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+          <button id="btn-download-pdf" class="btn btn-secondary" style="padding: 7px 8px; font-size: 0.76rem; gap:4px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Download PDF
+          </button>
+          <a href="Trescon_Global_Letterhead_Template.docx" download class="btn btn-outline" style="padding: 7px 8px; font-size: 0.76rem; text-align:center; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:4px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Word (.docx)
+          </a>
+        </div>
+        <button id="btn-reset" class="btn-text-reset" style="background:none; border:none; color:var(--trescon-muted); font-size:0.75rem; cursor:pointer; text-decoration:underline; margin-top:2px;">
+          Reset Sample Text
+        </button>
+      </footer>
+    </aside>
+
+    <!-- RIGHT DISPLAY AREA: LIVE A4 PAPER PREVIEW -->
+    <main class="preview-area">
+      
+      <div class="paper-container" id="sheets-wrapper" style="display:flex; flex-direction:column; gap:30px;">
+        
+        <article class="a4-sheet" id="letterhead-sheet">
+          
+          <!-- TOP ACCENT RULE -->
+          <div class="top-accent-bar"></div>
+
+          <!-- HEADER SECTION -->
+          <header class="letter-header">
+            <div class="header-logo-block">
+              <img src="brand_assets/10-years-trescon-logo.png" alt="Trescon Global Logo" class="letterhead-logo">
+              <span class="brand-tagline">Connecting Businesses<br>with Opportunities</span>
+            </div>
+            <div class="header-meta-block" id="preview-header-contacts">
+              <div class="header-contact-line">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span id="preview-date">Date: July 24, 2026</span>
+              </div>
+              <div class="header-contact-line">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                <span>info@tresconglobal.com</span>
+              </div>
+              <div class="header-contact-line">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                <span>tresconglobal.com</span>
+              </div>
+            </div>
+          </header>
+          <div class="header-gradient-rule"></div>
+
+          <!-- RECIPIENT ADDRESS BLOCK -->
+          <div class="recipient-block">
+            <p>To,</p>
+            <p class="recip-name" id="preview-recipient-name">Mr. Alex Turner</p>
+            <p class="recip-title" id="preview-recipient-title">Chief Executive Officer, Apex Global Innovations Ltd.</p>
+            <p class="recip-addr" id="preview-recipient-address">Bengaluru, Karnataka</p>
+          </div>
+
+          <!-- SUBJECT LINE -->
+          <div class="subject-line" id="preview-subject">
+            Subject: Formal Proposal & Corporate Partnership Engagement
+          </div>
+
+          <!-- SALUTATION -->
+          <div class="salutation" id="preview-salutation">
+            Dear Mr. Turner,
+          </div>
+
+          <!-- LETTER BODY CONTENT -->
+          <div class="letter-body" id="preview-body">
+            <!-- Dynamic paragraphs inserted by app JS -->
+          </div>
+
+          <!-- WATERMARK OVERLAY -->
+          <div class="watermark-overlay" id="preview-watermark"></div>
+
+          <!-- CLOSING & SIGNATURE -->
+          <div class="signature-block">
+            <p class="closing-phrase">Warm regards,</p>
+            <div class="signature-space" id="preview-signature-space"></div>
+            <p class="signatory-name" id="preview-sign-name">Mohammed Saleem</p>
+            <p class="signatory-title" id="preview-sign-title">Founder & Chairman</p>
+            <p class="signatory-company">Trescon Global Business Solutions Pvt. Ltd.</p>
+          </div>
+
+          <!-- FOOTER SECTION -->
+          <footer class="letter-footer">
+            <div class="footer-divider"></div>
+            <div class="footer-columns">
+              <div class="footer-col-left">
+                <p class="footer-company-name" id="preview-footer-company">Trescon Global Business Solutions Pvt Ltd</p>
+                <p class="footer-address" id="preview-footer-address">
+                  1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka &ndash; 560034
+                </p>
+                <p class="footer-license" id="preview-footer-license" style="display:none;"></p>
+              </div>
+              <div class="footer-col-right">
+                <p class="footer-disclaimer">
+                  <strong>Disclaimer:</strong> The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. &copy; 2025 Trescon. All rights reserved.
+                </p>
+              </div>
+            </div>
+          </footer>
+
+        </article>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="letterhead.js"></script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trescon Global - Brand Job Poster Generator</title>
+  <meta name="description" content="Generate official, brand-compliant job flyers for Trescon Global hiring campaigns. Customize text, roles, locations, themes, and size ratios.">
+  <link rel="stylesheet" href="style.css">
+  <!-- Load HTML2Canvas for PNG exports -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfYLjYEXyR+/UMdyPfSL3NBTs3Gp-g6C1R4h1ZIc1vTXYdBc57vy62COdB3C/Ww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+
+  <div class="dashboard-container">
+    
+    <!-- LEFT SIDEBAR: CONFIGURATOR PANEL -->
+    <aside class="editor-sidebar">
+      <div class="brand-header">
+        <img src="brand_assets/10-years-trescon-logo-W.png" alt="Trescon Logo" class="brand-logo-small" id="sidebar-logo">
+        <h1>Poster Builder</h1>
+      </div>
+      
+      <!-- Text Inputs -->
+      <section class="editor-section">
+        <h2>1. Flyer Details</h2>
+        
+        <div class="form-group">
+          <label for="title-input">Campaign Title</label>
+          <input type="text" id="title-input" class="form-input" placeholder="We're growing our team at Trescon...">
+        </div>
+        
+        <div class="form-group">
+          <label for="subtitle-input">Intro Subtitle</label>
+          <textarea id="subtitle-input" class="form-textarea" placeholder="We're looking for enthusiastic individuals..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label style="display: flex; justify-content: space-between; align-items: center;">
+            <span>Open Positions</span>
+            <span id="roles-limit-warning" style="font-size: 0.65rem; color: #ff5e57; display: none; font-weight: 500;">Max 5 positions recommended</span>
+          </label>
+          <div id="roles-input-container" style="display: flex; flex-direction: column; gap: 8px;">
+            <!-- Inputs dynamically added by app.js -->
+          </div>
+          <button id="add-role-btn" class="add-role-btn" type="button">+ Add Position</button>
+        </div>
+      </section>
+
+      <!-- Location & Metadata -->
+      <section class="editor-section">
+        <h2>2. Highlights & Location</h2>
+        
+        <div class="form-group">
+          <label for="location-input">Job Location</label>
+          <input type="text" id="location-input" class="form-input" placeholder="Manipal">
+        </div>
+        
+        <div class="form-group">
+          <label for="highlight-input">Key Badge / Preference</label>
+          <input type="text" id="highlight-input" class="form-input" placeholder="Immediate Joiners Preferred">
+        </div>
+        
+        <div class="form-group">
+          <label for="email-input">Recruitment Email</label>
+          <input type="email" id="email-input" class="form-input" placeholder="hr@tresconglobal.com">
+        </div>
+        
+        <div class="form-group">
+          <label for="cta-label-input">CTA Header Prompt</label>
+          <input type="text" id="cta-label-input" class="form-input" value="APPLY DIRECTLY VIA EMAIL" placeholder="APPLY DIRECTLY VIA EMAIL">
+        </div>
+      </section>
+
+      <!-- Aspect Ratio Size Presets -->
+      <section class="editor-section">
+        <h2>3. Format Aspect Ratio</h2>
+        <div class="options-grid">
+          <div class="option-card">
+            <input type="radio" id="ratio-square-opt" name="size-preset" value="square">
+            <label for="ratio-square-opt">
+              <span class="icon">⬜</span>
+              <span>Square (1:1)<br>Feed</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" id="ratio-portrait-opt" name="size-preset" value="portrait" checked>
+            <label for="ratio-portrait-opt">
+              <span class="icon">▰</span>
+              <span>Portrait (4:5)<br>LinkedIn</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" id="ratio-story-opt" name="size-preset" value="story">
+            <label for="ratio-story-opt">
+              <span class="icon">▮</span>
+              <span>Story (9:16)<br>Mobile</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Design Themes -->
+      <section class="editor-section">
+        <h2>4. Design Theme</h2>
+        <div class="options-grid">
+          <div class="option-card">
+            <input type="radio" id="theme-emerald-opt" name="theme-preset" value="emerald" checked>
+            <label for="theme-emerald-opt">
+              <span class="icon" style="color: #c0f43c;">●</span>
+              <span>Emerald Glow</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" id="theme-midnight-opt" name="theme-preset" value="midnight">
+            <label for="theme-midnight-opt">
+              <span class="icon" style="color: #00a5a3;">●</span>
+              <span>Midnight Tech</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" id="theme-light-opt" name="theme-preset" value="light">
+            <label for="theme-light-opt">
+              <span class="icon" style="color: #01373d;">●</span>
+              <span>Corp Light</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Brand Patterns -->
+      <section class="editor-section">
+        <h2>5. Background Pattern</h2>
+        <div class="options-grid">
+          <div class="option-card">
+            <input type="radio" id="pattern-circles-opt" name="pattern-preset" value="circles" checked>
+            <label for="pattern-circles-opt">Circles</label>
+          </div>
+          <div class="option-card">
+            <input type="radio" id="pattern-grid-opt" name="pattern-preset" value="grid">
+            <label for="pattern-grid-opt">Grid</label>
+          </div>
+          <div class="option-card">
+            <input type="radio" id="pattern-abstract-opt" name="pattern-preset" value="abstract">
+            <label for="pattern-abstract-opt">Abstract</label>
+          </div>
+          <div class="option-card">
+            <input type="radio" id="pattern-none-opt" name="pattern-preset" value="none">
+            <label for="pattern-none-opt">None</label>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top: 8px;">
+          <label for="pattern-opacity" style="display: flex; justify-content: space-between;">
+            <span>Pattern Opacity</span>
+            <span id="opacity-val">15%</span>
+          </label>
+          <input type="range" id="pattern-opacity" min="0" max="60" value="15" style="accent-color: var(--color-teal); width: 100%; cursor: pointer;" oninput="document.getElementById('opacity-val').textContent = this.value + '%'">
+        </div>
+      </section>
+
+      <!-- Logo Variant -->
+      <section class="editor-section">
+        <h2>6. Logo Variant</h2>
+        <div class="options-grid">
+          <div class="option-card">
+            <input type="radio" id="logo-auto-opt" name="logo-preset" value="auto" checked>
+            <label for="logo-auto-opt">Auto</label>
+          </div>
+          <div class="option-card">
+            <input type="radio" id="logo-white-opt" name="logo-preset" value="white">
+            <label for="logo-white-opt">White</label>
+          </div>
+          <div class="option-card">
+            <input type="radio" id="logo-dark-opt" name="logo-preset" value="dark">
+            <label for="logo-dark-opt">Dark</label>
+          </div>
+          <div class="option-card">
+            <input type="radio" id="logo-none-opt" name="logo-preset" value="none">
+            <label for="logo-none-opt">None</label>
+          </div>
+        </div>
+      </section>
+
+      <!-- QR Code Integration -->
+      <section class="editor-section">
+        <h2>7. QR Code Integration</h2>
+        <div class="form-group">
+          <div class="switch-container">
+            <label class="switch">
+              <input type="checkbox" id="qr-toggle">
+              <span class="slider"></span>
+            </label>
+            <span class="switch-label">Show QR Code on flyer</span>
+          </div>
+        </div>
+        <div class="form-group" id="qr-link-group" style="margin-top: 12px;">
+          <label for="qr-link">QR Code Target URL</label>
+          <input type="text" id="qr-link" class="form-input" value="tresconglobal.com/careers" placeholder="e.g. tresconglobal.com/careers">
+        </div>
+      </section>
+
+      <!-- Export Action -->
+      <button class="export-btn" id="export-btn">
+        <span class="icon">💾</span> Export Poster PNG
+      </button>
+    </aside>
+
+    <!-- RIGHT PANEL: PREVIEW AREA -->
+    <main class="preview-workspace">
+      
+      <!-- Visual Canvas Frame -->
+      <div class="flyer-canvas-wrapper ratio-portrait" id="flyer-canvas-wrapper">
+        <div class="flyer-canvas theme-emerald-glow" id="flyer-canvas">
+          
+          <!-- Geometric Background Overlay Pattern -->
+          <div class="brand-pattern pattern-circles" id="brand-pattern"></div>
+          
+          <!-- Interactive Brand Circle Decos -->
+          <div class="brand-deco-circle deco-1"></div>
+          <div class="brand-deco-circle deco-2"></div>
+          <div class="brand-deco-circle deco-3"></div>
+          
+          
+          <!-- Poster Top Header (Logo) -->
+          <div class="flyer-header">
+            <img src="brand_assets/10-years-trescon-logo-W.png" alt="Trescon Global" class="flyer-logo" id="flyer-logo">
+            <div class="careers-badge">
+              <span class="pulse-dot"></span>
+              <span>Careers</span>
+            </div>
+          </div>
+          
+          <!-- Poster Intro Heading Block -->
+          <div class="flyer-intro">
+            <h2 class="flyer-title" id="flyer-title-text">We're growing our team at Trescon Manipal!</h2>
+            <p class="flyer-subtitle" id="flyer-subtitle-text">We're looking for enthusiastic individuals to join us in these key roles:</p>
+          </div>
+          
+          <!-- Poster Open Positions Listing -->
+          <div class="flyer-roles" id="flyer-roles-list">
+            <!-- Dynamic elements generated by app.js -->
+          </div>
+          
+          <!-- Job Details and Badges Row -->
+          <div class="flyer-meta-row">
+            <!-- Location Badge -->
+            <div class="info-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span id="flyer-location-text">Manipal</span>
+            </div>
+            
+            <!-- Immediate Joiner Highlight Badge -->
+            <div class="info-badge badge-highlight">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span id="flyer-highlight-text">Immediate Joiners Preferred</span>
+            </div>
+          </div>
+          
+          <!-- Qualifier text block -->
+          <p class="candidate-qualifier">
+            Whether you're a fresher eager to kickstart your career or someone experienced looking for your next opportunity, we'd love to hear from you.
+          </p>
+          
+          <!-- Call to Action Container (Modern Split Layout) -->
+          <div class="cta-box">
+            <div class="cta-info">
+              <span class="cta-text" id="flyer-cta-label-text">APPLY DIRECTLY VIA EMAIL</span>
+              <a href="mailto:hr@tresconglobal.com" id="flyer-mailto-link" class="cta-highlight" title="Click to send email">
+                <span id="flyer-email-text">hr@tresconglobal.com</span>
+              </a>
+            </div>
+            
+            <div class="cta-right-col">
+              <div class="cta-qr-wrapper" id="flyer-qr-code" style="display: none;"></div>
+              <a href="https://tresconglobal.com" target="_blank" class="cta-website-badge" title="Visit Official Website">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                <span>tresconglobal.com</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- HTML2Canvas Image Export Library -->
+  <script src="html2canvas.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

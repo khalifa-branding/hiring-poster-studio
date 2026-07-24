@@ -1,0 +1,7 @@
+# Node & system
+node_modules/
+.DS_Store
+*.log
+
+# Large binary raw files (optional to ignore heavy pptx/pdf if desired)
+# Trescon Brandbook.pdf
