@@ -3,295 +3,298 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trescon Global - Brand Job Poster Generator</title>
-  <meta name="description" content="Generate official, brand-compliant job flyers for Trescon Global hiring campaigns. Customize text, roles, locations, themes, and size ratios.">
-  <link rel="stylesheet" href="style.css">
-  <!-- Load HTML2Canvas for PNG exports -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfYLjYEXyR+/UMdyPfSL3NBTs3Gp-g6C1R4h1ZIc1vTXYdBc57vy62COdB3C/Ww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <title>Trescon Global - Executive Letterhead Generator</title>
+  <meta name="description" content="Official Trescon Global executive letterhead generator and editor. Create, customize, dynamic regional office footers, and export print-ready A4 PDF documents.">
+  
+  <!-- Google Fonts: Anek Devanagari & Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="letterhead.css">
 </head>
 <body>
 
-  <div class="dashboard-container">
+  <div class="app-container">
     
-    <!-- LEFT SIDEBAR: CONFIGURATOR PANEL -->
-    <aside class="editor-sidebar">
-      <div class="brand-header">
-        <img src="brand_assets/10-years-trescon-logo-W.png" alt="Trescon Logo" class="brand-logo-small" id="sidebar-logo">
-        <h1>Poster Builder</h1>
+    <!-- LEFT CONTROL PANEL: EDITOR SIDEBAR -->
+    <aside class="sidebar no-print">
+      <div class="sidebar-brand">
+        <img src="brand_assets/trescon-logo-white-2025.png" alt="Trescon Logo" class="brand-logo-img">
+        <div class="brand-divider"></div>
+        <h2 class="brand-title">Executive Studio</h2>
       </div>
-      
-      <!-- Text Inputs -->
-      <section class="editor-section">
-        <h2>1. Flyer Details</h2>
-        
-        <div class="form-group">
-          <label for="title-input">Campaign Title</label>
-          <input type="text" id="title-input" class="form-input" placeholder="We're growing our team at Trescon...">
-        </div>
-        
-        <div class="form-group">
-          <label for="subtitle-input">Intro Subtitle</label>
-          <textarea id="subtitle-input" class="form-textarea" placeholder="We're looking for enthusiastic individuals..."></textarea>
+
+      <!-- TAB NAVIGATION -->
+      <nav class="sidebar-tabs">
+        <button type="button" class="tab-btn active" data-tab="tab-content">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Content
+        </button>
+        <button type="button" class="tab-btn" data-tab="tab-branding">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1"/></svg>
+          Branding
+        </button>
+        <button type="button" class="tab-btn" data-tab="tab-pages">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Pages
+        </button>
+      </nav>
+
+      <!-- SCROLLABLE TAB PANELS AREA -->
+      <div class="sidebar-scroll-content">
+
+        <!-- TAB 1: LETTER CONTENT -->
+        <div id="tab-content" class="tab-pane active">
+          <section class="editor-group">
+            <h3>Recipient Metadata</h3>
+            <div class="form-row">
+              <div class="form-field flex-1">
+                <label for="input-date">Date</label>
+                <input type="date" id="input-date" class="form-input">
+              </div>
+              <div class="form-field flex-1">
+                <label for="input-recipient-name">Recipient Name</label>
+                <input type="text" id="input-recipient-name" class="form-input" value="Mr. Alex Turner">
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="input-recipient-title">Recipient Title & Company</label>
+              <input type="text" id="input-recipient-title" class="form-input" value="Chief Executive Officer, Apex Global Innovations Ltd.">
+            </div>
+
+            <div class="form-field">
+              <label for="input-recipient-address">Recipient City / Location</label>
+              <input type="text" id="input-recipient-address" class="form-input" value="Bengaluru, Karnataka">
+            </div>
+          </section>
+
+          <section class="editor-group">
+            <h3>Document Body</h3>
+            <div class="form-field">
+              <label for="input-subject">Subject Line</label>
+              <input type="text" id="input-subject" class="form-input" value="Subject: Formal Proposal & Corporate Partnership Engagement">
+            </div>
+
+            <div class="form-field">
+              <label for="input-salutation">Salutation</label>
+              <input type="text" id="input-salutation" class="form-input" value="Dear Mr. Turner,">
+            </div>
+
+            <div class="form-field">
+              <label for="input-body">Letter Body Text</label>
+              <textarea id="input-body" class="form-textarea" rows="7" placeholder="Type or paste letter body content..."></textarea>
+            </div>
+          </section>
         </div>
 
-        <div class="form-group">
-          <label style="display: flex; justify-content: space-between; align-items: center;">
-            <span>Open Positions</span>
-            <span id="roles-limit-warning" style="font-size: 0.65rem; color: #ff5e57; display: none; font-weight: 500;">Max 5 positions recommended</span>
-          </label>
-          <div id="roles-input-container" style="display: flex; flex-direction: column; gap: 8px;">
-            <!-- Inputs dynamically added by app.js -->
-          </div>
-          <button id="add-role-btn" class="add-role-btn" type="button">+ Add Position</button>
-        </div>
-      </section>
+        <!-- TAB 2: BRANDING & OFFICE & SIGNATORY -->
+        <div id="tab-branding" class="tab-pane">
+          <section class="editor-group">
+            <h3>Regional Office / Address</h3>
+            <div class="form-field">
+              <label for="office-preset">Office Location Preset</label>
+              <select id="office-preset" class="form-select">
+                <option value="bangalore" selected>Bangalore (HQ)</option>
+                <option value="manipal">Manipal (India)</option>
+                <option value="mangalore">Mangalore (India)</option>
+                <option value="dubai">Dubai (DIFC, UAE)</option>
+                <option value="custom">Custom Address Details</option>
+              </select>
+            </div>
 
-      <!-- Location & Metadata -->
-      <section class="editor-section">
-        <h2>2. Highlights & Location</h2>
-        
-        <div class="form-group">
-          <label for="location-input">Job Location</label>
-          <input type="text" id="location-input" class="form-input" placeholder="Manipal">
-        </div>
-        
-        <div class="form-group">
-          <label for="highlight-input">Key Badge / Preference</label>
-          <input type="text" id="highlight-input" class="form-input" placeholder="Immediate Joiners Preferred">
-        </div>
-        
-        <div class="form-group">
-          <label for="email-input">Recruitment Email</label>
-          <input type="email" id="email-input" class="form-input" placeholder="hr@tresconglobal.com">
-        </div>
-        
-        <div class="form-group">
-          <label for="cta-label-input">CTA Header Prompt</label>
-          <input type="text" id="cta-label-input" class="form-input" value="APPLY DIRECTLY VIA EMAIL" placeholder="APPLY DIRECTLY VIA EMAIL">
-        </div>
-      </section>
+            <div id="custom-address-container" class="custom-address-box hidden">
+              <div class="form-field">
+                <label for="input-address">Address Line</label>
+                <input type="text" id="input-address" class="form-input" placeholder="Office address...">
+              </div>
+              <div class="form-field">
+                <label for="input-contact">Contact Details</label>
+                <input type="text" id="input-contact" class="form-input" placeholder="Phone, Email, Website...">
+              </div>
+            </div>
+          </section>
 
-      <!-- Aspect Ratio Size Presets -->
-      <section class="editor-section">
-        <h2>3. Format Aspect Ratio</h2>
-        <div class="options-grid">
-          <div class="option-card">
-            <input type="radio" id="ratio-square-opt" name="size-preset" value="square">
-            <label for="ratio-square-opt">
-              <span class="icon">⬜</span>
-              <span>Square (1:1)<br>Feed</span>
-            </label>
-          </div>
-          <div class="option-card">
-            <input type="radio" id="ratio-portrait-opt" name="size-preset" value="portrait" checked>
-            <label for="ratio-portrait-opt">
-              <span class="icon">▰</span>
-              <span>Portrait (4:5)<br>LinkedIn</span>
-            </label>
-          </div>
-          <div class="option-card">
-            <input type="radio" id="ratio-story-opt" name="size-preset" value="story">
-            <label for="ratio-story-opt">
-              <span class="icon">▮</span>
-              <span>Story (9:16)<br>Mobile</span>
-            </label>
-          </div>
-        </div>
-      </section>
+          <section class="editor-group">
+            <h3>Signatory Details</h3>
+            <div class="form-row">
+              <div class="form-field flex-1">
+                <label for="input-sign-name">Signatory Name</label>
+                <input type="text" id="input-sign-name" class="form-input" value="Mohammed Saleem">
+              </div>
+              <div class="form-field flex-1">
+                <label for="input-sign-title">Signatory Position</label>
+                <input type="text" id="input-sign-title" class="form-input" value="Founder & Chairman">
+              </div>
+            </div>
+          </section>
 
-      <!-- Design Themes -->
-      <section class="editor-section">
-        <h2>4. Design Theme</h2>
-        <div class="options-grid">
-          <div class="option-card">
-            <input type="radio" id="theme-emerald-opt" name="theme-preset" value="emerald" checked>
-            <label for="theme-emerald-opt">
-              <span class="icon" style="color: #c0f43c;">●</span>
-              <span>Emerald Glow</span>
-            </label>
-          </div>
-          <div class="option-card">
-            <input type="radio" id="theme-midnight-opt" name="theme-preset" value="midnight">
-            <label for="theme-midnight-opt">
-              <span class="icon" style="color: #00a5a3;">●</span>
-              <span>Midnight Tech</span>
-            </label>
-          </div>
-          <div class="option-card">
-            <input type="radio" id="theme-light-opt" name="theme-preset" value="light">
-            <label for="theme-light-opt">
-              <span class="icon" style="color: #01373d;">●</span>
-              <span>Corp Light</span>
-            </label>
-          </div>
-        </div>
-      </section>
+          <section class="editor-group">
+            <h3>Signature & Watermark</h3>
+            <div class="form-field">
+              <label>Signature Mode</label>
+              <div class="radio-group" style="display:flex; gap:12px; margin-top:4px;">
+                <label style="font-weight:normal; cursor:pointer;"><input type="radio" name="sig-mode" value="physical" checked> Physical Space</label>
+                <label style="font-weight:normal; cursor:pointer;"><input type="radio" name="sig-mode" value="digital"> Digital Image</label>
+              </div>
+            </div>
 
-      <!-- Brand Patterns -->
-      <section class="editor-section">
-        <h2>5. Background Pattern</h2>
-        <div class="options-grid">
-          <div class="option-card">
-            <input type="radio" id="pattern-circles-opt" name="pattern-preset" value="circles" checked>
-            <label for="pattern-circles-opt">Circles</label>
-          </div>
-          <div class="option-card">
-            <input type="radio" id="pattern-grid-opt" name="pattern-preset" value="grid">
-            <label for="pattern-grid-opt">Grid</label>
-          </div>
-          <div class="option-card">
-            <input type="radio" id="pattern-abstract-opt" name="pattern-preset" value="abstract">
-            <label for="pattern-abstract-opt">Abstract</label>
-          </div>
-          <div class="option-card">
-            <input type="radio" id="pattern-none-opt" name="pattern-preset" value="none">
-            <label for="pattern-none-opt">None</label>
-          </div>
-        </div>
-        <div class="form-group" style="margin-top: 8px;">
-          <label for="pattern-opacity" style="display: flex; justify-content: space-between;">
-            <span>Pattern Opacity</span>
-            <span id="opacity-val">15%</span>
-          </label>
-          <input type="range" id="pattern-opacity" min="0" max="60" value="15" style="accent-color: var(--color-teal); width: 100%; cursor: pointer;" oninput="document.getElementById('opacity-val').textContent = this.value + '%'">
-        </div>
-      </section>
+            <div id="sig-upload-box" class="custom-address-box hidden">
+              <div class="form-field">
+                <label for="input-sig-file">Upload Signature PNG/JPG</label>
+                <input type="file" id="input-sig-file" accept="image/*" class="form-input" style="padding: 6px;">
+              </div>
+              <button type="button" id="btn-clear-sig" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.78rem;">Clear Signature</button>
+            </div>
 
-      <!-- Logo Variant -->
-      <section class="editor-section">
-        <h2>6. Logo Variant</h2>
-        <div class="options-grid">
-          <div class="option-card">
-            <input type="radio" id="logo-auto-opt" name="logo-preset" value="auto" checked>
-            <label for="logo-auto-opt">Auto</label>
-          </div>
-          <div class="option-card">
-            <input type="radio" id="logo-white-opt" name="logo-preset" value="white">
-            <label for="logo-white-opt">White</label>
-          </div>
-          <div class="option-card">
-            <input type="radio" id="logo-dark-opt" name="logo-preset" value="dark">
-            <label for="logo-dark-opt">Dark</label>
-          </div>
-          <div class="option-card">
-            <input type="radio" id="logo-none-opt" name="logo-preset" value="none">
-            <label for="logo-none-opt">None</label>
-          </div>
+            <div class="form-field" style="margin-top:10px;">
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                <input type="checkbox" id="toggle-watermark" checked>
+                <span>Show Faint Brand Watermark (3.5% Opacity)</span>
+              </label>
+            </div>
+          </section>
         </div>
-      </section>
 
-      <!-- QR Code Integration -->
-      <section class="editor-section">
-        <h2>7. QR Code Integration</h2>
-        <div class="form-group">
-          <div class="switch-container">
-            <label class="switch">
-              <input type="checkbox" id="qr-toggle">
-              <span class="slider"></span>
-            </label>
-            <span class="switch-label">Show QR Code on flyer</span>
-          </div>
+        <!-- TAB 3: PAGES & MULTI-PAGE SUPPORT -->
+        <div id="tab-pages" class="tab-pane">
+          <section class="editor-group">
+            <h3>Multi-Page Continuation</h3>
+            <div class="form-field">
+              <button type="button" id="btn-toggle-page2" class="btn btn-outline" style="width:100%;">
+                + Add Manual Page 2
+              </button>
+            </div>
+            <div id="page2-editor-box" class="custom-address-box hidden">
+              <div class="form-field">
+                <label for="input-body-page2">Page 2 Body Text</label>
+                <textarea id="input-body-page2" class="form-textarea" rows="8" placeholder="Type page 2 content..."></textarea>
+              </div>
+            </div>
+          </section>
         </div>
-        <div class="form-group" id="qr-link-group" style="margin-top: 12px;">
-          <label for="qr-link">QR Code Target URL</label>
-          <input type="text" id="qr-link" class="form-input" value="tresconglobal.com/careers" placeholder="e.g. tresconglobal.com/careers">
-        </div>
-      </section>
 
-      <!-- Export Action -->
-      <button class="export-btn" id="export-btn">
-        <span class="icon">💾</span> Export Poster PNG
-      </button>
+      </div>
+
+      <!-- FIXED STICKY ACTION FOOTER -->
+      <footer class="sidebar-footer">
+        <button id="btn-print" class="btn btn-primary" style="padding: 9px 12px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print / Export A4 PDF
+        </button>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+          <button id="btn-download-pdf" class="btn btn-secondary" style="padding: 7px 8px; font-size: 0.76rem; gap:4px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Download PDF
+          </button>
+          <a href="Trescon_Global_Letterhead_Template.docx" download class="btn btn-outline" style="padding: 7px 8px; font-size: 0.76rem; text-align:center; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:4px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Word (.docx)
+          </a>
+        </div>
+        <button id="btn-reset" class="btn-text-reset" style="background:none; border:none; color:var(--trescon-muted); font-size:0.75rem; cursor:pointer; text-decoration:underline; margin-top:2px;">
+          Reset Sample Text
+        </button>
+      </footer>
     </aside>
 
-    <!-- RIGHT PANEL: PREVIEW AREA -->
-    <main class="preview-workspace">
+    <!-- RIGHT DISPLAY AREA: LIVE A4 PAPER PREVIEW -->
+    <main class="preview-area">
       
-      <!-- Visual Canvas Frame -->
-      <div class="flyer-canvas-wrapper ratio-portrait" id="flyer-canvas-wrapper">
-        <div class="flyer-canvas theme-emerald-glow" id="flyer-canvas">
+      <div class="paper-container" id="sheets-wrapper" style="display:flex; flex-direction:column; gap:30px;">
+        
+        <article class="a4-sheet" id="letterhead-sheet">
           
-          <!-- Geometric Background Overlay Pattern -->
-          <div class="brand-pattern pattern-circles" id="brand-pattern"></div>
-          
-          <!-- Interactive Brand Circle Decos -->
-          <div class="brand-deco-circle deco-1"></div>
-          <div class="brand-deco-circle deco-2"></div>
-          <div class="brand-deco-circle deco-3"></div>
-          
-          
-          <!-- Poster Top Header (Logo) -->
-          <div class="flyer-header">
-            <img src="brand_assets/10-years-trescon-logo-W.png" alt="Trescon Global" class="flyer-logo" id="flyer-logo">
-            <div class="careers-badge">
-              <span class="pulse-dot"></span>
-              <span>Careers</span>
+          <!-- TOP ACCENT RULE -->
+          <div class="top-accent-bar"></div>
+
+          <!-- HEADER SECTION -->
+          <header class="letter-header">
+            <div class="header-logo-block">
+              <img src="brand_assets/10-years-trescon-logo.png" alt="Trescon Global Logo" class="letterhead-logo">
+              <span class="brand-tagline">Connecting Businesses<br>with Opportunities</span>
             </div>
-          </div>
-          
-          <!-- Poster Intro Heading Block -->
-          <div class="flyer-intro">
-            <h2 class="flyer-title" id="flyer-title-text">We're growing our team at Trescon Manipal!</h2>
-            <p class="flyer-subtitle" id="flyer-subtitle-text">We're looking for enthusiastic individuals to join us in these key roles:</p>
-          </div>
-          
-          <!-- Poster Open Positions Listing -->
-          <div class="flyer-roles" id="flyer-roles-list">
-            <!-- Dynamic elements generated by app.js -->
-          </div>
-          
-          <!-- Job Details and Badges Row -->
-          <div class="flyer-meta-row">
-            <!-- Location Badge -->
-            <div class="info-badge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-              <span id="flyer-location-text">Manipal</span>
-            </div>
-            
-            <!-- Immediate Joiner Highlight Badge -->
-            <div class="info-badge badge-highlight">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-              <span id="flyer-highlight-text">Immediate Joiners Preferred</span>
-            </div>
-          </div>
-          
-          <!-- Qualifier text block -->
-          <p class="candidate-qualifier">
-            Whether you're a fresher eager to kickstart your career or someone experienced looking for your next opportunity, we'd love to hear from you.
-          </p>
-          
-          <!-- Call to Action Container (Modern Split Layout) -->
-          <div class="cta-box">
-            <div class="cta-info">
-              <span class="cta-text" id="flyer-cta-label-text">APPLY DIRECTLY VIA EMAIL</span>
-              <a href="mailto:hr@tresconglobal.com" id="flyer-mailto-link" class="cta-highlight" title="Click to send email">
-                <span id="flyer-email-text">hr@tresconglobal.com</span>
-              </a>
-            </div>
-            
-            <div class="cta-right-col">
-              <div class="cta-qr-wrapper" id="flyer-qr-code" style="display: none;"></div>
-              <a href="https://tresconglobal.com" target="_blank" class="cta-website-badge" title="Visit Official Website">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <div class="header-meta-block" id="preview-header-contacts">
+              <div class="header-contact-line">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span id="preview-date">Date: July 24, 2026</span>
+              </div>
+              <div class="header-contact-line">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                <span>info@tresconglobal.com</span>
+              </div>
+              <div class="header-contact-line">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>
                 <span>tresconglobal.com</span>
-              </a>
+              </div>
             </div>
+          </header>
+          <div class="header-gradient-rule"></div>
+
+          <!-- RECIPIENT ADDRESS BLOCK -->
+          <div class="recipient-block">
+            <p>To,</p>
+            <p class="recip-name" id="preview-recipient-name">Mr. Alex Turner</p>
+            <p class="recip-title" id="preview-recipient-title">Chief Executive Officer, Apex Global Innovations Ltd.</p>
+            <p class="recip-addr" id="preview-recipient-address">Bengaluru, Karnataka</p>
           </div>
 
-        </div>
+          <!-- SUBJECT LINE -->
+          <div class="subject-line" id="preview-subject">
+            Subject: Formal Proposal & Corporate Partnership Engagement
+          </div>
+
+          <!-- SALUTATION -->
+          <div class="salutation" id="preview-salutation">
+            Dear Mr. Turner,
+          </div>
+
+          <!-- LETTER BODY CONTENT -->
+          <div class="letter-body" id="preview-body">
+            <!-- Dynamic paragraphs inserted by app JS -->
+          </div>
+
+          <!-- WATERMARK OVERLAY -->
+          <div class="watermark-overlay" id="preview-watermark"></div>
+
+          <!-- CLOSING & SIGNATURE -->
+          <div class="signature-block">
+            <p class="closing-phrase">Warm regards,</p>
+            <div class="signature-space" id="preview-signature-space"></div>
+            <p class="signatory-name" id="preview-sign-name">Mohammed Saleem</p>
+            <p class="signatory-title" id="preview-sign-title">Founder & Chairman</p>
+            <p class="signatory-company">Trescon Global Business Solutions Pvt. Ltd.</p>
+          </div>
+
+          <!-- FOOTER SECTION -->
+          <footer class="letter-footer">
+            <div class="footer-divider"></div>
+            <div class="footer-columns">
+              <div class="footer-col-left">
+                <p class="footer-company-name" id="preview-footer-company">Trescon Global Business Solutions Pvt Ltd</p>
+                <p class="footer-address" id="preview-footer-address">
+                  1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka &ndash; 560034
+                </p>
+                <p class="footer-license" id="preview-footer-license" style="display:none;"></p>
+              </div>
+              <div class="footer-col-right">
+                <p class="footer-disclaimer">
+                  <strong>Disclaimer:</strong> The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. &copy; 2025 Trescon. All rights reserved.
+                </p>
+              </div>
+            </div>
+          </footer>
+
+        </article>
+
       </div>
-      
+
     </main>
 
   </div>
 
-  <!-- HTML2Canvas Image Export Library -->
-  <script src="html2canvas.min.js"></script>
-  <script src="app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="letterhead.js"></script>
 </body>
 </html>
