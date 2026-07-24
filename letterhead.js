@@ -1,29 +1,28 @@
 /**
- * Trescon Global Executive Letterhead Generator Logic
+ * Trescon Global Executive Letterhead Studio Logic (Enterprise Production Refactor)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
 
   // Preset Address Database
-  // Preset Address Database
   const ADDRESS_PRESETS = {
     bangalore: {
       entity: "Trescon Global Business Solutions Pvt Ltd",
-      address: "1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka – 560034",
+      address: "1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka &ndash; 560034",
       license: "",
       email: "info@tresconglobal.com",
       web: "tresconglobal.com"
     },
     manipal: {
       entity: "Trescon Global Business Solutions Pvt Ltd",
-      address: "H (23), 5th Floor, Pragathi Business District #412, above Reliance Trends, Laxmindra Nagar,<br>Manipal, Udupi, Karnataka – 576104",
+      address: "H (23), 5th Floor, Pragathi Business District #412, above Reliance Trends, Laxmindra Nagar,<br>Manipal, Udupi, Karnataka &ndash; 576104",
       license: "",
       email: "info@tresconglobal.com",
       web: "tresconglobal.com"
     },
     mangalore: {
       entity: "Trescon Global Business Solutions Pvt Ltd",
-      address: "1st Floor, Bejai Post, Ajantha Business Center, Bejai – Kapikad Road, Mangaluru, Karnataka – 575004",
+      address: "1st Floor, Bejai Post, Ajantha Business Center, Bejai &ndash; Kapikad Road, Mangaluru, Karnataka &ndash; 575004",
       license: "",
       email: "info@tresconglobal.com",
       web: "tresconglobal.com"
@@ -37,72 +36,97 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Sample Corporate Proposal Content (from Brandbook)
+  // Sample Corporate Proposal Content
   const SAMPLE_BODY = `I hope this message finds you well. I am writing on behalf of Trescon Global to formally submit our comprehensive proposal for the upcoming enterprise technology summit and strategic collaboration initiatives. Our team has tailored this framework to align with your organization's vision, key deliverables, and expansion roadmaps.
 
 As a premier B2B events and business solutions firm operating across seven global territories, Trescon is committed to connecting businesses with high-impact market opportunities. The enclosed document details our execution timeline, stakeholder engagement models, and target milestones for optimal business outcome.
 
 We welcome the opportunity to discuss this proposal further and address any specific requirements. Please feel free to reach out to our executive coordination office at your convenience.`;
 
-  // Element Selectors
+  // UI Element References
   const officePresetSelect = document.getElementById('office-preset');
-  const customAddressContainer = document.getElementById('custom-address-container');
-  const inputAddress = document.getElementById('input-address');
-  const inputContact = document.getElementById('input-contact');
+  const previewBodyElem = document.getElementById('preview-body');
+  const topToolbarContainer = document.getElementById('editor-top-toolbar');
 
-  const inputDate = document.getElementById('input-date');
-  const inputRecipientName = document.getElementById('input-recipient-name');
-  const inputRecipientTitle = document.getElementById('input-recipient-title');
-  const inputRecipientAddress = document.getElementById('input-recipient-address');
-  const inputSubject = document.getElementById('input-subject');
-  const inputSalutation = document.getElementById('input-salutation');
-  const inputBody = document.getElementById('input-body');
-  const inputSignName = document.getElementById('input-sign-name');
-  const inputSignTitle = document.getElementById('input-sign-title');
-
-  // Preview Elements
   const previewDate = document.getElementById('preview-date');
   const previewRecipientName = document.getElementById('preview-recipient-name');
   const previewRecipientTitle = document.getElementById('preview-recipient-title');
   const previewRecipientAddress = document.getElementById('preview-recipient-address');
   const previewSubject = document.getElementById('preview-subject');
   const previewSalutation = document.getElementById('preview-salutation');
-  const previewBody = document.getElementById('preview-body');
   const previewSignName = document.getElementById('preview-sign-name');
   const previewSignTitle = document.getElementById('preview-sign-title');
+
   const previewFooterCompany = document.getElementById('preview-footer-company');
   const previewFooterAddress = document.getElementById('preview-footer-address');
   const previewFooterLicense = document.getElementById('preview-footer-license');
   const previewHeaderContacts = document.getElementById('preview-header-contacts');
 
   const btnPrint = document.getElementById('btn-print');
-  const btnReset = document.getElementById('btn-reset');
+  const btnDownloadPdf = document.getElementById('btn-download-pdf');
+  const btnDownloadDocx = document.getElementById('btn-download-docx');
 
-  // Tab Switching Handler
-  const tabButtons = document.querySelectorAll('.sidebar-tabs .tab-btn');
-  const tabPanes = document.querySelectorAll('.sidebar-scroll-content .tab-pane');
+  // Enterprise State Management & LocalStorage Persistence
+  const STORAGE_KEY = 'trescon_letterhead_state_v3';
 
-  tabButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetTabId = btn.getAttribute('data-tab');
-      
-      tabButtons.forEach(b => b.classList.remove('active'));
-      tabPanes.forEach(p => p.classList.remove('active'));
+  let docState = {
+    officePreset: 'bangalore',
+    recipientName: 'Mr. Alex Turner',
+    recipientTitle: 'Chief Executive Officer, Apex Global Innovations Ltd.',
+    recipientAddress: 'Bengaluru, Karnataka',
+    subject: 'Subject: Formal Proposal & Corporate Partnership Engagement',
+    salutation: 'Dear Mr. Turner,',
+    date: 'Date: July 24, 2026',
+    bodyHTML: '',
+    signatoryName: 'Mohammed Saleem',
+    signatoryTitle: 'Founder & Chairman'
+  };
 
-      btn.classList.add('active');
-      const targetPane = document.getElementById(targetTabId);
-      if (targetPane) targetPane.classList.add('active');
-    });
-  });
+  function saveDocState() {
+    try {
+      docState.officePreset = officePresetSelect ? officePresetSelect.value : 'bangalore';
+      if (previewRecipientName) docState.recipientName = previewRecipientName.textContent;
+      if (previewRecipientTitle) docState.recipientTitle = previewRecipientTitle.textContent;
+      if (previewRecipientAddress) docState.recipientAddress = previewRecipientAddress.textContent;
+      if (previewSubject) docState.subject = previewSubject.textContent;
+      if (previewSalutation) docState.salutation = previewSalutation.textContent;
+      if (previewDate) docState.date = previewDate.textContent;
+      if (previewSignName) docState.signatoryName = previewSignName.textContent;
+      if (previewSignTitle) docState.signatoryTitle = previewSignTitle.textContent;
+      if (quill) docState.bodyHTML = quill.root.innerHTML;
 
-  // Initialize Body Input & Date with Current Date
-  const todayDateStr = new Date().toISOString().split('T')[0];
-  if (inputDate) inputDate.value = todayDateStr;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(docState));
+    } catch (e) {
+      console.warn('LocalStorage save error:', e);
+    }
+  }
 
-  // Initialize Quill Rich Text Editor directly on the A4 letterhead canvas!
+  function loadDocState() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        docState = { ...docState, ...parsed };
+
+        if (officePresetSelect && docState.officePreset) {
+          officePresetSelect.value = docState.officePreset;
+        }
+        if (previewRecipientName && docState.recipientName) previewRecipientName.textContent = docState.recipientName;
+        if (previewRecipientTitle && docState.recipientTitle) previewRecipientTitle.textContent = docState.recipientTitle;
+        if (previewRecipientAddress && docState.recipientAddress) previewRecipientAddress.textContent = docState.recipientAddress;
+        if (previewSubject && docState.subject) previewSubject.textContent = docState.subject;
+        if (previewSalutation && docState.salutation) previewSalutation.textContent = docState.salutation;
+        if (previewDate && docState.date) previewDate.textContent = docState.date;
+        if (previewSignName && docState.signatoryName) previewSignName.textContent = docState.signatoryName;
+        if (previewSignTitle && docState.signatoryTitle) previewSignTitle.textContent = docState.signatoryTitle;
+      }
+    } catch (e) {
+      console.warn('LocalStorage load error:', e);
+    }
+  }
+
+  // Single-Stream Quill Editor Initialization
   let quill = null;
-  const previewBodyElem = document.getElementById('preview-body');
-  const topToolbarContainer = document.getElementById('editor-top-toolbar');
 
   if (window.Quill && previewBodyElem) {
     const basicWordToolbarOptions = [
@@ -121,18 +145,24 @@ We welcome the opportunity to discuss this proposal further and address any spec
       }
     });
 
-    // Move Quill's generated toolbar into the top fixed header ribbon!
     const qlToolbar = previewBodyElem.parentElement.querySelector('.ql-toolbar');
     if (qlToolbar && topToolbarContainer) {
       topToolbarContainer.appendChild(qlToolbar);
     }
 
-    const initialHTML = SAMPLE_BODY.split('\n\n').map(p => `<p>${p.trim()}</p>`).join('');
-    quill.root.innerHTML = initialHTML;
+    // Load State or Set Default Content
+    loadDocState();
+
+    if (docState.bodyHTML && docState.bodyHTML !== '<p><br></p>') {
+      quill.root.innerHTML = docState.bodyHTML;
+    } else {
+      const initialHTML = SAMPLE_BODY.split('\n\n').map(p => `<p>${p.trim()}</p>`).join('');
+      quill.root.innerHTML = initialHTML;
+    }
 
     // Intercept Tab & Shift+Tab keys for MS Word indentation behavior
     quill.keyboard.addBinding({
-      key: 9, // Tab key
+      key: 9,
       handler: function(range, context) {
         if (context.format.list) {
           this.quill.format('indent', '+1');
@@ -144,7 +174,7 @@ We welcome the opportunity to discuss this proposal further and address any spec
     });
 
     quill.keyboard.addBinding({
-      key: 9, // Shift + Tab key
+      key: 9,
       shiftKey: true,
       handler: function(range, context) {
         this.quill.format('indent', '-1');
@@ -153,45 +183,22 @@ We welcome the opportunity to discuss this proposal further and address any spec
     });
 
     quill.on('text-change', () => {
+      saveDocState();
       paginateDocument();
     });
   }
 
-  // Render Body Paragraphs Function
-  function renderBodyText(text) {
-    if (quill) return;
-    if (!text || text === '<p><br></p>') {
-      previewBody.innerHTML = '<p style="color:#a0aec0; font-style:italic;">[Letter body content placeholder]</p>';
-      resetPaginationState();
-      return;
-    }
-    previewBody.innerHTML = text;
-    setTimeout(paginateDocument, 50);
-  }
-
-  function resetPaginationState() {
-    document.querySelectorAll('.auto-page-sheet').forEach(sheet => sheet.remove());
-    const previewBodyElem = document.getElementById('preview-body');
-    if (previewBodyElem) {
-      const editorRoot = previewBodyElem.querySelector('.ql-editor') || previewBodyElem;
-      editorRoot.querySelectorAll('.page-break-divider').forEach(el => el.remove());
-    }
-  }
-
-  // Automatic Multi-Page Pagination Handler (Google Docs / Notion Style Single Canvas)
+  // Dynamic Pagination Engine (A4 Height Measurement & Page Breaking)
   function paginateDocument() {
-    resetPaginationState();
-    if (page2Active) return; // Skip if manual 2-page template active
-
-    const previewBodyElem = document.getElementById('preview-body');
     if (!previewBodyElem) return;
-
     const editorRoot = previewBodyElem.querySelector('.ql-editor') || previewBodyElem;
+    editorRoot.querySelectorAll('.page-break-divider').forEach(el => el.remove());
+
     const bodyChildren = Array.from(editorRoot.children);
     if (bodyChildren.length === 0) return;
 
-    const MAX_PAGE1_HEIGHT = 440; // Printable height for Page 1 body area
-    const MAX_PAGE_N_HEIGHT = 650; // Printable height for continuation pages
+    const MAX_PAGE1_HEIGHT = 440;
+    const MAX_PAGE_N_HEIGHT = 650;
 
     let currentHeight = 0;
     let pageNum = 1;
@@ -205,9 +212,8 @@ We welcome the opportunity to discuss this proposal further and address any spec
         pageNum++;
         currentHeight = h;
 
-        // Insert non-destructive visual Page Break Divider before this element
         const pageBreak = document.createElement('div');
-        pageBreak.className = 'page-break-divider no-print-break';
+        pageBreak.className = 'page-break-divider no-print';
         pageBreak.setAttribute('contenteditable', 'false');
         pageBreak.innerHTML = `
           <div class="page-break-line"></div>
@@ -221,18 +227,10 @@ We welcome the opportunity to discuss this proposal further and address any spec
     });
   }
 
-  const iconDate = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`;
-  const iconEmail = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>`;
-  const iconWeb = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`;
-
-  // Update Footer & Header Contacts Function
+  // Update Regional Office Metadata (Decoupled from Body Text)
   function updateFooter() {
     const selectedKey = officePresetSelect ? officePresetSelect.value : 'bangalore';
     const data = ADDRESS_PRESETS[selectedKey] || ADDRESS_PRESETS.bangalore;
-
-    const page2Company = document.getElementById('page2-footer-company');
-    const page2Address = document.getElementById('page2-footer-address');
-    const page2License = document.getElementById('page2-footer-license');
 
     if (previewFooterCompany) previewFooterCompany.textContent = data.entity;
     if (previewFooterAddress) previewFooterAddress.innerHTML = data.address;
@@ -245,285 +243,233 @@ We welcome the opportunity to discuss this proposal further and address any spec
       }
     }
 
-    if (page2Company) page2Company.textContent = data.entity;
-    if (page2Address) page2Address.innerHTML = data.address;
-    if (page2License) {
-      if (data.license) {
-        page2License.textContent = data.license;
-        page2License.style.display = 'block';
-      } else {
-        page2License.style.display = 'none';
-      }
+    const iconDate = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`;
+    const iconEmail = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>`;
+    const iconWeb = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>`;
+
+    if (previewHeaderContacts) {
+      previewHeaderContacts.innerHTML = `
+        <div class="header-contact-line">${iconDate}<span id="preview-date" contenteditable="true">${docState.date || 'Date: July 24, 2026'}</span></div>
+        <div class="header-contact-line">${iconEmail}<span>${data.email}</span></div>
+        <div class="header-contact-line">${iconWeb}<span>${data.web}</span></div>
+      `;
     }
+
+    saveDocState();
   }
 
-  // Date Formatting Helper
-  function formatFormalDate(dateVal) {
-    if (!dateVal) return '';
-    const parts = dateVal.split('-');
-    if (parts.length === 3) {
-      const year = parseInt(parts[0], 10);
-      const month = parseInt(parts[1], 10) - 1;
-      const day = parseInt(parts[2], 10);
-      const d = new Date(year, month, day);
-      return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-    }
-    return dateVal;
+  if (officePresetSelect) {
+    officePresetSelect.addEventListener('change', updateFooter);
   }
 
-  // Signature & Watermark Elements
-  const sigModeRadios = document.querySelectorAll('input[name="sig-mode"]');
-  const sigUploadBox = document.getElementById('sig-upload-box');
-  const inputSigFile = document.getElementById('input-sig-file');
-  const btnClearSig = document.getElementById('btn-clear-sig');
-  const previewSigSpace = document.getElementById('preview-signature-space');
-  const toggleWatermark = document.getElementById('toggle-watermark');
-  const previewWatermark = document.getElementById('preview-watermark');
+  // Attach Save Listeners to ContentEditable Fields
+  [previewRecipientName, previewRecipientTitle, previewRecipientAddress, previewSubject, previewSalutation, previewDate, previewSignName, previewSignTitle].forEach(elem => {
+    if (elem) {
+      elem.addEventListener('input', saveDocState);
+      elem.addEventListener('blur', saveDocState);
+    }
+  });
 
-  // Multi-Page Elements
-  const btnTogglePage2 = document.getElementById('btn-toggle-page2');
-  const page2EditorBox = document.getElementById('page2-editor-box');
-  const inputBodyPage2 = document.getElementById('input-body-page2');
-  const sheetsWrapper = document.getElementById('sheets-wrapper');
-
-  let uploadedSigDataUrl = '';
-  let page2Active = false;
-
-  // Signature Radio Toggle Handler
-  sigModeRadios.forEach(radio => {
-    radio.addEventListener('change', (e) => {
-      if (e.target.value === 'digital') {
-        sigUploadBox.classList.remove('hidden');
-        renderSignature();
-      } else {
-        sigUploadBox.classList.add('hidden');
-        previewSigSpace.innerHTML = '';
-      }
+  // Native High-Fidelity Vector PDF Print Handler
+  if (btnPrint) {
+    btnPrint.addEventListener('click', () => {
+      window.print();
     });
-  });
-
-  // Render Signature Image
-  function renderSignature() {
-    const selectedMode = document.querySelector('input[name="sig-mode"]:checked').value;
-    if (selectedMode === 'digital' && uploadedSigDataUrl) {
-      previewSigSpace.innerHTML = `<img src="${uploadedSigDataUrl}" alt="Digital Signature">`;
-    } else {
-      previewSigSpace.innerHTML = '';
-    }
   }
 
-  // File Upload Event
-  inputSigFile.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        uploadedSigDataUrl = event.target.result;
-        renderSignature();
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-
-  // Clear Signature Event
-  btnClearSig.addEventListener('click', () => {
-    inputSigFile.value = '';
-    uploadedSigDataUrl = '';
-    previewSigSpace.innerHTML = '';
-  });
-
-  // Watermark Toggle Event
-  toggleWatermark.addEventListener('change', () => {
-    if (toggleWatermark.checked) {
-      previewWatermark.classList.remove('hidden-watermark');
-      document.querySelectorAll('.watermark-overlay').forEach(el => el.classList.remove('hidden-watermark'));
-    } else {
-      previewWatermark.classList.add('hidden-watermark');
-      document.querySelectorAll('.watermark-overlay').forEach(el => el.classList.add('hidden-watermark'));
-    }
-  });
-
-  // Continuation Page Toggle Handler
-  btnTogglePage2.addEventListener('click', () => {
-    page2Active = !page2Active;
-    if (page2Active) {
-      page2EditorBox.classList.remove('hidden');
-      btnTogglePage2.textContent = '- Remove Continuation Page (Page 2)';
-      btnTogglePage2.classList.remove('btn-outline');
-      btnTogglePage2.classList.add('btn-secondary');
-      if (!inputBodyPage2.value) {
-        inputBodyPage2.value = "Continuation of proposal details, timeline breakdowns, and financial deliverables for phase 2 execution.";
-      }
-      renderPage2Sheet();
-    } else {
-      page2EditorBox.classList.add('hidden');
-      btnTogglePage2.textContent = '+ Add Continuation Page (Page 2)';
-      btnTogglePage2.classList.remove('btn-secondary');
-      btnTogglePage2.classList.add('btn-outline');
-      const page2Sheet = document.getElementById('letterhead-sheet-page2');
-      if (page2Sheet) page2Sheet.remove();
-    }
-  });
-
-  // Render Continuation Page 2 Sheet
-  function renderPage2Sheet() {
-    let page2Sheet = document.getElementById('letterhead-sheet-page2');
-    if (!page2Sheet) {
-      page2Sheet = document.createElement('article');
-      page2Sheet.className = 'a4-sheet';
-      page2Sheet.id = 'letterhead-sheet-page2';
-      sheetsWrapper.appendChild(page2Sheet);
-    }
-
-    const currentEntity = previewFooterCompany ? previewFooterCompany.textContent : 'Trescon Global Business Solutions Pvt Ltd';
-    const currentAddr = previewFooterAddress.innerHTML;
-    const currentLicense = (previewFooterLicense && previewFooterLicense.style.display !== 'none') ? previewFooterLicense.textContent : '';
-    const isWatermarkVisible = toggleWatermark.checked;
-
-    page2Sheet.innerHTML = `
-      <div class="top-accent-bar"></div>
-      <header class="letter-header" style="padding-bottom:8px;">
-        <div class="header-logo-block">
-          <img src="brand_assets/trescon-logo-white-2025.png" alt="Trescon Logo" style="height:20px; filter:invert(1);">
-        </div>
-        <div class="header-meta-block">
-          <div style="font-size:0.8rem; color:var(--trescon-slate); font-weight:600;">Page 2 of 2</div>
-        </div>
-      </header>
-      <div class="header-gradient-rule"></div>
-
-      <div class="watermark-overlay ${isWatermarkVisible ? '' : 'hidden-watermark'}"></div>
-
-      <div class="letter-body" id="preview-body-page2" style="margin-top:16px;">
-        ${renderParagraphsHTML(inputBodyPage2.value)}
-      </div>
-
-      <footer class="letter-footer">
-        <div class="footer-divider"></div>
-        <div class="footer-columns">
-          <div class="footer-col-left">
-            <p class="footer-company-name">${currentEntity}</p>
-            <p class="footer-address">${currentAddr}</p>
-            ${currentLicense ? `<p class="footer-license">${currentLicense}</p>` : ''}
-          </div>
-          <div class="footer-col-right">
-            <p class="footer-disclaimer">
-              <strong>Disclaimer:</strong> The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. &copy; 2025 Trescon. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
-    `;
-  }
-
-  function renderParagraphsHTML(text) {
-    if (!text) return '';
-    return text.split('\n\n').filter(p => p.trim() !== '').map(p => `<p style="text-align:justify; margin-bottom:10px;">${p.trim()}</p>`).join('');
-  }
-
-  inputBodyPage2.addEventListener('input', () => {
-    if (page2Active) renderPage2Sheet();
-  });
-
-  // Bind Input Event Listeners
-  inputDate.addEventListener('change', () => previewDate.textContent = 'Date: ' + formatFormalDate(inputDate.value));
-  inputDate.addEventListener('input', () => previewDate.textContent = 'Date: ' + formatFormalDate(inputDate.value));
-  inputRecipientName.addEventListener('input', () => previewRecipientName.textContent = inputRecipientName.value);
-  inputRecipientTitle.addEventListener('input', () => previewRecipientTitle.textContent = inputRecipientTitle.value);
-  inputRecipientAddress.addEventListener('input', () => previewRecipientAddress.textContent = inputRecipientAddress.value);
-  inputSubject.addEventListener('input', () => previewSubject.textContent = inputSubject.value);
-  inputSalutation.addEventListener('input', () => previewSalutation.textContent = inputSalutation.value);
-  inputBody.addEventListener('input', () => renderBodyText(inputBody.value));
-  inputSignName.addEventListener('input', () => previewSignName.textContent = inputSignName.value);
-  inputSignTitle.addEventListener('input', () => previewSignTitle.textContent = inputSignTitle.value);
-
-  officePresetSelect.addEventListener('change', () => {
-    updateFooter();
-    if (page2Active) renderPage2Sheet();
-  });
-  inputAddress.addEventListener('input', () => {
-    updateFooter();
-    if (page2Active) renderPage2Sheet();
-  });
-  inputContact.addEventListener('input', () => {
-    updateFooter();
-    if (page2Active) renderPage2Sheet();
-  });
-
-  // Print & PDF Download Actions
-  btnPrint.addEventListener('click', () => {
-    window.print();
-  });
-
-  const btnDownloadPdf = document.getElementById('btn-download-pdf');
+  // Fallback 1-Click Client PDF Download
   if (btnDownloadPdf) {
     btnDownloadPdf.addEventListener('click', () => {
-      const element = document.getElementById('sheets-wrapper');
+      const element = document.getElementById('letterhead-sheet');
+      if (!element || !window.html2pdf) return;
+
       const opt = {
-        margin:       0,
-        filename:     'Trescon_Executive_Letter.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, logging: false },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        margin: [0, 0, 0, 0],
+        filename: `Trescon_Global_Letterhead_${new Date().toISOString().slice(0, 10)}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, logging: false },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
-      if (window.html2pdf) {
-        html2pdf().set(opt).from(element).save();
-      } else {
-        window.print();
-      }
+
+      html2pdf().set(opt).from(element).save();
     });
   }
 
-  // Reset Action
-  btnReset.addEventListener('click', () => {
-    inputDate.value = new Date().toISOString().split('T')[0];
-    inputRecipientName.value = "Mr. Alex Turner";
-    inputRecipientTitle.value = "Chief Executive Officer, Apex Global Innovations Ltd.";
-    inputRecipientAddress.value = "Bengaluru, Karnataka";
-    inputSubject.value = "Subject: Formal Proposal & Corporate Partnership Engagement";
-    inputSalutation.value = "Dear Mr. Turner,";
-    inputSignName.value = "Mohammed Saleem";
-    inputSignTitle.value = "Founder & Chairman";
-    officePresetSelect.value = "bangalore";
-
-    if (quill) {
-      const initialHTML = SAMPLE_BODY.split('\n\n').map(p => `<p>${p.trim()}</p>`).join('');
-      quill.root.innerHTML = initialHTML;
+  // Dynamic Browser-Side Word (.docx) Exporter Utility
+  async function exportToDocx() {
+    if (!window.docx) {
+      alert('The docx exporter library is still loading. Please try again in a moment.');
+      return;
     }
 
-    // Reset signature & watermark & page2
-    inputSigFile.value = '';
-    uploadedSigDataUrl = '';
-    previewSigSpace.innerHTML = '';
-    document.querySelector('input[name="sig-mode"][value="physical"]').checked = true;
-    sigUploadBox.classList.add('hidden');
-    toggleWatermark.checked = true;
-    previewWatermark.classList.remove('hidden-watermark');
+    const { Document, Packer, Paragraph, TextRun, AlignmentType, Table, TableRow, TableCell, WidthType, BorderStyle } = window.docx;
 
-    if (page2Active) {
-      btnTogglePage2.click();
+    const recipName = previewRecipientName ? previewRecipientName.textContent.trim() : 'Mr. Alex Turner';
+    const recipTitle = previewRecipientTitle ? previewRecipientTitle.textContent.trim() : '';
+    const recipAddr = previewRecipientAddress ? previewRecipientAddress.textContent.trim() : '';
+    const subject = previewSubject ? previewSubject.textContent.trim() : '';
+    const salutation = previewSalutation ? previewSalutation.textContent.trim() : '';
+    const dateStr = previewDate ? previewDate.textContent.trim() : 'Date: July 24, 2026';
+    const signName = previewSignName ? previewSignName.textContent.trim() : 'Mohammed Saleem';
+    const signTitle = previewSignTitle ? previewSignTitle.textContent.trim() : 'Founder & Chairman';
+
+    const selectedKey = officePresetSelect ? officePresetSelect.value : 'bangalore';
+    const data = ADDRESS_PRESETS[selectedKey] || ADDRESS_PRESETS.bangalore;
+
+    // Convert Quill HTML AST to docx Paragraphs
+    const bodyHtml = quill ? quill.root.innerHTML : '';
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = bodyHtml;
+
+    const bodyParagraphs = [];
+    const children = Array.from(tempDiv.children);
+
+    children.forEach(child => {
+      const text = child.textContent.trim();
+      if (!text) return;
+
+      if (child.tagName === 'UL') {
+        Array.from(child.querySelectorAll('li')).forEach(li => {
+          bodyParagraphs.push(
+            new Paragraph({
+              text: li.textContent.trim(),
+              bullet: { level: 0 },
+              spacing: { after: 120 }
+            })
+          );
+        });
+      } else if (child.tagName === 'OL') {
+        Array.from(child.querySelectorAll('li')).forEach((li, idx) => {
+          bodyParagraphs.push(
+            new Paragraph({
+              text: `${idx + 1}. ${li.textContent.trim()}`,
+              spacing: { after: 120 }
+            })
+          );
+        });
+      } else {
+        bodyParagraphs.push(
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: text,
+                font: 'Manrope',
+                size: 22, // 11pt
+                color: '2D3748'
+              })
+            ],
+            spacing: { after: 180 }
+          })
+        );
+      }
+    });
+
+    // Construct 2-Column Footer Table in DOCX
+    const footerTable = new Table({
+      width: { size: 100, type: WidthType.PERCENTAGE },
+      rows: [
+        new TableRow({
+          children: [
+            new TableCell({
+              width: { size: 50, type: WidthType.PERCENTAGE },
+              borders: {
+                top: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' },
+                bottom: { style: BorderStyle.NONE },
+                left: { style: BorderStyle.NONE },
+                right: { style: BorderStyle.SINGLE, size: 2, color: 'CCCCCC' }
+              },
+              children: [
+                new Paragraph({
+                  children: [
+                    new TextRun({ text: data.entity, bold: true, color: '061626', size: 18 })
+                  ]
+                }),
+                new Paragraph({
+                  children: [
+                    new TextRun({ text: data.address.replace(/<br>/g, ' '), color: '4A5568', size: 16 })
+                  ]
+                }),
+                ...(data.license ? [new Paragraph({ children: [new TextRun({ text: data.license, color: '4A5568', size: 16 })] })] : [])
+              ]
+            }),
+            new TableCell({
+              width: { size: 50, type: WidthType.PERCENTAGE },
+              borders: {
+                top: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' },
+                bottom: { style: BorderStyle.NONE },
+                left: { style: BorderStyle.NONE },
+                right: { style: BorderStyle.NONE }
+              },
+              children: [
+                new Paragraph({
+                  children: [
+                    new TextRun({
+                      text: 'Disclaimer: The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. © 2025 Trescon. All rights reserved.',
+                      color: '718096',
+                      size: 14
+                    })
+                  ]
+                })
+              ]
+            })
+          ]
+        })
+      ]
+    });
+
+    const doc = new Document({
+      sections: [
+        {
+          properties: {},
+          children: [
+            new Paragraph({
+              children: [
+                new TextRun({ text: 'TRESCON GLOBAL', bold: true, size: 28, color: '00A5A3' }),
+                new TextRun({ text: '\nConnecting Businesses with Opportunities', italic: true, size: 16, color: '4A5568' })
+              ],
+              spacing: { after: 240 }
+            }),
+            new Paragraph({
+              children: [new TextRun({ text: dateStr, color: '4A5568', size: 18 })],
+              alignment: AlignmentType.RIGHT,
+              spacing: { after: 360 }
+            }),
+            new Paragraph({ children: [new TextRun({ text: 'To,', size: 22 })] }),
+            new Paragraph({ children: [new TextRun({ text: recipName, bold: true, size: 22 })] }),
+            new Paragraph({ children: [new TextRun({ text: recipTitle, size: 20 })] }),
+            new Paragraph({ children: [new TextRun({ text: recipAddr, size: 20 })], spacing: { after: 360 } }),
+            new Paragraph({ children: [new TextRun({ text: subject, bold: true, color: '00A5A3', size: 22 })], spacing: { after: 240 } }),
+            new Paragraph({ children: [new TextRun({ text: salutation, size: 22 })], spacing: { after: 360 } }),
+            ...bodyParagraphs,
+            new Paragraph({ children: [new TextRun({ text: 'Warm regards,', size: 22 })], spacing: { before: 360 } }),
+            new Paragraph({ children: [new TextRun({ text: signName, bold: true, size: 22, color: '00A5A3' })] }),
+            new Paragraph({ children: [new TextRun({ text: signTitle, size: 20 })] }),
+            new Paragraph({ children: [new TextRun({ text: data.entity, size: 20, color: '4A5568' })], spacing: { after: 480 } }),
+            footerTable
+          ]
+        }
+      ]
+    });
+
+    try {
+      const blob = await Packer.toBlob(doc);
+      const fileName = `Trescon_Global_Letterhead_${selectedKey.toUpperCase()}_${new Date().toISOString().slice(0, 10)}.docx`;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('Docx Exporter Error:', err);
     }
-
-    // Trigger updates
-    previewDate.textContent = formatFormalDate(inputDate.value);
-    previewRecipientName.textContent = inputRecipientName.value;
-    previewRecipientTitle.textContent = inputRecipientTitle.value;
-    previewRecipientAddress.textContent = inputRecipientAddress.value;
-    previewSubject.textContent = inputSubject.value;
-    previewSalutation.textContent = inputSalutation.value;
-    if (quill) renderBodyText(quill.root.innerHTML);
-    previewSignName.textContent = inputSignName.value;
-    previewSignTitle.textContent = inputSignTitle.value;
-    updateFooter();
-  });
-
-  // Initial Sync
-  previewDate.textContent = 'Date: ' + formatFormalDate(inputDate.value);
-  if (quill) {
-    renderBodyText(quill.root.innerHTML);
-  } else {
-    renderBodyText(SAMPLE_BODY);
   }
-  updateFooter();
 
+  if (btnDownloadDocx) {
+    btnDownloadDocx.addEventListener('click', exportToDocx);
+  }
+
+  // Initial Footer Update & Pagination Execution
+  updateFooter();
+  setTimeout(paginateDocument, 100);
 });
