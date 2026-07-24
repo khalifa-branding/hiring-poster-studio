@@ -139,7 +139,7 @@ We welcome the opportunity to discuss this proposal further and address any spec
 
     quill = new Quill('#preview-body', {
       theme: 'snow',
-      placeholder: 'Click here to start typing your letter body directly on the page...',
+      placeholder: 'Start typing your letter here (recipient details, subject, body text, and signature)...',
       modules: {
         toolbar: basicWordToolbarOptions
       }
@@ -150,14 +150,13 @@ We welcome the opportunity to discuss this proposal further and address any spec
       topToolbarContainer.appendChild(qlToolbar);
     }
 
-    // Load State or Set Default Content
+    // Load Saved State or Leave Blank
     loadDocState();
 
-    if (docState.bodyHTML && docState.bodyHTML !== '<p><br></p>') {
+    if (docState.bodyHTML) {
       quill.root.innerHTML = docState.bodyHTML;
     } else {
-      const initialHTML = SAMPLE_BODY.split('\n\n').map(p => `<p>${p.trim()}</p>`).join('');
-      quill.root.innerHTML = initialHTML;
+      quill.root.innerHTML = '';
     }
 
     // Intercept Tab & Shift+Tab keys for MS Word indentation behavior
