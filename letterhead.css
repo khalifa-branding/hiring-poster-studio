@@ -502,25 +502,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   text-align: justify;
 }
 
-/* Bullet & Numbered List Styling - Flush Left Paragraph Alignment */
-.letter-body ul {
-  padding-left: 20px;
-  margin-top: 6px;
-  margin-bottom: 14px;
-  text-align: left;
-}
-
+/* Bullet & Numbered List Styling - MS Word Standard Indent */
+.letter-body ul,
 .letter-body ol {
-  padding-left: 22px;
-  margin-top: 6px;
-  margin-bottom: 14px;
-  text-align: left;
+  padding-left: 36px !important;
+  margin-left: 0 !important;
+  margin-top: 8px !important;
+  margin-bottom: 14px !important;
+  text-align: left !important;
 }
 
 .letter-body li {
-  margin-bottom: 6px;
-  line-height: 1.5;
-  color: var(--trescon-charcoal);
+  margin-bottom: 6px !important;
+  line-height: 1.5 !important;
+  color: var(--trescon-charcoal) !important;
 }
 
 .letter-body ul li::marker {
@@ -533,10 +528,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 /* Quill Indentation & Nested Lists */
-.letter-body .ql-indent-1 { padding-left: 28px; }
-.letter-body .ql-indent-2 { padding-left: 56px; }
-.letter-body .ql-indent-3 { padding-left: 84px; }
-.letter-body .ql-indent-4 { padding-left: 112px; }
+.letter-body .ql-indent-1, .letter-body li.ql-indent-1 { padding-left: 54px !important; }
+.letter-body .ql-indent-2, .letter-body li.ql-indent-2 { padding-left: 72px !important; }
+.letter-body .ql-indent-3, .letter-body li.ql-indent-3 { padding-left: 90px !important; }
+.letter-body .ql-indent-4, .letter-body li.ql-indent-4 { padding-left: 108px !important; }
 
 .letter-body ul ul,
 .letter-body ol ol,
@@ -544,7 +539,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .letter-body ol ul {
   margin-top: 4px;
   margin-bottom: 4px;
-  padding-left: 20px;
+  padding-left: 20px !important;
 }
 
 /* Headings in Body */
