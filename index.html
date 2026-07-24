@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
+  <!-- Quill.js Rich Text Editor CSS -->
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
   <link rel="stylesheet" href="letterhead.css">
 </head>
 <body>
@@ -83,8 +85,10 @@
             </div>
 
             <div class="form-field">
-              <label for="input-body">Letter Body Text</label>
-              <textarea id="input-body" class="form-textarea" rows="7" placeholder="Type or paste letter body content..."></textarea>
+              <label for="editor-body">Letter Body Text (Rich Text)</label>
+              <div id="editor-body-container">
+                <div id="editor-body"></div>
+              </div>
             </div>
           </section>
         </div>
@@ -225,7 +229,7 @@
                 <span>info@tresconglobal.com</span>
               </div>
               <div class="header-contact-line">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                 <span>tresconglobal.com</span>
               </div>
             </div>
@@ -295,6 +299,7 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
   <script src="letterhead.js"></script>
 </body>
 </html>

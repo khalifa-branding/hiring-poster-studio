@@ -215,6 +215,45 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   line-height: 1.5;
 }
 
+/* Quill.js Rich Text Editor Styling */
+.ql-toolbar.ql-snow {
+  background-color: #1a2330 !important;
+  border-color: #2d3748 !important;
+  border-radius: 6px 6px 0 0 !important;
+}
+
+.ql-snow .ql-stroke {
+  stroke: #a0aec0 !important;
+}
+
+.ql-snow .ql-fill {
+  fill: #a0aec0 !important;
+}
+
+.ql-snow .ql-picker {
+  color: #a0aec0 !important;
+}
+
+.ql-snow .ql-picker-options {
+  background-color: #1a2330 !important;
+  border-color: #2d3748 !important;
+}
+
+.ql-container.ql-snow {
+  background-color: #0d131c !important;
+  border-color: #2d3748 !important;
+  color: #e2e8f0 !important;
+  border-radius: 0 0 6px 6px !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.88rem !important;
+  min-height: 160px;
+}
+
+.ql-editor.ql-blank::before {
+  color: #64748b !important;
+  font-style: normal !important;
+}
+
 .form-row {
   display: flex;
   gap: 12px;

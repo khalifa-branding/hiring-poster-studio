@@ -97,23 +97,45 @@ We welcome the opportunity to discuss this proposal further and address any spec
 
   // Initialize Body Input & Date with Current Date
   const todayDateStr = new Date().toISOString().split('T')[0];
-  inputDate.value = todayDateStr;
-  inputBody.value = SAMPLE_BODY;
+  if (inputDate) inputDate.value = todayDateStr;
+
+  // Initialize Quill Rich Text Editor
+  let quill = null;
+  const editorElem = document.getElementById('editor-body');
+  if (window.Quill && editorElem) {
+    quill = new Quill('#editor-body', {
+      theme: 'snow',
+      placeholder: 'Type or paste letter body content with rich formatting...',
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline'],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          [{ 'align': [] }],
+          ['clean']
+        ]
+      }
+    });
+
+    const initialHTML = SAMPLE_BODY.split('\n\n').map(p => `<p>${p.trim()}</p>`).join('');
+    quill.root.innerHTML = initialHTML;
+
+    quill.on('text-change', () => {
+      renderBodyText(quill.root.innerHTML);
+    });
+  }
 
   // Render Body Paragraphs Function
   function renderBodyText(text) {
-    previewBody.innerHTML = '';
-    const paragraphs = text.split('\n\n').filter(p => p.trim() !== '');
-    if (paragraphs.length === 0) {
+    if (!text || text === '<p><br></p>') {
       previewBody.innerHTML = '<p style="color:#a0aec0; font-style:italic;">[Letter body content placeholder]</p>';
       resetPaginationState();
       return;
     }
-    paragraphs.forEach(paraText => {
-      const p = document.createElement('p');
-      p.textContent = paraText.trim();
-      previewBody.appendChild(p);
-    });
+    if (text.includes('<p>') || text.includes('<div>') || text.includes('<ul') || text.includes('<ol')) {
+      previewBody.innerHTML = text;
+    } else {
+      previewBody.innerHTML = text.split('\n\n').filter(p => p.trim() !== '').map(p => `<p>${p.trim()}</p>`).join('');
+    }
 
     // Run auto-pagination
     setTimeout(paginateDocument, 50);
@@ -499,10 +521,14 @@ We welcome the opportunity to discuss this proposal further and address any spec
     inputRecipientAddress.value = "Bengaluru, Karnataka";
     inputSubject.value = "Subject: Formal Proposal & Corporate Partnership Engagement";
     inputSalutation.value = "Dear Mr. Turner,";
-    inputBody.value = SAMPLE_BODY;
     inputSignName.value = "Mohammed Saleem";
     inputSignTitle.value = "Founder & Chairman";
     officePresetSelect.value = "bangalore";
+
+    if (quill) {
+      const initialHTML = SAMPLE_BODY.split('\n\n').map(p => `<p>${p.trim()}</p>`).join('');
+      quill.root.innerHTML = initialHTML;
+    }
 
     // Reset signature & watermark & page2
     inputSigFile.value = '';
@@ -524,7 +550,7 @@ We welcome the opportunity to discuss this proposal further and address any spec
     previewRecipientAddress.textContent = inputRecipientAddress.value;
     previewSubject.textContent = inputSubject.value;
     previewSalutation.textContent = inputSalutation.value;
-    renderBodyText(inputBody.value);
+    if (quill) renderBodyText(quill.root.innerHTML);
     previewSignName.textContent = inputSignName.value;
     previewSignTitle.textContent = inputSignTitle.value;
     updateFooter();
@@ -532,7 +558,11 @@ We welcome the opportunity to discuss this proposal further and address any spec
 
   // Initial Sync
   previewDate.textContent = 'Date: ' + formatFormalDate(inputDate.value);
-  renderBodyText(inputBody.value);
+  if (quill) {
+    renderBodyText(quill.root.innerHTML);
+  } else {
+    renderBodyText(SAMPLE_BODY);
+  }
   updateFooter();
 
 });
