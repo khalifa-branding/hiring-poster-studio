@@ -227,42 +227,32 @@ We welcome the opportunity to discuss this proposal further and address any spec
 
   // Update Footer & Header Contacts Function
   function updateFooter() {
-    const selectedKey = officePresetSelect.value;
-    const formattedDate = formatFormalDate(inputDate.value);
+    const selectedKey = officePresetSelect ? officePresetSelect.value : 'bangalore';
+    const data = ADDRESS_PRESETS[selectedKey] || ADDRESS_PRESETS.bangalore;
 
-    if (selectedKey === 'custom') {
-      customAddressContainer.classList.remove('hidden');
-      if (previewFooterCompany) previewFooterCompany.textContent = 'Trescon Global Business Solutions Pvt Ltd';
-      if (previewFooterAddress) previewFooterAddress.innerHTML = inputAddress.value || 'Custom Address Line Placeholder';
-      if (previewFooterLicense) previewFooterLicense.style.display = 'none';
-      if (previewHeaderContacts) {
-        previewHeaderContacts.innerHTML = `
-          <div class="header-contact-line">${iconDate}<span id="preview-date">Date: ${formattedDate}</span></div>
-          <div class="header-contact-line">${iconEmail}<span>info@tresconglobal.com</span></div>
-          <div class="header-contact-line">${iconWeb}<span>tresconglobal.com</span></div>
-        `;
+    const page2Company = document.getElementById('page2-footer-company');
+    const page2Address = document.getElementById('page2-footer-address');
+    const page2License = document.getElementById('page2-footer-license');
+
+    if (previewFooterCompany) previewFooterCompany.textContent = data.entity;
+    if (previewFooterAddress) previewFooterAddress.innerHTML = data.address;
+    if (previewFooterLicense) {
+      if (data.license) {
+        previewFooterLicense.textContent = data.license;
+        previewFooterLicense.style.display = 'block';
+      } else {
+        previewFooterLicense.style.display = 'none';
       }
-    } else {
-      customAddressContainer.classList.add('hidden');
-      const data = ADDRESS_PRESETS[selectedKey];
-      if (data) {
-        if (previewFooterCompany) previewFooterCompany.textContent = data.entity;
-        if (previewFooterAddress) previewFooterAddress.innerHTML = data.address;
-        if (previewFooterLicense) {
-          if (data.license) {
-            previewFooterLicense.textContent = data.license;
-            previewFooterLicense.style.display = 'block';
-          } else {
-            previewFooterLicense.style.display = 'none';
-          }
-        }
-        if (previewHeaderContacts) {
-          previewHeaderContacts.innerHTML = `
-            <div class="header-contact-line">${iconDate}<span id="preview-date">Date: ${formattedDate}</span></div>
-            <div class="header-contact-line">${iconEmail}<span>${data.email}</span></div>
-            <div class="header-contact-line">${iconWeb}<span>${data.web}</span></div>
-          `;
-        }
+    }
+
+    if (page2Company) page2Company.textContent = data.entity;
+    if (page2Address) page2Address.innerHTML = data.address;
+    if (page2License) {
+      if (data.license) {
+        page2License.textContent = data.license;
+        page2License.style.display = 'block';
+      } else {
+        page2License.style.display = 'none';
       }
     }
   }

@@ -41,8 +41,11 @@
       <!-- QUILL TOP TOOLBAR CONTAINER -->
       <div id="editor-top-toolbar" class="ribbon-toolbar"></div>
 
-      <!-- EXPORT ACTIONS -->
+      <!-- EXPORT & PAGE ACTIONS -->
       <div class="ribbon-actions">
+        <button id="btn-toggle-page2" class="btn btn-outline btn-sm">
+          + Continuation Page 2
+        </button>
         <button id="btn-print" class="btn btn-primary btn-sm">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
           Print / PDF
@@ -62,6 +65,7 @@
       
       <div class="paper-container" id="sheets-wrapper" style="display:flex; flex-direction:column; gap:30px;">
         
+        <!-- PAGE 1 SHEET -->
         <article class="a4-sheet" id="letterhead-sheet">
           
           <!-- TOP ACCENT RULE -->
@@ -115,7 +119,7 @@
           <div class="watermark-overlay" id="preview-watermark"></div>
 
           <!-- CLOSING & SIGNATURE -->
-          <div class="signature-block">
+          <div class="signature-block" id="page1-signature-block">
             <p class="closing-phrase" contenteditable="true">Warm regards,</p>
             <div class="signature-space" id="preview-signature-space"></div>
             <p class="signatory-name" id="preview-sign-name" contenteditable="true">Mohammed Saleem</p>
@@ -142,6 +146,54 @@
             </div>
           </footer>
 
+        </article>
+
+        <!-- PAGE 2 CONTINUATION SHEET CARD -->
+        <article class="a4-sheet hidden" id="page2-sheet">
+          <div class="top-accent-bar"></div>
+
+          <header class="letter-header">
+            <div class="header-logo-block">
+              <img src="brand_assets/10-years-trescon-logo.png" alt="Trescon Global Logo" class="letterhead-logo" style="height:32px;">
+            </div>
+            <div class="header-meta-block">
+              <span style="font-size:0.82rem; font-weight:700; color:var(--trescon-slate);">Continuation Sheet &mdash; Page 2</span>
+            </div>
+          </header>
+          <div class="header-gradient-rule"></div>
+
+          <!-- PAGE 2 LETTER BODY CONTENT EDITOR -->
+          <div class="letter-body" id="preview-body-page2"></div>
+
+          <div class="watermark-overlay" id="preview-watermark-page2"></div>
+
+          <!-- CLOSING & SIGNATURE ON PAGE 2 -->
+          <div class="signature-block" id="page2-signature-block">
+            <p class="closing-phrase" contenteditable="true">Warm regards,</p>
+            <div class="signature-space"></div>
+            <p class="signatory-name" contenteditable="true">Mohammed Saleem</p>
+            <p class="signatory-title" contenteditable="true">Founder & Chairman</p>
+            <p class="signatory-company">Trescon Global Business Solutions Pvt. Ltd.</p>
+          </div>
+
+          <!-- FOOTER SECTION ON PAGE 2 -->
+          <footer class="letter-footer">
+            <div class="footer-divider"></div>
+            <div class="footer-columns">
+              <div class="footer-col-left">
+                <p class="footer-company-name" id="page2-footer-company">Trescon Global Business Solutions Pvt Ltd</p>
+                <p class="footer-address" id="page2-footer-address">
+                  1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka &ndash; 560034
+                </p>
+                <p class="footer-license" id="page2-footer-license" style="display:none;"></p>
+              </div>
+              <div class="footer-col-right">
+                <p class="footer-disclaimer">
+                  <strong>Disclaimer:</strong> The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon Makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. &copy; 2025 Trescon. All rights reserved.
+                </p>
+              </div>
+            </div>
+          </footer>
         </article>
 
       </div>
