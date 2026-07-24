@@ -105,17 +105,11 @@ We welcome the opportunity to discuss this proposal further and address any spec
   const topToolbarContainer = document.getElementById('editor-top-toolbar');
 
   if (window.Quill && previewBodyElem) {
-    const fullToolbarOptions = [
-      [{ 'font': [] }, { 'size': ['small', false, 'large', 'huge'] }],
-      [{ 'header': [1, 2, 3, 4, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'color': [] }, { 'background': [] }],
-      [{ 'script': 'sub'}, { 'script': 'super' }],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+    const basicWordToolbarOptions = [
+      ['bold', 'italic', 'underline'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
       [{ 'indent': '-1'}, { 'indent': '+1' }],
       [{ 'align': [] }],
-      ['blockquote', 'code-block'],
-      ['link'],
       ['clean']
     ];
 
@@ -123,7 +117,7 @@ We welcome the opportunity to discuss this proposal further and address any spec
       theme: 'snow',
       placeholder: 'Click here to start typing your letter body directly on the page...',
       modules: {
-        toolbar: fullToolbarOptions
+        toolbar: basicWordToolbarOptions
       }
     });
 
@@ -159,7 +153,7 @@ We welcome the opportunity to discuss this proposal further and address any spec
     });
 
     quill.on('text-change', () => {
-      setTimeout(paginateDocument, 50);
+      paginateDocument();
     });
   }
 
