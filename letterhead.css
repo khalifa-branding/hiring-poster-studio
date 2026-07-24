@@ -33,14 +33,91 @@ body {
   flex-direction: column;
 }
 
-/* --------------------------------------------------------------------------
-   App Container & Sidebar Layout
-   -------------------------------------------------------------------------- */
-.app-container {
+/* Studio Google Docs Layout */
+.studio-app-container {
   display: flex;
-  flex: 1;
+  flex-direction: column;
   min-height: 100vh;
-  overflow: hidden;
+}
+
+.studio-top-ribbon {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 54px;
+  background: linear-gradient(135deg, #012b30 0%, #0d1620 100%);
+  border-bottom: 1px solid #1e2936;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 16px;
+  z-index: 100;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.ribbon-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.ribbon-preset-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.form-select-sm {
+  background: #16202c;
+  color: #ffffff;
+  border: 1px solid #2d3748;
+  padding: 4px 8px;
+  font-size: 0.78rem;
+  border-radius: 4px;
+  outline: none;
+}
+
+.ribbon-toolbar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.ribbon-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn-sm {
+  padding: 6px 12px !important;
+  font-size: 0.78rem !important;
+}
+
+/* In-Page Direct Editing Hover & Focus */
+[contenteditable="true"] {
+  outline: none;
+  transition: all 0.2s ease;
+  border-radius: 3px;
+  padding: 2px 4px;
+}
+
+[contenteditable="true"]:hover {
+  background-color: rgba(0, 165, 163, 0.08);
+  box-shadow: 0 0 0 1px rgba(0, 165, 163, 0.3);
+  cursor: text;
+}
+
+[contenteditable="true"]:focus {
+  background-color: rgba(0, 165, 163, 0.12);
+  box-shadow: 0 0 0 2px var(--trescon-teal);
 }
 
 /* Sidebar Layout */
@@ -215,23 +292,26 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   line-height: 1.5;
 }
 
-/* Quill.js Rich Text Editor Styling */
+/* Quill.js Top Ribbon & In-Page Canvas Editor Styling */
 .ql-toolbar.ql-snow {
-  background-color: #1a2330 !important;
-  border-color: #2d3748 !important;
-  border-radius: 6px 6px 0 0 !important;
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
 }
 
 .ql-snow .ql-stroke {
-  stroke: #a0aec0 !important;
+  stroke: #cbd5e1 !important;
 }
 
 .ql-snow .ql-fill {
-  fill: #a0aec0 !important;
+  fill: #cbd5e1 !important;
 }
 
 .ql-snow .ql-picker {
-  color: #a0aec0 !important;
+  color: #cbd5e1 !important;
 }
 
 .ql-snow .ql-picker-options {
@@ -239,19 +319,30 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-color: #2d3748 !important;
 }
 
-.ql-container.ql-snow {
-  background-color: #0d131c !important;
-  border-color: #2d3748 !important;
-  color: #e2e8f0 !important;
-  border-radius: 0 0 6px 6px !important;
+#preview-body.ql-container.ql-snow {
+  border: none !important;
+  background: transparent !important;
   font-family: var(--font-body) !important;
-  font-size: 0.88rem !important;
-  min-height: 160px;
+  font-size: 0.93rem !important;
+  line-height: 1.5 !important;
+  color: var(--trescon-charcoal) !important;
+  padding: 0 !important;
+  min-height: 200px;
 }
 
-.ql-editor.ql-blank::before {
-  color: #64748b !important;
-  font-style: normal !important;
+#preview-body .ql-editor {
+  padding: 0 !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.93rem !important;
+  line-height: 1.5 !important;
+  color: var(--trescon-charcoal) !important;
+  overflow-y: visible !important;
+}
+
+#preview-body .ql-editor.ql-blank::before {
+  color: #a0aec0 !important;
+  font-style: italic !important;
+  left: 0 !important;
 }
 
 .form-row {

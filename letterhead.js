@@ -99,30 +99,36 @@ We welcome the opportunity to discuss this proposal further and address any spec
   const todayDateStr = new Date().toISOString().split('T')[0];
   if (inputDate) inputDate.value = todayDateStr;
 
-  // Initialize Quill Rich Text Editor
+  // Initialize Quill Rich Text Editor directly on the A4 letterhead canvas!
   let quill = null;
-  const editorElem = document.getElementById('editor-body');
-  if (window.Quill && editorElem) {
+  const previewBodyElem = document.getElementById('preview-body');
+  const topToolbarContainer = document.getElementById('editor-top-toolbar');
+
+  if (window.Quill && previewBodyElem) {
     const fullToolbarOptions = [
       [{ 'header': [1, 2, 3, false] }],
-      [{ 'size': ['small', false, 'large', 'huge'] }],
       ['bold', 'italic', 'underline', 'strike'],
       [{ 'color': [] }, { 'background': [] }],
       [{ 'list': 'ordered'}, { 'list': 'bullet' }],
       [{ 'indent': '-1'}, { 'indent': '+1' }],
       [{ 'align': [] }],
-      ['blockquote', 'code-block'],
-      ['link'],
+      ['blockquote'],
       ['clean']
     ];
 
-    quill = new Quill('#editor-body', {
+    quill = new Quill('#preview-body', {
       theme: 'snow',
-      placeholder: 'Type or paste letter body content with rich formatting...',
+      placeholder: 'Click here to start typing your letter body directly on the page...',
       modules: {
         toolbar: fullToolbarOptions
       }
     });
+
+    // Move Quill's generated toolbar into the top fixed header ribbon!
+    const qlToolbar = previewBodyElem.parentElement.querySelector('.ql-toolbar');
+    if (qlToolbar && topToolbarContainer) {
+      topToolbarContainer.appendChild(qlToolbar);
+    }
 
     const initialHTML = SAMPLE_BODY.split('\n\n').map(p => `<p>${p.trim()}</p>`).join('');
     quill.root.innerHTML = initialHTML;
@@ -150,24 +156,19 @@ We welcome the opportunity to discuss this proposal further and address any spec
     });
 
     quill.on('text-change', () => {
-      renderBodyText(quill.root.innerHTML);
+      setTimeout(paginateDocument, 50);
     });
   }
 
   // Render Body Paragraphs Function
   function renderBodyText(text) {
+    if (quill) return;
     if (!text || text === '<p><br></p>') {
       previewBody.innerHTML = '<p style="color:#a0aec0; font-style:italic;">[Letter body content placeholder]</p>';
       resetPaginationState();
       return;
     }
-    if (text.includes('<p>') || text.includes('<div>') || text.includes('<ul') || text.includes('<ol')) {
-      previewBody.innerHTML = text;
-    } else {
-      previewBody.innerHTML = text.split('\n\n').filter(p => p.trim() !== '').map(p => `<p>${p.trim()}</p>`).join('');
-    }
-
-    // Run auto-pagination
+    previewBody.innerHTML = text;
     setTimeout(paginateDocument, 50);
   }
 
