@@ -103,16 +103,24 @@ We welcome the opportunity to discuss this proposal further and address any spec
   let quill = null;
   const editorElem = document.getElementById('editor-body');
   if (window.Quill && editorElem) {
+    const fullToolbarOptions = [
+      [{ 'header': [1, 2, 3, false] }],
+      [{ 'size': ['small', false, 'large', 'huge'] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'indent': '-1'}, { 'indent': '+1' }],
+      [{ 'align': [] }],
+      ['blockquote', 'code-block'],
+      ['link'],
+      ['clean']
+    ];
+
     quill = new Quill('#editor-body', {
       theme: 'snow',
       placeholder: 'Type or paste letter body content with rich formatting...',
       modules: {
-        toolbar: [
-          ['bold', 'italic', 'underline'],
-          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-          [{ 'align': [] }],
-          ['clean']
-        ]
+        toolbar: fullToolbarOptions
       }
     });
 

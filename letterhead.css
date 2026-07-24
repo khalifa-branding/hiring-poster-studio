@@ -489,17 +489,90 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-bottom: 16px;
 }
 
-/* Body Content */
+/* Body Content & Executive Rich Text Styling */
 .letter-body {
   font-size: 0.93rem;
-  line-height: 1.4;
+  line-height: 1.5;
   color: var(--trescon-charcoal);
   flex: 1;
 }
 
 .letter-body p {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   text-align: justify;
+}
+
+/* Bullet & Numbered List Styling */
+.letter-body ul,
+.letter-body ol {
+  padding-left: 24px;
+  margin-top: 6px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.letter-body li {
+  margin-bottom: 6px;
+  line-height: 1.5;
+  color: var(--trescon-charcoal);
+}
+
+.letter-body ul li::marker {
+  color: var(--trescon-teal);
+}
+
+.letter-body ol li::marker {
+  color: var(--trescon-teal);
+  font-weight: 700;
+}
+
+/* Headings in Body */
+.letter-body h1, .letter-body h2, .letter-body h3 {
+  color: var(--trescon-dark);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  margin-top: 14px;
+  margin-bottom: 8px;
+}
+
+.letter-body h1 { font-size: 1.2rem; }
+.letter-body h2 { font-size: 1.08rem; }
+.letter-body h3 { font-size: 0.98rem; }
+
+/* Blockquotes in Body */
+.letter-body blockquote {
+  border-left: 3px solid var(--trescon-teal);
+  margin: 12px 0;
+  padding: 8px 14px;
+  background: rgba(0, 165, 163, 0.04);
+  color: var(--trescon-dark);
+  font-style: italic;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Tables in Body */
+.letter-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 0.85rem;
+}
+
+.letter-body table th,
+.letter-body table td {
+  border: 1px solid rgba(1, 55, 61, 0.25);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.letter-body table th {
+  background-color: var(--trescon-dark);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.letter-body table tr:nth-child(even) {
+  background-color: rgba(0, 165, 163, 0.04);
 }
 
 /* Signature Block */
