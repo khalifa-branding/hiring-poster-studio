@@ -532,6 +532,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-weight: 700;
 }
 
+/* Quill Indentation & Nested Lists */
+.letter-body .ql-indent-1 { padding-left: 28px; }
+.letter-body .ql-indent-2 { padding-left: 56px; }
+.letter-body .ql-indent-3 { padding-left: 84px; }
+.letter-body .ql-indent-4 { padding-left: 112px; }
+
+.letter-body ul ul,
+.letter-body ol ol,
+.letter-body ul ol,
+.letter-body ol ul {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  padding-left: 20px;
+}
+
 /* Headings in Body */
 .letter-body h1, .letter-body h2, .letter-body h3 {
   color: var(--trescon-dark);

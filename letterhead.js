@@ -127,6 +127,28 @@ We welcome the opportunity to discuss this proposal further and address any spec
     const initialHTML = SAMPLE_BODY.split('\n\n').map(p => `<p>${p.trim()}</p>`).join('');
     quill.root.innerHTML = initialHTML;
 
+    // Intercept Tab & Shift+Tab keys for MS Word indentation behavior
+    quill.keyboard.addBinding({
+      key: 9, // Tab key
+      handler: function(range, context) {
+        if (context.format.list) {
+          this.quill.format('indent', '+1');
+        } else {
+          this.quill.insertText(range.index, '    ');
+        }
+        return false;
+      }
+    });
+
+    quill.keyboard.addBinding({
+      key: 9, // Shift + Tab key
+      shiftKey: true,
+      handler: function(range, context) {
+        this.quill.format('indent', '-1');
+        return false;
+      }
+    });
+
     quill.on('text-change', () => {
       renderBodyText(quill.root.innerHTML);
     });
