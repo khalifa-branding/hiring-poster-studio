@@ -442,11 +442,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   justify-content: center;
 }
 
-/* A4 Sheet Dimensions & Print Standard (Google Docs / MS Word Page Engine) */
+/* A4 Sheet Dimensions & Google Docs Canvas Engine */
 .a4-sheet {
   width: 210mm;
-  height: 297mm;
-  max-height: 297mm;
+  min-height: 297mm;
+  height: auto;
   background-color: #ffffff;
   color: var(--trescon-charcoal);
   padding: 15mm 15mm 15mm 15mm;
@@ -454,9 +454,40 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
   margin-bottom: 30px;
   font-family: var(--font-body);
+}
+
+/* Visual Page Break Divider (Google Docs Style) */
+.page-break-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 32px 0 24px;
+  padding: 12px 0;
+  user-select: none;
+  page-break-before: always;
+  break-before: page;
+}
+
+.page-break-line {
+  flex: 1;
+  height: 1.5px;
+  background: linear-gradient(90deg, var(--trescon-teal) 0%, var(--trescon-lime) 100%);
+  opacity: 0.6;
+}
+
+.page-break-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--trescon-slate);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background: #f4f6f7;
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--trescon-border);
 }
 
 /* Top Accent Bar */

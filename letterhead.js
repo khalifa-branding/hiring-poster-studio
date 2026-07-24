@@ -174,114 +174,51 @@ We welcome the opportunity to discuss this proposal further and address any spec
     const previewBodyElem = document.getElementById('preview-body');
     if (previewBodyElem) {
       const editorRoot = previewBodyElem.querySelector('.ql-editor') || previewBodyElem;
-      Array.from(editorRoot.children).forEach(child => child.style.display = '');
+      editorRoot.querySelectorAll('.page-break-divider').forEach(el => el.remove());
     }
-    const sigBlock = document.querySelector('#letterhead-sheet .signature-block');
-    if (sigBlock) sigBlock.style.display = 'block';
   }
 
-  // Automatic Multi-Page Pagination Handler (Google Docs / MS Word Style Engine)
+  // Automatic Multi-Page Pagination Handler (Google Docs / Notion Style Single Canvas)
   function paginateDocument() {
     resetPaginationState();
     if (page2Active) return; // Skip if manual 2-page template active
 
-    const letterheadSheet = document.getElementById('letterhead-sheet');
     const previewBodyElem = document.getElementById('preview-body');
-    const sigBlock = document.querySelector('#letterhead-sheet .signature-block');
-    const sheetsWrapper = document.getElementById('sheets-wrapper');
-    if (!letterheadSheet || !previewBodyElem || !sheetsWrapper) return;
+    if (!previewBodyElem) return;
 
     const editorRoot = previewBodyElem.querySelector('.ql-editor') || previewBodyElem;
     const bodyChildren = Array.from(editorRoot.children);
     if (bodyChildren.length === 0) return;
 
-    // Reset visibility of all children on Page 1 first
-    bodyChildren.forEach(child => child.style.display = '');
+    const MAX_PAGE1_HEIGHT = 440; // Printable height for Page 1 body area
+    const MAX_PAGE_N_HEIGHT = 650; // Printable height for continuation pages
 
-    // Max body height allowed on Page 1 before overflowing (~420px printable height)
-    const MAX_PAGE1_BODY_HEIGHT = 420;
-    let page1Height = 0;
-    let splitIndex = bodyChildren.length;
+    let currentHeight = 0;
+    let pageNum = 1;
 
-    for (let i = 0; i < bodyChildren.length; i++) {
-      const child = bodyChildren[i];
+    bodyChildren.forEach((child, index) => {
+      if (child.classList.contains('page-break-divider')) return;
       const h = child.offsetHeight || 32;
-      if (page1Height + h > MAX_PAGE1_BODY_HEIGHT && i > 0) {
-        splitIndex = i;
-        break;
+      const currentLimit = (pageNum === 1) ? MAX_PAGE1_HEIGHT : MAX_PAGE_N_HEIGHT;
+
+      if (currentHeight + h > currentLimit && index > 0) {
+        pageNum++;
+        currentHeight = h;
+
+        // Insert non-destructive visual Page Break Divider before this element
+        const pageBreak = document.createElement('div');
+        pageBreak.className = 'page-break-divider no-print-break';
+        pageBreak.setAttribute('contenteditable', 'false');
+        pageBreak.innerHTML = `
+          <div class="page-break-line"></div>
+          <div class="page-break-label">Continuation Sheet &mdash; Page ${pageNum}</div>
+          <div class="page-break-line"></div>
+        `;
+        editorRoot.insertBefore(pageBreak, child);
+      } else {
+        currentHeight += h;
       }
-      page1Height += h;
-    }
-
-    if (splitIndex >= bodyChildren.length) return; // Fits cleanly on Page 1!
-
-    // We have multi-page overflow!
-    // Hide overflowing elements on Page 1 so they don't double-render
-    const page2Children = bodyChildren.slice(splitIndex);
-    page2Children.forEach(child => {
-      child.style.display = 'none';
     });
-
-    // Create Page 2 Continuation Sheet
-    const autoSheet = document.createElement('article');
-    autoSheet.className = 'a4-sheet auto-page-sheet';
-    autoSheet.id = 'auto-sheet-page-2';
-
-    const currentEntity = previewFooterCompany ? previewFooterCompany.textContent : 'Trescon Global Business Solutions Pvt Ltd';
-    const currentAddr = previewFooterAddress ? previewFooterAddress.innerHTML : '';
-    const currentLicense = (previewFooterLicense && previewFooterLicense.style.display !== 'none') ? previewFooterLicense.textContent : '';
-    const isWatermarkVisible = toggleWatermark && toggleWatermark.checked;
-
-    autoSheet.innerHTML = `
-      <div class="top-accent-bar"></div>
-      <header class="letter-header" style="padding-bottom:8px;">
-        <div class="header-logo-block">
-          <img src="brand_assets/10-years-trescon-logo.png" alt="Trescon Logo" style="height:32px;">
-        </div>
-        <div class="header-meta-block">
-          <div style="font-size:0.8rem; color:var(--trescon-slate); font-weight:600;">Continuation Sheet &mdash; Page 2</div>
-        </div>
-      </header>
-      <div class="header-gradient-rule"></div>
-
-      <div class="watermark-overlay ${isWatermarkVisible ? '' : 'hidden-watermark'}"></div>
-
-      <div class="letter-body auto-letter-body" style="margin-top:16px; flex: 1;">
-      </div>
-
-      <footer class="letter-footer">
-        <div class="footer-divider"></div>
-        <div class="footer-columns">
-          <div class="footer-col-left">
-            <p class="footer-company-name">${currentEntity}</p>
-            <p class="footer-address">${currentAddr}</p>
-            ${currentLicense ? `<p class="footer-license">${currentLicense}</p>` : ''}
-          </div>
-          <div class="footer-col-right">
-            <p class="footer-disclaimer">
-              <strong>Disclaimer:</strong> The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. &copy; 2025 Trescon. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
-    `;
-
-    const autoBody = autoSheet.querySelector('.auto-letter-body');
-    page2Children.forEach(child => {
-      const clone = child.cloneNode(true);
-      clone.style.display = '';
-      autoBody.appendChild(clone);
-    });
-
-    // Move signature block to Page 2
-    if (sigBlock) {
-      const clonedSig = sigBlock.cloneNode(true);
-      clonedSig.style.display = 'block';
-      autoSheet.insertBefore(clonedSig, autoSheet.querySelector('.letter-footer'));
-      sigBlock.style.display = 'none';
-    }
-
-    sheetsWrapper.appendChild(autoSheet);
   }
 
   const iconDate = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`;
