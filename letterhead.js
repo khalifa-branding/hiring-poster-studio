@@ -174,11 +174,16 @@ We welcome the opportunity to discuss this proposal further and address any spec
 
   function resetPaginationState() {
     document.querySelectorAll('.auto-page-sheet').forEach(sheet => sheet.remove());
+    const previewBodyElem = document.getElementById('preview-body');
+    if (previewBodyElem) {
+      const editorRoot = previewBodyElem.querySelector('.ql-editor') || previewBodyElem;
+      Array.from(editorRoot.children).forEach(child => child.style.display = '');
+    }
     const sigBlock = document.querySelector('#letterhead-sheet .signature-block');
     if (sigBlock) sigBlock.style.display = 'block';
   }
 
-  // Automatic Multi-Page Pagination Handler (Google Docs / MS Word Style)
+  // Automatic Multi-Page Pagination Handler (Google Docs / MS Word Style Engine)
   function paginateDocument() {
     resetPaginationState();
     if (page2Active) return; // Skip if manual 2-page template active
@@ -189,37 +194,36 @@ We welcome the opportunity to discuss this proposal further and address any spec
     const sheetsWrapper = document.getElementById('sheets-wrapper');
     if (!letterheadSheet || !previewBodyElem || !sheetsWrapper) return;
 
-    // Get all top-level elements inside Quill's editor (or preview body)
     const editorRoot = previewBodyElem.querySelector('.ql-editor') || previewBodyElem;
     const bodyChildren = Array.from(editorRoot.children);
     if (bodyChildren.length === 0) return;
 
-    // A4 Page 1 Printable Height Threshold (1040px)
-    const MAX_PAGE1_HEIGHT = 1040;
-    
-    // Check if letterhead sheet overflows A4 page 1 limit
-    if (letterheadSheet.scrollHeight <= MAX_PAGE1_HEIGHT) {
-      return; // Fits cleanly on 1 page!
-    }
+    // Reset visibility of all children on Page 1 first
+    bodyChildren.forEach(child => child.style.display = '');
 
-    // We have multi-page overflow!
+    // Max body height allowed on Page 1 before overflowing (~420px printable height)
+    const MAX_PAGE1_BODY_HEIGHT = 420;
     let page1Height = 0;
-    const headerOffset = 360; // Overhead for header, recipient block, subject, salutation
     let splitIndex = bodyChildren.length;
 
     for (let i = 0; i < bodyChildren.length; i++) {
       const child = bodyChildren[i];
-      const h = child.offsetHeight || 30;
-      if (headerOffset + page1Height + h > (MAX_PAGE1_HEIGHT - 120) && i > 0) {
+      const h = child.offsetHeight || 32;
+      if (page1Height + h > MAX_PAGE1_BODY_HEIGHT && i > 0) {
         splitIndex = i;
         break;
       }
       page1Height += h;
     }
 
-    if (splitIndex >= bodyChildren.length) splitIndex = Math.max(1, bodyChildren.length - 1);
+    if (splitIndex >= bodyChildren.length) return; // Fits cleanly on Page 1!
 
+    // We have multi-page overflow!
+    // Hide overflowing elements on Page 1 so they don't double-render
     const page2Children = bodyChildren.slice(splitIndex);
+    page2Children.forEach(child => {
+      child.style.display = 'none';
+    });
 
     // Create Page 2 Continuation Sheet
     const autoSheet = document.createElement('article');
@@ -245,7 +249,7 @@ We welcome the opportunity to discuss this proposal further and address any spec
 
       <div class="watermark-overlay ${isWatermarkVisible ? '' : 'hidden-watermark'}"></div>
 
-      <div class="letter-body auto-letter-body" style="margin-top:16px; min-height: 380px;">
+      <div class="letter-body auto-letter-body" style="margin-top:16px; flex: 1;">
       </div>
 
       <footer class="letter-footer">
@@ -267,7 +271,9 @@ We welcome the opportunity to discuss this proposal further and address any spec
 
     const autoBody = autoSheet.querySelector('.auto-letter-body');
     page2Children.forEach(child => {
-      autoBody.appendChild(child.cloneNode(true));
+      const clone = child.cloneNode(true);
+      clone.style.display = '';
+      autoBody.appendChild(clone);
     });
 
     // Move signature block to Page 2
