@@ -442,19 +442,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   justify-content: center;
 }
 
-/* A4 Sheet Dimensions & Print Standard (Google Docs / MS Word Page Engine) */
+/* A4 Sheet Dimensions & Print Standard (Google Docs Seamless Paper Engine) */
 .a4-sheet {
   width: 210mm;
-  height: 297mm;
-  max-height: 297mm;
+  min-height: 297mm;
+  height: auto;
   background-color: #ffffff;
   color: var(--trescon-charcoal);
-  padding: 15mm 15mm 15mm 15mm;
+  padding: 18mm 18mm 18mm 18mm;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 2px rgba(0, 0, 0, 0.2);
   position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   margin-bottom: 30px;
   font-family: var(--font-body);
 }

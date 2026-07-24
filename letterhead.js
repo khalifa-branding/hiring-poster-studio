@@ -106,13 +106,16 @@ We welcome the opportunity to discuss this proposal further and address any spec
 
   if (window.Quill && previewBodyElem) {
     const fullToolbarOptions = [
-      [{ 'header': [1, 2, 3, false] }],
+      [{ 'font': [] }, { 'size': ['small', false, 'large', 'huge'] }],
+      [{ 'header': [1, 2, 3, 4, false] }],
       ['bold', 'italic', 'underline', 'strike'],
       [{ 'color': [] }, { 'background': [] }],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'script': 'sub'}, { 'script': 'super' }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
       [{ 'indent': '-1'}, { 'indent': '+1' }],
       [{ 'align': [] }],
-      ['blockquote'],
+      ['blockquote', 'code-block'],
+      ['link'],
       ['clean']
     ];
 
