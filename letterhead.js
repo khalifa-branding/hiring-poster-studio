@@ -174,111 +174,111 @@ We welcome the opportunity to discuss this proposal further and address any spec
 
   function resetPaginationState() {
     document.querySelectorAll('.auto-page-sheet').forEach(sheet => sheet.remove());
-    const sigBlock = document.querySelector('.signature-block');
+    const sigBlock = document.querySelector('#letterhead-sheet .signature-block');
     if (sigBlock) sigBlock.style.display = 'block';
   }
 
-  // Automatic Multi-Page Pagination Handler
+  // Automatic Multi-Page Pagination Handler (Google Docs / MS Word Style)
   function paginateDocument() {
     resetPaginationState();
     if (page2Active) return; // Skip if manual 2-page template active
 
+    const letterheadSheet = document.getElementById('letterhead-sheet');
+    const previewBodyElem = document.getElementById('preview-body');
     const sigBlock = document.querySelector('#letterhead-sheet .signature-block');
-    const pElements = Array.from(previewBody.querySelectorAll('p'));
-    if (pElements.length === 0) return;
+    const sheetsWrapper = document.getElementById('sheets-wrapper');
+    if (!letterheadSheet || !previewBodyElem || !sheetsWrapper) return;
 
-    // Check if letter body overflows single page printable area (~480px max height on page 1)
-    const maxPage1Height = 450;
-    const maxPageNHeight = 680;
+    // Get all top-level elements inside Quill's editor (or preview body)
+    const editorRoot = previewBodyElem.querySelector('.ql-editor') || previewBodyElem;
+    const bodyChildren = Array.from(editorRoot.children);
+    if (bodyChildren.length === 0) return;
 
-    let pageParagraphs = [[]];
-    let currentPageIndex = 1;
-    let currentHeight = 0;
-    let overflowed = false;
-
-    pElements.forEach(p => {
-      const h = p.offsetHeight || 38;
-      const targetMax = (currentPageIndex === 1) ? maxPage1Height : maxPageNHeight;
-
-      if (currentHeight + h > targetMax && currentHeight > 0) {
-        overflowed = true;
-        currentPageIndex++;
-        pageParagraphs.push([p]);
-        currentHeight = h;
-      } else {
-        pageParagraphs[currentPageIndex - 1].push(p);
-        currentHeight += h;
-      }
-    });
-
-    if (!overflowed) return;
+    // A4 Page 1 Printable Height Threshold (1040px)
+    const MAX_PAGE1_HEIGHT = 1040;
+    
+    // Check if letterhead sheet overflows A4 page 1 limit
+    if (letterheadSheet.scrollHeight <= MAX_PAGE1_HEIGHT) {
+      return; // Fits cleanly on 1 page!
+    }
 
     // We have multi-page overflow!
-    const totalPages = pageParagraphs.length;
+    let page1Height = 0;
+    const headerOffset = 360; // Overhead for header, recipient block, subject, salutation
+    let splitIndex = bodyChildren.length;
 
-    // Page 1 keeps pageParagraphs[0]
-    previewBody.innerHTML = '';
-    pageParagraphs[0].forEach(p => previewBody.appendChild(p.cloneNode(true)));
-
-    // Generate Page 2, 3...
-    for (let i = 1; i < totalPages; i++) {
-      const pageNum = i + 1;
-      const autoSheet = document.createElement('article');
-      autoSheet.className = 'a4-sheet auto-page-sheet';
-      autoSheet.id = `auto-sheet-page-${pageNum}`;
-
-      const currentEntity = previewFooterCompany ? previewFooterCompany.textContent : 'Trescon Global Business Solutions Pvt Ltd';
-      const currentAddr = previewFooterAddress.innerHTML;
-      const currentLicense = (previewFooterLicense && previewFooterLicense.style.display !== 'none') ? previewFooterLicense.textContent : '';
-      const isWatermarkVisible = toggleWatermark.checked;
-
-      autoSheet.innerHTML = `
-        <div class="top-accent-bar"></div>
-        <header class="letter-header" style="padding-bottom:8px;">
-          <div class="header-logo-block">
-            <img src="brand_assets/10-years-trescon-logo.png" alt="Trescon Logo" style="height:32px;">
-          </div>
-          <div class="header-meta-block">
-            <div style="font-size:0.8rem; color:var(--trescon-slate); font-weight:600;">Page ${pageNum} of ${totalPages}</div>
-          </div>
-        </header>
-        <div class="header-gradient-rule"></div>
-
-        <div class="watermark-overlay ${isWatermarkVisible ? '' : 'hidden-watermark'}"></div>
-
-        <div class="letter-body auto-letter-body" style="margin-top:16px;">
-        </div>
-
-        <footer class="letter-footer">
-          <div class="footer-divider"></div>
-          <div class="footer-columns">
-            <div class="footer-col-left">
-              <p class="footer-company-name">${currentEntity}</p>
-              <p class="footer-address">${currentAddr}</p>
-              ${currentLicense ? `<p class="footer-license">${currentLicense}</p>` : ''}
-            </div>
-            <div class="footer-col-right">
-              <p class="footer-disclaimer">
-                <strong>Disclaimer:</strong> The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. &copy; 2025 Trescon. All rights reserved.
-              </p>
-            </div>
-          </div>
-        </footer>
-      `;
-
-      const autoBody = autoSheet.querySelector('.auto-letter-body');
-      pageParagraphs[i].forEach(p => autoBody.appendChild(p.cloneNode(true)));
-
-      // If last page, move signature block to end of text
-      if (pageNum === totalPages && sigBlock) {
-        const clonedSig = sigBlock.cloneNode(true);
-        clonedSig.style.display = 'block';
-        autoSheet.insertBefore(clonedSig, autoSheet.querySelector('.letter-footer'));
-        sigBlock.style.display = 'none';
+    for (let i = 0; i < bodyChildren.length; i++) {
+      const child = bodyChildren[i];
+      const h = child.offsetHeight || 30;
+      if (headerOffset + page1Height + h > (MAX_PAGE1_HEIGHT - 120) && i > 0) {
+        splitIndex = i;
+        break;
       }
-
-      sheetsWrapper.appendChild(autoSheet);
+      page1Height += h;
     }
+
+    if (splitIndex >= bodyChildren.length) splitIndex = Math.max(1, bodyChildren.length - 1);
+
+    const page2Children = bodyChildren.slice(splitIndex);
+
+    // Create Page 2 Continuation Sheet
+    const autoSheet = document.createElement('article');
+    autoSheet.className = 'a4-sheet auto-page-sheet';
+    autoSheet.id = 'auto-sheet-page-2';
+
+    const currentEntity = previewFooterCompany ? previewFooterCompany.textContent : 'Trescon Global Business Solutions Pvt Ltd';
+    const currentAddr = previewFooterAddress ? previewFooterAddress.innerHTML : '';
+    const currentLicense = (previewFooterLicense && previewFooterLicense.style.display !== 'none') ? previewFooterLicense.textContent : '';
+    const isWatermarkVisible = toggleWatermark && toggleWatermark.checked;
+
+    autoSheet.innerHTML = `
+      <div class="top-accent-bar"></div>
+      <header class="letter-header" style="padding-bottom:8px;">
+        <div class="header-logo-block">
+          <img src="brand_assets/10-years-trescon-logo.png" alt="Trescon Logo" style="height:32px;">
+        </div>
+        <div class="header-meta-block">
+          <div style="font-size:0.8rem; color:var(--trescon-slate); font-weight:600;">Continuation Sheet &mdash; Page 2</div>
+        </div>
+      </header>
+      <div class="header-gradient-rule"></div>
+
+      <div class="watermark-overlay ${isWatermarkVisible ? '' : 'hidden-watermark'}"></div>
+
+      <div class="letter-body auto-letter-body" style="margin-top:16px; min-height: 380px;">
+      </div>
+
+      <footer class="letter-footer">
+        <div class="footer-divider"></div>
+        <div class="footer-columns">
+          <div class="footer-col-left">
+            <p class="footer-company-name">${currentEntity}</p>
+            <p class="footer-address">${currentAddr}</p>
+            ${currentLicense ? `<p class="footer-license">${currentLicense}</p>` : ''}
+          </div>
+          <div class="footer-col-right">
+            <p class="footer-disclaimer">
+              <strong>Disclaimer:</strong> The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. &copy; 2025 Trescon. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
+    `;
+
+    const autoBody = autoSheet.querySelector('.auto-letter-body');
+    page2Children.forEach(child => {
+      autoBody.appendChild(child.cloneNode(true));
+    });
+
+    // Move signature block to Page 2
+    if (sigBlock) {
+      const clonedSig = sigBlock.cloneNode(true);
+      clonedSig.style.display = 'block';
+      autoSheet.insertBefore(clonedSig, autoSheet.querySelector('.letter-footer'));
+      sigBlock.style.display = 'none';
+    }
+
+    sheetsWrapper.appendChild(autoSheet);
   }
 
   const iconDate = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`;
