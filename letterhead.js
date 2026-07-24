@@ -187,43 +187,98 @@ We welcome the opportunity to discuss this proposal further and address any spec
     });
   }
 
-  // Dynamic Pagination Engine (A4 Height Measurement & Page Breaking)
-  function paginateDocument() {
-    if (!previewBodyElem) return;
-    const editorRoot = previewBodyElem.querySelector('.ql-editor') || previewBodyElem;
-    editorRoot.querySelectorAll('.page-break-divider').forEach(el => el.remove());
+  function resetPaginationState() {
+    document.querySelectorAll('.auto-page-sheet').forEach(sheet => sheet.remove());
+  }
 
+  // Dynamic Multi-Sheet Physical A4 Pagination Engine
+  function paginateDocument() {
+    resetPaginationState();
+
+    const letterheadSheet = document.getElementById('letterhead-sheet');
+    const previewBodyElem = document.getElementById('preview-body');
+    const sheetsWrapper = document.getElementById('sheets-wrapper');
+    if (!letterheadSheet || !previewBodyElem || !sheetsWrapper) return;
+
+    const editorRoot = previewBodyElem.querySelector('.ql-editor') || previewBodyElem;
     const bodyChildren = Array.from(editorRoot.children);
     if (bodyChildren.length === 0) return;
 
-    const MAX_PAGE1_HEIGHT = 440;
-    const MAX_PAGE_N_HEIGHT = 650;
+    // Printable body height threshold on Page 1 (approx 640px for full blank canvas)
+    const MAX_PAGE1_BODY_HEIGHT = 640;
+    const MAX_PAGE_N_BODY_HEIGHT = 800;
 
     let currentHeight = 0;
-    let pageNum = 1;
+    let pageParagraphs = [[]];
+    let currentPageIndex = 1;
 
-    bodyChildren.forEach((child, index) => {
-      if (child.classList.contains('page-break-divider')) return;
+    bodyChildren.forEach(child => {
       const h = child.offsetHeight || 32;
-      const currentLimit = (pageNum === 1) ? MAX_PAGE1_HEIGHT : MAX_PAGE_N_HEIGHT;
+      const limit = (currentPageIndex === 1) ? MAX_PAGE1_BODY_HEIGHT : MAX_PAGE_N_BODY_HEIGHT;
 
-      if (currentHeight + h > currentLimit && index > 0) {
-        pageNum++;
+      if (currentHeight + h > limit && currentHeight > 0) {
+        currentPageIndex++;
+        pageParagraphs.push([child]);
         currentHeight = h;
-
-        const pageBreak = document.createElement('div');
-        pageBreak.className = 'page-break-divider no-print';
-        pageBreak.setAttribute('contenteditable', 'false');
-        pageBreak.innerHTML = `
-          <div class="page-break-line"></div>
-          <div class="page-break-label">Continuation Sheet &mdash; Page ${pageNum}</div>
-          <div class="page-break-line"></div>
-        `;
-        editorRoot.insertBefore(pageBreak, child);
       } else {
+        pageParagraphs[currentPageIndex - 1].push(child);
         currentHeight += h;
       }
     });
+
+    if (pageParagraphs.length <= 1) return; // Fits cleanly on Page 1!
+
+    // We have multi-page overflow! Generate Page 2, 3...
+    const totalPages = pageParagraphs.length;
+
+    for (let i = 1; i < totalPages; i++) {
+      const pageNum = i + 1;
+      const autoSheet = document.createElement('article');
+      autoSheet.className = 'a4-sheet auto-page-sheet';
+      autoSheet.id = `auto-sheet-page-${pageNum}`;
+
+      const selectedKey = officePresetSelect ? officePresetSelect.value : 'bangalore';
+      const data = ADDRESS_PRESETS[selectedKey] || ADDRESS_PRESETS.bangalore;
+
+      autoSheet.innerHTML = `
+        <div class="top-accent-bar"></div>
+        <header class="letter-header" style="padding-bottom:8px;">
+          <div class="header-logo-block">
+            <img src="brand_assets/10-years-trescon-logo.png" alt="Trescon Logo" style="height:32px;">
+          </div>
+          <div class="header-meta-block">
+            <div style="font-size:0.82rem; color:var(--trescon-slate); font-weight:700;">Continuation Sheet &mdash; Page ${pageNum}</div>
+          </div>
+        </header>
+        <div class="header-gradient-rule"></div>
+
+        <div class="letter-body auto-letter-body" style="margin-top:16px; flex: 1;">
+        </div>
+
+        <footer class="letter-footer">
+          <div class="footer-divider"></div>
+          <div class="footer-columns">
+            <div class="footer-col-left">
+              <p class="footer-company-name">${data.entity}</p>
+              <p class="footer-address">${data.address}</p>
+              ${data.license ? `<p class="footer-license">${data.license}</p>` : ''}
+            </div>
+            <div class="footer-col-right">
+              <p class="footer-disclaimer">
+                <strong>Disclaimer:</strong> The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. &copy; 2025 Trescon. All rights reserved.
+              </p>
+            </div>
+          </div>
+        </footer>
+      `;
+
+      const autoBody = autoSheet.querySelector('.auto-letter-body');
+      pageParagraphs[i].forEach(child => {
+        autoBody.appendChild(child.cloneNode(true));
+      });
+
+      sheetsWrapper.appendChild(autoSheet);
+    }
   }
 
   // Update Regional Office Metadata (Decoupled from Body Text)
