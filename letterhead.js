@@ -114,17 +114,31 @@ window.exportToDocx = async function() {
     new Paragraph({ children: [new TextRun({ text: salutationStr, color: "1E2124", size: 20, font: "Manrope" })], spacing: { after: 180 } })
   );
 
-  // Add Body Paragraphs
+  // Add Body Paragraphs & Bullet Lists
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = bodyHTML;
+
   tempDiv.childNodes.forEach(node => {
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      const text = stripHtmlEntities(node.innerText);
-      if (text.trim().length > 0) {
-        bodyParagraphs.push(new Paragraph({
-          children: [new TextRun({ text: text, size: 20, font: "Manrope", color: "1E2124" })],
-          spacing: { after: 140 }
-        }));
+    if (node.nodeName === 'UL' || node.nodeName === 'OL') {
+      node.querySelectorAll('li').forEach(li => {
+        const text = stripHtmlEntities(li.innerText).trim();
+        if (text) {
+          bodyParagraphs.push(new Paragraph({
+            text: text,
+            bullet: { level: 0 },
+            spacing: { after: 100 }
+          }));
+        }
+      });
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      if (node.nodeName === 'P' || node.nodeName === 'DIV' || node.nodeName.startsWith('H')) {
+        const text = stripHtmlEntities(node.innerText).trim();
+        if (text) {
+          bodyParagraphs.push(new Paragraph({
+            children: [new TextRun({ text: text, size: 20, font: "Manrope", color: "1E2124" })],
+            spacing: { after: 140 }
+          }));
+        }
       }
     }
   });
@@ -183,12 +197,18 @@ window.exportToDocx = async function() {
             borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
             children: [
               new Paragraph({
-                alignment: AlignmentType.LEFT,
-                children: [
-                  new TextRun({ text: dateStr + "\n", bold: true, size: 16, color: '1E2124', font: 'Manrope' }),
-                  new TextRun({ text: data.email + "\n", size: 15, color: '464D53', font: 'Manrope' }),
-                  new TextRun({ text: data.web, bold: true, size: 15, color: '00A5A3', font: 'Manrope' })
-                ],
+                alignment: AlignmentType.RIGHT,
+                children: [new TextRun({ text: dateStr, bold: true, size: 16, color: '1E2124', font: 'Manrope' })],
+                spacing: { after: 30 }
+              }),
+              new Paragraph({
+                alignment: AlignmentType.RIGHT,
+                children: [new TextRun({ text: data.email, size: 15, color: '464D53', font: 'Manrope' })],
+                spacing: { after: 30 }
+              }),
+              new Paragraph({
+                alignment: AlignmentType.RIGHT,
+                children: [new TextRun({ text: data.web, bold: true, size: 15, color: '00A5A3', font: 'Manrope' })],
                 spacing: { after: 120 }
               })
             ]
@@ -226,14 +246,16 @@ window.exportToDocx = async function() {
             width: { size: 40, type: WidthType.PERCENTAGE },
             borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
             children: [
-              new Paragraph({
+              ...(cleanExtra ? [new Paragraph({
                 alignment: AlignmentType.RIGHT,
-                children: [
-                  ...(cleanExtra ? [new TextRun({ text: cleanExtra + "\n", color: '464D53', size: 14, font: 'Manrope' })] : []),
-                  ...(cleanCin ? [new TextRun({ text: cleanCin, bold: true, color: '00A5A3', size: 14, font: 'Manrope' })] : [])
-                ],
+                children: [new TextRun({ text: cleanExtra, color: '464D53', size: 14, font: 'Manrope' })],
+                spacing: { after: 20 }
+              })] : []),
+              ...(cleanCin ? [new Paragraph({
+                alignment: AlignmentType.RIGHT,
+                children: [new TextRun({ text: cleanCin, bold: true, color: '00A5A3', size: 14, font: 'Manrope' })],
                 spacing: { after: 40 }
-              })
+              })] : [])
             ]
           })
         ]
