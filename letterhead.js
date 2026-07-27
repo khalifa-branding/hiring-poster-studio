@@ -502,7 +502,21 @@ We welcome the opportunity to discuss this proposal further and address any spec
       );
     }
 
-    const { Document, Packer, Paragraph, TextRun, AlignmentType, Table, TableRow, TableCell, WidthType, BorderStyle, Header, Footer } = window.docx;
+    const { Document, Packer, Paragraph, TextRun, AlignmentType, Table, TableRow, TableCell, WidthType, BorderStyle, Header, Footer, ImageRun } = window.docx;
+
+    let logoImageRun = null;
+    try {
+      const imgRes = await fetch('brand_assets/10-years-trescon-logo.png');
+      if (imgRes.ok) {
+        const imgBuffer = await imgRes.arrayBuffer();
+        logoImageRun = new ImageRun({
+          data: imgBuffer,
+          transformation: { width: 130, height: 42 }
+        });
+      }
+    } catch (e) {
+      console.warn('Logo fetch error:', e);
+    }
 
     const doc = new Document({
       sections: [
@@ -522,8 +536,10 @@ We welcome the opportunity to discuss this proposal further and address any spec
               children: [
                 new Paragraph({
                   children: [
-                    new TextRun({ text: 'TRESCON GLOBAL  ', bold: true, size: 24, color: '00A5A3', font: 'Manrope' }),
-                    new TextRun({ text: 'Connecting Businesses with Opportunities', italic: true, size: 16, color: '4A5568', font: 'Manrope' })
+                    ...(logoImageRun ? [logoImageRun] : [
+                      new TextRun({ text: 'TRESCON GLOBAL ', bold: true, size: 24, color: '00A5A3', font: 'Manrope' })
+                    ]),
+                    new TextRun({ text: '  Connecting Businesses with Opportunities', italic: true, size: 15, color: '4A5568', font: 'Manrope' })
                   ]
                 }),
                 new Paragraph({
