@@ -164,10 +164,14 @@ We welcome the opportunity to discuss this proposal further and address any spec
       topToolbarContainer.appendChild(qlToolbar);
     }
 
-    // Load Saved State or Leave Blank
+    // Purge legacy prefilled sample content if present in state cache
     loadDocState();
+    if (docState.bodyHTML && (docState.bodyHTML.includes('Alex Turner') || docState.bodyHTML.includes('Mohammed Saleem') || docState.bodyHTML.includes('I hope this message finds you well'))) {
+      docState.bodyHTML = '';
+      try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+    }
 
-    if (docState.bodyHTML) {
+    if (docState.bodyHTML && docState.bodyHTML !== '<p><br></p>') {
       quill.root.innerHTML = docState.bodyHTML;
     } else {
       quill.root.innerHTML = '';
