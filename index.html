@@ -1,133 +1,464 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trescon Global - Executive Letterhead Generator</title>
-  <meta name="description" content="Official Trescon Global executive letterhead generator and editor. Create, customize, dynamic regional office footers, and export print-ready A4 PDF documents.">
-  
-  <!-- Google Fonts: Anek Devanagari & Manrope -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Quill.js Rich Text Editor CSS -->
-  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-  <link rel="stylesheet" href="letterhead.css?v=3.5">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Trescon Executive Letterhead Studio</title>
+<!-- Tailwind CSS & Lucide Icons -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<!-- docx.js (v8.5.0) & FileSaver for native Word exports -->
+<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+<style>
+/* Google Fonts: Official Brand Typography */
+@import url('https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap');
+:root {
+--trescon-teal: #00A5A3;
+--trescon-dark-teal: #01373D;
+--trescon-lime: #C0F43C;
+--trescon-charcoal: #1E2124;
+--trescon-slate-gray: #464D53;
+--trescon-soft-teal: #E6F6F6;
+--trescon-border-light: #DCE3E6;
+}
+body {
+font-family: 'Manrope', sans-serif;
+background-color: var(--trescon-dark-teal);
+color: #f8fafc;
+}
+.font-brand {
+font-family: 'Anek Devanagari', sans-serif;
+}
+/* Standard A4 Paper Canvas Dimensions */
+.a4-page {
+width: 210mm;
+min-height: 297mm;
+height: 297mm;
+padding: 18mm 20mm 18mm 20mm;
+margin: 0 auto 2rem auto;
+background: #ffffff;
+color: var(--trescon-charcoal);
+box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+position: relative;
+display: flex;
+flex-direction: column;
+box-sizing: border-box;
+overflow: hidden;
+}
+/* Live WYSIWYG Editable Area */
+.editor-area {
+outline: none;
+font-size: 10pt;
+line-height: 1.65;
+color: var(--trescon-charcoal);
+flex-grow: 1;
+border-radius: 4px;
+transition: background-color 0.2s ease;
+}
+.editor-area:focus {
+background-color: #fafdfd;
+}
+.editor-area p { margin-bottom: 0.75rem; }
+.editor-area ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 0.75rem; }
+.editor-area ol { list-style-type: decimal; margin-left: 1.5rem; margin-bottom: 0.75rem; }
+.editor-area ul ul { list-style-type: circle; margin-left: 1.25rem; }
+.editor-area ul ul ul { list-style-type: square; margin-left: 1.25rem; }
+/* Vector Print Media Rules */
+@media print {
+body {
+background: #ffffff !important;
+padding: 0 !important;
+margin: 0 !important;
+}
+.no-print { display: none !important; }
+.a4-page {
+box-shadow: none !important;
+margin: 0 !important;
+width: 210mm !important;
+height: 297mm !important;
+page-break-after: always;
+box-sizing: border-box;
+}
+@page {
+size: A4 portrait;
+margin: 0;
+}
+}
+</style>
 </head>
-<body>
-
-  <div class="studio-app-container">
-    
-    <!-- TOP FIXED FORMATTING RIBBON & ACTION TOOLBAR -->
-    <header class="studio-top-ribbon no-print">
-      <div class="ribbon-brand">
-        <img src="brand_assets/trescon-logo-white-2025.png" alt="Trescon Logo" class="brand-logo-img">
-        <div class="brand-divider"></div>
-        <h1 class="brand-title">Executive Letterhead Studio</h1>
-      </div>
-
-      <!-- OFFICE PRESET DROPDOWN -->
-      <div class="ribbon-preset-box">
-        <label for="office-preset">Office Location:</label>
-        <select id="office-preset" class="form-select-sm">
-          <option value="bangalore" selected>Bangalore (HQ)</option>
-          <option value="manipal">Manipal (India)</option>
-          <option value="mangalore">Mangalore (India)</option>
-          <option value="dubai">Dubai (DIFC, UAE)</option>
-        </select>
-      </div>
-
-      <!-- QUILL TOP TOOLBAR CONTAINER -->
-      <div id="editor-top-toolbar" class="ribbon-toolbar"></div>
-
-      <!-- EXPORT ACTIONS -->
-      <div class="ribbon-actions">
-        <button id="btn-print" class="btn btn-primary btn-sm">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-          Print / PDF
-        </button>
-        <button id="btn-download-pdf" class="btn btn-secondary btn-sm">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-          Download PDF
-        </button>
-        <button id="btn-download-docx" class="btn btn-outline btn-sm">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Word (.docx)
-        </button>
-      </div>
-    </header>
-
-    <!-- RIGHT DISPLAY AREA: LIVE A4 PAPER PREVIEW -->
-    <main class="preview-area">
-      
-      <div class="paper-container" id="sheets-wrapper" style="display:flex; flex-direction:column; gap:30px;">
-        
-        <!-- PAGE 1 SHEET -->
-        <article class="a4-sheet" id="letterhead-sheet">
-          
-          <!-- TOP ACCENT RULE -->
-          <div class="top-accent-bar"></div>
-
-          <!-- HEADER SECTION -->
-          <header class="letter-header">
-            <div class="header-logo-block">
-              <img src="brand_assets/10-years-trescon-logo.png" alt="Trescon Global Logo" class="letterhead-logo">
-              <span class="brand-tagline">Connecting Businesses<br>with Opportunities</span>
-            </div>
-            <div class="header-meta-block" id="preview-header-contacts">
-              <div class="header-contact-line">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                <span id="preview-date" contenteditable="true">Date: July 27, 2026</span>
-              </div>
-              <div class="header-contact-line">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-                <span>info@tresconglobal.com</span>
-              </div>
-              <div class="header-contact-line">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                <span>tresconglobal.com</span>
-              </div>
-            </div>
-          </header>
-          <div class="header-gradient-rule"></div>
-
-          <!-- LETTER BODY CONTENT CANVAS (FULL ACTIVE EDITABLE CANVAS) -->
-          <div class="letter-body full-canvas-editor" id="preview-body"></div>
-
-          <!-- WATERMARK OVERLAY -->
-          <div class="watermark-overlay" id="preview-watermark"></div>
-
-          <!-- FOOTER SECTION -->
-          <footer class="letter-footer">
-            <div class="footer-divider"></div>
-            <div class="footer-columns">
-              <div class="footer-col-left">
-                <p class="footer-company-name" id="preview-footer-company">Trescon Global Business Solutions Pvt Ltd</p>
-                <p class="footer-address" id="preview-footer-address">
-                  1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka – 560034
-                </p>
-                <p class="footer-license" id="preview-footer-license" style="display:none;"></p>
-              </div>
-              <div class="footer-col-right">
-                <p class="footer-disclaimer">
-                  <strong>Disclaimer:</strong> The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. &copy; 2025 Trescon. All rights reserved.
-                </p>
-              </div>
-            </div>
-          </footer>
-
-        </article>
-
-      </div>
-
-    </main>
-
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-  <script src="letterhead.js?v=3.5"></script>
+<body class="min-h-screen flex flex-col">
+<!-- PINNED TOOLBAR -->
+<header class="no-print sticky top-0 z-50 bg-[#012f34] border-b border-[#00a5a3]/30 shadow-2xl px-6 py-3 flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="bg-[#C0F43C] text-[#01373D] font-brand font-extrabold px-2.5 py-0.5 rounded text-xs uppercase tracking-wider">
+TRESCON
+</div>
+<h1 class="text-base font-semibold text-white tracking-tight">Executive Letterhead Studio</h1>
+</div>
+<!-- WYSIWYG Formatting Buttons -->
+<div class="flex items-center bg-[#01373D] rounded-lg p-1 border border-[#00A5A3]/40 gap-1">
+<button onclick="execCmd('bold')" title="Bold" class="p-1.5 hover:bg-[#00A5A3]/20 rounded text-slate-200 hover:text-white transition">
+<i data-lucide="bold" class="w-4 h-4"></i>
+</button>
+<button onclick="execCmd('italic')" title="Italic" class="p-1.5 hover:bg-[#00A5A3]/20 rounded text-slate-200 hover:text-white transition">
+<i data-lucide="italic" class="w-4 h-4"></i>
+</button>
+<button onclick="execCmd('underline')" title="Underline" class="p-1.5 hover:bg-[#00A5A3]/20 rounded text-slate-200 hover:text-white transition">
+<i data-lucide="underline" class="w-4 h-4"></i>
+</button>
+<div class="h-4 w-px bg-[#00A5A3]/30 mx-1"></div>
+<button onclick="execCmd('insertUnorderedList')" title="Bullet List" class="p-1.5 hover:bg-[#00A5A3]/20 rounded text-slate-200 hover:text-white transition">
+<i data-lucide="list" class="w-4 h-4"></i>
+</button>
+<button onclick="execCmd('insertOrderedList')" title="Numbered List" class="p-1.5 hover:bg-[#00A5A3]/20 rounded text-slate-200 hover:text-white transition">
+<i data-lucide="list-ordered" class="w-4 h-4"></i>
+</button>
+<button onclick="execCmd('indent')" title="Indent (Tab)" class="p-1.5 hover:bg-[#00A5A3]/20 rounded text-slate-200 hover:text-white transition">
+<i data-lucide="indent-increase" class="w-4 h-4"></i>
+</button>
+<button onclick="execCmd('outdent')" title="Outdent (Shift+Tab)" class="p-1.5 hover:bg-[#00A5A3]/20 rounded text-slate-200 hover:text-white transition">
+<i data-lucide="indent-decrease" class="w-4 h-4"></i>
+</button>
+<div class="h-4 w-px bg-[#00A5A3]/30 mx-1"></div>
+<button onclick="execCmd('justifyLeft')" title="Align Left" class="p-1.5 hover:bg-[#00A5A3]/20 rounded text-slate-200 hover:text-white transition">
+<i data-lucide="align-left" class="w-4 h-4"></i>
+</button>
+<button onclick="execCmd('justifyCenter')" title="Align Center" class="p-1.5 hover:bg-[#00A5A3]/20 rounded text-slate-200 hover:text-white transition">
+<i data-lucide="align-center" class="w-4 h-4"></i>
+</button>
+<button onclick="execCmd('justifyRight')" title="Align Right" class="p-1.5 hover:bg-[#00A5A3]/20 rounded text-slate-200 hover:text-white transition">
+<i data-lucide="align-right" class="w-4 h-4"></i>
+</button>
+<button onclick="execCmd('removeFormat')" title="Clear Formatting" class="p-1.5 hover:bg-[#00A5A3]/20 rounded text-rose-300 hover:text-rose-200 transition">
+<i data-lucide="remove-formatting" class="w-4 h-4"></i>
+</button>
+</div>
+<!-- Preset Selector & Actions -->
+<div class="flex items-center gap-3">
+<select id="officeSelect" onchange="updateFooterAddress()" class="bg-[#01373D] text-slate-100 border border-[#00A5A3]/50 text-sm rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#C0F43C] focus:outline-none">
+<option value="bangalore">Bangalore (HQ)</option>
+<option value="manipal">Manipal (India)</option>
+<option value="mangalore">Mangalore (India)</option>
+<option value="dubai">Dubai (DIFC, UAE)</option>
+</select>
+<button onclick="window.print()" class="flex items-center gap-2 bg-[#01373D] hover:bg-[#00A5A3]/20 text-white text-sm font-medium px-3.5 py-1.5 rounded-lg border border-[#00A5A3]/50 transition">
+<i data-lucide="printer" class="w-4 h-4 text-[#00A5A3]"></i> Export PDF
+</button>
+<button onclick="exportToWord()" class="flex items-center gap-2 bg-[#00A5A3] hover:bg-[#008f8d] text-white font-bold text-sm px-3.5 py-1.5 rounded-lg transition shadow-md">
+<i data-lucide="file-text" class="w-4 h-4 text-[#C0F43C]"></i> Export DOCX
+</button>
+</div>
+</header>
+<!-- CANVAS WRAPPER -->
+<main class="flex-grow p-8 overflow-y-auto" id="pages-container">
+<!-- PAGE 1 -->
+<div class="a4-page" id="page-1">
+<!-- Precision Header Block -->
+<div class="flex justify-between items-end pb-4 border-b-2 border-[#00A5A3] mb-6">
+<!-- Left Brand Group -->
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="bg-[#C0F43C] text-[#01373D] font-brand font-extrabold text-[7.5pt] px-2 py-0.5 rounded-[3px] uppercase tracking-wide">
+10 Years
+</span>
+</div>
+<!-- High-res PNG logo fallback with CSS wordmark rendering -->
+<div class="h-9 flex items-center">
+<img src="https://raw.githubusercontent.com/khalifa-branding/trescon-executive-letterhead/main/brand_assets/10-years-trescon-logo.png"
+alt="Trescon Global"
+class="h-full object-contain"
+onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+<span class="hidden text-3xl font-brand font-black text-[#01373D] tracking-tighter leading-none lowercase">
+trescon
+</span>
+</div>
+<p class="text-[8pt] font-semibold text-[#00A5A3] tracking-wider uppercase pt-0.5">
+Connecting Businesses with Opportunities
+</p>
+</div>
+<!-- Right Contact Metadata Block (Left-Aligned Column with Vertical Icons) -->
+<div class="text-left text-[8.5pt] text-[#464D53] space-y-1.5 pb-0.5">
+<p class="font-bold text-[#1E2124] pl-[22px]">Date: July 27, 2026</p>
+<p class="flex items-center justify-start gap-2 text-[#464D53]">
+<i data-lucide="mail" class="w-3.5 h-3.5 text-[#00A5A3] shrink-0"></i>
+<span>info@tresconglobal.com</span>
+</p>
+<p class="flex items-center justify-start gap-2 font-semibold text-[#00A5A3]">
+<i data-lucide="globe" class="w-3.5 h-3.5 text-[#00A5A3] shrink-0"></i>
+<span>tresconglobal.com</span>
+</p>
+</div>
+</div>
+<!-- Editable Canvas -->
+<div id="editor" class="editor-area" contenteditable="true" spellcheck="true">
+<p><strong>To:</strong> Executive Leadership Team</p>
+<p><strong>Subject:</strong> Strategic Operations & Regional Expansion Plan</p>
+<br/>
+<p>Dear Stakeholders,</p>
+<p>We are pleased to present the updated operational framework for our upcoming executive summits. This document outlines key milestones, regional logistics, and target outcomes designed to accelerate our international reach.</p>
+<p>Key Strategic Objectives:</p>
+<ul>
+<li>Expand executive outreach across emerging technology hubs.</li>
+<li>Standardize digital assets and communication infrastructure.</li>
+<li>Drive high-impact B2B networking events across DIFC and APAC regions.</li>
+</ul>
+<p>Please review the enclosed directives and advise on any region-specific adjustments required prior to final execution.</p>
+</div>
+<!-- Regional Office Footer -->
+<div class="mt-auto pt-3 border-t border-[#DCE3E6] text-[8pt] text-[#464D53] space-y-2">
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="font-bold text-[#01373D] font-brand text-[9pt]" id="footer-entity">Trescon Global Business Solutions Pvt Ltd</p>
+<p id="footer-address" class="leading-relaxed">1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka – 560034</p>
+</div>
+<div class="text-right flex flex-col justify-end">
+<p id="footer-extra" class="text-[#464D53]"></p>
+<p class="font-semibold text-[#00A5A3]" id="footer-cin">CIN: U74900KA2016PTC086221</p>
+</div>
+</div>
+<!-- Corporate Legal Disclaimer -->
+<p class="text-[7pt] text-[#464D53]/80 leading-normal pt-1.5 border-t border-[#DCE3E6]">
+<strong>Disclaimer:</strong> The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. © 2026 Trescon. All rights reserved.
+</p>
+</div>
+</div>
+</main>
+<!-- JAVASCRIPT ENGINE -->
+<script>
+// Initialize Icons
+lucide.createIcons();
+// Regional Location Presets
+const OFFICE_PRESETS = {
+bangalore: {
+entity: "Trescon Global Business Solutions Pvt Ltd",
+address: "1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka – 560034",
+extra: "",
+cin: "CIN: U74900KA2016PTC086221"
+},
+manipal: {
+entity: "Trescon Global Business Solutions Pvt Ltd",
+address: "H (23), 5th Floor, Pragathi Business District #412, above Reliance Trends, Laxmindra Nagar, Manipal, Udupi, Karnataka – 576104",
+extra: "",
+cin: "CIN: U74900KA2016PTC086221"
+},
+mangalore: {
+entity: "Trescon Global Business Solutions Pvt Ltd",
+address: "1st Floor, Bejai Post, Ajantha Business Center, Bejai – Kapikad Road, Mangaluru, Karnataka – 575004",
+extra: "",
+cin: "CIN: U74900KA2016PTC086221"
+},
+dubai: {
+entity: "Trescon Events Organizing Ltd.",
+address: "Office 806, 8th Floor, Liberty House, Dubai International Financial Centre, DIFC, Dubai, UAE",
+extra: "License number CL6668.",
+cin: ""
+}
+};
+// Text Commands
+function execCmd(command, value = null) {
+document.execCommand(command, false, value);
+document.getElementById('editor').focus();
+}
+// Keydown List Indentation Handling
+document.getElementById('editor').addEventListener('keydown', function(e) {
+if (e.key === 'Tab') {
+e.preventDefault();
+if (e.shiftKey) {
+execCmd('outdent');
+} else {
+execCmd('indent');
+}
+}
+});
+// Update Regional Presets Across Pages
+function updateFooterAddress() {
+const selected = document.getElementById('officeSelect').value;
+const data = OFFICE_PRESETS[selected];
+document.querySelectorAll('#footer-entity').forEach(el => el.textContent = data.entity);
+document.querySelectorAll('#footer-address').forEach(el => el.textContent = data.address);
+document.querySelectorAll('#footer-extra').forEach(el => el.textContent = data.extra);
+document.querySelectorAll('#footer-cin').forEach(el => el.textContent = data.cin);
+}
+// Dynamic Multi-Page A4 Overflow Manager
+const MAX_PAGE_HEIGHT_PX = 800;
+document.getElementById('editor').addEventListener('input', paginate);
+function paginate() {
+const editor = document.getElementById('editor');
+const existingContinuations = document.querySelectorAll('.continuation-page');
+if (editor.scrollHeight > MAX_PAGE_HEIGHT_PX) {
+if (existingContinuations.length === 0) {
+createContinuationPage(2);
+}
+} else if (editor.scrollHeight <= MAX_PAGE_HEIGHT_PX && existingContinuations.length > 0) {
+existingContinuations.forEach(p => p.remove());
+}
+}
+function createContinuationPage(pageNum) {
+const container = document.getElementById('pages-container');
+const page = document.createElement('div');
+page.className = 'a4-page continuation-page mt-8';
+page.id = `page-${pageNum}`;
+const selected = document.getElementById('officeSelect').value;
+const data = OFFICE_PRESETS[selected];
+page.innerHTML = `
+<div class="flex justify-between items-center pb-3 border-b-2 border-[#00A5A3] mb-6 text-xs text-[#464D53]">
+<span class="font-brand font-bold text-[#01373D] tracking-wider uppercase">TRESCON GLOBAL</span>
+<span>Continuation Sheet — Page ${pageNum}</span>
+</div>
+<div class="editor-area flex-grow" contenteditable="true"></div>
+<div class="mt-auto pt-3 border-t border-[#DCE3E6] text-[8pt] text-[#464D53] space-y-2">
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="font-bold text-[#01373D] font-brand text-[9pt]" id="footer-entity">${data.entity}</p>
+<p id="footer-address" class="leading-relaxed">${data.address}</p>
+</div>
+<div class="text-right flex flex-col justify-end">
+<p id="footer-extra" class="text-[#464D53]">${data.extra}</p>
+<p class="font-semibold text-[#00A5A3]" id="footer-cin">${data.cin}</p>
+</div>
+</div>
+<p class="text-[7pt] text-[#464D53]/80 leading-normal pt-1.5 border-t border-[#DCE3E6]">
+<strong>Disclaimer:</strong> The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. © 2026 Trescon. All rights reserved.
+</p>
+</div>
+`;
+container.appendChild(page);
+}
+// Native Word (.docx) Exporter Engine
+async function exportToWord() {
+const { Document, Packer, Paragraph, TextRun, Header, Footer, Table, TableRow, TableCell, WidthType, AlignmentType, BorderStyle } = window.docx;
+const selectedOffice = OFFICE_PRESETS[document.getElementById('officeSelect').value];
+const editorHTML = document.getElementById('editor').innerHTML;
+const cleanText = (text) => text.replace(/&ndash;/g, '–').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+const tempDiv = document.createElement('div');
+tempDiv.innerHTML = editorHTML;
+const docParagraphs = [];
+tempDiv.childNodes.forEach(node => {
+if (node.nodeType === Node.ELEMENT_NODE) {
+const text = cleanText(node.innerText);
+if (text.trim().length > 0) {
+docParagraphs.push(new Paragraph({
+children: [new TextRun({ text: text, size: 20, font: "Manrope", color: "1E2124" })],
+spacing: { after: 120 }
+}));
+}
+}
+});
+const doc = new Document({
+sections: [{
+properties: {
+page: {
+margin: { top: 1000, bottom: 1000, left: 1000, right: 1000 }
+}
+},
+headers: {
+default: new Header({
+children: [
+new Table({
+width: { size: 100, type: WidthType.PERCENTAGE },
+borders: {
+bottom: { style: BorderStyle.SINGLE, size: 12, color: "00A5A3" },
+top: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE }
+},
+rows: [
+new TableRow({
+children: [
+new TableCell({
+width: { size: 50, type: WidthType.PERCENTAGE },
+borders: { bottom: { style: BorderStyle.NONE }, top: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
+children: [
+new Paragraph({
+children: [
+new TextRun({ text: "10 Years\n", bold: true, size: 14, color: "C0F43C", font: "Anek Devanagari" }),
+new TextRun({ text: "trescon\n", bold: true, size: 30, color: "01373D", font: "Anek Devanagari" }),
+new TextRun({ text: "CONNECTING BUSINESSES WITH OPPORTUNITIES", bold: true, size: 12, color: "00A5A3", font: "Manrope" })
+]
+})
+]
+}),
+new TableCell({
+width: { size: 50, type: WidthType.PERCENTAGE },
+borders: { bottom: { style: BorderStyle.NONE }, top: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
+children: [
+new Paragraph({
+alignment: AlignmentType.LEFT,
+children: [
+new TextRun({ text: "Date: July 27, 2026\n", bold: true, size: 16, color: "1E2124", font: "Manrope" }),
+new TextRun({ text: "info@tresconglobal.com\n", size: 15, color: "464D53", font: "Manrope" }),
+new TextRun({ text: "tresconglobal.com", bold: true, size: 15, color: "00A5A3", font: "Manrope" })
+]
+})
+]
+})
+]
+})
+]
+})
+]
+})
+},
+footers: {
+default: new Footer({
+children: [
+new Table({
+width: { size: 100, type: WidthType.PERCENTAGE },
+borders: {
+top: { style: BorderStyle.SINGLE, size: 4, color: "DCE3E6" },
+bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE }
+},
+rows: [
+new TableRow({
+children: [
+new TableCell({
+width: { size: 60, type: WidthType.PERCENTAGE },
+borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
+children: [
+new Paragraph({
+children: [
+new TextRun({ text: selectedOffice.entity + "\n", bold: true, size: 14, color: "01373D", font: "Anek Devanagari" }),
+new TextRun({ text: selectedOffice.address, size: 13, color: "464D53", font: "Manrope" })
+]
+})
+]
+}),
+new TableCell({
+width: { size: 40, type: WidthType.PERCENTAGE },
+borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
+children: [
+new Paragraph({
+alignment: AlignmentType.RIGHT,
+children: [
+new TextRun({ text: selectedOffice.extra ? selectedOffice.extra + "\n" : "", size: 13, color: "464D53", font: "Manrope" }),
+new TextRun({ text: selectedOffice.cin, size: 13, color: "00A5A3", bold: true, font: "Manrope" })
+]
+})
+]
+})
+]
+})
+]
+}),
+new Paragraph({
+children: [
+new TextRun({
+text: "Disclaimer: The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. © 2026 Trescon. All rights reserved.",
+size: 10,
+color: "464D53",
+font: "Manrope"
+})
+],
+spacing: { before: 100 }
+})
+]
+})
+},
+children: docParagraphs
+}]
+});
+const blob = await Packer.toBlob(doc);
+saveAs(blob, "Trescon_Executive_Letterhead.docx");
+}
+</script>
 </body>
 </html>
