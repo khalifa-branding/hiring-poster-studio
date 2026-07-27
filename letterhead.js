@@ -300,18 +300,24 @@ We welcome the opportunity to discuss this proposal further and address any spec
   }
 
   // Update Regional Office Metadata (Decoupled from Body Text)
-  function updateFooter() {
-    const selectedKey = officePresetSelect ? officePresetSelect.value : 'bangalore';
+  window.updateFooter = function() {
+    const selectElem = document.getElementById('office-preset');
+    const selectedKey = selectElem ? selectElem.value : 'bangalore';
     const data = ADDRESS_PRESETS[selectedKey] || ADDRESS_PRESETS.bangalore;
 
-    if (previewFooterCompany) previewFooterCompany.textContent = data.entity;
-    if (previewFooterAddress) previewFooterAddress.innerHTML = data.address;
-    if (previewFooterLicense) {
+    const companyElem = document.getElementById('preview-footer-company');
+    const addressElem = document.getElementById('preview-footer-address');
+    const licenseElem = document.getElementById('preview-footer-license');
+    const headerContactsElem = document.getElementById('preview-header-contacts');
+
+    if (companyElem) companyElem.textContent = data.entity;
+    if (addressElem) addressElem.innerHTML = data.address;
+    if (licenseElem) {
       if (data.license) {
-        previewFooterLicense.textContent = data.license;
-        previewFooterLicense.style.display = 'block';
+        licenseElem.textContent = data.license;
+        licenseElem.style.display = 'block';
       } else {
-        previewFooterLicense.style.display = 'none';
+        licenseElem.style.display = 'none';
       }
     }
 
@@ -319,19 +325,21 @@ We welcome the opportunity to discuss this proposal further and address any spec
     const iconEmail = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>`;
     const iconWeb = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>`;
 
-    if (previewHeaderContacts) {
-      previewHeaderContacts.innerHTML = `
-        <div class="header-contact-line">${iconDate}<span id="preview-date" contenteditable="true">${docState.date || 'Date: July 24, 2026'}</span></div>
+    if (headerContactsElem) {
+      const dateElem = document.getElementById('preview-date');
+      const currentDateText = dateElem ? dateElem.textContent : 'Date: July 27, 2026';
+      headerContactsElem.innerHTML = `
+        <div class="header-contact-line">${iconDate}<span id="preview-date" contenteditable="true">${currentDateText}</span></div>
         <div class="header-contact-line">${iconEmail}<span>${data.email}</span></div>
         <div class="header-contact-line">${iconWeb}<span>${data.web}</span></div>
       `;
     }
 
     saveDocState();
-  }
+  };
 
   if (officePresetSelect) {
-    officePresetSelect.addEventListener('change', updateFooter);
+    officePresetSelect.addEventListener('change', window.updateFooter);
   }
 
   // Attach Save Listeners to ContentEditable Fields
