@@ -1,3 +1,7 @@
+/**
+ * Trescon Global Executive Letterhead Studio Logic (Option 2 — Guided Form-Based Architecture)
+ */
+
 // Preset Address Database
 const ADDRESS_PRESETS = {
   bangalore: {
@@ -48,29 +52,7 @@ function stripHtmlEntities(str) {
     .replace(/<br\s*\/?>/gi, ' ');
 }
 
-// Enterprise State Management & LocalStorage Persistence
-const STORAGE_KEY = 'trescon_letterhead_state_v3';
-
-let docState = {
-  officePreset: 'bangalore',
-  date: 'Date: July 27, 2026',
-  bodyHTML: ''
-};
-
-function saveDocState() {
-  try {
-    const selectElem = document.getElementById('office-preset');
-    if (selectElem) docState.officePreset = selectElem.value;
-    const dateElem = document.getElementById('preview-date');
-    if (dateElem) docState.date = dateElem.textContent;
-    if (window.quill) docState.bodyHTML = window.quill.root.innerHTML;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(docState));
-  } catch (e) {
-    console.warn('LocalStorage save error:', e);
-  }
-}
-
-// Global Update Footer Function
+// Global Update Footer & Office Preset Function
 window.updateFooter = function() {
   const selectElem = document.getElementById('office-preset');
   const selectedKey = selectElem ? selectElem.value : 'bangalore';
@@ -80,512 +62,265 @@ window.updateFooter = function() {
   const addressElem = document.getElementById('preview-footer-address');
   const extraElem = document.getElementById('preview-footer-extra');
   const cinElem = document.getElementById('preview-footer-cin');
-  const headerContactsElem = document.getElementById('preview-header-contacts');
+  const emailElem = document.getElementById('preview-email');
+  const webElem = document.getElementById('preview-web');
 
   if (companyElem) companyElem.textContent = data.entity;
   if (addressElem) addressElem.innerHTML = data.address;
   if (extraElem) extraElem.textContent = data.extra || '';
   if (cinElem) cinElem.textContent = data.cin || '';
+  if (emailElem) emailElem.textContent = data.email;
+  if (webElem) webElem.textContent = data.web;
+};
 
-  const iconDate = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`;
-  const iconEmail = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>`;
-  const iconWeb = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1 4-10z"></path></svg>`;
+// Native Word (.docx) Exporter Engine
+window.exportToDocx = async function() {
+  const selectElem = document.getElementById('office-preset');
+  const selectedKey = selectElem ? selectElem.value : 'bangalore';
+  const data = ADDRESS_PRESETS[selectedKey] || ADDRESS_PRESETS.bangalore;
 
-  if (headerContactsElem) {
-    const dateElem = document.getElementById('preview-date');
-    const currentDateText = dateElem ? dateElem.textContent : 'Date: July 27, 2026';
-    headerContactsElem.innerHTML = `
-      <div class="header-contact-line">${iconDate}<span id="preview-date" contenteditable="true">${currentDateText}</span></div>
-      <div class="header-contact-line">${iconEmail}<span>${data.email}</span></div>
-      <div class="header-contact-line">${iconWeb}<span>${data.web}</span></div>
-    `;
+  const dateStr = document.getElementById('input-date') ? document.getElementById('input-date').value : 'Date: July 27, 2026';
+  const recipName = document.getElementById('input-recip-name') ? document.getElementById('input-recip-name').value : 'Mr. Alex Turner';
+  const recipTitle = document.getElementById('input-recip-title') ? document.getElementById('input-recip-title').value : 'Chief Executive Officer, Apex Global Innovations Ltd.';
+  const recipAddr = document.getElementById('input-recip-address') ? document.getElementById('input-recip-address').value : 'Bengaluru, Karnataka';
+  const subjectStr = document.getElementById('input-subject') ? document.getElementById('input-subject').value : 'Subject: Formal Proposal & Corporate Partnership Engagement';
+  const salutationStr = document.getElementById('input-salutation') ? document.getElementById('input-salutation').value : 'Dear Mr. Turner,';
+  const closingStr = document.getElementById('input-sign-closing') ? document.getElementById('input-sign-closing').value : 'Warm regards,';
+  const signName = document.getElementById('input-sign-name') ? document.getElementById('input-sign-name').value : 'Mohammed Saleem';
+  const signTitle = document.getElementById('input-sign-title') ? document.getElementById('input-sign-title').value : 'Founder & Chairman';
+
+  const bodyHTML = window.quill ? window.quill.root.innerHTML : (document.getElementById('preview-body') ? document.getElementById('preview-body').innerHTML : '');
+
+  // Parse Body HTML into Word Paragraphs
+  const { Document, Packer, Paragraph, TextRun, AlignmentType, Table, TableRow, TableCell, WidthType, BorderStyle, Header, Footer, ImageRun } = window.docx;
+
+  const bodyParagraphs = [];
+
+  // Add Recipient Block
+  bodyParagraphs.push(
+    new Paragraph({ children: [new TextRun({ text: "To,", bold: true, color: "01373D", size: 20, font: "Manrope" })], spacing: { after: 40 } }),
+    new Paragraph({ children: [new TextRun({ text: recipName, bold: true, color: "01373D", size: 20, font: "Manrope" })], spacing: { after: 40 } }),
+    new Paragraph({ children: [new TextRun({ text: recipTitle, color: "4A5568", size: 18, font: "Manrope" })], spacing: { after: 40 } }),
+    new Paragraph({ children: [new TextRun({ text: recipAddr, color: "4A5568", size: 18, font: "Manrope" })], spacing: { after: 240 } })
+  );
+
+  // Add Subject Line
+  bodyParagraphs.push(
+    new Paragraph({ children: [new TextRun({ text: subjectStr, bold: true, underline: {}, color: "01373D", size: 20, font: "Manrope" })], spacing: { after: 200 } })
+  );
+
+  // Add Salutation
+  bodyParagraphs.push(
+    new Paragraph({ children: [new TextRun({ text: salutationStr, color: "1E2124", size: 20, font: "Manrope" })], spacing: { after: 180 } })
+  );
+
+  // Add Body Paragraphs
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = bodyHTML;
+  tempDiv.childNodes.forEach(node => {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      const text = stripHtmlEntities(node.innerText);
+      if (text.trim().length > 0) {
+        bodyParagraphs.push(new Paragraph({
+          children: [new TextRun({ text: text, size: 20, font: "Manrope", color: "1E2124" })],
+          spacing: { after: 140 }
+        }));
+      }
+    }
+  });
+
+  // Add Signature Block
+  bodyParagraphs.push(
+    new Paragraph({ children: [new TextRun({ text: closingStr, color: "1E2124", size: 20, font: "Manrope" })], spacing: { before: 200, after: 400 } }),
+    new Paragraph({ children: [new TextRun({ text: signName, bold: true, color: "01373D", size: 20, font: "Anek Devanagari" })], spacing: { after: 40 } }),
+    new Paragraph({ children: [new TextRun({ text: signTitle, color: "464D53", size: 18, font: "Manrope" })], spacing: { after: 100 } })
+  );
+
+  // Fetch Logo
+  let logoImageRun = null;
+  try {
+    const imgRes = await fetch('brand_assets/10-years-trescon-logo.png');
+    if (imgRes.ok) {
+      const imgBuffer = await imgRes.arrayBuffer();
+      logoImageRun = new ImageRun({
+        data: imgBuffer,
+        transformation: { width: 130, height: 42 }
+      });
+    }
+  } catch (e) {
+    console.warn('Logo fetch error:', e);
   }
 
-  saveDocState();
+  const cleanEntity = stripHtmlEntities(data.entity);
+  const cleanAddress = stripHtmlEntities(data.address);
+  const cleanExtra = stripHtmlEntities(data.extra);
+  const cleanCin = stripHtmlEntities(data.cin);
+
+  const footerTable = new Table({
+    width: { size: 100, type: WidthType.PERCENTAGE },
+    rows: [
+      new TableRow({
+        children: [
+          new TableCell({
+            width: { size: 60, type: WidthType.PERCENTAGE },
+            borders: { top: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
+            children: [
+              new Paragraph({ children: [new TextRun({ text: cleanEntity, bold: true, color: '01373D', size: 18, font: 'Anek Devanagari' })] }),
+              new Paragraph({ children: [new TextRun({ text: cleanAddress, color: '4A5568', size: 15, font: 'Manrope' })] })
+            ]
+          }),
+          new TableCell({
+            width: { size: 40, type: WidthType.PERCENTAGE },
+            borders: { top: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
+            children: [
+              new Paragraph({
+                alignment: AlignmentType.RIGHT,
+                children: [
+                  ...(cleanExtra ? [new TextRun({ text: cleanExtra + "\n", color: '4A5568', size: 15, font: 'Manrope' })] : []),
+                  ...(cleanCin ? [new TextRun({ text: cleanCin, bold: true, color: '00A5A3', size: 15, font: 'Manrope' })] : [])
+                ]
+              })
+            ]
+          })
+        ]
+      })
+    ]
+  });
+
+  const doc = new Document({
+    sections: [{
+      properties: {
+        page: { margin: { top: 1440, bottom: 1440, left: 1440, right: 1440 } }
+      },
+      headers: {
+        default: new Header({
+          children: [
+            new Paragraph({
+              children: [
+                ...(logoImageRun ? [logoImageRun] : [new TextRun({ text: 'TRESCON GLOBAL ', bold: true, size: 24, color: '00A5A3', font: 'Manrope' })]),
+                new TextRun({ text: '  Connecting Businesses with Opportunities', italic: true, size: 15, color: '4A5568', font: 'Manrope' })
+              ]
+            }),
+            new Paragraph({
+              children: [new TextRun({ text: dateStr, color: '4A5568', size: 18, font: 'Manrope' })],
+              alignment: AlignmentType.LEFT,
+              spacing: { after: 200 }
+            })
+          ]
+        })
+      },
+      footers: {
+        default: new Footer({
+          children: [
+            footerTable,
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "Disclaimer: The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. © 2025 Trescon. All rights reserved.",
+                  size: 10,
+                  color: "718096",
+                  font: "Manrope"
+                })
+              ],
+              spacing: { before: 100 }
+            })
+          ]
+        })
+      },
+      children: bodyParagraphs
+    }]
+  });
+
+  try {
+    const blob = await Packer.toBlob(doc);
+    const fileName = `Trescon_Executive_Letterhead_${selectedKey.toUpperCase()}_${new Date().toISOString().slice(0, 10)}.docx`;
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error('Docx Exporter Error:', err);
+  }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  function loadDocState() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        docState = { ...docState, ...parsed };
+  // Initialize Quill Editor in Sidebar Form
+  window.quill = null;
+  const bodyEditorContainer = document.getElementById('input-body-editor');
+  const toolbarContainer = document.getElementById('editor-sidebar-toolbar');
 
-        const selectElem = document.getElementById('office-preset');
-        if (selectElem && docState.officePreset) {
-          selectElem.value = docState.officePreset;
-        }
-      }
-    } catch (e) {
-      console.warn('LocalStorage load error:', e);
-    }
-  }
-
-  // Single-Stream Quill Editor Initialization
-  let quill = null;
-
-  if (window.Quill && previewBodyElem) {
-    const basicWordToolbarOptions = [
+  if (window.Quill && bodyEditorContainer) {
+    const toolbarOptions = [
       ['bold', 'italic', 'underline'],
       [{ 'list': 'ordered'}, { 'list': 'bullet' }],
       [{ 'indent': '-1'}, { 'indent': '+1' }],
-      [{ 'align': [] }],
       ['clean']
     ];
 
-    quill = new Quill('#preview-body', {
+    window.quill = new Quill('#input-body-editor', {
       theme: 'snow',
-      placeholder: 'Start typing your letter here (recipient details, subject, body text, and signature)...',
-      modules: {
-        toolbar: basicWordToolbarOptions
-      }
+      placeholder: 'Type your letter content here...',
+      modules: { toolbar: toolbarOptions }
     });
 
-    const qlToolbar = previewBodyElem.parentElement.querySelector('.ql-toolbar');
-    if (qlToolbar && topToolbarContainer) {
-      topToolbarContainer.appendChild(qlToolbar);
-    }
-
-    // Purge legacy prefilled sample content if present in state cache
-    loadDocState();
-    if (docState.bodyHTML && (docState.bodyHTML.includes('Alex Turner') || docState.bodyHTML.includes('Mohammed Saleem') || docState.bodyHTML.includes('I hope this message finds you well'))) {
-      docState.bodyHTML = '';
-      try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
-    }
-
-    if (docState.bodyHTML && docState.bodyHTML !== '<p><br></p>') {
-      quill.root.innerHTML = docState.bodyHTML;
-    } else {
-      quill.root.innerHTML = '';
-    }
-
-    // Intercept Tab & Shift+Tab keys for MS Word indentation behavior
-    quill.keyboard.addBinding({
-      key: 9,
-      handler: function(range, context) {
-        if (context.format.list) {
-          this.quill.format('indent', '+1');
-        } else {
-          this.quill.insertText(range.index, '    ');
-        }
-        return false;
-      }
-    });
-
-    quill.keyboard.addBinding({
-      key: 9,
-      shiftKey: true,
-      handler: function(range, context) {
-        this.quill.format('indent', '-1');
-        return false;
-      }
-    });
-
-    quill.on('text-change', () => {
-      saveDocState();
-      paginateDocument();
-    });
-  }
-
-  function resetPaginationState() {
-    document.querySelectorAll('.auto-page-sheet').forEach(sheet => sheet.remove());
-  }
-
-  // Dynamic Multi-Sheet Physical A4 Pagination Engine
-  function paginateDocument() {
-    resetPaginationState();
-
-    const letterheadSheet = document.getElementById('letterhead-sheet');
-    const previewBodyElem = document.getElementById('preview-body');
-    const sheetsWrapper = document.getElementById('sheets-wrapper');
-    if (!letterheadSheet || !previewBodyElem || !sheetsWrapper) return;
-
-    const editorRoot = previewBodyElem.querySelector('.ql-editor') || previewBodyElem;
-    const bodyChildren = Array.from(editorRoot.children);
-    if (bodyChildren.length === 0) return;
-
-    // Printable body height threshold on Page 1 (approx 640px for full blank canvas)
-    const MAX_PAGE1_BODY_HEIGHT = 640;
-    const MAX_PAGE_N_BODY_HEIGHT = 800;
-
-    let currentHeight = 0;
-    let pageParagraphs = [[]];
-    let currentPageIndex = 1;
-
-    bodyChildren.forEach(child => {
-      const h = child.offsetHeight || 32;
-      const limit = (currentPageIndex === 1) ? MAX_PAGE1_BODY_HEIGHT : MAX_PAGE_N_BODY_HEIGHT;
-
-      if (currentHeight + h > limit && currentHeight > 0) {
-        currentPageIndex++;
-        pageParagraphs.push([child]);
-        currentHeight = h;
-      } else {
-        pageParagraphs[currentPageIndex - 1].push(child);
-        currentHeight += h;
-      }
-    });
-
-    if (pageParagraphs.length <= 1) return; // Fits cleanly on Page 1!
-
-    // We have multi-page overflow! Generate Page 2, 3...
-    const totalPages = pageParagraphs.length;
-
-    for (let i = 1; i < totalPages; i++) {
-      const pageNum = i + 1;
-      const autoSheet = document.createElement('article');
-      autoSheet.className = 'a4-sheet auto-page-sheet';
-      autoSheet.id = `auto-sheet-page-${pageNum}`;
-
-      const selectedKey = officePresetSelect ? officePresetSelect.value : 'bangalore';
-      const data = ADDRESS_PRESETS[selectedKey] || ADDRESS_PRESETS.bangalore;
-
-      autoSheet.innerHTML = `
-        <div class="top-accent-bar"></div>
-        <header class="letter-header" style="padding-bottom:8px;">
-          <div class="header-logo-block">
-            <img src="brand_assets/10-years-trescon-logo.png" alt="Trescon Logo" style="height:32px;">
-          </div>
-          <div class="header-meta-block">
-            <div style="font-size:0.82rem; color:var(--trescon-slate); font-weight:700;">Continuation Sheet &mdash; Page ${pageNum}</div>
-          </div>
-        </header>
-        <div class="header-gradient-rule"></div>
-
-        <div class="letter-body auto-letter-body" style="margin-top:16px; flex: 1;">
-        </div>
-
-        <footer class="letter-footer">
-          <div class="footer-divider"></div>
-          <div class="footer-columns">
-            <div class="footer-col-left">
-              <p class="footer-company-name">${data.entity}</p>
-              <p class="footer-address">${data.address}</p>
-              ${data.license ? `<p class="footer-license">${data.license}</p>` : ''}
-            </div>
-            <div class="footer-col-right">
-              <p class="footer-disclaimer">
-                <strong>Disclaimer:</strong> The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. &copy; 2025 Trescon. All rights reserved.
-              </p>
-            </div>
-          </div>
-        </footer>
-      `;
-
-      const autoBody = autoSheet.querySelector('.auto-letter-body');
-      pageParagraphs[i].forEach(child => {
-        autoBody.appendChild(child.cloneNode(true));
-      });
-
-      sheetsWrapper.appendChild(autoSheet);
+    // Move toolbar above editor box
+    const qlToolbar = bodyEditorContainer.parentElement.querySelector('.ql-toolbar');
+    if (qlToolbar && toolbarContainer) {
+      toolbarContainer.appendChild(qlToolbar);
     }
   }
 
-  // Update Regional Office Metadata (Decoupled from Body Text)
-  window.updateFooter = function() {
-    const selectElem = document.getElementById('office-preset');
-    const selectedKey = selectElem ? selectElem.value : 'bangalore';
-    const data = ADDRESS_PRESETS[selectedKey] || ADDRESS_PRESETS.bangalore;
-
-    const companyElem = document.getElementById('preview-footer-company');
-    const addressElem = document.getElementById('preview-footer-address');
-    const extraElem = document.getElementById('preview-footer-extra');
-    const cinElem = document.getElementById('preview-footer-cin');
-    const headerContactsElem = document.getElementById('preview-header-contacts');
-
-    if (companyElem) companyElem.textContent = data.entity;
-    if (addressElem) addressElem.innerHTML = data.address;
-    if (extraElem) extraElem.textContent = data.extra || '';
-    if (cinElem) cinElem.textContent = data.cin || '';
-
-    const iconDate = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`;
-    const iconEmail = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>`;
-    const iconWeb = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>`;
-
-    if (headerContactsElem) {
-      const dateElem = document.getElementById('preview-date');
-      const currentDateText = dateElem ? dateElem.textContent : 'Date: July 27, 2026';
-      headerContactsElem.innerHTML = `
-        <div class="header-contact-line">${iconDate}<span id="preview-date" contenteditable="true">${currentDateText}</span></div>
-        <div class="header-contact-line">${iconEmail}<span>${data.email}</span></div>
-        <div class="header-contact-line">${iconWeb}<span>${data.web}</span></div>
-      `;
-    }
-
-    saveDocState();
-  };
-
-  if (officePresetSelect) {
-    officePresetSelect.addEventListener('change', window.updateFooter);
-  }
-
-  // Attach Save Listeners to ContentEditable Fields
-  [previewRecipientName, previewRecipientTitle, previewRecipientAddress, previewSubject, previewSalutation, previewDate, previewSignName, previewSignTitle].forEach(elem => {
-    if (elem) {
-      elem.addEventListener('input', saveDocState);
-      elem.addEventListener('blur', saveDocState);
-    }
-  });
-
-  // Native High-Fidelity Vector PDF Print Handler
-  if (btnPrint) {
-    btnPrint.addEventListener('click', () => {
-      window.print();
-    });
-  }
-
-  // Fallback 1-Click Client PDF Download
-  if (btnDownloadPdf) {
-    btnDownloadPdf.addEventListener('click', () => {
-      const element = document.getElementById('letterhead-sheet');
-      if (!element || !window.html2pdf) return;
-
-      const opt = {
-        margin: [0, 0, 0, 0],
-        filename: `Trescon_Global_Letterhead_${new Date().toISOString().slice(0, 10)}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, logging: false },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  // Bind Form Inputs to Live Preview Elements
+  function bindInputToPreview(inputId, previewId, isInnerHTML = false) {
+    const inputElem = document.getElementById(inputId);
+    const previewElem = document.getElementById(previewId);
+    if (inputElem && previewElem) {
+      const updateFn = () => {
+        if (isInnerHTML) previewElem.innerHTML = inputElem.value;
+        else previewElem.textContent = inputElem.value;
       };
-
-      html2pdf().set(opt).from(element).save();
-    });
-  }
-
-  // Dynamic Browser-Side Word (.docx) Exporter Utility
-  async function exportToDocx() {
-    if (!window.docx) {
-      alert('The docx exporter library is still loading. Please try again in a moment.');
-      return;
-    }
-
-    const { Document, Packer, Paragraph, TextRun, AlignmentType, Table, TableRow, TableCell, WidthType, BorderStyle } = window.docx;
-
-    const recipName = previewRecipientName ? previewRecipientName.textContent.trim() : 'Mr. Alex Turner';
-    const recipTitle = previewRecipientTitle ? previewRecipientTitle.textContent.trim() : '';
-    const recipAddr = previewRecipientAddress ? previewRecipientAddress.textContent.trim() : '';
-    const subject = previewSubject ? previewSubject.textContent.trim() : '';
-    const salutation = previewSalutation ? previewSalutation.textContent.trim() : '';
-    const dateStr = previewDate ? previewDate.textContent.trim() : 'Date: July 24, 2026';
-    const signName = previewSignName ? previewSignName.textContent.trim() : 'Mohammed Saleem';
-    const signTitle = previewSignTitle ? previewSignTitle.textContent.trim() : 'Founder & Chairman';
-
-    const selectedKey = officePresetSelect ? officePresetSelect.value : 'bangalore';
-    const data = ADDRESS_PRESETS[selectedKey] || ADDRESS_PRESETS.bangalore;
-
-    // Convert Quill HTML AST to docx Paragraphs
-    const bodyHtml = quill ? quill.root.innerHTML : '';
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = bodyHtml;
-
-    const bodyParagraphs = [];
-    const children = Array.from(tempDiv.children);
-
-    children.forEach(child => {
-      const text = child.textContent.trim();
-      if (!text) return;
-
-      if (child.tagName === 'UL') {
-        Array.from(child.querySelectorAll('li')).forEach(li => {
-          bodyParagraphs.push(
-            new Paragraph({
-              text: li.textContent.trim(),
-              bullet: { level: 0 },
-              spacing: { after: 120 }
-            })
-          );
-        });
-      } else if (child.tagName === 'OL') {
-        Array.from(child.querySelectorAll('li')).forEach((li, idx) => {
-          bodyParagraphs.push(
-            new Paragraph({
-              text: `${idx + 1}. ${li.textContent.trim()}`,
-              spacing: { after: 120 }
-            })
-          );
-        });
-      } else {
-        bodyParagraphs.push(
-          new Paragraph({
-            children: [
-              new TextRun({
-                text: text,
-                font: 'Manrope',
-                size: 22, // 11pt
-                color: '2D3748'
-              })
-            ],
-            spacing: { after: 180 }
-          })
-        );
-      }
-    });
-
-    const cleanEntity = stripHtmlEntities(data.entity);
-    const cleanAddress = stripHtmlEntities(data.address);
-    const cleanExtra = stripHtmlEntities(data.extra);
-    const cleanCin = stripHtmlEntities(data.cin);
-
-    // Construct 2-Column Footer Table in DOCX
-    const footerTable = new Table({
-      width: { size: 100, type: WidthType.PERCENTAGE },
-      rows: [
-        new TableRow({
-          children: [
-            new TableCell({
-              width: { size: 60, type: WidthType.PERCENTAGE },
-              borders: {
-                top: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' },
-                bottom: { style: BorderStyle.NONE },
-                left: { style: BorderStyle.NONE },
-                right: { style: BorderStyle.NONE }
-              },
-              children: [
-                new Paragraph({
-                  children: [
-                    new TextRun({ text: cleanEntity, bold: true, color: '01373D', size: 18, font: 'Anek Devanagari' })
-                  ]
-                }),
-                new Paragraph({
-                  children: [
-                    new TextRun({ text: cleanAddress, color: '4A5568', size: 15, font: 'Manrope' })
-                  ]
-                })
-              ]
-            }),
-            new TableCell({
-              width: { size: 40, type: WidthType.PERCENTAGE },
-              borders: {
-                top: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' },
-                bottom: { style: BorderStyle.NONE },
-                left: { style: BorderStyle.NONE },
-                right: { style: BorderStyle.NONE }
-              },
-              children: [
-                new Paragraph({
-                  alignment: AlignmentType.RIGHT,
-                  children: [
-                    ...(cleanExtra ? [new TextRun({ text: cleanExtra + "\n", color: '4A5568', size: 15, font: 'Manrope' })] : []),
-                    ...(cleanCin ? [new TextRun({ text: cleanCin, bold: true, color: '00A5A3', size: 15, font: 'Manrope' })] : [])
-                  ]
-                })
-              ]
-            })
-          ]
-        })
-      ]
-    });
-
-    // If body paragraphs are empty, add a few blank lines for typing in Word
-    if (bodyParagraphs.length === 0) {
-      bodyParagraphs.push(
-        new Paragraph({ children: [new TextRun({ text: '', size: 22 })], spacing: { after: 360 } }),
-        new Paragraph({ children: [new TextRun({ text: '', size: 22 })], spacing: { after: 360 } }),
-        new Paragraph({ children: [new TextRun({ text: '', size: 22 })], spacing: { after: 360 } })
-      );
-    }
-
-    const { Document, Packer, Paragraph, TextRun, AlignmentType, Table, TableRow, TableCell, WidthType, BorderStyle, Header, Footer, ImageRun } = window.docx;
-
-    let logoImageRun = null;
-    try {
-      const imgRes = await fetch('brand_assets/10-years-trescon-logo.png');
-      if (imgRes.ok) {
-        const imgBuffer = await imgRes.arrayBuffer();
-        logoImageRun = new ImageRun({
-          data: imgBuffer,
-          transformation: { width: 130, height: 42 }
-        });
-      }
-    } catch (e) {
-      console.warn('Logo fetch error:', e);
-    }
-
-    const doc = new Document({
-      sections: [
-        {
-          properties: {
-            page: {
-              margin: {
-                top: 1440, // 1 inch
-                bottom: 1440, // 1 inch
-                left: 1440, // 1 inch
-                right: 1440 // 1 inch
-              }
-            }
-          },
-          headers: {
-            default: new Header({
-              children: [
-                new Paragraph({
-                  children: [
-                    ...(logoImageRun ? [logoImageRun] : [
-                      new TextRun({ text: 'TRESCON GLOBAL ', bold: true, size: 24, color: '00A5A3', font: 'Manrope' })
-                    ]),
-                    new TextRun({ text: '  Connecting Businesses with Opportunities', italic: true, size: 15, color: '4A5568', font: 'Manrope' })
-                  ]
-                }),
-                new Paragraph({
-                  children: [new TextRun({ text: dateStr, color: '4A5568', size: 18, font: 'Manrope' })],
-                  alignment: AlignmentType.LEFT,
-                  spacing: { after: 200 }
-                })
-              ]
-            })
-          },
-          footers: {
-            default: new Footer({
-              children: [
-                footerTable,
-                new Paragraph({
-                  children: [
-                    new TextRun({
-                      text: "Disclaimer: The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. © 2025 Trescon. All rights reserved.",
-                      size: 10,
-                      color: "718096",
-                      font: "Manrope"
-                    })
-                  ],
-                  spacing: { before: 100 }
-                })
-              ]
-            })
-          },
-          children: bodyParagraphs.length > 0 ? bodyParagraphs : [
-            new Paragraph({ children: [new TextRun({ text: '', size: 22 })], spacing: { after: 360 } }),
-            new Paragraph({ children: [new TextRun({ text: '', size: 22 })], spacing: { after: 360 } })
-          ]
-        }
-      ]
-    });
-
-    try {
-      const blob = await Packer.toBlob(doc);
-      const fileName = `Trescon_Global_Letterhead_${selectedKey.toUpperCase()}_${new Date().toISOString().slice(0, 10)}.docx`;
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileName;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error('Docx Exporter Error:', err);
+      inputElem.addEventListener('input', updateFn);
+      inputElem.addEventListener('change', updateFn);
+      updateFn();
     }
   }
 
+  bindInputToPreview('input-date', 'preview-date');
+  bindInputToPreview('input-recip-name', 'preview-recipient-name');
+  bindInputToPreview('input-recip-title', 'preview-recipient-title');
+  bindInputToPreview('input-recip-address', 'preview-recipient-address');
+  bindInputToPreview('input-subject', 'preview-subject');
+  bindInputToPreview('input-salutation', 'preview-salutation');
+  bindInputToPreview('input-sign-closing', 'preview-sign-closing');
+  bindInputToPreview('input-sign-name', 'preview-sign-name');
+  bindInputToPreview('input-sign-title', 'preview-sign-title');
+
+  // Bind Body Quill Editor to Live Preview Body
+  if (window.quill) {
+    const previewBodyElem = document.getElementById('preview-body');
+    window.quill.on('text-change', () => {
+      if (previewBodyElem) {
+        previewBodyElem.innerHTML = window.quill.root.innerHTML;
+      }
+    });
+
+    // Initial Body Text
+    if (previewBodyElem) {
+      window.quill.root.innerHTML = `<p>We are pleased to present the updated operational framework for our upcoming executive summits. This document outlines key milestones, regional logistics, and target outcomes designed to accelerate our international reach.</p><p>Key Strategic Directives:</p><ul><li>Expand executive outreach across emerging technology hubs.</li><li>Standardize digital assets and communication infrastructure.</li><li>Drive high-impact B2B networking events across DIFC and APAC regions.</li></ul><p>Please review the enclosed directives and advise on any region-specific adjustments required prior to final execution.</p>`;
+      previewBodyElem.innerHTML = window.quill.root.innerHTML;
+    }
+  }
+
+  // Bind Office Select Dropdown
   const selectElem = document.getElementById('office-preset');
   if (selectElem) {
     selectElem.addEventListener('change', window.updateFooter);
     selectElem.addEventListener('input', window.updateFooter);
   }
 
-  if (btnDownloadDocx) {
-    btnDownloadDocx.addEventListener('click', exportToDocx);
-  }
-
-  // Initial Footer Update & Pagination Execution
+  // Trigger Initial Footer Sync
   window.updateFooter();
-  setTimeout(paginateDocument, 100);
 });

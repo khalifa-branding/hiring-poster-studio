@@ -120,17 +120,157 @@ body {
   box-shadow: 0 0 0 2px var(--trescon-teal);
 }
 
-/* Sidebar Layout */
-.sidebar {
-  width: 380px;
-  background-color: var(--trescon-dark);
+/* Studio Layout Split & Sidebar Form */
+.studio-main-layout {
+  display: flex;
+  height: calc(100vh - 56px);
+  overflow: hidden;
+  margin-top: 56px;
+}
+
+.sidebar-form {
+  width: 400px;
+  min-width: 400px;
+  background-color: #070d14;
+  border-right: 1px solid #1e2936;
+  padding: 20px;
+  overflow-y: auto;
   color: #e2e8f0;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
-  z-index: 10;
-  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
+  gap: 16px;
+  z-index: 20;
+}
+
+.sidebar-header h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.sidebar-header p {
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+.form-section-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--trescon-teal);
+  margin-top: 12px;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #1e2936;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.form-control {
+  background-color: #111923;
+  border: 1px solid #233042;
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: var(--trescon-teal);
+  box-shadow: 0 0 0 2px rgba(0, 165, 163, 0.25);
+  background-color: #162230;
+}
+
+.body-rich-editor {
+  background: #111923;
+  border: 1px solid #233042;
+  border-radius: 0 0 6px 6px;
+  min-height: 140px;
+  color: #ffffff;
+}
+
+.form-action-box {
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* Document Blocks in Preview */
+.recipient-block {
+  margin-bottom: 16px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--trescon-charcoal);
+}
+
+.recip-line {
+  margin-bottom: 2px;
+}
+
+.recip-to {
+  font-weight: 600;
+  color: var(--trescon-dark);
+}
+
+.recip-name {
+  font-weight: 700;
+  color: var(--trescon-dark);
+}
+
+.subject-block {
+  margin-bottom: 16px;
+  font-weight: 700;
+  font-size: 0.94rem;
+  color: var(--trescon-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.salutation-block {
+  margin-bottom: 14px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--trescon-charcoal);
+}
+
+.signature-block {
+  margin-top: 28px;
+  font-size: 0.92rem;
+  color: var(--trescon-charcoal);
+}
+
+.signature-space {
+  height: 40px;
+}
+
+.signatory-name {
+  font-weight: 700;
+  color: var(--trescon-dark);
+  font-family: var(--font-heading);
+}
+
+.signatory-title {
+  font-size: 0.86rem;
+  color: var(--trescon-slate);
 }
 
 .sidebar-tabs {
