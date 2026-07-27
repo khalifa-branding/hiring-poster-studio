@@ -8,21 +8,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const ADDRESS_PRESETS = {
     bangalore: {
       entity: "Trescon Global Business Solutions Pvt Ltd",
-      address: "1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka &ndash; 560034",
+      address: "1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka – 560034",
       license: "",
       email: "info@tresconglobal.com",
       web: "tresconglobal.com"
     },
     manipal: {
       entity: "Trescon Global Business Solutions Pvt Ltd",
-      address: "H (23), 5th Floor, Pragathi Business District #412, above Reliance Trends, Laxmindra Nagar,<br>Manipal, Udupi, Karnataka &ndash; 576104",
+      address: "H (23), 5th Floor, Pragathi Business District #412, above Reliance Trends, Laxmindra Nagar,<br>Manipal, Udupi, Karnataka – 576104",
       license: "",
       email: "info@tresconglobal.com",
       web: "tresconglobal.com"
     },
     mangalore: {
       entity: "Trescon Global Business Solutions Pvt Ltd",
-      address: "1st Floor, Bejai Post, Ajantha Business Center, Bejai &ndash; Kapikad Road, Mangaluru, Karnataka &ndash; 575004",
+      address: "1st Floor, Bejai Post, Ajantha Business Center, Bejai – Kapikad Road, Mangaluru, Karnataka – 575004",
       license: "",
       email: "info@tresconglobal.com",
       web: "tresconglobal.com"
@@ -35,6 +35,20 @@ document.addEventListener('DOMContentLoaded', () => {
       web: "tresconglobal.com"
     }
   };
+
+  // Helper to strip raw HTML entities for Word exporter
+  function stripHtmlEntities(str) {
+    if (!str) return '';
+    return str
+      .replace(/&ndash;/g, '–')
+      .replace(/&mdash;/g, '—')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/<br\s*\/?>/gi, ' ');
+  }
 
   // Sample Corporate Proposal Content
   const SAMPLE_BODY = `I hope this message finds you well. I am writing on behalf of Trescon Global to formally submit our comprehensive proposal for the upcoming enterprise technology summit and strategic collaboration initiatives. Our team has tailored this framework to align with your organization's vision, key deliverables, and expansion roadmaps.
@@ -418,6 +432,10 @@ We welcome the opportunity to discuss this proposal further and address any spec
       }
     });
 
+    const cleanEntity = stripHtmlEntities(data.entity);
+    const cleanAddress = stripHtmlEntities(data.address);
+    const cleanLicense = stripHtmlEntities(data.license);
+
     // Construct 2-Column Footer Table in DOCX
     const footerTable = new Table({
       width: { size: 100, type: WidthType.PERCENTAGE },
@@ -435,15 +453,15 @@ We welcome the opportunity to discuss this proposal further and address any spec
               children: [
                 new Paragraph({
                   children: [
-                    new TextRun({ text: data.entity, bold: true, color: '061626', size: 18 })
+                    new TextRun({ text: cleanEntity, bold: true, color: '061626', size: 18 })
                   ]
                 }),
                 new Paragraph({
                   children: [
-                    new TextRun({ text: data.address.replace(/<br>/g, ' '), color: '4A5568', size: 16 })
+                    new TextRun({ text: cleanAddress, color: '4A5568', size: 16 })
                   ]
                 }),
-                ...(data.license ? [new Paragraph({ children: [new TextRun({ text: data.license, color: '4A5568', size: 16 })] })] : [])
+                ...(cleanLicense ? [new Paragraph({ children: [new TextRun({ text: cleanLicense, color: '4A5568', size: 16 })] })] : [])
               ]
             }),
             new TableCell({
