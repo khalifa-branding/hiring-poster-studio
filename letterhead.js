@@ -9,28 +9,32 @@ document.addEventListener('DOMContentLoaded', () => {
     bangalore: {
       entity: "Trescon Global Business Solutions Pvt Ltd",
       address: "1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka – 560034",
-      license: "",
+      extra: "",
+      cin: "CIN: U74900KA2016PTC086221",
       email: "info@tresconglobal.com",
       web: "tresconglobal.com"
     },
     manipal: {
       entity: "Trescon Global Business Solutions Pvt Ltd",
       address: "H (23), 5th Floor, Pragathi Business District #412, above Reliance Trends, Laxmindra Nagar,<br>Manipal, Udupi, Karnataka – 576104",
-      license: "",
+      extra: "",
+      cin: "CIN: U74900KA2016PTC086221",
       email: "info@tresconglobal.com",
       web: "tresconglobal.com"
     },
     mangalore: {
       entity: "Trescon Global Business Solutions Pvt Ltd",
       address: "1st Floor, Bejai Post, Ajantha Business Center, Bejai – Kapikad Road, Mangaluru, Karnataka – 575004",
-      license: "",
+      extra: "",
+      cin: "CIN: U74900KA2016PTC086221",
       email: "info@tresconglobal.com",
       web: "tresconglobal.com"
     },
     dubai: {
       entity: "Trescon Events Organizing Ltd.",
       address: "Office 806, 8th Floor, Liberty House, Dubai International Financial Centre, DIFC, Dubai, UAE",
-      license: "License number CL6668.",
+      extra: "License number CL6668.",
+      cin: "",
       email: "uae@tresconglobal.com",
       web: "tresconglobal.com"
     }
@@ -307,19 +311,14 @@ We welcome the opportunity to discuss this proposal further and address any spec
 
     const companyElem = document.getElementById('preview-footer-company');
     const addressElem = document.getElementById('preview-footer-address');
-    const licenseElem = document.getElementById('preview-footer-license');
+    const extraElem = document.getElementById('preview-footer-extra');
+    const cinElem = document.getElementById('preview-footer-cin');
     const headerContactsElem = document.getElementById('preview-header-contacts');
 
     if (companyElem) companyElem.textContent = data.entity;
     if (addressElem) addressElem.innerHTML = data.address;
-    if (licenseElem) {
-      if (data.license) {
-        licenseElem.textContent = data.license;
-        licenseElem.style.display = 'block';
-      } else {
-        licenseElem.style.display = 'none';
-      }
-    }
+    if (extraElem) extraElem.textContent = data.extra || '';
+    if (cinElem) cinElem.textContent = data.cin || '';
 
     const iconDate = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`;
     const iconEmail = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>`;
@@ -446,7 +445,8 @@ We welcome the opportunity to discuss this proposal further and address any spec
 
     const cleanEntity = stripHtmlEntities(data.entity);
     const cleanAddress = stripHtmlEntities(data.address);
-    const cleanLicense = stripHtmlEntities(data.license);
+    const cleanExtra = stripHtmlEntities(data.extra);
+    const cleanCin = stripHtmlEntities(data.cin);
 
     // Construct 2-Column Footer Table in DOCX
     const footerTable = new Table({
@@ -455,29 +455,7 @@ We welcome the opportunity to discuss this proposal further and address any spec
         new TableRow({
           children: [
             new TableCell({
-              width: { size: 50, type: WidthType.PERCENTAGE },
-              borders: {
-                top: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' },
-                bottom: { style: BorderStyle.NONE },
-                left: { style: BorderStyle.NONE },
-                right: { style: BorderStyle.SINGLE, size: 2, color: 'CCCCCC' }
-              },
-              children: [
-                new Paragraph({
-                  children: [
-                    new TextRun({ text: cleanEntity, bold: true, color: '061626', size: 18 })
-                  ]
-                }),
-                new Paragraph({
-                  children: [
-                    new TextRun({ text: cleanAddress, color: '4A5568', size: 16 })
-                  ]
-                }),
-                ...(cleanLicense ? [new Paragraph({ children: [new TextRun({ text: cleanLicense, color: '4A5568', size: 16 })] })] : [])
-              ]
-            }),
-            new TableCell({
-              width: { size: 50, type: WidthType.PERCENTAGE },
+              width: { size: 60, type: WidthType.PERCENTAGE },
               borders: {
                 top: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' },
                 bottom: { style: BorderStyle.NONE },
@@ -487,11 +465,30 @@ We welcome the opportunity to discuss this proposal further and address any spec
               children: [
                 new Paragraph({
                   children: [
-                    new TextRun({
-                      text: 'Disclaimer: The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. © 2025 Trescon. All rights reserved.',
-                      color: '718096',
-                      size: 14
-                    })
+                    new TextRun({ text: cleanEntity, bold: true, color: '01373D', size: 18, font: 'Anek Devanagari' })
+                  ]
+                }),
+                new Paragraph({
+                  children: [
+                    new TextRun({ text: cleanAddress, color: '4A5568', size: 15, font: 'Manrope' })
+                  ]
+                })
+              ]
+            }),
+            new TableCell({
+              width: { size: 40, type: WidthType.PERCENTAGE },
+              borders: {
+                top: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' },
+                bottom: { style: BorderStyle.NONE },
+                left: { style: BorderStyle.NONE },
+                right: { style: BorderStyle.NONE }
+              },
+              children: [
+                new Paragraph({
+                  alignment: AlignmentType.RIGHT,
+                  children: [
+                    ...(cleanExtra ? [new TextRun({ text: cleanExtra + "\n", color: '4A5568', size: 15, font: 'Manrope' })] : []),
+                    ...(cleanCin ? [new TextRun({ text: cleanCin, bold: true, color: '00A5A3', size: 15, font: 'Manrope' })] : [])
                   ]
                 })
               ]
@@ -561,7 +558,18 @@ We welcome the opportunity to discuss this proposal further and address any spec
           footers: {
             default: new Footer({
               children: [
-                footerTable
+                footerTable,
+                new Paragraph({
+                  children: [
+                    new TextRun({
+                      text: "Disclaimer: The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. © 2025 Trescon. All rights reserved.",
+                      size: 10,
+                      color: "718096",
+                      font: "Manrope"
+                    })
+                  ],
+                  spacing: { before: 100 }
+                })
               ]
             })
           },
