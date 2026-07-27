@@ -113,17 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const parsed = JSON.parse(saved);
         docState = { ...docState, ...parsed };
 
-        if (officePresetSelect && docState.officePreset) {
-          officePresetSelect.value = docState.officePreset;
+        const selectElem = document.getElementById('office-preset');
+        if (selectElem && docState.officePreset) {
+          selectElem.value = docState.officePreset;
         }
-        if (previewRecipientName && docState.recipientName) previewRecipientName.textContent = docState.recipientName;
-        if (previewRecipientTitle && docState.recipientTitle) previewRecipientTitle.textContent = docState.recipientTitle;
-        if (previewRecipientAddress && docState.recipientAddress) previewRecipientAddress.textContent = docState.recipientAddress;
-        if (previewSubject && docState.subject) previewSubject.textContent = docState.subject;
-        if (previewSalutation && docState.salutation) previewSalutation.textContent = docState.salutation;
-        if (previewDate && docState.date) previewDate.textContent = docState.date;
-        if (previewSignName && docState.signatoryName) previewSignName.textContent = docState.signatoryName;
-        if (previewSignTitle && docState.signatoryTitle) previewSignTitle.textContent = docState.signatoryTitle;
       }
     } catch (e) {
       console.warn('LocalStorage load error:', e);
@@ -582,13 +575,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  window.exportToDocx = exportToDocx;
+  const selectElem = document.getElementById('office-preset');
+  if (selectElem) {
+    selectElem.addEventListener('change', window.updateFooter);
+    selectElem.addEventListener('input', window.updateFooter);
+  }
 
   if (btnDownloadDocx) {
     btnDownloadDocx.addEventListener('click', exportToDocx);
   }
 
   // Initial Footer Update & Pagination Execution
-  updateFooter();
+  window.updateFooter();
   setTimeout(paginateDocument, 100);
 });
