@@ -471,6 +471,15 @@ We welcome the opportunity to discuss this proposal further and address any spec
       ]
     });
 
+    // If body paragraphs are empty, add a few blank lines for typing in Word
+    if (bodyParagraphs.length === 0) {
+      bodyParagraphs.push(
+        new Paragraph({ children: [new TextRun({ text: '', size: 22 })], spacing: { after: 360 } }),
+        new Paragraph({ children: [new TextRun({ text: '', size: 22 })], spacing: { after: 360 } }),
+        new Paragraph({ children: [new TextRun({ text: '', size: 22 })], spacing: { after: 360 } })
+      );
+    }
+
     const doc = new Document({
       sections: [
         {
@@ -486,19 +495,10 @@ We welcome the opportunity to discuss this proposal further and address any spec
             new Paragraph({
               children: [new TextRun({ text: dateStr, color: '4A5568', size: 18 })],
               alignment: AlignmentType.RIGHT,
-              spacing: { after: 360 }
+              spacing: { after: 480 }
             }),
-            new Paragraph({ children: [new TextRun({ text: 'To,', size: 22 })] }),
-            new Paragraph({ children: [new TextRun({ text: recipName, bold: true, size: 22 })] }),
-            new Paragraph({ children: [new TextRun({ text: recipTitle, size: 20 })] }),
-            new Paragraph({ children: [new TextRun({ text: recipAddr, size: 20 })], spacing: { after: 360 } }),
-            new Paragraph({ children: [new TextRun({ text: subject, bold: true, color: '00A5A3', size: 22 })], spacing: { after: 240 } }),
-            new Paragraph({ children: [new TextRun({ text: salutation, size: 22 })], spacing: { after: 360 } }),
             ...bodyParagraphs,
-            new Paragraph({ children: [new TextRun({ text: 'Warm regards,', size: 22 })], spacing: { before: 360 } }),
-            new Paragraph({ children: [new TextRun({ text: signName, bold: true, size: 22, color: '00A5A3' })] }),
-            new Paragraph({ children: [new TextRun({ text: signTitle, size: 20 })] }),
-            new Paragraph({ children: [new TextRun({ text: data.entity, size: 20, color: '4A5568' })], spacing: { after: 480 } }),
+            new Paragraph({ children: [], spacing: { after: 720 } }),
             footerTable
           ]
         }
