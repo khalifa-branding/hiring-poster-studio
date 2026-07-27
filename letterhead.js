@@ -1,123 +1,110 @@
-/**
- * Trescon Global Executive Letterhead Studio Logic (Enterprise Production Refactor)
- */
+// Preset Address Database
+const ADDRESS_PRESETS = {
+  bangalore: {
+    entity: "Trescon Global Business Solutions Pvt Ltd",
+    address: "1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka – 560034",
+    extra: "",
+    cin: "CIN: U74900KA2016PTC086221",
+    email: "info@tresconglobal.com",
+    web: "tresconglobal.com"
+  },
+  manipal: {
+    entity: "Trescon Global Business Solutions Pvt Ltd",
+    address: "H (23), 5th Floor, Pragathi Business District #412, above Reliance Trends, Laxmindra Nagar,<br>Manipal, Udupi, Karnataka – 576104",
+    extra: "",
+    cin: "CIN: U74900KA2016PTC086221",
+    email: "info@tresconglobal.com",
+    web: "tresconglobal.com"
+  },
+  mangalore: {
+    entity: "Trescon Global Business Solutions Pvt Ltd",
+    address: "1st Floor, Bejai Post, Ajantha Business Center, Bejai – Kapikad Road, Mangaluru, Karnataka – 575004",
+    extra: "",
+    cin: "CIN: U74900KA2016PTC086221",
+    email: "info@tresconglobal.com",
+    web: "tresconglobal.com"
+  },
+  dubai: {
+    entity: "Trescon Events Organizing Ltd.",
+    address: "Office 806, 8th Floor, Liberty House, Dubai International Financial Centre, DIFC, Dubai, UAE",
+    extra: "License number CL6668.",
+    cin: "",
+    email: "uae@tresconglobal.com",
+    web: "tresconglobal.com"
+  }
+};
+
+// Helper to strip raw HTML entities for Word exporter
+function stripHtmlEntities(str) {
+  if (!str) return '';
+  return str
+    .replace(/&ndash;/g, '–')
+    .replace(/&mdash;/g, '—')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/<br\s*\/?>/gi, ' ');
+}
+
+// Enterprise State Management & LocalStorage Persistence
+const STORAGE_KEY = 'trescon_letterhead_state_v3';
+
+let docState = {
+  officePreset: 'bangalore',
+  date: 'Date: July 27, 2026',
+  bodyHTML: ''
+};
+
+function saveDocState() {
+  try {
+    const selectElem = document.getElementById('office-preset');
+    if (selectElem) docState.officePreset = selectElem.value;
+    const dateElem = document.getElementById('preview-date');
+    if (dateElem) docState.date = dateElem.textContent;
+    if (window.quill) docState.bodyHTML = window.quill.root.innerHTML;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(docState));
+  } catch (e) {
+    console.warn('LocalStorage save error:', e);
+  }
+}
+
+// Global Update Footer Function
+window.updateFooter = function() {
+  const selectElem = document.getElementById('office-preset');
+  const selectedKey = selectElem ? selectElem.value : 'bangalore';
+  const data = ADDRESS_PRESETS[selectedKey] || ADDRESS_PRESETS.bangalore;
+
+  const companyElem = document.getElementById('preview-footer-company');
+  const addressElem = document.getElementById('preview-footer-address');
+  const extraElem = document.getElementById('preview-footer-extra');
+  const cinElem = document.getElementById('preview-footer-cin');
+  const headerContactsElem = document.getElementById('preview-header-contacts');
+
+  if (companyElem) companyElem.textContent = data.entity;
+  if (addressElem) addressElem.innerHTML = data.address;
+  if (extraElem) extraElem.textContent = data.extra || '';
+  if (cinElem) cinElem.textContent = data.cin || '';
+
+  const iconDate = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`;
+  const iconEmail = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>`;
+  const iconWeb = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1 4-10z"></path></svg>`;
+
+  if (headerContactsElem) {
+    const dateElem = document.getElementById('preview-date');
+    const currentDateText = dateElem ? dateElem.textContent : 'Date: July 27, 2026';
+    headerContactsElem.innerHTML = `
+      <div class="header-contact-line">${iconDate}<span id="preview-date" contenteditable="true">${currentDateText}</span></div>
+      <div class="header-contact-line">${iconEmail}<span>${data.email}</span></div>
+      <div class="header-contact-line">${iconWeb}<span>${data.web}</span></div>
+    `;
+  }
+
+  saveDocState();
+};
 
 document.addEventListener('DOMContentLoaded', () => {
-
-  // Preset Address Database
-  const ADDRESS_PRESETS = {
-    bangalore: {
-      entity: "Trescon Global Business Solutions Pvt Ltd",
-      address: "1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka – 560034",
-      extra: "",
-      cin: "CIN: U74900KA2016PTC086221",
-      email: "info@tresconglobal.com",
-      web: "tresconglobal.com"
-    },
-    manipal: {
-      entity: "Trescon Global Business Solutions Pvt Ltd",
-      address: "H (23), 5th Floor, Pragathi Business District #412, above Reliance Trends, Laxmindra Nagar,<br>Manipal, Udupi, Karnataka – 576104",
-      extra: "",
-      cin: "CIN: U74900KA2016PTC086221",
-      email: "info@tresconglobal.com",
-      web: "tresconglobal.com"
-    },
-    mangalore: {
-      entity: "Trescon Global Business Solutions Pvt Ltd",
-      address: "1st Floor, Bejai Post, Ajantha Business Center, Bejai – Kapikad Road, Mangaluru, Karnataka – 575004",
-      extra: "",
-      cin: "CIN: U74900KA2016PTC086221",
-      email: "info@tresconglobal.com",
-      web: "tresconglobal.com"
-    },
-    dubai: {
-      entity: "Trescon Events Organizing Ltd.",
-      address: "Office 806, 8th Floor, Liberty House, Dubai International Financial Centre, DIFC, Dubai, UAE",
-      extra: "License number CL6668.",
-      cin: "",
-      email: "uae@tresconglobal.com",
-      web: "tresconglobal.com"
-    }
-  };
-
-  // Helper to strip raw HTML entities for Word exporter
-  function stripHtmlEntities(str) {
-    if (!str) return '';
-    return str
-      .replace(/&ndash;/g, '–')
-      .replace(/&mdash;/g, '—')
-      .replace(/&amp;/g, '&')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&quot;/g, '"')
-      .replace(/&#39;/g, "'")
-      .replace(/<br\s*\/?>/gi, ' ');
-  }
-
-  // Sample Corporate Proposal Content
-  const SAMPLE_BODY = `I hope this message finds you well. I am writing on behalf of Trescon Global to formally submit our comprehensive proposal for the upcoming enterprise technology summit and strategic collaboration initiatives. Our team has tailored this framework to align with your organization's vision, key deliverables, and expansion roadmaps.
-
-As a premier B2B events and business solutions firm operating across seven global territories, Trescon is committed to connecting businesses with high-impact market opportunities. The enclosed document details our execution timeline, stakeholder engagement models, and target milestones for optimal business outcome.
-
-We welcome the opportunity to discuss this proposal further and address any specific requirements. Please feel free to reach out to our executive coordination office at your convenience.`;
-
-  // UI Element References
-  const officePresetSelect = document.getElementById('office-preset');
-  const previewBodyElem = document.getElementById('preview-body');
-  const topToolbarContainer = document.getElementById('editor-top-toolbar');
-
-  const previewDate = document.getElementById('preview-date');
-  const previewRecipientName = document.getElementById('preview-recipient-name');
-  const previewRecipientTitle = document.getElementById('preview-recipient-title');
-  const previewRecipientAddress = document.getElementById('preview-recipient-address');
-  const previewSubject = document.getElementById('preview-subject');
-  const previewSalutation = document.getElementById('preview-salutation');
-  const previewSignName = document.getElementById('preview-sign-name');
-  const previewSignTitle = document.getElementById('preview-sign-title');
-
-  const previewFooterCompany = document.getElementById('preview-footer-company');
-  const previewFooterAddress = document.getElementById('preview-footer-address');
-  const previewFooterLicense = document.getElementById('preview-footer-license');
-  const previewHeaderContacts = document.getElementById('preview-header-contacts');
-
-  const btnPrint = document.getElementById('btn-print');
-  const btnDownloadPdf = document.getElementById('btn-download-pdf');
-  const btnDownloadDocx = document.getElementById('btn-download-docx');
-
-  // Enterprise State Management & LocalStorage Persistence
-  const STORAGE_KEY = 'trescon_letterhead_state_v3';
-
-  let docState = {
-    officePreset: 'bangalore',
-    recipientName: 'Mr. Alex Turner',
-    recipientTitle: 'Chief Executive Officer, Apex Global Innovations Ltd.',
-    recipientAddress: 'Bengaluru, Karnataka',
-    subject: 'Subject: Formal Proposal & Corporate Partnership Engagement',
-    salutation: 'Dear Mr. Turner,',
-    date: 'Date: July 24, 2026',
-    bodyHTML: '',
-    signatoryName: 'Mohammed Saleem',
-    signatoryTitle: 'Founder & Chairman'
-  };
-
-  function saveDocState() {
-    try {
-      docState.officePreset = officePresetSelect ? officePresetSelect.value : 'bangalore';
-      if (previewRecipientName) docState.recipientName = previewRecipientName.textContent;
-      if (previewRecipientTitle) docState.recipientTitle = previewRecipientTitle.textContent;
-      if (previewRecipientAddress) docState.recipientAddress = previewRecipientAddress.textContent;
-      if (previewSubject) docState.subject = previewSubject.textContent;
-      if (previewSalutation) docState.salutation = previewSalutation.textContent;
-      if (previewDate) docState.date = previewDate.textContent;
-      if (previewSignName) docState.signatoryName = previewSignName.textContent;
-      if (previewSignTitle) docState.signatoryTitle = previewSignTitle.textContent;
-      if (quill) docState.bodyHTML = quill.root.innerHTML;
-
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(docState));
-    } catch (e) {
-      console.warn('LocalStorage save error:', e);
-    }
-  }
 
   function loadDocState() {
     try {
@@ -594,6 +581,8 @@ We welcome the opportunity to discuss this proposal further and address any spec
       console.error('Docx Exporter Error:', err);
     }
   }
+
+  window.exportToDocx = exportToDocx;
 
   if (btnDownloadDocx) {
     btnDownloadDocx.addEventListener('click', exportToDocx);
