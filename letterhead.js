@@ -544,7 +544,7 @@ We welcome the opportunity to discuss this proposal further and address any spec
                 }),
                 new Paragraph({
                   children: [new TextRun({ text: dateStr, color: '4A5568', size: 18, font: 'Manrope' })],
-                  alignment: AlignmentType.RIGHT,
+                  alignment: AlignmentType.LEFT,
                   spacing: { after: 200 }
                 })
               ]

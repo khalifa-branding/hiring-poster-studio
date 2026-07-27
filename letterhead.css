@@ -531,20 +531,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .header-meta-block {
-  text-align: right;
+  text-align: left;
   font-size: 0.82rem;
   color: var(--trescon-dark);
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 3px;
+  align-items: flex-start;
+  gap: 4px;
   font-weight: 500;
 }
 
 .header-contact-line {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
+  width: 100%;
 }
 
 .header-contact-line span {
@@ -553,7 +554,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .contact-icon {
+  width: 14px;
+  height: 14px;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Header Gradient Rule */
