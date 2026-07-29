@@ -599,22 +599,58 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const quickNewCampaignBtn = document.getElementById('btn-quick-new-campaign');
-  if (quickNewCampaignBtn) {
-    quickNewCampaignBtn.addEventListener('click', () => {
-      titleInput.value = "We're growing our global team!";
-      subtitleInput.value = "We're looking for talented professionals to join us:";
-      locationInput.value = "Global Offices";
-      highlightInput.value = "Immediate Joiners Preferred";
-      emailInput.value = "careers@tresconglobal.com";
-      roles = [
-        { title: "Acquisition Executive", type: "1-3 Yrs" },
-        { title: "Business Development Manager", type: "2-5 Yrs" }
-      ];
-      syncTextFields();
-      renderEditorRoles();
-      renderPreviewRoles();
-      switchView('view-poster-builder');
+  // Preset Chips Listener
+  const presetChips = document.querySelectorAll('.preset-chip');
+  presetChips.forEach(chip => {
+    chip.addEventListener('click', (e) => {
+      const presetKey = e.currentTarget.dataset.preset;
+      const data = campaignDataMap[presetKey];
+      if (data) {
+        presetChips.forEach(c => c.classList.remove('active-chip'));
+        e.currentTarget.classList.add('active-chip');
+
+        titleInput.value = data.title;
+        subtitleInput.value = data.subtitle;
+        locationInput.value = data.location;
+        highlightInput.value = data.highlight;
+        emailInput.value = data.email;
+        roles = JSON.parse(JSON.stringify(data.roles));
+        
+        syncTextFields();
+        renderEditorRoles();
+        renderPreviewRoles();
+      }
+    });
+  });
+
+  // Floating Zoom Controls & Halo Toggle
+  let currentZoom = 100;
+  const zoomText = document.getElementById('zoom-value-text');
+  const btnZoomIn = document.getElementById('btn-zoom-in');
+  const btnZoomOut = document.getElementById('btn-zoom-out');
+  const btnZoomFit = document.getElementById('btn-zoom-fit');
+  const btnToggleGlow = document.getElementById('btn-toggle-glow');
+  const studioHalo = document.getElementById('studio-halo-glow');
+
+  const updateZoom = (newZoom) => {
+    currentZoom = Math.min(Math.max(newZoom, 60), 160);
+    if (zoomText) zoomText.textContent = `${currentZoom}%`;
+    if (flyerWrapper) {
+      flyerWrapper.style.transform = `scale(${currentZoom / 100})`;
+      flyerWrapper.style.transformOrigin = 'center center';
+    }
+  };
+
+  if (btnZoomIn) btnZoomIn.addEventListener('click', () => updateZoom(currentZoom + 10));
+  if (btnZoomOut) btnZoomOut.addEventListener('click', () => updateZoom(currentZoom - 10));
+  if (btnZoomFit) btnZoomFit.addEventListener('click', () => updateZoom(100));
+
+  if (btnToggleGlow) {
+    btnToggleGlow.addEventListener('click', () => {
+      btnToggleGlow.classList.toggle('active-tool');
+      if (studioHalo) {
+        studioHalo.style.display = studioHalo.style.display === 'none' ? 'block' : 'none';
+      }
     });
   }
 

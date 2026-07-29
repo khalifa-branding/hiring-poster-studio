@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trescon Global - Hiring Poster Studio</title>
+  <title>Trescon Global - Hiring Poster Studio Pro</title>
   <meta name="description" content="Official Trescon Global Canva-style hiring poster generator and social media campaign editor. Fill out job details, pick aspect ratios (Square, Portrait, Story), design themes, and export high-res PNGs.">
   
   <!-- Google Fonts: Anek Devanagari & Manrope -->
@@ -11,25 +11,38 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=5.0">
+  <link rel="stylesheet" href="style.css?v=6.0">
 </head>
 <body>
 
   <div class="studio-app-container">
     
-    <!-- TOP FIXED NAVIGATION RIBBON (EXACT LETTERHEAD STYLE) -->
+    <!-- TOP FIXED NAVIGATION RIBBON (EXECUTIVE DARK LUXURY STYLE) -->
     <header class="studio-top-ribbon">
       <div class="ribbon-brand">
         <img src="brand_assets/trescon-logo-white-2025.png" alt="Trescon Logo" class="brand-logo-img">
         <div class="brand-divider"></div>
         <h1 class="brand-title">Hiring Poster Studio</h1>
+        <span class="live-studio-badge"><span class="badge-dot"></span> PRO</span>
+      </div>
+
+      <!-- CENTER: QUICK CAMPAIGN PRESET CHIPS -->
+      <div class="ribbon-presets">
+        <span class="preset-label">Campaign Presets:</span>
+        <button class="preset-chip active-chip" data-preset="manipal">📍 Manipal Sprint</button>
+        <button class="preset-chip" data-preset="bangalore">📍 Bangalore HQ</button>
+        <button class="preset-chip" data-preset="dubai">📍 Dubai DIFC</button>
+        <button class="preset-chip" data-preset="riyadh">📍 Riyadh KSA</button>
       </div>
 
       <!-- EXPORT ACTIONS TOP RIGHT -->
-      <div class="ribbon-actions">
+      <div class="ribbon-actions" style="display: flex; align-items: center; gap: 0.75rem;">
+        <a href="letterhead.html" class="btn-top-switch" title="Open Executive Letterhead Studio">
+          <span>📄</span> Letterhead Studio
+        </a>
         <button id="btn-export-top" class="btn-top-export" onclick="document.getElementById('export-btn').click();">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-          Export Poster PNG
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+          Export High-Res PNG
         </button>
       </div>
     </header>
@@ -54,7 +67,7 @@
             <span>📐</span> Format
           </button>
           <button class="sidebar-cat-tab" data-tab="tab-style">
-            <span>🎨</span> Theme & Logo
+            <span>🎨</span> Theme & Swatches
           </button>
         </nav>
 
@@ -171,33 +184,55 @@
             </section>
           </div>
 
-          <!-- TAB 3: THEMES, LOGOS & QR CODES -->
+          <!-- TAB 3: VISUAL THEME SWATCHES, LOGOS & QR CODES -->
           <div id="tab-style" class="sidebar-tab-panel">
-            <!-- Section 5: Design Themes -->
+            <!-- Section 5: Design Themes & Visual Swatches -->
             <section class="editor-section">
-              <h2>6. Design Theme</h2>
-              <div class="options-grid">
-                <div class="option-card">
+              <h2>6. Design Theme & Swatches</h2>
+              <div class="theme-swatch-grid">
+                
+                <div class="theme-swatch-card">
                   <input type="radio" id="theme-emerald-opt" name="theme-preset" value="emerald" checked>
                   <label for="theme-emerald-opt">
-                    <span class="icon" style="color: #c0f43c;">●</span>
-                    <span>Emerald Glow</span>
+                    <div class="swatch-preview-box preview-emerald">
+                      <span class="swatch-dot dot-lime"></span>
+                      <span class="swatch-dot dot-teal"></span>
+                    </div>
+                    <div class="swatch-details">
+                      <span class="swatch-name">Emerald Glow</span>
+                      <span class="swatch-tag">Signature Neon</span>
+                    </div>
                   </label>
                 </div>
-                <div class="option-card">
+
+                <div class="theme-swatch-card">
                   <input type="radio" id="theme-midnight-opt" name="theme-preset" value="midnight">
                   <label for="theme-midnight-opt">
-                    <span class="icon" style="color: #00a5a3;">●</span>
-                    <span>Midnight Tech</span>
+                    <div class="swatch-preview-box preview-midnight">
+                      <span class="swatch-dot dot-cyan"></span>
+                      <span class="swatch-dot dot-blue"></span>
+                    </div>
+                    <div class="swatch-details">
+                      <span class="swatch-name">Midnight Tech</span>
+                      <span class="swatch-tag">Cyber Cyan</span>
+                    </div>
                   </label>
                 </div>
-                <div class="option-card">
+
+                <div class="theme-swatch-card">
                   <input type="radio" id="theme-light-opt" name="theme-preset" value="light">
                   <label for="theme-light-opt">
-                    <span class="icon" style="color: #01373d;">●</span>
-                    <span>Corp Light</span>
+                    <div class="swatch-preview-box preview-light">
+                      <span class="swatch-dot dot-dark"></span>
+                      <span class="swatch-dot dot-slate"></span>
+                    </div>
+                    <div class="swatch-details">
+                      <span class="swatch-name">Corp Light</span>
+                      <span class="swatch-tag">Executive Paper</span>
+                    </div>
                   </label>
                 </div>
+
               </div>
             </section>
 
@@ -247,13 +282,41 @@
 
         <!-- Export Action Button -->
         <button class="export-btn" id="export-btn">
-          <span class="icon">💾</span> Export Poster PNG
+          <span class="icon">💾</span> Export High-Res PNG
         </button>
       </aside>
 
-      <!-- RIGHT PANEL: PREVIEW WORKSPACE (AUTO-SCALED FOR LAPTOPS) -->
-      <main class="preview-workspace">
+      <!-- RIGHT PANEL: PREVIEW WORKSPACE (EXECUTIVE DARK LUXURY STUDIO) -->
+      <main class="preview-workspace" id="preview-workspace">
         
+        <!-- FLOATING STUDIO CONTROLS TOOLBAR -->
+        <div class="floating-studio-toolbar">
+          <div class="toolbar-group">
+            <button class="toolbar-btn" id="btn-zoom-out" title="Zoom Out (-)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <span class="zoom-value" id="zoom-value-text">100%</span>
+            <button class="toolbar-btn" id="btn-zoom-in" title="Zoom In (+)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <button class="toolbar-btn" id="btn-zoom-fit" title="Fit to Screen">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path></svg>
+            </button>
+          </div>
+          
+          <div class="toolbar-divider"></div>
+
+          <div class="toolbar-group">
+            <button class="toolbar-btn active-tool" id="btn-toggle-glow" title="Toggle Ambient Studio Halo">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+              <span>Ambient Halo</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- AMBIENT GLOW BACKDROP HALO -->
+        <div class="studio-halo-glow" id="studio-halo-glow"></div>
+
         <div class="flyer-canvas-wrapper ratio-portrait" id="flyer-canvas-wrapper">
           <div class="flyer-canvas theme-emerald-glow" id="flyer-canvas">
             
@@ -320,7 +383,7 @@
               <div class="cta-right-col">
                 <div class="cta-qr-wrapper" id="flyer-qr-code" style="display: none;"></div>
                 <a href="https://tresconglobal.com" target="_blank" class="cta-website-badge" title="Visit Official Website">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>
                   <span>tresconglobal.com</span>
                 </a>
               </div>
@@ -337,6 +400,6 @@
 
   <!-- HTML2Canvas Image Export Library -->
   <script src="html2canvas.min.js"></script>
-  <script src="app.js?v=5.0"></script>
+  <script src="app.js?v=6.0"></script>
 </body>
 </html>
