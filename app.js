@@ -16,11 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const addRoleBtn = document.getElementById('add-role-btn');
   const rolesContainer = document.getElementById('roles-input-container');
   
-  // QR DOM Inputs/Outputs
-  const qrToggle = document.getElementById('qr-toggle');
-  const qrLink = document.getElementById('qr-link');
-  const flyerQrCode = document.getElementById('flyer-qr-code');
-  
   // Dynamic Outputs on Flyer
   const flyerTitle = document.getElementById('flyer-title-text');
   const flyerSubtitle = document.getElementById('flyer-subtitle-text');
@@ -56,104 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
     { title: "Commercial Executive", type: "0-2 Yrs" },
     { title: "Community Executive - Delegates", type: "2-4 Yrs" }
   ];
-
-  // High-fidelity vector QR Code SVG generator
-  const getQRCodeSVG = () => {
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges">
-      <rect width="29" height="29" fill="#FFFFFF"/>
-      <rect x="0" y="0" width="7" height="7" fill="#000000"/>
-      <rect x="1" y="1" width="5" height="5" fill="#FFFFFF"/>
-      <rect x="2" y="2" width="3" height="3" fill="#000000"/>
-      <rect x="22" y="0" width="7" height="7" fill="#000000"/>
-      <rect x="23" y="1" width="5" height="5" fill="#FFFFFF"/>
-      <rect x="24" y="2" width="3" height="3" fill="#000000"/>
-      <rect x="0" y="22" width="7" height="7" fill="#000000"/>
-      <rect x="1" y="23" width="5" height="5" fill="#FFFFFF"/>
-      <rect x="2" y="24" width="3" height="3" fill="#000000"/>
-      <rect x="20" y="20" width="5" height="5" fill="#000000"/>
-      <rect x="21" y="21" width="3" height="3" fill="#FFFFFF"/>
-      <rect x="22" y="22" width="1" height="1" fill="#000000"/>
-      <rect x="8" y="0" width="1" height="1" fill="#000000"/>
-      <rect x="10" y="1" width="2" height="1" fill="#000000"/>
-      <rect x="13" y="0" width="1" height="3" fill="#000000"/>
-      <rect x="15" y="1" width="1" height="1" fill="#000000"/>
-      <rect x="17" y="0" width="2" height="1" fill="#000000"/>
-      <rect x="20" y="1" width="1" height="2" fill="#000000"/>
-      <rect x="8" y="3" width="2" height="1" fill="#000000"/>
-      <rect x="11" y="2" width="1" height="2" fill="#000000"/>
-      <rect x="15" y="3" width="3" height="1" fill="#000000"/>
-      <rect x="19" y="3" width="1" height="1" fill="#000000"/>
-      <rect x="9" y="5" width="1" height="2" fill="#000000"/>
-      <rect x="12" y="5" width="2" height="1" fill="#000000"/>
-      <rect x="16" y="5" width="1" height="1" fill="#000000"/>
-      <rect x="18" y="6" width="3" height="1" fill="#000000"/>
-      <rect x="0" y="8" width="1" height="2" fill="#000000"/>
-      <rect x="2" y="9" width="3" height="1" fill="#000000"/>
-      <rect x="6" y="8" width="1" height="1" fill="#000000"/>
-      <rect x="8" y="8" width="4" height="1" fill="#000000"/>
-      <rect x="14" y="7" width="1" height="2" fill="#000000"/>
-      <rect x="16" y="8" width="2" height="2" fill="#000000"/>
-      <rect x="19" y="8" width="1" height="1" fill="#000000"/>
-      <rect x="21" y="9" width="3" height="1" fill="#000000"/>
-      <rect x="25" y="8" width="1" height="3" fill="#000000"/>
-      <rect x="28" y="9" width="1" height="1" fill="#000000"/>
-      <rect x="1" y="11" width="2" height="1" fill="#000000"/>
-      <rect x="4" y="12" width="1" height="2" fill="#000000"/>
-      <rect x="7" y="11" width="2" height="1" fill="#000000"/>
-      <rect x="10" y="10" width="1" height="3" fill="#000000"/>
-      <rect x="12" y="12" width="2" height="1" fill="#000000"/>
-      <rect x="15" y="11" width="1" height="1" fill="#000000"/>
-      <rect x="17" y="12" width="1" height="2" fill="#000000"/>
-      <rect x="19" y="10" width="3" height="1" fill="#000000"/>
-      <rect x="23" y="12" width="1" height="1" fill="#000000"/>
-      <rect x="27" y="11" width="2" height="1" fill="#000000"/>
-      <rect x="0" y="14" width="3" height="1" fill="#000000"/>
-      <rect x="4" y="15" width="2" height="1" fill="#000000"/>
-      <rect x="7" y="14" width="1" height="1" fill="#000000"/>
-      <rect x="9" y="15" width="3" height="1" fill="#000000"/>
-      <rect x="13" y="14" width="1" height="2" fill="#000000"/>
-      <rect x="15" y="15" width="2" height="1" fill="#000000"/>
-      <rect x="18" y="14" width="1" height="1" fill="#000000"/>
-      <rect x="20" y="15" width="3" height="1" fill="#000000"/>
-      <rect x="24" y="14" width="2" height="1" fill="#000000"/>
-      <rect x="27" y="15" width="1" height="2" fill="#000000"/>
-      <rect x="8" y="17" width="1" height="3" fill="#000000"/>
-      <rect x="10" y="18" width="2" height="1" fill="#000000"/>
-      <rect x="13" y="17" width="3" height="1" fill="#000000"/>
-      <rect x="17" y="18" width="1" height="2" fill="#000000"/>
-      <rect x="19" y="17" width="2" height="1" fill="#000000"/>
-      <rect x="22" y="18" width="1" height="1" fill="#000000"/>
-      <rect x="25" y="17" width="2" height="1" fill="#000000"/>
-      <rect x="8" y="21" width="3" height="1" fill="#000000"/>
-      <rect x="12" y="20" width="1" height="2" fill="#000000"/>
-      <rect x="14" y="21" width="2" height="1" fill="#000000"/>
-      <rect x="17" y="20" width="2" height="1" fill="#000000"/>
-      <rect x="10" y="23" width="1" height="3" fill="#000000"/>
-      <rect x="12" y="24" width="3" height="1" fill="#000000"/>
-      <rect x="16" y="23" width="1" height="2" fill="#000000"/>
-      <rect x="18" y="25" width="2" height="1" fill="#000000"/>
-      <rect x="8" y="27" width="2" height="1" fill="#000000"/>
-      <rect x="11" y="28" width="3" height="1" fill="#000000"/>
-      <rect x="15" y="27" width="1" height="2" fill="#000000"/>
-      <rect x="17" y="28" width="2" height="1" fill="#000000"/>
-    </svg>`;
-  };
-
-  // Sync QR code visibility and target
-  const syncQRCode = () => {
-    if (qrToggle && flyerQrCode) {
-      if (qrToggle.checked) {
-        flyerQrCode.style.display = 'flex';
-        flyerQrCode.innerHTML = getQRCodeSVG();
-      } else {
-        flyerQrCode.style.display = 'none';
-      }
-    }
-  };
-
-  if (qrToggle) {
-    qrToggle.addEventListener('change', syncQRCode);
-  }
 
   // Real-time synchronization function for all basic text inputs with fallbacks
   const syncTextFields = () => {
@@ -473,12 +370,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // Primary & Canvas Quick Export Listeners
+  // Primary Export Listener
   const btnExportTop = document.getElementById('btn-export-top');
-  const btnCanvasQuickExport = document.getElementById('btn-canvas-quick-export');
-  
   if (btnExportTop) btnExportTop.addEventListener('click', exportPosterPNG);
-  if (btnCanvasQuickExport) btnCanvasQuickExport.addEventListener('click', exportPosterPNG);
 
   // Non-Blocking Form Reset Handler
   const btnResetForm = document.getElementById('btn-reset-form');
@@ -542,14 +436,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Floating Zoom Controls & Ambient Halo Toggle
+  // Floating Zoom Controls
   let currentZoom = 100;
   const zoomText = document.getElementById('zoom-value-text');
   const btnZoomIn = document.getElementById('btn-zoom-in');
   const btnZoomOut = document.getElementById('btn-zoom-out');
   const btnZoomFit = document.getElementById('btn-zoom-fit');
-  const btnToggleGlow = document.getElementById('btn-toggle-glow');
-  const studioHalo = document.getElementById('studio-halo-glow');
 
   const updateZoom = (newZoom) => {
     currentZoom = Math.min(Math.max(newZoom, 60), 160);
@@ -563,15 +455,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnZoomIn) btnZoomIn.addEventListener('click', () => updateZoom(currentZoom + 10));
   if (btnZoomOut) btnZoomOut.addEventListener('click', () => updateZoom(currentZoom - 10));
   if (btnZoomFit) btnZoomFit.addEventListener('click', () => updateZoom(100));
-
-  if (btnToggleGlow) {
-    btnToggleGlow.addEventListener('click', () => {
-      btnToggleGlow.classList.toggle('active-tool');
-      if (studioHalo) {
-        studioHalo.style.display = studioHalo.style.display === 'none' ? 'block' : 'none';
-      }
-    });
-  }
 
   // Auto-Save Status Pulse Feedback
   const statusText = document.getElementById('status-text');
@@ -595,7 +478,6 @@ document.addEventListener('DOMContentLoaded', () => {
       headerBtn.addEventListener('click', () => {
         const isOpen = item.classList.contains('open');
         
-        // Single accordion focus mode: close other accordions
         accordionItems.forEach(otherItem => {
           otherItem.classList.remove('open');
           const otherHeader = otherItem.querySelector('.accordion-header');
@@ -614,5 +496,4 @@ document.addEventListener('DOMContentLoaded', () => {
   syncTextFields();
   renderEditorRoles();
   renderPreviewRoles();
-  syncQRCode();
 });
