@@ -272,10 +272,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (selectedTheme === 'emerald') {
       flyerCanvas.classList.add('theme-emerald-glow');
+      if (flyerLogo) flyerLogo.src = 'brand_assets/10-years-trescon-logo-W.png';
     } else if (selectedTheme === 'midnight') {
       flyerCanvas.classList.add('theme-midnight-modern');
+      if (flyerLogo) flyerLogo.src = 'brand_assets/10-years-trescon-logo-W.png';
     } else if (selectedTheme === 'light') {
       flyerCanvas.classList.add('theme-corporate-light');
+      if (flyerLogo) flyerLogo.src = 'brand_assets/10-years-trescon-logo-B.png';
     }
 
     renderPreviewRoles();
