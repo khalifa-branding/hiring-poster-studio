@@ -654,6 +654,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Render Roles in Left Editor Panel (P1: Alignment & Custom Chevron)
+  function renderEditorRoles() {
+    if (!rolesContainer) return;
+    rolesContainer.innerHTML = '';
+
+    roles.forEach((role, idx) => {
+      const row = document.createElement('div');
+      row.className = 'role-input-row';
+      row.innerHTML = `
+        <input type="text" class="form-input role-title-input" value="${escapeHtml(role.title)}" placeholder="Job Role Title" data-index="${idx}" aria-label="Job role title ${idx + 1}" title="${escapeHtml(role.title)}">
+        <select class="form-input role-exp-select" data-index="${idx}" aria-label="Experience requirement for role ${idx + 1}">
+          ${expOptions.map(opt => `<option value="${opt}" ${opt === role.type ? 'selected' : ''}>${opt}</option>`).join('')}
+        </select>
+        <button class="remove-role-btn role-remove-btn" data-index="${idx}" aria-label="Remove role ${idx + 1}" title="Remove role">✕</button>
+      `;
+      rolesContainer.appendChild(row);
+    });
+
+    // Dynamic Title tooltips
+    document.querySelectorAll('.role-title-input').forEach(inp => {
+      inp.addEventListener('input', (e) => {
+        const index = parseInt(e.target.dataset.index, 10);
+        roles[index].title = e.target.value;
+        e.target.setAttribute('title', e.target.value);
+        renderPreviewRoles();
+      });
+    });
+
+    document.querySelectorAll('.role-exp-select').forEach(sel => {
+      sel.addEventListener('change', (e) => {
+        const index = parseInt(e.target.dataset.index, 10);
+        roles[index].type = e.target.value;
+        renderPreviewRoles();
+      });
+    });
+
+    document.querySelectorAll('.remove-role-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const index = parseInt(e.currentTarget.dataset.index, 10);
+        roles.splice(index, 1);
+        renderEditorRoles();
+        renderPreviewRoles();
+      });
+    });
+
+    updateRolesLimitUI();
+  }
+
   // Primary & Canvas Quick Export Listeners
   const btnExportTop = document.getElementById('btn-export-top');
   const btnCanvasQuickExport = document.getElementById('btn-canvas-quick-export');
@@ -661,25 +709,50 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnExportTop) btnExportTop.addEventListener('click', exportPosterPNG);
   if (btnCanvasQuickExport) btnCanvasQuickExport.addEventListener('click', exportPosterPNG);
 
-  // Form Reset Handler
+  // P2: Non-Blocking Safeguard Form Reset Handler
   const btnResetForm = document.getElementById('btn-reset-form');
-  if (btnResetForm) {
+  const resetActionContainer = btnResetForm ? btnResetForm.parentElement : null;
+
+  if (btnResetForm && resetActionContainer) {
     btnResetForm.addEventListener('click', () => {
-      titleInput.value = "We're growing our team at Trescon Manipal!";
-      subtitleInput.value = "We're looking for enthusiastic individuals to join us in these key roles:";
-      locationInput.value = "Manipal";
-      highlightInput.value = "Immediate Joiners Preferred";
-      emailInput.value = "hr@tresconglobal.com";
-      ctaLabelInput.value = "APPLY DIRECTLY VIA EMAIL";
-      roles = [
-        { title: "Speaker Acquisition Executive", type: "1-3 Yrs" },
-        { title: "Commercial Executive", type: "0-2 Yrs" },
-        { title: "Community Executive - Delegates", type: "2-4 Yrs" }
-      ];
-      syncTextFields();
-      renderEditorRoles();
-      renderPreviewRoles();
-      triggerAutoSavePulse("Form reset to defaults");
+      if (document.getElementById('reset-confirm-box')) return;
+
+      const confirmBox = document.createElement('div');
+      confirmBox.id = 'reset-confirm-box';
+      confirmBox.className = 'reset-confirm-box';
+      confirmBox.innerHTML = `
+        <span>Reset fields?</span>
+        <button class="btn-confirm-reset" id="btn-confirm-reset-action">Confirm</button>
+        <button class="btn-cancel-reset" id="btn-cancel-reset-action">Cancel</button>
+      `;
+
+      resetActionContainer.insertBefore(confirmBox, btnResetForm);
+      btnResetForm.style.display = 'none';
+
+      document.getElementById('btn-confirm-reset-action').addEventListener('click', () => {
+        titleInput.value = "We're growing our team at Trescon Manipal!";
+        subtitleInput.value = "We're looking for enthusiastic individuals to join us in these key roles:";
+        locationInput.value = "Manipal";
+        highlightInput.value = "Immediate Joiners Preferred";
+        emailInput.value = "hr@tresconglobal.com";
+        ctaLabelInput.value = "APPLY DIRECTLY VIA EMAIL";
+        roles = [
+          { title: "Speaker Acquisition Executive", type: "1-3 Yrs" },
+          { title: "Commercial Executive", type: "0-2 Yrs" },
+          { title: "Community Executive - Delegates", type: "2-4 Yrs" }
+        ];
+        syncTextFields();
+        renderEditorRoles();
+        renderPreviewRoles();
+        confirmBox.remove();
+        btnResetForm.style.display = 'inline-flex';
+        triggerAutoSavePulse("Form reset to defaults");
+      });
+
+      document.getElementById('btn-cancel-reset-action').addEventListener('click', () => {
+        confirmBox.remove();
+        btnResetForm.style.display = 'inline-flex';
+      });
     });
   }
 
@@ -708,30 +781,45 @@ document.addEventListener('DOMContentLoaded', () => {
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
       statusText.textContent = msg;
-      statusText.style.color = "#9CA3AF";
+      statusText.style.color = "#A1A1AA";
     }, 600);
   }
 
-  // Trigger pulse on input changes
+  // Trigger pulse on input changes & dynamic title tooltips
   document.querySelectorAll('.form-input, input[type="radio"]').forEach(inp => {
-    inp.addEventListener('input', () => triggerAutoSavePulse());
+    inp.addEventListener('input', (e) => {
+      e.target.setAttribute('title', e.target.value);
+      triggerAutoSavePulse();
+    });
   });
 
-  // Sidebar Category Tabs Switching (Laptop UX Optimization)
+  // P3: Category Tabs & Keyboard Accessibility (WCAG 2.1 AA)
   const sidebarCatTabs = document.querySelectorAll('.sidebar-cat-tab');
   const sidebarTabPanels = document.querySelectorAll('.sidebar-tab-panel');
+  const tabListNav = document.querySelector('.sidebar-category-tabs');
 
-  sidebarCatTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const targetTabId = tab.dataset.tab;
-      
+  if (tabListNav) {
+    tabListNav.setAttribute('role', 'tablist');
+  }
+
+  sidebarCatTabs.forEach((tab, index) => {
+    tab.setAttribute('role', 'tab');
+    tab.setAttribute('id', `tab-${tab.dataset.tab}`);
+    tab.setAttribute('aria-selected', tab.classList.contains('active') ? 'true' : 'false');
+    tab.setAttribute('tabindex', tab.classList.contains('active') ? '0' : '-1');
+
+    tab.addEventListener('click', (e) => {
+      const targetTabId = e.currentTarget.dataset.tab;
+
       sidebarCatTabs.forEach(t => {
-        if (t === tab) {
-          t.classList.add('active');
-        } else {
-          t.classList.remove('active');
-        }
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+        t.setAttribute('tabindex', '-1');
       });
+
+      e.currentTarget.classList.add('active');
+      e.currentTarget.setAttribute('aria-selected', 'true');
+      e.currentTarget.setAttribute('tabindex', '0');
 
       sidebarTabPanels.forEach(panel => {
         if (panel.id === targetTabId) {
@@ -740,6 +828,21 @@ document.addEventListener('DOMContentLoaded', () => {
           panel.classList.remove('active-panel');
         }
       });
+    });
+
+    // Arrow Keyboard Navigation
+    tab.addEventListener('keydown', (e) => {
+      let targetIndex = null;
+      if (e.key === 'ArrowRight') {
+        targetIndex = (index + 1) % sidebarCatTabs.length;
+      } else if (e.key === 'ArrowLeft') {
+        targetIndex = (index - 1 + sidebarCatTabs.length) % sidebarCatTabs.length;
+      }
+      if (targetIndex !== null) {
+        e.preventDefault();
+        sidebarCatTabs[targetIndex].click();
+        sidebarCatTabs[targetIndex].focus();
+      }
     });
   });
 

@@ -2341,8 +2341,132 @@ select.form-input option,
   font-weight: 700 !important;
 }
 
-.btn-quick-export-canvas:hover {
-  background: var(--color-lime) !important;
-  color: #0A1826 !important;
-  box-shadow: 0 0 12px rgba(163, 230, 53, 0.3) !important;
+/* ==========================================
+   PRIORITIZED ACTIONABLE POLISH STYLES (P1, P2, P3)
+   ========================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* P1: Sidebar Horizontal Overflow Fix */
+.editor-sidebar {
+  overflow-x: hidden !important;
+  box-sizing: border-box;
+}
+
+.form-grid-2col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.6rem;
+  width: 100%;
+}
+
+/* P1: Role Input Row Alignment & Custom Select Chevron */
+.role-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.role-title-input {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+.role-exp-select {
+  flex: 0 0 95px !important;
+  width: 95px !important;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 22px !important;
+  cursor: pointer;
+}
+
+.role-remove-btn {
+  flex-shrink: 0;
+  aria-label: "Remove position";
+}
+
+/* P2: High-Contrast Active Neon Focus States */
+.form-input:focus, .form-textarea:focus, .role-exp-select:focus {
+  outline: none !important;
+  border-color: var(--color-lime) !important;
+  box-shadow: 0 0 0 3px rgba(163, 230, 53, 0.25) !important;
+  background-color: rgba(163, 230, 53, 0.03) !important;
+}
+
+/* P2: Non-Blocking Reset Confirmation Badge */
+.reset-confirm-box {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(239, 68, 68, 0.14);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  color: #FCA5A5;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.btn-confirm-reset {
+  background: #EF4444;
+  color: #FFFFFF;
+  border: none;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.68rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-confirm-reset:hover {
+  background: #DC2626;
+}
+
+.btn-cancel-reset {
+  background: transparent;
+  color: #D1D5DB;
+  border: none;
+  font-size: 0.68rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* P3: Muted Text Contrast Optimization (WCAG 2.1 AA) */
+.sidebar-header p, .form-group label, .status-text, .swatch-tag, .preset-label {
+  color: #A1A1AA !important;
+}
+
+/* P3: Custom Sleek Vertical Scrollbars */
+.sidebar-tab-panels::-webkit-scrollbar, 
+.editor-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar-tab-panels::-webkit-scrollbar-track, 
+.editor-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-tab-panels::-webkit-scrollbar-thumb, 
+.editor-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+.sidebar-tab-panels::-webkit-scrollbar-thumb:hover, 
+.editor-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
