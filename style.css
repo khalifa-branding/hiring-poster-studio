@@ -1323,43 +1323,56 @@ select.form-input option,
   flex-shrink: 0;
 }
 
-/* Solid Executive Brand CTA Button */
+/* Solid Crisp Executive Brand CTA Button */
 .cta-website-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.45em;
-  padding: 0.48em 0.95em;
-  border-radius: 7px;
+  padding: 0.45em 0.85em;
+  border-radius: 6px;
   background: var(--color-lime);
   color: #0A1826 !important;
   font-family: var(--font-body);
   font-size: 0.74em;
-  font-weight: 700;
+  font-weight: 800;
   text-decoration: none;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.3px;
   transition: all 0.2s ease;
   flex-shrink: 0;
   white-space: nowrap;
-  box-shadow: 0 2px 10px rgba(163, 230, 53, 0.25);
+  box-shadow: none !important;
   border: none;
 }
 
-.cta-website-badge:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(163, 230, 53, 0.4);
+.theme-emerald-glow .cta-website-badge {
+  background: #A3E635 !important; /* Pure Crisp Bright Lime */
+  color: #061A12 !important; /* High Contrast Deep Dark Text */
+  font-weight: 800 !important;
+}
+
+.theme-emerald-glow .cta-website-badge:hover {
+  background: #B4F34A !important;
 }
 
 .theme-midnight-modern .cta-website-badge {
-  background: var(--color-teal);
+  background: #00A5A3 !important; /* Pure Vibrant Teal */
   color: #FFFFFF !important;
-  box-shadow: 0 2px 10px rgba(0, 165, 163, 0.3);
+  font-weight: 800 !important;
+}
+
+.theme-midnight-modern .cta-website-badge:hover {
+  background: #00BEBC !important;
 }
 
 .theme-corporate-light .cta-website-badge {
   color: #FFFFFF !important;
-  background: #0284C7 !important;
+  background: #0284C7 !important; /* Pure Electric Cyan */
   border: none !important;
-  box-shadow: 0 2px 10px rgba(2, 132, 199, 0.3) !important;
+  font-weight: 800 !important;
+}
+
+.theme-corporate-light .cta-website-badge:hover {
+  background: #0369A1 !important;
 }
 
 .cta-website-badge:hover {
