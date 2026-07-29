@@ -155,18 +155,38 @@ document.addEventListener('DOMContentLoaded', () => {
     qrToggle.addEventListener('change', syncQRCode);
   }
 
-  // Real-time synchronization function for all basic text inputs
+  // Real-time synchronization function for all basic text inputs with fallbacks
   const syncTextFields = () => {
-    if (titleInput && flyerTitle) flyerTitle.textContent = titleInput.value;
-    if (subtitleInput && flyerSubtitle) flyerSubtitle.textContent = subtitleInput.value;
-    if (locationInput && flyerLocation) flyerLocation.textContent = locationInput.value;
-    if (highlightInput && flyerHighlight) flyerHighlight.textContent = highlightInput.value;
-    if (emailInput && flyerEmail) flyerEmail.textContent = emailInput.value;
-    if (ctaLabelInput && flyerCtaLabel) flyerCtaLabel.textContent = ctaLabelInput.value;
+    const defaultTitle = "We're growing our team at Trescon Manipal!";
+    const defaultSubtitle = "We're looking for enthusiastic individuals to join us in these key roles:";
+    const defaultLocation = "Manipal";
+    const defaultHighlight = "Immediate Joiners Preferred";
+    const defaultEmail = "hr@tresconglobal.com";
+    const defaultCtaLabel = "APPLY DIRECTLY VIA EMAIL";
+
+    if (titleInput && flyerTitle) {
+      flyerTitle.textContent = titleInput.value.trim() !== '' ? titleInput.value : defaultTitle;
+    }
+    if (subtitleInput && flyerSubtitle) {
+      flyerSubtitle.textContent = subtitleInput.value.trim() !== '' ? subtitleInput.value : defaultSubtitle;
+    }
+    if (locationInput && flyerLocation) {
+      flyerLocation.textContent = locationInput.value.trim() !== '' ? locationInput.value : defaultLocation;
+    }
+    if (highlightInput && flyerHighlight) {
+      flyerHighlight.textContent = highlightInput.value.trim() !== '' ? highlightInput.value : defaultHighlight;
+    }
+    if (emailInput && flyerEmail) {
+      flyerEmail.textContent = emailInput.value.trim() !== '' ? emailInput.value : defaultEmail;
+    }
+    if (ctaLabelInput && flyerCtaLabel) {
+      flyerCtaLabel.textContent = ctaLabelInput.value.trim() !== '' ? ctaLabelInput.value : defaultCtaLabel;
+    }
     
     const flyerMailto = document.getElementById('flyer-mailto-link');
     if (flyerMailto && emailInput) {
-      flyerMailto.href = `mailto:${emailInput.value}`;
+      const activeEmail = emailInput.value.trim() !== '' ? emailInput.value : defaultEmail;
+      flyerMailto.href = `mailto:${activeEmail}`;
     }
   };
 

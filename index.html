@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=7.0">
+  <link rel="stylesheet" href="style.css?v=8.0">
 </head>
 <body>
 
@@ -28,7 +28,7 @@
 
       <!-- SINGLE DEFINITIVE PRIMARY CTA BUTTON (TOP RIGHT NAVBAR) -->
       <div class="ribbon-actions">
-        <button id="btn-export-top" class="btn-top-export">
+        <button id="btn-export-top" class="btn-top-export" aria-label="Export High-Res PNG">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
           Export High-Res PNG
         </button>
@@ -70,11 +70,11 @@
               <div class="form-grid-2col">
                 <div class="form-group">
                   <label for="title-input">Headline Banner</label>
-                  <input type="text" id="title-input" class="form-input" placeholder="We're growing our team at Trescon Manipal!">
+                  <input type="text" id="title-input" class="form-input" value="We're growing our team at Trescon Manipal!" placeholder="We're growing our team at Trescon Manipal!">
                 </div>
                 <div class="form-group">
                   <label for="subtitle-input">Sub-Headline Text</label>
-                  <input type="text" id="subtitle-input" class="form-input" placeholder="We're looking for enthusiastic individuals to join us in these key roles:">
+                  <input type="text" id="subtitle-input" class="form-input" value="We're looking for enthusiastic individuals to join us in these key roles:" placeholder="We're looking for enthusiastic individuals to join us in these key roles:">
                 </div>
               </div>
             </section>
@@ -97,17 +97,17 @@
               <div class="form-grid-2col">
                 <div class="form-group">
                   <label for="location-input">Office Location</label>
-                  <input type="text" id="location-input" class="form-input" placeholder="Manipal">
+                  <input type="text" id="location-input" class="form-input" value="Manipal" placeholder="Manipal">
                 </div>
                 <div class="form-group">
                   <label for="highlight-input">Candidate Priority</label>
-                  <input type="text" id="highlight-input" class="form-input" placeholder="Immediate Joiners Preferred">
+                  <input type="text" id="highlight-input" class="form-input" value="Immediate Joiners Preferred" placeholder="Immediate Joiners Preferred">
                 </div>
               </div>
               <div class="form-grid-2col">
                 <div class="form-group">
                   <label for="email-input">Recruitment Email</label>
-                  <input type="email" id="email-input" class="form-input" placeholder="hr@tresconglobal.com">
+                  <input type="email" id="email-input" class="form-input" value="hr@tresconglobal.com" placeholder="hr@tresconglobal.com">
                 </div>
                 <div class="form-group">
                   <label for="cta-label-input">CTA Header Prompt</label>
@@ -282,12 +282,12 @@
           </div>
 
           <div class="sidebar-footer-actions">
-            <button id="btn-reset-form" class="btn-ghost-sm" title="Reset to default form settings">
+            <button id="btn-reset-form" class="btn-ghost-sm" title="Reset to default form settings" aria-label="Reset form settings">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
               <span>Reset</span>
             </button>
-            <button id="btn-toggle-fullscreen" class="btn-ghost-sm" title="Toggle Fullscreen Preview Mode">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3H5a2 2 0 0 0-2 2v3m18-5h-3a2 2 0 0 0-2 2v3m0 11v3a2 2 0 0 1-2 2h-3m-11 0H5a2 2 0 0 1-2-2v-3"></path></svg>
+            <button id="btn-toggle-fullscreen" class="btn-ghost-sm" title="Toggle Fullscreen Preview Mode" aria-label="Toggle Fullscreen">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3H5a2 2 0 0 1-2 2v3m18-5h-3a2 2 0 0 1-2 2v3m0 11v3a2 2 0 0 1-2 2h-3m-11 0H5a2 2 0 0 1-2-2v-3"></path></svg>
               <span>Fullscreen</span>
             </button>
           </div>
@@ -301,14 +301,14 @@
         <!-- FLOATING STUDIO CONTROLS TOOLBAR (WITH CANVAS QUICK-EXPORT) -->
         <div class="floating-studio-toolbar">
           <div class="toolbar-group">
-            <button class="toolbar-btn" id="btn-zoom-out" title="Zoom Out (-)">
+            <button class="toolbar-btn" id="btn-zoom-out" title="Zoom Out (-)" aria-label="Zoom out">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             </button>
             <span class="zoom-value" id="zoom-value-text">100%</span>
-            <button class="toolbar-btn" id="btn-zoom-in" title="Zoom In (+)">
+            <button class="toolbar-btn" id="btn-zoom-in" title="Zoom In (+)" aria-label="Zoom in">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             </button>
-            <button class="toolbar-btn" id="btn-zoom-fit" title="Fit to Screen">
+            <button class="toolbar-btn" id="btn-zoom-fit" title="Fit to Screen" aria-label="Fit screen">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path></svg>
             </button>
           </div>
@@ -316,7 +316,7 @@
           <div class="toolbar-divider"></div>
 
           <div class="toolbar-group">
-            <button class="toolbar-btn active-tool" id="btn-toggle-glow" title="Toggle Ambient Studio Halo">
+            <button class="toolbar-btn active-tool" id="btn-toggle-glow" title="Toggle Ambient Studio Halo" aria-label="Toggle ambient halo">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
               <span>Ambient Halo</span>
             </button>
@@ -325,7 +325,7 @@
           <div class="toolbar-divider"></div>
 
           <div class="toolbar-group">
-            <button class="toolbar-btn btn-quick-export-canvas" id="btn-canvas-quick-export" title="Quick Export High-Res PNG">
+            <button class="toolbar-btn btn-quick-export-canvas" id="btn-canvas-quick-export" title="Quick Export High-Res PNG" aria-label="Quick export PNG">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
               <span>Export</span>
             </button>
@@ -418,6 +418,6 @@
 
   <!-- HTML2Canvas Image Export Library -->
   <script src="html2canvas.min.js"></script>
-  <script src="app.js?v=7.0"></script>
+  <script src="app.js?v=8.0"></script>
 </body>
 </html>
