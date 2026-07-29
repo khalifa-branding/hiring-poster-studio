@@ -94,6 +94,51 @@ body {
   transform: translateY(3.5px);
 }
 
+.ribbon-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar-zoom-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.navbar-zoom-controls .toolbar-btn {
+  background: transparent;
+  border: none;
+  color: #9CA3AF;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.navbar-zoom-controls .toolbar-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+}
+
+.navbar-zoom-controls .zoom-value {
+  font-family: 'Manrope', -apple-system, sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #E5E7EB;
+  padding: 0 4px;
+  min-width: 42px;
+  text-align: center;
+}
+
 .btn-top-export {
   display: inline-flex;
   align-items: center;

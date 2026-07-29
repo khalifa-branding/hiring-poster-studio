@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=13.0">
+  <link rel="stylesheet" href="style.css?v=14.0">
 </head>
 <body>
 
@@ -27,6 +27,20 @@
       </div>
 
       <div class="ribbon-actions">
+        <!-- TOP NAVBAR ZOOM CONTROLLER -->
+        <div class="navbar-zoom-controls" id="navbar-zoom-controls">
+          <button class="toolbar-btn" id="btn-zoom-out" title="Zoom Out (-)" aria-label="Zoom out">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+          <span class="zoom-value" id="zoom-value-text">100%</span>
+          <button class="toolbar-btn" id="btn-zoom-in" title="Zoom In (+)" aria-label="Zoom in">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+          <button class="toolbar-btn" id="btn-zoom-fit" title="Fit to Screen" aria-label="Fit screen">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path></svg>
+          </button>
+        </div>
+
         <button id="btn-export-top" class="btn-top-export" aria-label="Export High-Res PNG">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
           Export High-Res PNG
@@ -237,22 +251,6 @@
 
       <!-- RIGHT PANEL: PREVIEW WORKSPACE -->
       <main class="preview-workspace" id="preview-workspace">
-        
-        <!-- MINIMAL FLOATING ZOOM TOOLBAR -->
-        <div class="floating-studio-toolbar">
-          <div class="toolbar-group">
-            <button class="toolbar-btn" id="btn-zoom-out" title="Zoom Out (-)" aria-label="Zoom out">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            </button>
-            <span class="zoom-value" id="zoom-value-text">100%</span>
-            <button class="toolbar-btn" id="btn-zoom-in" title="Zoom In (+)" aria-label="Zoom in">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            </button>
-            <button class="toolbar-btn" id="btn-zoom-fit" title="Fit to Screen" aria-label="Fit screen">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path></svg>
-            </button>
-          </div>
-        </div>
 
         <!-- AMBIENT GLOW BACKDROP HALO -->
         <div class="studio-halo-glow" id="studio-halo-glow"></div>
@@ -339,6 +337,6 @@
 
   <!-- HTML2Canvas Image Export Library -->
   <script src="html2canvas.min.js"></script>
-  <script src="app.js?v=13.0"></script>
+  <script src="app.js?v=14.0"></script>
 </body>
 </html>
