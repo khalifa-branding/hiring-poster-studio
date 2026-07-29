@@ -654,6 +654,69 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Primary & Canvas Quick Export Listeners
+  const btnExportTop = document.getElementById('btn-export-top');
+  const btnCanvasQuickExport = document.getElementById('btn-canvas-quick-export');
+  
+  if (btnExportTop) btnExportTop.addEventListener('click', exportPosterPNG);
+  if (btnCanvasQuickExport) btnCanvasQuickExport.addEventListener('click', exportPosterPNG);
+
+  // Form Reset Handler
+  const btnResetForm = document.getElementById('btn-reset-form');
+  if (btnResetForm) {
+    btnResetForm.addEventListener('click', () => {
+      titleInput.value = "We're growing our team at Trescon Manipal!";
+      subtitleInput.value = "We're looking for enthusiastic individuals to join us in these key roles:";
+      locationInput.value = "Manipal";
+      highlightInput.value = "Immediate Joiners Preferred";
+      emailInput.value = "hr@tresconglobal.com";
+      ctaLabelInput.value = "APPLY DIRECTLY VIA EMAIL";
+      roles = [
+        { title: "Speaker Acquisition Executive", type: "1-3 Yrs" },
+        { title: "Commercial Executive", type: "0-2 Yrs" },
+        { title: "Community Executive - Delegates", type: "2-4 Yrs" }
+      ];
+      syncTextFields();
+      renderEditorRoles();
+      renderPreviewRoles();
+      triggerAutoSavePulse("Form reset to defaults");
+    });
+  }
+
+  // Fullscreen Preview Toggle
+  const btnToggleFullscreen = document.getElementById('btn-toggle-fullscreen');
+  const studioAppContainer = document.getElementById('studio-app-container');
+  if (btnToggleFullscreen && studioAppContainer) {
+    btnToggleFullscreen.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        studioAppContainer.requestFullscreen().catch(err => {
+          console.log(`Fullscreen error: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    });
+  }
+
+  // Auto-Save Status Pulse
+  const statusText = document.getElementById('status-text');
+  let saveTimer = null;
+  function triggerAutoSavePulse(msg = "All changes saved") {
+    if (!statusText) return;
+    statusText.textContent = "Saving...";
+    statusText.style.color = "var(--color-lime)";
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      statusText.textContent = msg;
+      statusText.style.color = "#9CA3AF";
+    }, 600);
+  }
+
+  // Trigger pulse on input changes
+  document.querySelectorAll('.form-input, input[type="radio"]').forEach(inp => {
+    inp.addEventListener('input', () => triggerAutoSavePulse());
+  });
+
   // Sidebar Category Tabs Switching (Laptop UX Optimization)
   const sidebarCatTabs = document.querySelectorAll('.sidebar-cat-tab');
   const sidebarTabPanels = document.querySelectorAll('.sidebar-tab-panel');

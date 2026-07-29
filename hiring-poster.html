@@ -11,13 +11,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=6.0">
+  <link rel="stylesheet" href="style.css?v=7.0">
 </head>
 <body>
 
-  <div class="studio-app-container">
+  <div class="studio-app-container" id="studio-app-container">
     
-    <!-- TOP FIXED NAVIGATION RIBBON (EXECUTIVE DARK LUXURY STYLE) -->
+    <!-- TOP FIXED NAVIGATION RIBBON (PRIMARY GLOBAL CTA HEADER) -->
     <header class="studio-top-ribbon">
       <div class="ribbon-brand">
         <img src="brand_assets/trescon-logo-white-2025.png" alt="Trescon Logo" class="brand-logo-img">
@@ -26,9 +26,9 @@
         <span class="live-studio-badge"><span class="badge-dot"></span> PRO</span>
       </div>
 
-      <!-- EXPORT ACTIONS TOP RIGHT -->
+      <!-- SINGLE DEFINITIVE PRIMARY CTA BUTTON (TOP RIGHT NAVBAR) -->
       <div class="ribbon-actions">
-        <button id="btn-export-top" class="btn-top-export" onclick="document.getElementById('export-btn').click();">
+        <button id="btn-export-top" class="btn-top-export">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
           Export High-Res PNG
         </button>
@@ -274,16 +274,31 @@
 
         </div>
 
-        <!-- Export Action Button -->
-        <button class="export-btn" id="export-btn">
-          <span class="icon">💾</span> Export High-Res PNG
-        </button>
+        <!-- STICKY AUTO-SAVED & SECONDARY CONTROL FOOTER -->
+        <footer class="sidebar-status-footer">
+          <div class="status-indicator" id="status-indicator">
+            <span class="status-check-icon">✓</span>
+            <span class="status-text" id="status-text">All changes saved</span>
+          </div>
+
+          <div class="sidebar-footer-actions">
+            <button id="btn-reset-form" class="btn-ghost-sm" title="Reset to default form settings">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+              <span>Reset</span>
+            </button>
+            <button id="btn-toggle-fullscreen" class="btn-ghost-sm" title="Toggle Fullscreen Preview Mode">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3H5a2 2 0 0 0-2 2v3m18-5h-3a2 2 0 0 0-2 2v3m0 11v3a2 2 0 0 1-2 2h-3m-11 0H5a2 2 0 0 1-2-2v-3"></path></svg>
+              <span>Fullscreen</span>
+            </button>
+          </div>
+        </footer>
+
       </aside>
 
       <!-- RIGHT PANEL: PREVIEW WORKSPACE (EXECUTIVE DARK LUXURY STUDIO) -->
       <main class="preview-workspace" id="preview-workspace">
         
-        <!-- FLOATING STUDIO CONTROLS TOOLBAR -->
+        <!-- FLOATING STUDIO CONTROLS TOOLBAR (WITH CANVAS QUICK-EXPORT) -->
         <div class="floating-studio-toolbar">
           <div class="toolbar-group">
             <button class="toolbar-btn" id="btn-zoom-out" title="Zoom Out (-)">
@@ -304,6 +319,15 @@
             <button class="toolbar-btn active-tool" id="btn-toggle-glow" title="Toggle Ambient Studio Halo">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
               <span>Ambient Halo</span>
+            </button>
+          </div>
+
+          <div class="toolbar-divider"></div>
+
+          <div class="toolbar-group">
+            <button class="toolbar-btn btn-quick-export-canvas" id="btn-canvas-quick-export" title="Quick Export High-Res PNG">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+              <span>Export</span>
             </button>
           </div>
         </div>
@@ -394,6 +418,6 @@
 
   <!-- HTML2Canvas Image Export Library -->
   <script src="html2canvas.min.js"></script>
-  <script src="app.js?v=6.0"></script>
+  <script src="app.js?v=7.0"></script>
 </body>
 </html>

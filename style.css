@@ -2274,3 +2274,75 @@ select.form-input option,
     gap: 0.75rem;
   }
 }
+
+/* ==========================================
+   UX REFINEMENT: SIDEBAR STATUS FOOTER & QUICK EXPORT
+   ========================================== */
+
+.sidebar-status-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: auto;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.74rem;
+  color: #9CA3AF;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.status-check-icon {
+  color: var(--color-lime);
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
+.sidebar-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-ghost-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.28rem 0.55rem;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: #9CA3AF;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-ghost-sm:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-quick-export-canvas {
+  background: rgba(163, 230, 53, 0.15) !important;
+  border-color: rgba(163, 230, 53, 0.35) !important;
+  color: var(--color-lime) !important;
+  font-weight: 700 !important;
+}
+
+.btn-quick-export-canvas:hover {
+  background: var(--color-lime) !important;
+  color: #0A1826 !important;
+  box-shadow: 0 0 12px rgba(163, 230, 53, 0.3) !important;
+}
