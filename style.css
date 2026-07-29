@@ -969,13 +969,13 @@ select.form-input option,
 }
 
 .theme-corporate-light .role-card-number {
-  color: var(--color-dark-teal);
+  color: #0284C7 !important;
 }
 .theme-corporate-light .role-card-number::after {
-  background-color: rgba(1, 55, 61, 0.12);
+  background-color: rgba(2, 132, 199, 0.25) !important;
 }
 .theme-corporate-light .role-card:hover .role-card-number {
-  color: var(--color-teal);
+  color: #0369A1 !important;
 }
 
 .role-card-info {
@@ -1033,9 +1033,10 @@ select.form-input option,
 }
 
 .theme-corporate-light .role-type-badge {
-  background: rgba(10, 24, 38, 0.06);
-  border: 1px solid rgba(10, 24, 38, 0.15);
-  color: var(--color-dark-teal);
+  background: rgba(16, 185, 129, 0.12) !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  color: #047857 !important;
+  font-weight: 700 !important;
 }
 
 .role-card-sub {
@@ -1124,14 +1125,16 @@ select.form-input option,
 }
 
 .theme-corporate-light .info-badge {
-  background: rgba(10, 24, 38, 0.03);
-  border: 1px solid rgba(10, 24, 38, 0.08);
-  color: var(--color-slate-grey);
+  background: rgba(2, 132, 199, 0.08) !important;
+  border: 1px solid rgba(2, 132, 199, 0.25) !important;
+  color: #0369A1 !important;
+  font-weight: 600 !important;
 }
 .theme-corporate-light .info-badge.badge-highlight {
-  border-color: rgba(10, 24, 38, 0.2);
-  color: var(--color-dark-teal);
-  background: rgba(10, 24, 38, 0.05);
+  background: rgba(16, 185, 129, 0.12) !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  color: #047857 !important;
+  font-weight: 600 !important;
 }
 
 .info-badge svg {
@@ -1154,12 +1157,11 @@ select.form-input option,
 }
 
 .theme-corporate-light .candidate-qualifier {
-  border-top-color: rgba(1, 55, 61, 0.06);
-  color: var(--color-slate-grey);
+  border-top-color: rgba(2, 132, 199, 0.15) !important;
+  color: #475569 !important;
 }
 
 /* Call to Action Container */
-/* Call to Action Container (Modern Split Layout) */
 .cta-box {
   border-radius: 0.75em;
   padding: 0.65em 0.85em !important;
@@ -1187,9 +1189,9 @@ select.form-input option,
 }
 
 .theme-corporate-light .cta-box {
-  background: rgba(10, 24, 38, 0.03);
-  border-color: rgba(10, 24, 38, 0.12);
-  box-shadow: none;
+  background: #FFFFFF !important;
+  border: 1.5px solid #0284C7 !important;
+  box-shadow: 0 4px 16px rgba(2, 132, 199, 0.1) !important;
 }
 
 .cta-info {
@@ -1221,16 +1223,17 @@ select.form-input option,
 }
 
 .theme-corporate-light .role-card-title {
-  color: #0A1826 !important;
+  color: #0F172A !important;
 }
 
 .theme-corporate-light .cta-highlight {
-  color: #0A1826 !important;
+  color: #0284C7 !important;
+  font-weight: 800 !important;
 }
 
 .theme-corporate-light .cta-text {
-  color: #464D53;
-  opacity: 0.85;
+  color: #64748B !important;
+  opacity: 0.9 !important;
 }
 
 .cta-highlight:hover {
@@ -1242,7 +1245,7 @@ select.form-input option,
 }
 
 .theme-corporate-light .cta-highlight:hover {
-  color: var(--color-teal) !important;
+  color: #0369A1 !important;
 }
 
 .cta-right-col {
@@ -1275,9 +1278,10 @@ select.form-input option,
 }
 
 .theme-corporate-light .cta-website-badge {
-  color: var(--color-dark-teal);
-  background: rgba(10, 24, 38, 0.04);
-  border-color: rgba(10, 24, 38, 0.12);
+  color: #FFFFFF !important;
+  background: #0284C7 !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3) !important;
 }
 
 .cta-website-badge:hover {
