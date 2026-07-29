@@ -492,6 +492,158 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // View Switcher Tabs Logic
+  const navTabs = document.querySelectorAll('.nav-tab');
+  const appViews = document.querySelectorAll('.app-view');
+
+  const switchView = (targetViewId) => {
+    navTabs.forEach(tab => {
+      if (tab.dataset.view === targetViewId) {
+        tab.classList.add('active');
+      } else {
+        tab.classList.remove('active');
+      }
+    });
+
+    appViews.forEach(view => {
+      if (view.id === targetViewId) {
+        view.classList.add('view-active');
+      } else {
+        view.classList.remove('view-active');
+      }
+    });
+
+    // Re-render poster roles if navigating to poster builder
+    if (targetViewId === 'view-poster-builder') {
+      renderEditorRoles();
+      renderPreviewRoles();
+    }
+  };
+
+  navTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      switchView(tab.dataset.view);
+    });
+  });
+
+  // Campaign Preset Prefill Map
+  const campaignDataMap = {
+    manipal: {
+      title: "We're growing our team at Trescon Manipal!",
+      subtitle: "We're looking for enthusiastic individuals to join us in these key roles:",
+      location: "Manipal",
+      highlight: "Immediate Joiners Preferred",
+      email: "hr@tresconglobal.com",
+      roles: [
+        { title: "Speaker Acquisition Executive", type: "1-3 Yrs" },
+        { title: "Commercial Executive", type: "0-2 Yrs" },
+        { title: "Community Executive - Delegates", type: "2-4 Yrs" }
+      ]
+    },
+    bangalore: {
+      title: "Join Trescon Bangalore HQ Tech Drive!",
+      subtitle: "Expanding our core tech and operations teams for upcoming summits:",
+      location: "Bangalore HQ",
+      highlight: "Hybrid Work Culture",
+      email: "careers.tech@tresconglobal.com",
+      roles: [
+        { title: "Event Operations Manager", type: "3-5 Yrs" },
+        { title: "Senior Full Stack Developer", type: "5+ Yrs" },
+        { title: "Delegate Sales Specialist", type: "1-3 Yrs" }
+      ]
+    },
+    dubai: {
+      title: "Trescon Middle East Summit Hiring!",
+      subtitle: "Join our high-performing sales & VIP relations team in Dubai:",
+      location: "Dubai (DIFC)",
+      highlight: "Tax-Free Package + Incentives",
+      email: "uae.careers@tresconglobal.com",
+      roles: [
+        { title: "Sponsorship Sales Director", type: "5+ Yrs" },
+        { title: "VIP Relations Lead", type: "3-5 Yrs" },
+        { title: "Conference Producer", type: "2-4 Yrs" }
+      ]
+    },
+    riyadh: {
+      title: "Trescon Kingdom Expansion - Riyadh!",
+      subtitle: "We are hiring corporate marketing & PR specialists in Saudi Arabia:",
+      location: "Riyadh",
+      highlight: "Immediate Joiners Preferred",
+      email: "ksa.careers@tresconglobal.com",
+      roles: [
+        { title: "Marketing Manager", type: "3-5 Yrs" },
+        { title: "PR & Communications Specialist", type: "2-4 Yrs" }
+      ]
+    }
+  };
+
+  // Launch Poster Builder Action Buttons
+  const generatePosterBtns = document.querySelectorAll('.btn-generate-poster');
+  generatePosterBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const campaignKey = e.currentTarget.dataset.campaign;
+      const data = campaignDataMap[campaignKey];
+      if (data) {
+        titleInput.value = data.title;
+        subtitleInput.value = data.subtitle;
+        locationInput.value = data.location;
+        highlightInput.value = data.highlight;
+        emailInput.value = data.email;
+        roles = JSON.parse(JSON.stringify(data.roles));
+        
+        syncTextFields();
+        renderEditorRoles();
+        renderPreviewRoles();
+        switchView('view-poster-builder');
+      }
+    });
+  });
+
+  const quickNewCampaignBtn = document.getElementById('btn-quick-new-campaign');
+  if (quickNewCampaignBtn) {
+    quickNewCampaignBtn.addEventListener('click', () => {
+      titleInput.value = "We're growing our global team!";
+      subtitleInput.value = "We're looking for talented professionals to join us:";
+      locationInput.value = "Global Offices";
+      highlightInput.value = "Immediate Joiners Preferred";
+      emailInput.value = "careers@tresconglobal.com";
+      roles = [
+        { title: "Acquisition Executive", type: "1-3 Yrs" },
+        { title: "Business Development Manager", type: "2-5 Yrs" }
+      ];
+      syncTextFields();
+      renderEditorRoles();
+      renderPreviewRoles();
+      switchView('view-poster-builder');
+    });
+  }
+
+  // Sidebar Category Tabs Switching (Laptop UX Optimization)
+  const sidebarCatTabs = document.querySelectorAll('.sidebar-cat-tab');
+  const sidebarTabPanels = document.querySelectorAll('.sidebar-tab-panel');
+
+  sidebarCatTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetTabId = tab.dataset.tab;
+      
+      sidebarCatTabs.forEach(t => {
+        if (t === tab) {
+          t.classList.add('active');
+        } else {
+          t.classList.remove('active');
+        }
+      });
+
+      sidebarTabPanels.forEach(panel => {
+        if (panel.id === targetTabId) {
+          panel.classList.add('active-panel');
+        } else {
+          panel.classList.remove('active-panel');
+        }
+      });
+    });
+  });
+
   // Run initial setup
   syncTextFields();
   syncQRCode();
