@@ -587,57 +587,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 600);
   }
 
-  // Category Tabs Navigation & Keyboard Accessibility (WCAG 2.1 AA)
-  const sidebarCatTabs = document.querySelectorAll('.sidebar-cat-tab');
-  const sidebarTabPanels = document.querySelectorAll('.sidebar-tab-panel');
-  const tabListNav = document.querySelector('.sidebar-category-tabs');
+  // Accordion Collapsible Sections Interaction
+  const accordionItems = document.querySelectorAll('.accordion-item');
+  accordionItems.forEach(item => {
+    const headerBtn = item.querySelector('.accordion-header');
+    if (headerBtn) {
+      headerBtn.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        
+        // Single accordion focus mode: close other accordions
+        accordionItems.forEach(otherItem => {
+          otherItem.classList.remove('open');
+          const otherHeader = otherItem.querySelector('.accordion-header');
+          if (otherHeader) otherHeader.setAttribute('aria-expanded', 'false');
+        });
 
-  if (tabListNav) {
-    tabListNav.setAttribute('role', 'tablist');
-  }
-
-  sidebarCatTabs.forEach((tab, index) => {
-    tab.setAttribute('role', 'tab');
-    tab.setAttribute('id', `tab-${tab.dataset.tab}`);
-    tab.setAttribute('aria-selected', tab.classList.contains('active') ? 'true' : 'false');
-    tab.setAttribute('tabindex', tab.classList.contains('active') ? '0' : '-1');
-
-    tab.addEventListener('click', (e) => {
-      const targetTabId = e.currentTarget.dataset.tab;
-
-      sidebarCatTabs.forEach(t => {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
-        t.setAttribute('tabindex', '-1');
-      });
-
-      e.currentTarget.classList.add('active');
-      e.currentTarget.setAttribute('aria-selected', 'true');
-      e.currentTarget.setAttribute('tabindex', '0');
-
-      sidebarTabPanels.forEach(panel => {
-        if (panel.id === targetTabId) {
-          panel.classList.add('active-panel');
-        } else {
-          panel.classList.remove('active-panel');
+        if (!isOpen) {
+          item.classList.add('open');
+          headerBtn.setAttribute('aria-expanded', 'true');
         }
       });
-    });
-
-    // Arrow Keyboard Navigation
-    tab.addEventListener('keydown', (e) => {
-      let targetIndex = null;
-      if (e.key === 'ArrowRight') {
-        targetIndex = (index + 1) % sidebarCatTabs.length;
-      } else if (e.key === 'ArrowLeft') {
-        targetIndex = (index - 1 + sidebarCatTabs.length) % sidebarCatTabs.length;
-      }
-      if (targetIndex !== null) {
-        e.preventDefault();
-        sidebarCatTabs[targetIndex].click();
-        sidebarCatTabs[targetIndex].focus();
-      }
-    });
+    }
   });
 
   // Run initial state render & synchronization

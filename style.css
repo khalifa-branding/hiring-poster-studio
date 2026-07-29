@@ -2466,7 +2466,108 @@ select.form-input option,
   border-radius: 3px;
 }
 
-.sidebar-tab-panels::-webkit-scrollbar-thumb:hover, 
-.editor-sidebar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+/* ==========================================
+   STREAMLINED ACCORDION COLLAPSIBLE SIDEBAR
+   ========================================== */
+
+.sidebar-header-clean {
+  padding: 0.85rem 1rem 0.6rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-header-clean h2 {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-white);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.accordion-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.85rem;
+  overflow-y: auto;
+  flex: 1 1 auto;
+}
+
+.accordion-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.accordion-item:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.accordion-item.open {
+  border-color: rgba(163, 230, 53, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  background: transparent;
+  border: none;
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.accordion-header:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.acc-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.acc-icon {
+  font-size: 0.95rem;
+}
+
+.acc-title {
+  color: var(--color-white);
+}
+
+.acc-chevron {
+  color: #9CA3AF;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion-item.open .acc-chevron {
+  transform: rotate(180deg);
+  color: var(--color-lime);
+}
+
+.accordion-body {
+  display: none;
+  padding: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(10, 24, 38, 0.4);
+}
+
+.accordion-item.open .accordion-body {
+  display: block;
+  animation: fadeInBody 0.2s ease-out;
+}
+
+@keyframes fadeInBody {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }

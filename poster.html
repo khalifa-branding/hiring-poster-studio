@@ -11,13 +11,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=8.0">
+  <link rel="stylesheet" href="style.css?v=9.0">
 </head>
 <body>
 
   <div class="studio-app-container" id="studio-app-container">
     
-    <!-- TOP FIXED NAVIGATION RIBBON (PRIMARY GLOBAL CTA HEADER) -->
+    <!-- TOP FIXED NAVIGATION RIBBON -->
     <header class="studio-top-ribbon">
       <div class="ribbon-brand">
         <img src="brand_assets/trescon-logo-white-2025.png" alt="Trescon Logo" class="brand-logo-img">
@@ -26,7 +26,6 @@
         <span class="live-studio-badge"><span class="badge-dot"></span> PRO</span>
       </div>
 
-      <!-- SINGLE DEFINITIVE PRIMARY CTA BUTTON (TOP RIGHT NAVBAR) -->
       <div class="ribbon-actions">
         <button id="btn-export-top" class="btn-top-export" aria-label="Export High-Res PNG">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
@@ -38,35 +37,28 @@
     <!-- MAIN TWO-PANEL STUDIO LAYOUT -->
     <div class="studio-main-layout">
       
-      <!-- LEFT FORM INPUTS SIDEBAR -->
+      <!-- LEFT FORM INPUTS SIDEBAR (COMPACT ACCORDION LAYOUT) -->
       <aside class="editor-sidebar">
         
-        <div class="sidebar-header">
-          <h2>Poster Configuration</h2>
-          <p>Select a category tab below to edit settings without scrolling.</p>
+        <!-- STREAMLINED BOLD HEADER (SUBTEXT REMOVED) -->
+        <div class="sidebar-header-clean">
+          <h2>Poster Settings</h2>
         </div>
 
-        <!-- SIDEBAR CATEGORY TABS -->
-        <nav class="sidebar-category-tabs">
-          <button class="sidebar-cat-tab active" data-tab="tab-content">
-            <span>📝</span> Content
-          </button>
-          <button class="sidebar-cat-tab" data-tab="tab-format">
-            <span>📐</span> Format
-          </button>
-          <button class="sidebar-cat-tab" data-tab="tab-style">
-            <span>🎨</span> Theme & Swatches
-          </button>
-        </nav>
-
-        <!-- TAB CONTENT PANELS -->
-        <div class="sidebar-tab-panels">
+        <!-- ACCORDION COLLAPSIBLE CONTAINER -->
+        <div class="accordion-container">
           
-          <!-- TAB 1: CONTENT & HEADINGS -->
-          <div id="tab-content" class="sidebar-tab-panel active-panel">
-            <!-- Section 1: Campaign Main Headings -->
-            <section class="editor-section">
-              <h2>1. Campaign Headings</h2>
+          <!-- ACCORDION 1: 📝 CAMPAIGN HEADINGS (OPEN BY DEFAULT) -->
+          <div class="accordion-item open" id="acc-item-headings">
+            <button class="accordion-header" aria-expanded="true" aria-controls="acc-body-headings">
+              <div class="acc-title-group">
+                <span class="acc-icon">📝</span>
+                <span class="acc-title">1. Campaign Headings</span>
+              </div>
+              <svg class="acc-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            
+            <div class="accordion-body" id="acc-body-headings">
               <div class="form-grid-2col">
                 <div class="form-group">
                   <label for="title-input">Headline Banner</label>
@@ -77,23 +69,39 @@
                   <input type="text" id="subtitle-input" class="form-input" value="We're looking for enthusiastic individuals to join us in these key roles:" placeholder="We're looking for enthusiastic individuals to join us in these key roles:">
                 </div>
               </div>
-            </section>
+            </div>
+          </div>
 
-            <!-- Section 2: Open Roles List -->
-            <section class="editor-section">
-              <div class="section-title-with-btn">
-                <h2>2. Open Positions & Experience</h2>
-                <span id="roles-limit-warning" class="warning-tag" style="display: none;">Max 5 Roles</span>
+          <!-- ACCORDION 2: 💼 OPEN POSITIONS & EXPERIENCE -->
+          <div class="accordion-item" id="acc-item-roles">
+            <button class="accordion-header" aria-expanded="false" aria-controls="acc-body-roles">
+              <div class="acc-title-group">
+                <span class="acc-icon">💼</span>
+                <span class="acc-title">2. Open Positions</span>
+                <span id="roles-limit-warning" class="warning-tag" style="display: none;">Max 5</span>
               </div>
+              <svg class="acc-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+
+            <div class="accordion-body" id="acc-body-roles">
               <div id="roles-input-container" class="roles-container">
                 <!-- Dynamically populated by app.js -->
               </div>
               <button id="add-role-btn" class="add-role-btn">+ Add Position</button>
-            </section>
+            </div>
+          </div>
 
-            <!-- Section 3: Key Location & Badges -->
-            <section class="editor-section">
-              <h2>3. Highlights & Location</h2>
+          <!-- ACCORDION 3: 📍 CONTACT & DETAILS -->
+          <div class="accordion-item" id="acc-item-contact">
+            <button class="accordion-header" aria-expanded="false" aria-controls="acc-body-contact">
+              <div class="acc-title-group">
+                <span class="acc-icon">📍</span>
+                <span class="acc-title">3. Contact & Location</span>
+              </div>
+              <svg class="acc-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+
+            <div class="accordion-body" id="acc-body-contact">
               <div class="form-grid-2col">
                 <div class="form-group">
                   <label for="location-input">Office Location</label>
@@ -110,166 +118,108 @@
                   <input type="email" id="email-input" class="form-input" value="hr@tresconglobal.com" placeholder="hr@tresconglobal.com">
                 </div>
                 <div class="form-group">
-                  <label for="cta-label-input">CTA Header Prompt</label>
+                  <label for="cta-label-input">CTA Prompt</label>
                   <input type="text" id="cta-label-input" class="form-input" value="APPLY DIRECTLY VIA EMAIL" placeholder="APPLY DIRECTLY VIA EMAIL">
                 </div>
               </div>
-            </section>
+            </div>
           </div>
 
-          <!-- TAB 2: FORMAT ASPECT RATIO & PATTERNS -->
-          <div id="tab-format" class="sidebar-tab-panel">
-            <!-- Section 4: Aspect Ratio Size Presets -->
-            <section class="editor-section">
-              <h2>4. Format Aspect Ratio</h2>
-              <div class="options-grid">
-                <div class="option-card">
-                  <input type="radio" id="ratio-square-opt" name="size-preset" value="square">
-                  <label for="ratio-square-opt">
-                    <span class="icon">⬜</span>
-                    <span>Square (1:1)<br>Feed</span>
-                  </label>
-                </div>
-                <div class="option-card">
-                  <input type="radio" id="ratio-portrait-opt" name="size-preset" value="portrait" checked>
-                  <label for="ratio-portrait-opt">
-                    <span class="icon">▰</span>
-                    <span>Portrait (4:5)<br>LinkedIn</span>
-                  </label>
-                </div>
-                <div class="option-card">
-                  <input type="radio" id="ratio-story-opt" name="size-preset" value="story">
-                  <label for="ratio-story-opt">
-                    <span class="icon">▮</span>
-                    <span>Story (9:16)<br>Mobile</span>
-                  </label>
-                </div>
+          <!-- ACCORDION 4: 🎨 THEME, ASPECT RATIO & STYLE -->
+          <div class="accordion-item" id="acc-item-style">
+            <button class="accordion-header" aria-expanded="false" aria-controls="acc-body-style">
+              <div class="acc-title-group">
+                <span class="acc-icon">🎨</span>
+                <span class="acc-title">4. Theme & Format</span>
               </div>
-            </section>
+              <svg class="acc-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
 
-            <!-- Section 6: Background Patterns -->
-            <section class="editor-section">
-              <h2>5. Background Pattern</h2>
-              <div class="options-grid">
-                <div class="option-card">
-                  <input type="radio" id="pattern-circles-opt" name="pattern-preset" value="circles" checked>
-                  <label for="pattern-circles-opt">Circles</label>
-                </div>
-                <div class="option-card">
-                  <input type="radio" id="pattern-grid-opt" name="pattern-preset" value="grid">
-                  <label for="pattern-grid-opt">Grid</label>
-                </div>
-                <div class="option-card">
-                  <input type="radio" id="pattern-abstract-opt" name="pattern-preset" value="abstract">
-                  <label for="pattern-abstract-opt">Abstract</label>
-                </div>
-                <div class="option-card">
-                  <input type="radio" id="pattern-none-opt" name="pattern-preset" value="none">
-                  <label for="pattern-none-opt">None</label>
-                </div>
-              </div>
-              <div class="form-group" style="margin-top: 8px;">
-                <label for="pattern-opacity" style="display: flex; justify-content: space-between;">
-                  <span>Pattern Opacity</span>
-                  <span id="opacity-val">15%</span>
-                </label>
-                <input type="range" id="pattern-opacity" min="0" max="60" value="15" style="accent-color: var(--color-teal); width: 100%; cursor: pointer;" oninput="document.getElementById('opacity-val').textContent = this.value + '%'">
-              </div>
-            </section>
-          </div>
-
-          <!-- TAB 3: VISUAL THEME SWATCHES, LOGOS & QR CODES -->
-          <div id="tab-style" class="sidebar-tab-panel">
-            <!-- Section 5: Design Themes & Visual Swatches -->
-            <section class="editor-section">
-              <h2>6. Design Theme & Swatches</h2>
-              <div class="theme-swatch-grid">
-                
-                <div class="theme-swatch-card">
-                  <input type="radio" id="theme-emerald-opt" name="theme-preset" value="emerald" checked>
-                  <label for="theme-emerald-opt">
-                    <div class="swatch-preview-box preview-emerald">
-                      <span class="swatch-dot dot-lime"></span>
-                      <span class="swatch-dot dot-teal"></span>
-                    </div>
-                    <div class="swatch-details">
-                      <span class="swatch-name">Emerald Glow</span>
-                      <span class="swatch-tag">Signature Neon</span>
-                    </div>
-                  </label>
-                </div>
-
-                <div class="theme-swatch-card">
-                  <input type="radio" id="theme-midnight-opt" name="theme-preset" value="midnight">
-                  <label for="theme-midnight-opt">
-                    <div class="swatch-preview-box preview-midnight">
-                      <span class="swatch-dot dot-cyan"></span>
-                      <span class="swatch-dot dot-blue"></span>
-                    </div>
-                    <div class="swatch-details">
-                      <span class="swatch-name">Midnight Tech</span>
-                      <span class="swatch-tag">Cyber Cyan</span>
-                    </div>
-                  </label>
-                </div>
-
-                <div class="theme-swatch-card">
-                  <input type="radio" id="theme-light-opt" name="theme-preset" value="light">
-                  <label for="theme-light-opt">
-                    <div class="swatch-preview-box preview-light">
-                      <span class="swatch-dot dot-dark"></span>
-                      <span class="swatch-dot dot-slate"></span>
-                    </div>
-                    <div class="swatch-details">
-                      <span class="swatch-name">Corp Light</span>
-                      <span class="swatch-tag">Executive Paper</span>
-                    </div>
-                  </label>
-                </div>
-
-              </div>
-            </section>
-
-            <!-- Section 7: Logo Variant -->
-            <section class="editor-section">
-              <h2>7. Logo Variant</h2>
-              <div class="options-grid">
-                <div class="option-card">
-                  <input type="radio" id="logo-auto-opt" name="logo-preset" value="auto" checked>
-                  <label for="logo-auto-opt">Auto</label>
-                </div>
-                <div class="option-card">
-                  <input type="radio" id="logo-white-opt" name="logo-preset" value="white">
-                  <label for="logo-white-opt">White</label>
-                </div>
-                <div class="option-card">
-                  <input type="radio" id="logo-dark-opt" name="logo-preset" value="dark">
-                  <label for="logo-dark-opt">Dark</label>
-                </div>
-                <div class="option-card">
-                  <input type="radio" id="logo-none-opt" name="logo-preset" value="none">
-                  <label for="logo-none-opt">None</label>
-                </div>
-              </div>
-            </section>
-
-            <!-- Section 8: QR Code Integration -->
-            <section class="editor-section">
-              <h2>8. QR Code Integration</h2>
+            <div class="accordion-body" id="acc-body-style">
+              <!-- Aspect Ratio -->
               <div class="form-group">
+                <label>Aspect Ratio</label>
+                <div class="options-grid">
+                  <div class="option-card">
+                    <input type="radio" id="ratio-square-opt" name="size-preset" value="square">
+                    <label for="ratio-square-opt">
+                      <span class="icon">⬜</span>
+                      <span>Square (1:1)</span>
+                    </label>
+                  </div>
+                  <div class="option-card">
+                    <input type="radio" id="ratio-portrait-opt" name="size-preset" value="portrait" checked>
+                    <label for="ratio-portrait-opt">
+                      <span class="icon">▰</span>
+                      <span>Portrait (4:5)</span>
+                    </label>
+                  </div>
+                  <div class="option-card">
+                    <input type="radio" id="ratio-story-opt" name="size-preset" value="story">
+                    <label for="ratio-story-opt">
+                      <span class="icon">▮</span>
+                      <span>Story (9:16)</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Color Swatches -->
+              <div class="form-group" style="margin-top: 10px;">
+                <label>Color Swatches</label>
+                <div class="theme-swatch-grid">
+                  <div class="theme-swatch-card">
+                    <input type="radio" id="theme-emerald-opt" name="theme-preset" value="emerald" checked>
+                    <label for="theme-emerald-opt">
+                      <div class="swatch-preview-box preview-emerald">
+                        <span class="swatch-dot dot-lime"></span>
+                        <span class="swatch-dot dot-teal"></span>
+                      </div>
+                      <div class="swatch-details">
+                        <span class="swatch-name">Emerald</span>
+                      </div>
+                    </label>
+                  </div>
+
+                  <div class="theme-swatch-card">
+                    <input type="radio" id="theme-midnight-opt" name="theme-preset" value="midnight">
+                    <label for="theme-midnight-opt">
+                      <div class="swatch-preview-box preview-midnight">
+                        <span class="swatch-dot dot-cyan"></span>
+                        <span class="swatch-dot dot-blue"></span>
+                      </div>
+                      <div class="swatch-details">
+                        <span class="swatch-name">Midnight</span>
+                      </div>
+                    </label>
+                  </div>
+
+                  <div class="theme-swatch-card">
+                    <input type="radio" id="theme-light-opt" name="theme-preset" value="light">
+                    <label for="theme-light-opt">
+                      <div class="swatch-preview-box preview-light">
+                        <span class="swatch-dot dot-dark"></span>
+                        <span class="swatch-dot dot-slate"></span>
+                      </div>
+                      <div class="swatch-details">
+                        <span class="swatch-name">Light Paper</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- QR Code Toggle -->
+              <div class="form-group" style="margin-top: 10px;">
                 <div class="switch-container">
                   <label class="switch">
                     <input type="checkbox" id="qr-toggle">
                     <span class="slider"></span>
                   </label>
-                  <span class="switch-label">Show QR Code on flyer</span>
+                  <span class="switch-label">Show QR Code</span>
                 </div>
               </div>
-              <div class="form-group" id="qr-link-group" style="margin-top: 12px;">
-                <label for="qr-link">QR Code Target URL</label>
-                <input type="text" id="qr-link" class="form-input" value="tresconglobal.com/careers" placeholder="e.g. tresconglobal.com/careers">
-              </div>
-            </section>
+            </div>
           </div>
 
         </div>
@@ -287,7 +237,7 @@
               <span>Reset</span>
             </button>
             <button id="btn-toggle-fullscreen" class="btn-ghost-sm" title="Toggle Fullscreen Preview Mode" aria-label="Toggle Fullscreen">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3H5a2 2 0 0 0-2 2v3m18-5h-3a2 2 0 0 0-2 2v3m0 11v3a2 2 0 0 1-2 2h-3m-11 0H5a2 2 0 0 1-2-2v-3"></path></svg>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3H5a2 2 0 0 1-2 2v3m18-5h-3a2 2 0 0 1-2 2v3m0 11v3a2 2 0 0 1-2 2h-3m-11 0H5a2 2 0 0 1-2-2v-3"></path></svg>
               <span>Fullscreen</span>
             </button>
           </div>
@@ -295,10 +245,10 @@
 
       </aside>
 
-      <!-- RIGHT PANEL: PREVIEW WORKSPACE (EXECUTIVE DARK LUXURY STUDIO) -->
+      <!-- RIGHT PANEL: PREVIEW WORKSPACE -->
       <main class="preview-workspace" id="preview-workspace">
         
-        <!-- FLOATING STUDIO CONTROLS TOOLBAR (WITH CANVAS QUICK-EXPORT) -->
+        <!-- FLOATING STUDIO CONTROLS TOOLBAR -->
         <div class="floating-studio-toolbar">
           <div class="toolbar-group">
             <button class="toolbar-btn" id="btn-zoom-out" title="Zoom Out (-)" aria-label="Zoom out">
@@ -389,7 +339,7 @@
               Whether you're a fresher eager to kickstart your career or someone experienced looking for your next opportunity, we'd love to hear from you.
             </p>
             
-            <!-- Call to Action Container (Modern Split Layout) -->
+            <!-- Call to Action Container -->
             <div class="cta-box">
               <div class="cta-info">
                 <span class="cta-text" id="flyer-cta-label-text">APPLY DIRECTLY VIA EMAIL</span>
@@ -418,6 +368,6 @@
 
   <!-- HTML2Canvas Image Export Library -->
   <script src="html2canvas.min.js"></script>
-  <script src="app.js?v=8.0"></script>
+  <script src="app.js?v=9.0"></script>
 </body>
 </html>
