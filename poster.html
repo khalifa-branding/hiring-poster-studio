@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=22.0">
+  <link rel="stylesheet" href="style.css?v=23.0">
 </head>
 <body>
 
@@ -104,19 +104,6 @@
           </div>
 
         </div>
-
-        <!-- LEFT PANEL FOOTER: AUTO-SAVED + RESET BUTTON -->
-        <footer class="sidebar-status-footer">
-          <div class="status-indicator" id="status-indicator">
-            <span class="status-check-icon">✓</span>
-            <span class="status-text" id="status-text">All changes saved</span>
-          </div>
-          <button id="btn-reset-form" class="btn-ghost-sm" title="Reset to default form settings" aria-label="Reset form settings">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
-            <span>Reset</span>
-          </button>
-        </footer>
-
       </aside>
 
       <!-- COLUMN 2: CENTER WORKSPACE (POSTER CANVAS) -->
@@ -188,6 +175,48 @@
 
           </div>
         </div>
+
+        <!-- FIGMA / CANVA STYLE FLOATING GLASS CONTROL DOCK -->
+        <div class="canvas-floating-dock" id="canvas-floating-dock">
+          <!-- Auto-Save Indicator -->
+          <div class="dock-status" id="status-indicator">
+            <span class="status-check-icon">✓</span>
+            <span class="status-text" id="status-text">All changes saved</span>
+          </div>
+
+          <div class="dock-divider"></div>
+
+          <!-- Canvas Zoom Controls -->
+          <div class="dock-zoom-group" id="navbar-zoom-controls">
+            <button class="toolbar-btn" id="btn-zoom-out" title="Zoom Out (-)" aria-label="Zoom out">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <span class="zoom-value" id="zoom-value-text">100%</span>
+            <button class="toolbar-btn" id="btn-zoom-in" title="Zoom In (+)" aria-label="Zoom in">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <button class="toolbar-btn" id="btn-zoom-fit" title="Fit to Screen" aria-label="Fit screen">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path></svg>
+            </button>
+          </div>
+
+          <div class="dock-divider"></div>
+
+          <!-- Reset Button -->
+          <button id="btn-reset-form" class="dock-btn" title="Reset to default form settings" aria-label="Reset form settings">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            <span>Reset</span>
+          </button>
+
+          <div class="dock-divider"></div>
+
+          <!-- Fullscreen Button -->
+          <button id="btn-toggle-fullscreen" class="dock-btn" title="Toggle Fullscreen Preview Mode" aria-label="Toggle Fullscreen">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3H5a2 2 0 0 1-2 2v3m18-5h-3a2 2 0 0 1-2 2v3m0 11v3a2 2 0 0 1-2 2h-3m-11 0H5a2 2 0 0 1-2-2v-3"></path></svg>
+            <span>Fullscreen</span>
+          </button>
+        </div>
+
       </main>
 
       <!-- COLUMN 3: RIGHT SIDEBAR (CONTACT & STYLE - 50/50 DIVIDE) -->
@@ -316,28 +345,6 @@
           </div>
 
         </div>
-
-        <!-- RIGHT PANEL FOOTER: ZOOM SLIDER + FULLSCREEN BUTTON -->
-        <footer class="sidebar-status-footer">
-          <div class="sidebar-zoom-controls" id="navbar-zoom-controls">
-            <button class="toolbar-btn" id="btn-zoom-out" title="Zoom Out (-)" aria-label="Zoom out">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            </button>
-            <span class="zoom-value" id="zoom-value-text">100%</span>
-            <button class="toolbar-btn" id="btn-zoom-in" title="Zoom In (+)" aria-label="Zoom in">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            </button>
-            <button class="toolbar-btn" id="btn-zoom-fit" title="Fit to Screen" aria-label="Fit screen">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path></svg>
-            </button>
-          </div>
-
-          <button id="btn-toggle-fullscreen" class="btn-ghost-sm" title="Toggle Fullscreen Preview Mode" aria-label="Toggle Fullscreen">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3H5a2 2 0 0 1-2 2v3m18-5h-3a2 2 0 0 1-2 2v3m0 11v3a2 2 0 0 1-2 2h-3m-11 0H5a2 2 0 0 1-2-2v-3"></path></svg>
-            <span>Fullscreen</span>
-          </button>
-        </footer>
-
       </aside>
 
     </div>
@@ -346,6 +353,6 @@
 
   <!-- HTML2Canvas Image Export Library -->
   <script src="html2canvas.min.js"></script>
-  <script src="app.js?v=22.0"></script>
+  <script src="app.js?v=23.0"></script>
 </body>
 </html>
