@@ -957,37 +957,26 @@
         ctx.fillRect(0, 0, W, H);
       }
 
-      // 2. RADIAL LIGHTING & AMBIENT GLOW PER THEME
+      // 2. RADIAL LIGHTING & AMBIENT GLOW PER THEME (OPTION B: SOFT LOGO AMBIENT GLOW)
       if (showGlow) {
+        // Soft logo ambient radial glow behind upper-right quadrant
+        let logoGlow = ctx.createRadialGradient(logoX + 220, 200, 20, logoX + 220, 200, 450);
+        logoGlow.addColorStop(0, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.22)' : 'rgba(0, 165, 163, 0.28)');
+        logoGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = logoGlow;
+        ctx.fillRect(0, 0, W, H);
+
         if (activeTheme === 'lime') {
           let orb1 = ctx.createRadialGradient(W * 0.45, H * 0.5, 40, W * 0.45, H * 0.5, 650);
-          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.30)');
+          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.25)');
           orb1.addColorStop(1, 'rgba(192, 244, 60, 0)');
           ctx.fillStyle = orb1;
           ctx.fillRect(0, 0, W, H);
-
-          let orb2 = ctx.createRadialGradient(W * 0.8, H * 0.3, 50, W * 0.8, H * 0.3, 700);
-          orb2.addColorStop(0, 'rgba(0, 165, 163, 0.35)');
-          orb2.addColorStop(1, 'rgba(0, 165, 163, 0)');
-          ctx.fillStyle = orb2;
-          ctx.fillRect(0, 0, W, H);
-        } else if (activeTheme === 'executive') {
-          let orb1 = ctx.createRadialGradient(W * 0.76, H * 0.35, 50, W * 0.76, H * 0.35, 750);
-          orb1.addColorStop(0, 'rgba(0, 165, 163, 0.25)');
-          orb1.addColorStop(1, 'rgba(0, 165, 163, 0)');
-          ctx.fillStyle = orb1;
-          ctx.fillRect(0, 0, W, H);
         } else if (activeTheme !== 'light') {
-          let orb1 = ctx.createRadialGradient(W * 0.76, H * 0.35, 50, W * 0.76, H * 0.35, 750);
-          orb1.addColorStop(0, 'rgba(0, 165, 163, 0.42)');
-          orb1.addColorStop(1, 'rgba(0, 165, 163, 0)');
+          let orb1 = ctx.createRadialGradient(W * 0.32, H * 0.65, 40, W * 0.32, H * 0.65, 550);
+          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.18)');
+          orb1.addColorStop(1, 'rgba(192, 244, 60, 0)');
           ctx.fillStyle = orb1;
-          ctx.fillRect(0, 0, W, H);
-
-          let orb2 = ctx.createRadialGradient(W * 0.32, H * 0.65, 40, W * 0.32, H * 0.65, 550);
-          orb2.addColorStop(0, 'rgba(192, 244, 60, 0.22)');
-          orb2.addColorStop(1, 'rgba(192, 244, 60, 0)');
-          ctx.fillStyle = orb2;
           ctx.fillRect(0, 0, W, H);
         }
       }
@@ -995,9 +984,9 @@
       // 3. BRAND DOT-MATRIX PATTERN
       if (showDotPattern && activeBgStyle !== 'hex' && activeBgStyle !== 'network') {
         ctx.save();
-        let dotColor = 'rgba(255, 255, 255, 0.055)';
-        if (activeTheme === 'light') dotColor = 'rgba(1, 55, 61, 0.05)';
-        if (activeTheme === 'executive') dotColor = 'rgba(255, 255, 255, 0.04)';
+        let dotColor = 'rgba(255, 255, 255, 0.05)';
+        if (activeTheme === 'light') dotColor = 'rgba(1, 55, 61, 0.04)';
+        if (activeTheme === 'executive') dotColor = 'rgba(255, 255, 255, 0.035)';
         
         ctx.fillStyle = dotColor;
         const spacing = 44;
@@ -1011,33 +1000,33 @@
         ctx.restore();
       }
 
-      // 4. DYNAMIC BACKGROUND GRAPHIC STYLES RENDERER
+      // 4. DYNAMIC BACKGROUND GRAPHIC STYLES RENDERER (OPTION A: BALANCED EXTENDED RAYS)
       ctx.save();
-      let accentColor = 'rgba(192, 244, 60, 0.25)';
-      if (activeTheme === 'lime') accentColor = 'rgba(192, 244, 60, 0.45)';
-      if (activeTheme === 'light') accentColor = 'rgba(0, 165, 163, 0.25)';
-      if (activeTheme === 'executive') accentColor = 'rgba(0, 165, 163, 0.30)';
+      let accentColor = 'rgba(192, 244, 60, 0.22)';
+      if (activeTheme === 'lime') accentColor = 'rgba(192, 244, 60, 0.35)';
+      if (activeTheme === 'light') accentColor = 'rgba(0, 165, 163, 0.20)';
+      if (activeTheme === 'executive') accentColor = 'rgba(0, 165, 163, 0.25)';
 
       if (activeBgStyle === 'network') {
-        // B2B CONSTELLATION NETWORK GRAPHIC
+        // B2B CONSTELLATION NETWORK GRAPHIC (RESTRAINED SUBTLE NODE PATTERN)
         ctx.strokeStyle = accentColor;
         ctx.fillStyle = accentColor;
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1.5;
 
         const nodes = [
           {x: W*0.08, y: H*0.2}, {x: W*0.18, y: H*0.65}, {x: W*0.28, y: H*0.3},
-          {x: W*0.68, y: H*0.15}, {x: W*0.75, y: H*0.75}, {x: W*0.82, y: H*0.35},
-          {x: W*0.89, y: H*0.8}, {x: W*0.95, y: H*0.25}
+          {x: W*0.64, y: H*0.2}, {x: W*0.72, y: H*0.75}, {x: W*0.82, y: H*0.4},
+          {x: W*0.90, y: H*0.82}, {x: W*0.96, y: H*0.3}
         ];
 
         for (let i = 0; i < nodes.length; i++) {
           ctx.beginPath();
-          ctx.arc(nodes[i].x, nodes[i].y, 6, 0, Math.PI * 2);
+          ctx.arc(nodes[i].x, nodes[i].y, 4, 0, Math.PI * 2);
           ctx.fill();
 
           for (let j = i + 1; j < nodes.length; j++) {
             const dist = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
-            if (dist < 700) {
+            if (dist < 650) {
               ctx.beginPath();
               ctx.moveTo(nodes[i].x, nodes[i].y);
               ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -1048,8 +1037,8 @@
       } else if (activeBgStyle === 'hex') {
         // CYBER HEXAGON GRID GRAPHIC
         ctx.strokeStyle = accentColor;
-        ctx.lineWidth = 1.8;
-        const r = 48;
+        ctx.lineWidth = 1.5;
+        const r = 52;
         const a = 2 * Math.PI / 6;
 
         for (let x = 40; x < W + 100; x += r * 3) {
@@ -1065,7 +1054,7 @@
       } else if (activeBgStyle === 'waves') {
         // FLOWING ORGANIC WAVES GRAPHIC
         ctx.strokeStyle = accentColor;
-        ctx.lineWidth = 4;
+        ctx.lineWidth = 3;
         for (let offset = 0; offset < 4; offset++) {
           ctx.beginPath();
           ctx.moveTo(0, H * 0.4 + offset * 50);
@@ -1073,14 +1062,14 @@
           ctx.stroke();
         }
       } else {
-        // TECH MESH RAYS (Shuffled to Mid-Gap X: 1837px -> 2154px - 100% away from behind the logo!)
-        ctx.lineWidth = 3.5;
+        // TECH MESH RAYS (OPTION A: EXTENDED RAYS FADING TOWARD LOWER-RIGHT)
+        ctx.lineWidth = 2.8;
         ctx.strokeStyle = accentColor;
         ctx.beginPath();
         ctx.moveTo(W * 0.58, 0);
-        ctx.lineTo(W * 0.68, H);
+        ctx.lineTo(W * 0.72, H);
         ctx.moveTo(W * 0.60, 0);
-        ctx.lineTo(W * 0.70, H);
+        ctx.lineTo(W * 0.74, H);
         ctx.stroke();
       }
       ctx.restore();
@@ -1164,7 +1153,7 @@
       });
       ctx.restore();
 
-      // 7. DIVISION BADGES (SOLID WHITE PILLS, 32px MANROPE 800, 1 HORIZONTAL ROW AT Y = 495px)
+      // 7. REFINED GLASSMOPHIC SERVICE PILLS (10-15% REDUCED HEIGHT: 54px, 1.5px BORDER, 88% TRANSLUCENT FILL)
       const pillarYStart = 495;
       const pillars = [p1, p2, p3, p4].filter(p => p.trim() !== '');
 
@@ -1172,36 +1161,35 @@
       pillars.forEach((pillarText) => {
         ctx.save();
         if ('letterSpacing' in ctx) ctx.letterSpacing = '0.3px';
-        ctx.font = '800 32px "Manrope", sans-serif';
+        ctx.font = '800 30px "Manrope", sans-serif';
         const textWidth = ctx.measureText(pillarText).width;
-        const pillWidth = textWidth + 66;
+        const pillWidth = textWidth + 60;
 
-        // Pure Solid White Pill for 100% Maximum Contrast
-        ctx.fillStyle = '#FFFFFF';
-        ctx.strokeStyle = '#00A5A3';
-        ctx.lineWidth = 2.5;
+        // Soft Translucent White Fill (88% Opacity) + Lightweight 1.5px Border
+        ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.08)' : 'rgba(255, 255, 255, 0.88)';
+        ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(0, 165, 163, 0.4)' : '#00A5A3';
+        ctx.lineWidth = 1.5;
 
         ctx.beginPath();
-        ctx.roundRect(rX, pillarYStart, pillWidth, 64, 32);
+        ctx.roundRect(rX, pillarYStart, pillWidth, 54, 27); // 54px height (15% reduced for refined hierarchy)
         ctx.fill();
         ctx.stroke();
 
-        // Vibrant Electric Teal Dot Indicator
+        // Vibrant Teal Accent Dot Indicator
         ctx.fillStyle = '#00A5A3';
         ctx.beginPath();
-        ctx.arc(rX + 26, pillarYStart + 32, 8, 0, Math.PI * 2);
+        ctx.arc(rX + 24, pillarYStart + 27, 7, 0, Math.PI * 2);
         ctx.fill();
 
         // Deep Dark Teal Text
         ctx.fillStyle = '#01373D';
-        ctx.fillText(pillarText, rX + 46, pillarYStart + 43);
+        ctx.fillText(pillarText, rX + 42, pillarYStart + 37);
 
         ctx.restore();
-        rX += pillWidth + 20;
+        rX += pillWidth + 18;
       });
 
-      // 8. SINGLE LINE FOOTER SECTION AT Y = 717px (EXACT USER BLUEPRINT SPEC)
-      // Line 1: tresconglobal.com (40px Bold Electric Lime) + UAE • India • Singapore • Saudi Arabia • Qatar (30px White)
+      // 8. STRENGTHENED FOOTER HIERARCHY WITH GLOBAL PRESENCE DESCRIPTOR AT Y = 717px
       ctx.save();
       
       // Separator Line above Footer at Y = 664px
@@ -1214,22 +1202,31 @@
 
       const footerY = 717;
 
-      // Part 1: Website URL (40px Bold Electric Lime at X = 960px, Y = 717px)
+      // Part 1: Website URL Anchor (800 ExtraBold Electric Lime at X = 960px, Y = 717px)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
       ctx.font = '800 40px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
       
-      // Strip 'www.' if present for clean domain format
       const cleanWebsite = website.replace(/^https?:\/\//, '').replace(/^www\./, '');
       ctx.fillText(cleanWebsite, contentX, footerY);
 
       const urlWidth = ctx.measureText(cleanWebsite).width;
+      let nextX = contentX + urlWidth + 40;
 
-      // Part 2: Regional Hubs (30px Bold White at X = 960px + urlWidth + 40px, Y = 717px)
-      if ('letterSpacing' in ctx) ctx.letterSpacing = '0.5px';
-      ctx.font = '700 30px "Manrope", sans-serif';
+      // Part 2: Geographic Presence Descriptor ("Global Presence" in 500 Medium Translucent)
+      if ('letterSpacing' in ctx) ctx.letterSpacing = '0.6px';
+      ctx.font = '500 28px "Manrope", sans-serif';
+      ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.65)' : 'rgba(255, 255, 255, 0.70)';
+      ctx.fillText('Global Presence  •', nextX, footerY);
+
+      const descWidth = ctx.measureText('Global Presence  •').width;
+      nextX += descWidth + 14;
+
+      // Part 3: Geographic Countries (700 Bold White)
+      // Standardize country order per brand spec: UAE • Saudi Arabia • India • Singapore • Qatar
+      ctx.font = '700 28px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#01373D' : '#FFFFFF';
-      ctx.fillText(hubs, contentX + urlWidth + 40, footerY);
+      ctx.fillText('UAE  •  Saudi Arabia  •  India  •  Singapore  •  Qatar', nextX, footerY);
 
       ctx.restore();
 
