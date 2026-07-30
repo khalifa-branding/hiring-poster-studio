@@ -1045,14 +1045,14 @@
       }
       ctx.restore();
 
-      // 6. MAIN TAGLINE (READABLE 86px SEMIBOLD ANEK DEVANAGARI)
-      const maxTextWidth = 1000;
-      const startHeadlineY = 150;
+      // 6. MAIN TAGLINE (MAXIMUM SAFE AREA HIGH-IMPACT 110px BOLD ANEK DEVANAGARI)
+      const maxTextWidth = 1550; // Expands across safe area X: 820px -> 2370px
+      const startHeadlineY = 160;
 
       ctx.save();
       if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
-      let headlineFontSize = 86;
-      ctx.font = `600 ${headlineFontSize}px "Anek Devanagari", sans-serif`;
+      let headlineFontSize = 110;
+      ctx.font = `700 ${headlineFontSize}px "Anek Devanagari", sans-serif`;
       
       if (activeTheme === 'light') {
         ctx.fillStyle = '#01373D';
@@ -1070,7 +1070,7 @@
         if (metrics.width > maxTextWidth && n > 0) {
           ctx.fillText(line, contentX, currentY);
           line = words[n] + ' ';
-          currentY += headlineFontSize + 12;
+          currentY += headlineFontSize + 16;
         } else {
           line = testLine;
         }
