@@ -686,14 +686,13 @@
         </div>
       </div>
 
-      <!-- BACKGROUND GRAPHIC STYLE SELECTOR -->
+      <!-- APPROVED TRESCON BRANDBOOK BACKGROUND GRAPHIC SYSTEM -->
       <div class="control-group">
-        <h3>Background Graphic Style</h3>
+        <h3>Brandbook Graphic Language</h3>
         <div class="preset-grid">
-          <div class="preset-card active" id="bgCardRays" onclick="selectBgStyle('rays')">Tech Mesh Rays</div>
-          <div class="preset-card" id="bgCardNetwork" onclick="selectBgStyle('network')">B2B Network</div>
-          <div class="preset-card" id="bgCardHex" onclick="selectBgStyle('hex')">Cyber Hex Grid</div>
-          <div class="preset-card" id="bgCardWaves" onclick="selectBgStyle('waves')">Flowing Waves</div>
+          <div class="preset-card active" id="bgCardDotmatrix" onclick="selectBgStyle('dotmatrix')">Official Dot Matrix</div>
+          <div class="preset-card" id="bgCardBrandgrid" onclick="selectBgStyle('brandgrid')">Brand Alignment Grid</div>
+          <div class="preset-card" id="bgCardGradient" onclick="selectBgStyle('gradient')">Executive Gradient</div>
         </div>
       </div>
 
@@ -848,7 +847,7 @@
     const ctx = canvas.getContext('2d');
     
     let activeTheme = 'teal'; // 'teal', 'lime', 'executive', 'light'
-    let activeBgStyle = 'rays'; // 'rays', 'network', 'hex', 'waves'
+    let activeBgStyle = 'dotmatrix'; // 'dotmatrix', 'brandgrid', 'gradient'
     let safeZoneActive = false;
     let deviceMode = 'desktop';
 
@@ -896,7 +895,7 @@
 
     function selectBgStyle(style) {
       activeBgStyle = style;
-      ['Rays', 'Network', 'Hex', 'Waves'].forEach(s => {
+      ['Dotmatrix', 'Brandgrid', 'Gradient'].forEach(s => {
         const el = document.getElementById('bgCard' + s);
         if (el) el.classList.remove('active');
       });
@@ -961,9 +960,8 @@
         ctx.fillRect(0, 0, W, H);
       }
 
-      // 2. RESTRAINED AMBIENT GLOW (OPTION B: IMPERCEPTIBLE SUB-8% LOGO GLOW)
+      // 2. RESTRAINED AMBIENT GLOW (SUBTLE LOGO GLOW < 8% OPACITY PER BRIEF)
       if (showGlow) {
-        // Soft logo ambient radial glow behind upper-right quadrant (< 8% opacity)
         let logoGlow = ctx.createRadialGradient(logoX + 215, 175, 20, logoX + 215, 175, 500);
         logoGlow.addColorStop(0, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.08)' : 'rgba(0, 165, 163, 0.075)');
         logoGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
@@ -972,23 +970,23 @@
 
         if (activeTheme === 'lime') {
           let orb1 = ctx.createRadialGradient(W * 0.45, H * 0.5, 40, W * 0.45, H * 0.5, 650);
-          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.16)');
+          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.14)');
           orb1.addColorStop(1, 'rgba(192, 244, 60, 0)');
           ctx.fillStyle = orb1;
           ctx.fillRect(0, 0, W, H);
         } else if (activeTheme !== 'light') {
           let orb1 = ctx.createRadialGradient(W * 0.32, H * 0.65, 40, W * 0.32, H * 0.65, 550);
-          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.12)');
+          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.10)');
           orb1.addColorStop(1, 'rgba(192, 244, 60, 0)');
           ctx.fillStyle = orb1;
           ctx.fillRect(0, 0, W, H);
         }
       }
 
-      // 3. BRAND DOT-MATRIX PATTERN (REDUCED OPACITY BY 10% PER BRIEF)
-      if (showDotPattern && activeBgStyle !== 'hex' && activeBgStyle !== 'network') {
+      // 3. APPROVED TRESCON BRANDBOOK PATTERN (PAGE 21: Derived from circle dot of logo)
+      if (showDotPattern && activeBgStyle === 'dotmatrix') {
         ctx.save();
-        let dotColor = 'rgba(255, 255, 255, 0.035)';
+        let dotColor = 'rgba(255, 255, 255, 0.035)'; // 5-10% visual prominence
         if (activeTheme === 'light') dotColor = 'rgba(1, 55, 61, 0.03)';
         if (activeTheme === 'executive') dotColor = 'rgba(255, 255, 255, 0.028)';
         
@@ -997,9 +995,33 @@
         for (let x = 30; x < W; x += spacing) {
           for (let y = 30; y < H; y += spacing) {
             ctx.beginPath();
-            ctx.arc(x, y, 2.6, 0, Math.PI * 2);
+            ctx.arc(x, y, 2.5, 0, Math.PI * 2);
             ctx.fill();
           }
+        }
+        ctx.restore();
+      }
+
+      // 4. ARCHITECTURAL BRAND ALIGNMENT GRID (BRANDBOOK STATIONERY SPEC)
+      if (activeBgStyle === 'brandgrid') {
+        ctx.save();
+        let gridColor = 'rgba(255, 255, 255, 0.035)';
+        if (activeTheme === 'light') gridColor = 'rgba(1, 55, 61, 0.03)';
+        ctx.strokeStyle = gridColor;
+        ctx.lineWidth = 1;
+
+        const gridStep = 88;
+        for (let x = 0; x < W; x += gridStep) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, H);
+          ctx.stroke();
+        }
+        for (let y = 0; y < H; y += gridStep) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(W, y);
+          ctx.stroke();
         }
         ctx.restore();
       }
