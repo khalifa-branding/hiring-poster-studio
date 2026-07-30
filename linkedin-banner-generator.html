@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trescon Global - Enterprise LinkedIn Banner Studio v12.0 (Mathematical Zero-Collision Engine)</title>
+  <title>Trescon Global - Enterprise LinkedIn Banner Studio v12.1 (Generous Footer Spacing)</title>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -648,7 +648,7 @@
     <div class="brand-title">
       <img src="brand_assets/10-years-trescon-logo-W.png" alt="Trescon 10 Years Logo">
       <h1>LinkedIn Banner Studio</h1>
-      <span>v12.0 Mathematical Zero-Collision</span>
+      <span>v12.1 Generous Spacing Edition</span>
     </div>
 
     <!-- Device Viewport Switch -->
@@ -842,13 +842,13 @@
 
     // Load Official 10th Anniversary Logo Images (Cache-Busting URL)
     const logo10W = new Image();
-    logo10W.src = 'brand_assets/10-years-trescon-logo-W.png?v=12';
+    logo10W.src = 'brand_assets/10-years-trescon-logo-W.png?v=12.1';
 
     const logo10Color = new Image();
-    logo10Color.src = 'brand_assets/10-years-trescon-logo.png?v=12';
+    logo10Color.src = 'brand_assets/10-years-trescon-logo.png?v=12.1';
 
     const logo10Dark = new Image();
-    logo10Dark.src = 'brand_assets/10-years-trescon-logo-B.png?v=12';
+    logo10Dark.src = 'brand_assets/10-years-trescon-logo-B.png?v=12.1';
 
     let imagesLoaded = 0;
     [logo10W, logo10Color, logo10Dark].forEach(img => {
@@ -1015,10 +1015,7 @@
       ctx.fillStyle = topBarGrad;
       ctx.fillRect(0, 0, W, 12);
 
-      // 5. MATHEMATICAL ZERO-COLLISION GRID ARCHITECTURE (v12.0 ENGINE SPEC)
-      // Mobile Avatar Circle: X: 0 -> 940px (Bottom Left)
-      // Content Start: X = 960px! (100% past avatar circle)
-      // Logo Position: X = 2380px (Far Right, 100px before edit pencil icon!)
+      // 5. MATHEMATICAL ZERO-COLLISION GRID ARCHITECTURE
       const contentX = 960;
       const logoX = 2380;
       const logoW = 440;
@@ -1045,11 +1042,11 @@
       ctx.restore();
 
       // 6. MAIN TAGLINE (EXPLICIT 2-LINE SLOGAN ANCHORED AT X = 960px)
-      const startHeadlineY = 150;
+      const startHeadlineY = 145;
 
       ctx.save();
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
-      let headlineFontSize = 90;
+      let headlineFontSize = 88;
       ctx.font = `800 ${headlineFontSize}px "Anek Devanagari", sans-serif`;
       
       if (activeTheme === 'light') {
@@ -1066,7 +1063,7 @@
       } else {
         const words = headline.split(' ');
         let line = '';
-        const maxTextWidth = 1300; // Hard max text width to guarantee ending before logoX (2380px)
+        const maxTextWidth = 1300;
         for (let n = 0; n < words.length; n++) {
           let testLine = line + words[n] + ' ';
           let metrics = ctx.measureText(testLine);
@@ -1084,13 +1081,13 @@
       headlineLines.forEach((hLine, i) => {
         ctx.fillText(hLine, contentX, currentY);
         if (i < headlineLines.length - 1) {
-          currentY += headlineFontSize + 12;
+          currentY += headlineFontSize + 10;
         }
       });
       ctx.restore();
 
       // 7. SOLID HIGH-CONTRAST WHITE DIVISIONS BADGES AT X = 960px
-      const pillarYStart = Math.max(currentY + 40, 375);
+      const pillarYStart = Math.max(currentY + 35, 355);
       const pillars = [p1, p2, p3, p4].filter(p => p.trim() !== '');
 
       const row1 = pillars.slice(0, 2);
@@ -1098,14 +1095,14 @@
 
       [row1, row2].forEach((rowPillars, rowIndex) => {
         let rX = contentX;
-        const currentPillarY = pillarYStart + (rowIndex * 82);
+        const currentPillarY = pillarYStart + (rowIndex * 74);
 
         rowPillars.forEach((pillarText) => {
           ctx.save();
           if ('letterSpacing' in ctx) ctx.letterSpacing = '0.3px';
-          ctx.font = '800 36px "Manrope", sans-serif';
+          ctx.font = '800 32px "Manrope", sans-serif';
           const textWidth = ctx.measureText(pillarText).width;
-          const pillWidth = textWidth + 74;
+          const pillWidth = textWidth + 66;
 
           // Pure Solid White Pill for 100% Maximum Contrast
           ctx.fillStyle = '#FFFFFF';
@@ -1113,49 +1110,51 @@
           ctx.lineWidth = 2.5;
 
           ctx.beginPath();
-          ctx.roundRect(rX, currentPillarY, pillWidth, 72, 36);
+          ctx.roundRect(rX, currentPillarY, pillWidth, 64, 32);
           ctx.fill();
           ctx.stroke();
 
           // Vibrant Electric Teal Dot Indicator
           ctx.fillStyle = '#00A5A3';
           ctx.beginPath();
-          ctx.arc(rX + 30, currentPillarY + 36, 9, 0, Math.PI * 2);
+          ctx.arc(rX + 26, currentPillarY + 32, 8, 0, Math.PI * 2);
           ctx.fill();
 
           // Deep Dark Teal Text
           ctx.fillStyle = '#01373D';
-          ctx.fillText(pillarText, rX + 52, currentPillarY + 48);
+          ctx.fillText(pillarText, rX + 46, currentPillarY + 43);
 
           ctx.restore();
-          rX += pillWidth + 24;
+          rX += pillWidth + 22;
         });
       });
 
-      // 8. VERTICALLY STACKED FOOTER ARCHITECTURE (ZERO FOOTER TEXT COLLISION)
-      // Line 1: Website URL at Y = 707px
-      // Line 2: Regional Hubs at Y = 757px
+      // 8. VERTICALLY STACKED FOOTER WITH GENEROUS BREATHING GAP (v12.1 SPEC)
+      // Separator Line at Y = H - 128 (664px)
+      // Line 1: Website URL at Y = H - 75 (717px) -> 40px Bold Electric Lime
+      // Line 2: Regional Hubs at Y = H - 24 (768px) -> 30px Bold White
+      // Baseline gap: 51px (leaving 13px clean breathing space under descender 'g')
       ctx.save();
       
       // Separator Line above Footer
       ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.2)' : 'rgba(255, 255, 255, 0.25)';
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(contentX, H - 110);
-      ctx.lineTo(2900, H - 110);
+      ctx.moveTo(contentX, H - 128);
+      ctx.lineTo(2900, H - 128);
       ctx.stroke();
 
-      // Line 1: Website URL (44px Bold Electric Lime at X = 960px)
+      // Line 1: Website URL (40px Bold Electric Lime at X = 960px, Y = H - 75)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
-      ctx.font = '800 44px "Manrope", sans-serif';
+      ctx.font = '800 40px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
-      ctx.fillText(website, contentX, H - 65);
+      ctx.fillText(website, contentX, H - 75);
 
-      // Line 2: Regional Hubs (32px Bold White at X = 960px)
+      // Line 2: Regional Hubs (30px Bold White at X = 960px, Y = H - 24)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '0.5px';
-      ctx.font = '700 32px "Manrope", sans-serif';
+      ctx.font = '700 30px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#01373D' : '#FFFFFF';
-      ctx.fillText(hubs, contentX, H - 18);
+      ctx.fillText(hubs, contentX, H - 24);
 
       ctx.restore();
 
@@ -1250,14 +1249,14 @@
       render();
 
       const link = document.createElement('a');
-      link.download = `Trescon_LinkedIn_Banner_v12_${activeTheme.toUpperCase()}_3168x792.png`;
+      link.download = `Trescon_LinkedIn_Banner_v12.1_${activeTheme.toUpperCase()}_3168x792.png`;
       link.href = canvas.toDataURL('image/png', 1.0);
       link.click();
 
       safeZoneActive = wasGuideActive;
       render();
 
-      showToast(`Banner PNG (v12.0 ${activeTheme.toUpperCase()}) downloaded successfully!`);
+      showToast(`Banner PNG (v12.1 ${activeTheme.toUpperCase()}) downloaded successfully!`);
     }
   </script>
 </body>
