@@ -3,47 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trescon Global - Hiring Poster Studio Pro</title>
-  <meta name="description" content="Official Trescon Global Canva-style hiring poster generator and social media campaign editor. Fill out job details, pick aspect ratios (Square, Portrait, Story), design themes, and export high-res PNGs.">
+  <title>Trescon Global - Executive Letterhead Studio</title>
+  <meta name="description" content="Official Trescon Global executive letterhead generator and editor. Fill out letter details in the left form, view live A4 preview, and download clean Word templates.">
   
-  <!-- Google Fonts: Manrope (Clean UI Typography) & Anek Devanagari -->
+  <!-- Google Fonts: Anek Devanagari & Manrope -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=15.0">
+  <!-- Quill.js Rich Text Editor CSS -->
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <link rel="stylesheet" href="letterhead.css?v=5.0">
 </head>
 <body>
 
-  <div class="studio-app-container" id="studio-app-container">
+  <div class="studio-app-container">
     
     <!-- TOP FIXED NAVIGATION RIBBON -->
-    <header class="studio-top-ribbon">
+    <header class="studio-top-ribbon no-print">
       <div class="ribbon-brand">
         <img src="brand_assets/trescon-logo-white-2025.png" alt="Trescon Logo" class="brand-logo-img">
         <div class="brand-divider"></div>
-        <h1 class="brand-title">Hiring Poster Studio</h1>
-        <span class="live-studio-badge"><span class="badge-dot"></span> PRO</span>
+        <h1 class="brand-title">Executive Letterhead Studio</h1>
       </div>
 
-      <div class="ribbon-actions">
-        <!-- TOP NAVBAR ZOOM CONTROLLER -->
-        <div class="navbar-zoom-controls" id="navbar-zoom-controls">
-          <button class="toolbar-btn" id="btn-zoom-out" title="Zoom Out (-)" aria-label="Zoom out">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          </button>
-          <span class="zoom-value" id="zoom-value-text">100%</span>
-          <button class="toolbar-btn" id="btn-zoom-in" title="Zoom In (+)" aria-label="Zoom in">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          </button>
-          <button class="toolbar-btn" id="btn-zoom-fit" title="Fit to Screen" aria-label="Fit screen">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path></svg>
-          </button>
-        </div>
-
-        <button id="btn-export-top" class="btn-top-export" aria-label="Export High-Res PNG">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-          Export High-Res PNG
+      <!-- EXPORT ACTIONS & TOOL SWITCHER -->
+      <div class="ribbon-actions" style="display: flex; align-items: center; gap: 0.75rem;">
+        <a href="index.html" class="btn btn-outline btn-sm" style="color: var(--color-lime); border-color: rgba(163, 230, 53, 0.4); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
+          <span>📊</span> Hiring Hub & Poster Studio
+        </a>
+        <button id="btn-download-docx-top" class="btn btn-primary btn-sm" onclick="exportToDocx()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Download Word Template
         </button>
       </div>
     </header>
@@ -52,307 +43,187 @@
     <div class="studio-main-layout">
       
       <!-- LEFT FORM INPUTS SIDEBAR -->
-      <aside class="editor-sidebar">
-        
-        <!-- PRO EXECUTIVE HEADER -->
-        <div class="sidebar-header-clean">
-          <h2>Poster Settings</h2>
+      <aside class="sidebar-form no-print">
+        <div class="sidebar-header">
+          <h2>Document Configuration</h2>
+          <p>Fill out the fields below to update the live A4 preview.</p>
         </div>
 
-        <!-- ACCORDION COLLAPSIBLE CONTAINER -->
-        <div class="accordion-container">
+        <form id="letterhead-form" onsubmit="event.preventDefault();">
           
-          <!-- ACCORDION 1: CAMPAIGN HEADINGS (OPEN BY DEFAULT) -->
-          <div class="accordion-item open" id="acc-item-headings">
-            <button class="accordion-header" aria-expanded="true" aria-controls="acc-body-headings">
-              <div class="acc-title-group">
-                <svg class="acc-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                <span class="acc-title">1. Campaign Headings & Quote</span>
-              </div>
-              <svg class="acc-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </button>
-            
-            <div class="accordion-body" id="acc-body-headings">
-              <div class="form-grid-2col">
-                <div class="form-group">
-                  <label for="title-input">Headline Banner</label>
-                  <input type="text" id="title-input" class="form-input" value="We're growing our team at Trescon Manipal!" placeholder="We're growing our team at Trescon Manipal!">
-                </div>
-                <div class="form-group">
-                  <label for="subtitle-input">Sub-Headline Text</label>
-                  <input type="text" id="subtitle-input" class="form-input" value="We're looking for enthusiastic individuals to join us in these key roles:" placeholder="We're looking for enthusiastic individuals to join us in these key roles:">
-                </div>
-              </div>
-              <!-- CUSTOMIZABLE CANDIDATE QUALIFIER QUOTE -->
-              <div class="form-group" style="margin-top: 0.75rem;">
-                <label for="qualifier-input">Candidate Qualifier Quote (Optional)</label>
-                <input type="text" id="qualifier-input" class="form-input" value="Whether you're a fresher eager to kickstart your career or someone experienced looking for your next opportunity, we'd love to hear from you." placeholder="Leave blank to remove quote block completely">
-              </div>
-            </div>
+          <!-- SECTION 1: OFFICE LOCATION PRESET -->
+          <div class="form-group">
+            <label for="office-preset">Regional Office Location</label>
+            <select id="office-preset" class="form-control" onchange="updateFooter()">
+              <option value="bangalore" selected>Bangalore (HQ) — India</option>
+              <option value="manipal">Manipal — India</option>
+              <option value="mangalore">Mangalore — India</option>
+              <option value="dubai">Dubai (DIFC) — UAE</option>
+            </select>
           </div>
 
-          <!-- ACCORDION 2: OPEN POSITIONS & EXPERIENCE -->
-          <div class="accordion-item" id="acc-item-roles">
-            <button class="accordion-header" aria-expanded="false" aria-controls="acc-body-roles">
-              <div class="acc-title-group">
-                <svg class="acc-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                <span class="acc-title">2. Open Positions & Exp</span>
-                <span id="roles-limit-warning" class="warning-tag" style="display: none;">Max 5</span>
-              </div>
-              <svg class="acc-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </button>
-
-            <div class="accordion-body" id="acc-body-roles">
-              <div id="roles-input-container" class="roles-container">
-                <!-- Dynamically populated by app.js -->
-              </div>
-              <button id="add-role-btn" class="add-role-btn">+ Add Position</button>
-              
-              <!-- TOGGLE TO REMOVE SERIAL NUMBERS (01, 02...) -->
-              <div class="form-group" style="margin-top: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 0.65rem;">
-                <div class="switch-container">
-                  <label class="switch">
-                    <input type="checkbox" id="show-numbers-toggle" checked>
-                    <span class="slider"></span>
-                  </label>
-                  <span class="switch-label">Show Position Numbers (01, 02...)</span>
-                </div>
-              </div>
-            </div>
+          <!-- SECTION 2: DATE -->
+          <div class="form-group">
+            <label for="input-date">Letter Date</label>
+            <input type="text" id="input-date" class="form-control" value="Date: July 27, 2026" placeholder="e.g. Date: July 27, 2026">
           </div>
 
-          <!-- ACCORDION 3: CONTACT & DETAILS -->
-          <div class="accordion-item" id="acc-item-contact">
-            <button class="accordion-header" aria-expanded="false" aria-controls="acc-body-contact">
-              <div class="acc-title-group">
-                <svg class="acc-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                <span class="acc-title">3. Contact & Location</span>
-              </div>
-              <svg class="acc-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </button>
-
-            <div class="accordion-body" id="acc-body-contact">
-              <div class="form-grid-2col">
-                <div class="form-group">
-                  <label for="location-input">Office Location</label>
-                  <input type="text" id="location-input" class="form-input" value="Manipal" placeholder="Manipal">
-                </div>
-                <div class="form-group">
-                  <label for="highlight-input">Candidate Priority</label>
-                  <input type="text" id="highlight-input" class="form-input" value="Immediate Joiners Preferred" placeholder="Immediate Joiners Preferred">
-                </div>
-              </div>
-              <div class="form-grid-2col">
-                <div class="form-group">
-                  <label for="email-input">Recruitment Email</label>
-                  <input type="email" id="email-input" class="form-input" value="hr@tresconglobal.com" placeholder="hr@tresconglobal.com">
-                </div>
-                <div class="form-group">
-                  <label for="cta-label-input">CTA Prompt</label>
-                  <input type="text" id="cta-label-input" class="form-input" value="APPLY DIRECTLY VIA EMAIL" placeholder="APPLY DIRECTLY VIA EMAIL">
-                </div>
-              </div>
-            </div>
+          <!-- SECTION 3: RECIPIENT INFORMATION -->
+          <div class="form-section-title">Recipient Information</div>
+          <div class="form-group">
+            <label for="input-recip-name">Recipient Name</label>
+            <input type="text" id="input-recip-name" class="form-control" value="Mr. Alex Turner" placeholder="e.g. Mr. Alex Turner">
+          </div>
+          <div class="form-group">
+            <label for="input-recip-title">Designation & Company</label>
+            <input type="text" id="input-recip-title" class="form-control" value="Chief Executive Officer, Apex Global Innovations Ltd." placeholder="e.g. Chief Executive Officer, Apex Global Ltd.">
+          </div>
+          <div class="form-group">
+            <label for="input-recip-address">City & Country</label>
+            <input type="text" id="input-recip-address" class="form-control" value="Bengaluru, Karnataka" placeholder="e.g. Bengaluru, Karnataka">
           </div>
 
-          <!-- ACCORDION 4: THEME & FORMAT -->
-          <div class="accordion-item" id="acc-item-style">
-            <button class="accordion-header" aria-expanded="false" aria-controls="acc-body-style">
-              <div class="acc-title-group">
-                <svg class="acc-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.7-.72 1.7-1.65 0-.43-.17-.83-.44-1.14-.29-.33-.46-.77-.46-1.26 0-1.05.85-1.9 1.9-1.9H17c2.76 0 5-2.24 5-5 0-4.97-4.48-9-10-9z"></path></svg>
-                <span class="acc-title">4. Theme & Format</span>
-              </div>
-              <svg class="acc-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </button>
-
-            <div class="accordion-body" id="acc-body-style">
-              <!-- Aspect Ratio -->
-              <div class="form-group">
-                <label>Aspect Ratio</label>
-                <div class="options-grid">
-                  <div class="option-card">
-                    <input type="radio" id="ratio-square-opt" name="size-preset" value="square">
-                    <label for="ratio-square-opt">
-                      <span class="icon">⬜</span>
-                      <span>Square (1:1)</span>
-                    </label>
-                  </div>
-                  <div class="option-card">
-                    <input type="radio" id="ratio-portrait-opt" name="size-preset" value="portrait" checked>
-                    <label for="ratio-portrait-opt">
-                      <span class="icon">▰</span>
-                      <span>Portrait (4:5)</span>
-                    </label>
-                  </div>
-                  <div class="option-card">
-                    <input type="radio" id="ratio-story-opt" name="size-preset" value="story">
-                    <label for="ratio-story-opt">
-                      <span class="icon">▮</span>
-                      <span>Story (9:16)</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Color Swatches -->
-              <div class="form-group" style="margin-top: 10px;">
-                <label>Color Swatches</label>
-                <div class="theme-swatch-grid">
-                  <div class="theme-swatch-card">
-                    <input type="radio" id="theme-emerald-opt" name="theme-preset" value="emerald" checked>
-                    <label for="theme-emerald-opt">
-                      <div class="swatch-preview-box preview-emerald">
-                        <span class="swatch-dot dot-lime"></span>
-                        <span class="swatch-dot dot-teal"></span>
-                      </div>
-                      <div class="swatch-details">
-                        <span class="swatch-name">Emerald</span>
-                      </div>
-                    </label>
-                  </div>
-
-                  <div class="theme-swatch-card">
-                    <input type="radio" id="theme-midnight-opt" name="theme-preset" value="midnight">
-                    <label for="theme-midnight-opt">
-                      <div class="swatch-preview-box preview-midnight">
-                        <span class="swatch-dot dot-cyan"></span>
-                        <span class="swatch-dot dot-blue"></span>
-                      </div>
-                      <div class="swatch-details">
-                        <span class="swatch-name">Midnight</span>
-                      </div>
-                    </label>
-                  </div>
-
-                  <div class="theme-swatch-card">
-                    <input type="radio" id="theme-light-opt" name="theme-preset" value="light">
-                    <label for="theme-light-opt">
-                      <div class="swatch-preview-box preview-light">
-                        <span class="swatch-dot dot-dark"></span>
-                        <span class="swatch-dot dot-slate"></span>
-                      </div>
-                      <div class="swatch-details">
-                        <span class="swatch-name">Light Paper</span>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-            </div>
+          <!-- SECTION 4: SUBJECT & SALUTATION -->
+          <div class="form-section-title">Subject & Greeting</div>
+          <div class="form-group">
+            <label for="input-subject">Subject Line</label>
+            <input type="text" id="input-subject" class="form-control" value="Subject: Formal Proposal & Corporate Partnership Engagement" placeholder="e.g. Subject: Strategic Partnership Engagement">
+          </div>
+          <div class="form-group">
+            <label for="input-salutation">Salutation</label>
+            <input type="text" id="input-salutation" class="form-control" value="Dear Mr. Turner," placeholder="e.g. Dear Stakeholders,">
           </div>
 
-        </div>
-
-        <!-- STICKY AUTO-SAVED & SECONDARY CONTROL FOOTER -->
-        <footer class="sidebar-status-footer">
-          <div class="status-indicator" id="status-indicator">
-            <span class="status-check-icon">✓</span>
-            <span class="status-text" id="status-text">All changes saved</span>
+          <!-- SECTION 5: LETTER BODY CONTENT -->
+          <div class="form-section-title">Letter Content</div>
+          <div class="form-group">
+            <label for="input-body">Letter Body</label>
+            <div id="editor-sidebar-toolbar"></div>
+            <div id="input-body-editor" class="body-rich-editor"></div>
           </div>
 
-          <div class="sidebar-footer-actions">
-            <button id="btn-reset-form" class="btn-ghost-sm" title="Reset to default form settings" aria-label="Reset form settings">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
-              <span>Reset</span>
-            </button>
-            <button id="btn-toggle-fullscreen" class="btn-ghost-sm" title="Toggle Fullscreen Preview Mode" aria-label="Toggle Fullscreen">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3H5a2 2 0 0 1-2 2v3m18-5h-3a2 2 0 0 1-2 2v3m0 11v3a2 2 0 0 1-2 2h-3m-11 0H5a2 2 0 0 1-2-2v-3"></path></svg>
-              <span>Fullscreen</span>
+          <!-- SECTION 6: SIGNATORY INFORMATION -->
+          <div class="form-section-title">Signatory Details</div>
+          <div class="form-group">
+            <label for="input-sign-closing">Closing Phrase</label>
+            <input type="text" id="input-sign-closing" class="form-control" value="Warm regards," placeholder="e.g. Warm regards,">
+          </div>
+          <div class="form-group">
+            <label for="input-sign-name">Signatory Name</label>
+            <input type="text" id="input-sign-name" class="form-control" value="Mohammed Saleem" placeholder="e.g. Mohammed Saleem">
+          </div>
+          <div class="form-group">
+            <label for="input-sign-title">Signatory Title</label>
+            <input type="text" id="input-sign-title" class="form-control" value="Founder & Chairman" placeholder="e.g. Founder & Chairman">
+          </div>
+
+          <!-- SUBMIT CTA BUTTON -->
+          <div class="form-action-box">
+            <button type="button" id="btn-download-docx-side" class="btn btn-primary btn-block" onclick="exportToDocx()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Download Word Template (.docx)
             </button>
           </div>
-        </footer>
 
+        </form>
       </aside>
 
-      <!-- RIGHT PANEL: PREVIEW WORKSPACE -->
-      <main class="preview-workspace" id="preview-workspace">
-
-        <!-- AMBIENT GLOW BACKDROP HALO -->
-        <div class="studio-halo-glow" id="studio-halo-glow"></div>
-
-        <div class="flyer-canvas-wrapper ratio-portrait" id="flyer-canvas-wrapper">
-          <div class="flyer-canvas theme-emerald-glow" id="flyer-canvas">
-            
-            <!-- Geometric Background Overlay Pattern -->
-            <div class="brand-pattern pattern-circles" id="brand-pattern"></div>
-            
-            <!-- Interactive Brand Circle Decos -->
-            <div class="brand-deco-circle deco-1"></div>
-            <div class="brand-deco-circle deco-2"></div>
-            <div class="brand-deco-circle deco-3"></div>
-            
-            <!-- Poster Top Header (Logo) -->
-            <div class="flyer-header">
-              <img src="brand_assets/10-years-trescon-logo-W.png" alt="Trescon Global" class="flyer-logo" id="flyer-logo">
-              <div class="careers-badge">
-                <span class="pulse-dot"></span>
-                <span>Careers</span>
-              </div>
-            </div>
-            
-            <!-- Poster Intro Heading Block -->
-            <div class="flyer-intro">
-              <h2 class="flyer-title" id="flyer-title-text">We're growing our team at Trescon Manipal!</h2>
-              <p class="flyer-subtitle" id="flyer-subtitle-text">We're looking for enthusiastic individuals to join us in these key roles:</p>
-            </div>
-            
-            <!-- Poster Open Positions Listing -->
-            <div class="flyer-roles" id="flyer-roles-list">
-              <!-- Dynamic elements generated by app.js -->
-            </div>
-            
-            <!-- Job Details and Badges Row -->
-            <div class="flyer-meta-row">
-              <div class="info-badge">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                <span id="flyer-location-text">Manipal</span>
-              </div>
-              
-              <div class="info-badge badge-highlight">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-                <span id="flyer-highlight-text">Immediate Joiners Preferred</span>
-              </div>
-            </div>
-            
-            <!-- Qualifier text block -->
-            <p class="candidate-qualifier" id="flyer-candidate-qualifier">
-              Whether you're a fresher eager to kickstart your career or someone experienced looking for your next opportunity, we'd love to hear from you.
-            </p>
-            
-            <!-- Call to Action Container -->
-            <div class="cta-box">
-              <div class="cta-info">
-                <span class="cta-text" id="flyer-cta-label-text">APPLY DIRECTLY VIA EMAIL</span>
-                <a href="mailto:hr@tresconglobal.com" id="flyer-mailto-link" class="cta-highlight" title="Click to send email">
-                  <span id="flyer-email-text">hr@tresconglobal.com</span>
-                </a>
-              </div>
-              
-              <div class="cta-right-col">
-                <a href="https://tresconglobal.com" target="_blank" class="cta-website-badge" title="Visit Official Website">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z"></path></svg>
-                  <span>tresconglobal.com</span>
-                </a>
-              </div>
-            </div>
-
-          </div>
-        </div>
+      <!-- RIGHT DISPLAY AREA: LIVE A4 PAPER PREVIEW -->
+      <main class="preview-area">
         
+        <div class="paper-container" id="sheets-wrapper">
+          
+          <!-- PAGE 1 SHEET -->
+          <article class="a4-sheet" id="letterhead-sheet">
+            
+            <!-- TOP ACCENT RULE -->
+            <div class="top-accent-bar"></div>
+
+            <!-- HEADER SECTION -->
+            <header class="letter-header">
+              <div class="header-logo-block">
+                <img src="brand_assets/10-years-trescon-logo.png" alt="Trescon Global Logo" class="letterhead-logo">
+                <span class="brand-tagline">Connecting Businesses<br>with Opportunities</span>
+              </div>
+              <div class="header-meta-block" id="preview-header-contacts">
+                <div class="header-contact-line">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  <span id="preview-date">Date: July 27, 2026</span>
+                </div>
+                <div class="header-contact-line">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                  <span id="preview-email">info@tresconglobal.com</span>
+                </div>
+                <div class="header-contact-line">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                  <span id="preview-web">tresconglobal.com</span>
+                </div>
+              </div>
+            </header>
+            <div class="header-gradient-rule"></div>
+
+            <!-- RECIPIENT BLOCK PREVIEW -->
+            <div class="recipient-block" id="preview-recipient-block">
+              <p class="recip-line recip-to">To,</p>
+              <p class="recip-line recip-name" id="preview-recipient-name">Mr. Alex Turner</p>
+              <p class="recip-line recip-title" id="preview-recipient-title">Chief Executive Officer, Apex Global Innovations Ltd.</p>
+              <p class="recip-line recip-address" id="preview-recipient-address">Bengaluru, Karnataka</p>
+            </div>
+
+            <!-- SUBJECT LINE PREVIEW -->
+            <div class="subject-block" id="preview-subject-block">
+              <p class="subject-text" id="preview-subject">Subject: Formal Proposal & Corporate Partnership Engagement</p>
+            </div>
+
+            <!-- SALUTATION PREVIEW -->
+            <div class="salutation-block" id="preview-salutation-block">
+              <p class="salutation-text" id="preview-salutation">Dear Mr. Turner,</p>
+            </div>
+
+            <!-- LETTER BODY PREVIEW -->
+            <div class="letter-body full-canvas-editor" id="preview-body"></div>
+
+            <!-- SIGNATURE BLOCK PREVIEW -->
+            <div class="signature-block" id="preview-signature-block">
+              <p class="closing-phrase" id="preview-sign-closing">Warm regards,</p>
+              <div class="signature-space"></div>
+              <p class="signatory-name" id="preview-sign-name">Mohammed Saleem</p>
+              <p class="signatory-title" id="preview-sign-title">Founder & Chairman</p>
+            </div>
+
+            <!-- FOOTER SECTION -->
+            <footer class="letter-footer">
+              <div class="footer-divider"></div>
+              <div class="footer-columns" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 6px;">
+                <div class="footer-col-left" style="flex: 1;">
+                  <p class="footer-company-name" id="preview-footer-company" style="font-weight: 700; font-size: 0.85rem; color: #01373D; margin-bottom: 2px;">Trescon Global Business Solutions Pvt Ltd</p>
+                  <p class="footer-address" id="preview-footer-address" style="font-size: 0.78rem; color: #4A5568; line-height: 1.35;">
+                    1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka – 560034
+                  </p>
+                </div>
+                <div class="footer-col-right" style="text-align: right; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; padding-left: 15px;">
+                  <p class="footer-extra" id="preview-footer-extra" style="font-size: 0.78rem; color: #4A5568; margin-bottom: 2px;"></p>
+                  <p class="footer-cin" id="preview-footer-cin" style="font-size: 0.78rem; font-weight: 700; color: #00A5A3;">CIN: U74900KA2016PTC086221</p>
+                </div>
+              </div>
+              <p class="footer-disclaimer" style="font-size: 0.7rem; color: #718096; line-height: 1.35; padding-top: 6px; margin-top: 4px; border-top: 1px solid #DCE3E6;">
+                <strong>Disclaimer:</strong> The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. &copy; 2025 Trescon. All rights reserved.
+              </p>
+            </footer>
+
+          </article>
+
+        </div>
+
       </main>
 
     </div>
 
   </div>
 
-  <!-- HTML2Canvas Image Export Library -->
-  <script src="html2canvas.min.js"></script>
-  <script src="app.js?v=15.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+  <script src="letterhead.js?v=5.0"></script>
 </body>
 </html>
