@@ -1045,13 +1045,12 @@
       }
       ctx.restore();
 
-      // 6. MAIN TAGLINE (MAXIMUM SAFE AREA HIGH-IMPACT 110px BOLD ANEK DEVANAGARI)
-      const maxTextWidth = 1550; // Expands across safe area X: 820px -> 2370px
-      const startHeadlineY = 160;
+      // 6. MAIN TAGLINE (EXPLICIT 2-LINE HEADLINE: Connecting Businesses / with Opportunities)
+      const startHeadlineY = 165;
 
       ctx.save();
       if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
-      let headlineFontSize = 110;
+      let headlineFontSize = 112;
       ctx.font = `700 ${headlineFontSize}px "Anek Devanagari", sans-serif`;
       
       if (activeTheme === 'light') {
@@ -1060,22 +1059,35 @@
         ctx.fillStyle = '#FFFFFF';
       }
       
-      const words = headline.split(' ');
-      let line = '';
-      let currentY = startHeadlineY;
-
-      for (let n = 0; n < words.length; n++) {
-        let testLine = line + words[n] + ' ';
-        let metrics = ctx.measureText(testLine);
-        if (metrics.width > maxTextWidth && n > 0) {
-          ctx.fillText(line, contentX, currentY);
-          line = words[n] + ' ';
-          currentY += headlineFontSize + 16;
-        } else {
-          line = testLine;
+      let headlineLines = [];
+      if (headline.includes('\n')) {
+        headlineLines = headline.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+      } else if (headline.trim().toLowerCase() === "connecting businesses with opportunities") {
+        headlineLines = ["Connecting Businesses", "with Opportunities"];
+      } else {
+        const words = headline.split(' ');
+        let line = '';
+        const maxTextWidth = 1450;
+        for (let n = 0; n < words.length; n++) {
+          let testLine = line + words[n] + ' ';
+          let metrics = ctx.measureText(testLine);
+          if (metrics.width > maxTextWidth && n > 0) {
+            headlineLines.push(line.trim());
+            line = words[n] + ' ';
+          } else {
+            line = testLine;
+          }
         }
+        if (line.trim()) headlineLines.push(line.trim());
       }
-      ctx.fillText(line, contentX, currentY);
+
+      let currentY = startHeadlineY;
+      headlineLines.forEach((hLine, i) => {
+        ctx.fillText(hLine, contentX, currentY);
+        if (i < headlineLines.length - 1) {
+          currentY += headlineFontSize + 14;
+        }
+      });
       ctx.restore();
 
       // 7. HIGH-CONTRAST DIVISIONS BADGES (HIGHLY READABLE ON MOBILE)
