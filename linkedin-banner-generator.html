@@ -914,6 +914,10 @@
       const W = canvas.width;  // 3168
       const H = canvas.height; // 792
 
+      const contentX = 960;
+      const logoX = 2380;
+      const logoW = 440;
+
       const headline = document.getElementById('inputHeadline').value;
       const p1 = document.getElementById('inputPillar1').value;
       const p2 = document.getElementById('inputPillar2').value;
@@ -960,21 +964,21 @@
       // 2. RADIAL LIGHTING & AMBIENT GLOW PER THEME (OPTION B: SOFT LOGO AMBIENT GLOW)
       if (showGlow) {
         // Soft logo ambient radial glow behind upper-right quadrant
-        let logoGlow = ctx.createRadialGradient(logoX + 220, 200, 20, logoX + 220, 200, 450);
-        logoGlow.addColorStop(0, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.22)' : 'rgba(0, 165, 163, 0.28)');
+        let logoGlow = ctx.createRadialGradient(logoX + 220, 180, 20, logoX + 220, 180, 480);
+        logoGlow.addColorStop(0, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.20)' : 'rgba(0, 165, 163, 0.25)');
         logoGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = logoGlow;
         ctx.fillRect(0, 0, W, H);
 
         if (activeTheme === 'lime') {
           let orb1 = ctx.createRadialGradient(W * 0.45, H * 0.5, 40, W * 0.45, H * 0.5, 650);
-          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.25)');
+          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.22)');
           orb1.addColorStop(1, 'rgba(192, 244, 60, 0)');
           ctx.fillStyle = orb1;
           ctx.fillRect(0, 0, W, H);
         } else if (activeTheme !== 'light') {
           let orb1 = ctx.createRadialGradient(W * 0.32, H * 0.65, 40, W * 0.32, H * 0.65, 550);
-          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.18)');
+          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.16)');
           orb1.addColorStop(1, 'rgba(192, 244, 60, 0)');
           ctx.fillStyle = orb1;
           ctx.fillRect(0, 0, W, H);
@@ -984,7 +988,7 @@
       // 3. BRAND DOT-MATRIX PATTERN
       if (showDotPattern && activeBgStyle !== 'hex' && activeBgStyle !== 'network') {
         ctx.save();
-        let dotColor = 'rgba(255, 255, 255, 0.05)';
+        let dotColor = 'rgba(255, 255, 255, 0.045)';
         if (activeTheme === 'light') dotColor = 'rgba(1, 55, 61, 0.04)';
         if (activeTheme === 'executive') dotColor = 'rgba(255, 255, 255, 0.035)';
         
@@ -1000,15 +1004,15 @@
         ctx.restore();
       }
 
-      // 4. DYNAMIC BACKGROUND GRAPHIC STYLES RENDERER (OPTION A: BALANCED EXTENDED RAYS)
+      // 4. DYNAMIC BACKGROUND GRAPHIC STYLES RENDERER
       ctx.save();
-      let accentColor = 'rgba(192, 244, 60, 0.22)';
-      if (activeTheme === 'lime') accentColor = 'rgba(192, 244, 60, 0.35)';
-      if (activeTheme === 'light') accentColor = 'rgba(0, 165, 163, 0.20)';
-      if (activeTheme === 'executive') accentColor = 'rgba(0, 165, 163, 0.25)';
+      let accentColor = 'rgba(192, 244, 60, 0.20)';
+      if (activeTheme === 'lime') accentColor = 'rgba(192, 244, 60, 0.30)';
+      if (activeTheme === 'light') accentColor = 'rgba(0, 165, 163, 0.18)';
+      if (activeTheme === 'executive') accentColor = 'rgba(0, 165, 163, 0.22)';
 
       if (activeBgStyle === 'network') {
-        // B2B CONSTELLATION NETWORK GRAPHIC (RESTRAINED SUBTLE NODE PATTERN)
+        // B2B CONSTELLATION NETWORK GRAPHIC
         ctx.strokeStyle = accentColor;
         ctx.fillStyle = accentColor;
         ctx.lineWidth = 1.5;
@@ -1054,7 +1058,7 @@
       } else if (activeBgStyle === 'waves') {
         // FLOWING ORGANIC WAVES GRAPHIC
         ctx.strokeStyle = accentColor;
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 2.5;
         for (let offset = 0; offset < 4; offset++) {
           ctx.beginPath();
           ctx.moveTo(0, H * 0.4 + offset * 50);
@@ -1062,14 +1066,14 @@
           ctx.stroke();
         }
       } else {
-        // TECH MESH RAYS (OPTION A: EXTENDED RAYS FADING TOWARD LOWER-RIGHT)
-        ctx.lineWidth = 2.8;
+        // TECH MESH RAYS (Shuffled to Mid-Gap X: 1837px -> 2154px)
+        ctx.lineWidth = 2.5;
         ctx.strokeStyle = accentColor;
         ctx.beginPath();
         ctx.moveTo(W * 0.58, 0);
-        ctx.lineTo(W * 0.72, H);
+        ctx.lineTo(W * 0.70, H);
         ctx.moveTo(W * 0.60, 0);
-        ctx.lineTo(W * 0.74, H);
+        ctx.lineTo(W * 0.72, H);
         ctx.stroke();
       }
       ctx.restore();
@@ -1082,12 +1086,7 @@
       ctx.fillStyle = topBarGrad;
       ctx.fillRect(0, 0, W, 12);
 
-      // 5. MATHEMATICAL ZERO-COLLISION GRID ARCHITECTURE
-      const contentX = 960;
-      const logoX = 2380;
-      const logoW = 440;
-
-      // DRAW LOGO LOCKUP ANCHORED AT FAR RIGHT (X = 2380px, Y = 115px)
+      // 5. DRAW LOGO LOCKUP ANCHORED AT FAR RIGHT (X = 2380px, Y = 115px)
       ctx.save();
       if (useAnniversaryLogo) {
         let activeLogo = logo10W;
@@ -1108,7 +1107,7 @@
       }
       ctx.restore();
 
-      // 6. MAIN TAGLINE (96px ANEK DEVANAGARI 600 WEIGHT, START Y = 275px)
+      // 6. MAIN TAGLINE (96px ANEK DEVANAGARI 600 WEIGHT, START Y = 275px) — VISUAL DOMINANCE
       const startHeadlineY = 275;
 
       ctx.save();
@@ -1153,48 +1152,48 @@
       });
       ctx.restore();
 
-      // 7. REFINED GLASSMOPHIC SERVICE PILLS (10-15% REDUCED HEIGHT: 54px, 1.5px BORDER, 88% TRANSLUCENT FILL)
+      // 7. SECONDARY SERVICE PILLS (50px HEIGHT, 1.5px LIGHT BORDER, 85% TRANSLUCENT FILL, 600 MEDIUM TEXT)
       const pillarYStart = 495;
       const pillars = [p1, p2, p3, p4].filter(p => p.trim() !== '');
 
       let rX = contentX;
       pillars.forEach((pillarText) => {
         ctx.save();
-        if ('letterSpacing' in ctx) ctx.letterSpacing = '0.3px';
-        ctx.font = '800 30px "Manrope", sans-serif';
+        if ('letterSpacing' in ctx) ctx.letterSpacing = '0.2px';
+        ctx.font = '600 28px "Manrope", sans-serif'; // Medium 600 weight so pills don't compete with headline
         const textWidth = ctx.measureText(pillarText).width;
-        const pillWidth = textWidth + 60;
+        const pillWidth = textWidth + 56;
 
-        // Soft Translucent White Fill (88% Opacity) + Lightweight 1.5px Border
-        ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.08)' : 'rgba(255, 255, 255, 0.88)';
-        ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(0, 165, 163, 0.4)' : '#00A5A3';
+        // Soft Translucent White Fill (85% Opacity) + Lightweight 1.5px Border
+        ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.08)' : 'rgba(255, 255, 255, 0.85)';
+        ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(0, 165, 163, 0.35)' : 'rgba(0, 165, 163, 0.80)';
         ctx.lineWidth = 1.5;
 
         ctx.beginPath();
-        ctx.roundRect(rX, pillarYStart, pillWidth, 54, 27); // 54px height (15% reduced for refined hierarchy)
+        ctx.roundRect(rX, pillarYStart, pillWidth, 50, 25); // 50px height (reduced for refined secondary hierarchy)
         ctx.fill();
         ctx.stroke();
 
-        // Vibrant Teal Accent Dot Indicator
+        // Subtle Teal Accent Dot Indicator
         ctx.fillStyle = '#00A5A3';
         ctx.beginPath();
-        ctx.arc(rX + 24, pillarYStart + 27, 7, 0, Math.PI * 2);
+        ctx.arc(rX + 22, pillarYStart + 25, 6, 0, Math.PI * 2);
         ctx.fill();
 
         // Deep Dark Teal Text
         ctx.fillStyle = '#01373D';
-        ctx.fillText(pillarText, rX + 42, pillarYStart + 37);
+        ctx.fillText(pillarText, rX + 38, pillarYStart + 35);
 
         ctx.restore();
-        rX += pillWidth + 18;
+        rX += pillWidth + 16;
       });
 
       // 8. STRENGTHENED FOOTER HIERARCHY WITH GLOBAL PRESENCE DESCRIPTOR AT Y = 717px
       ctx.save();
       
       // Separator Line above Footer at Y = 664px
-      ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.2)' : 'rgba(255, 255, 255, 0.25)';
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.18)' : 'rgba(255, 255, 255, 0.20)';
+      ctx.lineWidth = 1.5;
       ctx.beginPath();
       ctx.moveTo(contentX, 664);
       ctx.lineTo(2900, 664);
@@ -1216,14 +1215,13 @@
       // Part 2: Geographic Presence Descriptor ("Global Presence" in 500 Medium Translucent)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '0.6px';
       ctx.font = '500 28px "Manrope", sans-serif';
-      ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.65)' : 'rgba(255, 255, 255, 0.70)';
+      ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.60)' : 'rgba(255, 255, 255, 0.65)';
       ctx.fillText('Global Presence  •', nextX, footerY);
 
       const descWidth = ctx.measureText('Global Presence  •').width;
       nextX += descWidth + 14;
 
       // Part 3: Geographic Countries (700 Bold White)
-      // Standardize country order per brand spec: UAE • Saudi Arabia • India • Singapore • Qatar
       ctx.font = '700 28px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#01373D' : '#FFFFFF';
       ctx.fillText('UAE  •  Saudi Arabia  •  India  •  Singapore  •  Qatar', nextX, footerY);
