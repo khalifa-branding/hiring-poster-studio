@@ -1000,20 +1000,44 @@
           }
         }
       } else if (activeBgStyle === 'herocircle') {
-        // PRESET 2: PRIMITIVE 01 — HERO CIRCLE ARC (Oversized Cropped Arc Framing Right Quadrant)
-        let circleColor = (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.12)' : 'rgba(0, 165, 163, 0.14)';
-        ctx.strokeStyle = circleColor;
-        ctx.lineWidth = 2.5;
+        // PRESET 2: REFINED ENTERPRISE HERO CIRCLE ARC SYSTEM (Derived from Logo Dot DNA)
+        const circleCenterX = logoX + 220; // 2625px (Upper-Right Offset)
+        const circleCenterY = -120;        // Upward Offset (-120px)
 
-        // Outer Hero Arc
+        // Arc 1: Outer Hero Arc (Radius 990px = 125% Height, 2.0px stroke, 6% opacity)
+        let strokeGrad1 = ctx.createLinearGradient(circleCenterX - 990, 0, circleCenterX + 990, H);
+        strokeGrad1.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        strokeGrad1.addColorStop(0.4, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.06)' : 'rgba(0, 165, 163, 0.065)');
+        strokeGrad1.addColorStop(0.8, 'rgba(0, 0, 0, 0)');
+
+        ctx.strokeStyle = strokeGrad1;
+        ctx.lineWidth = 2.0;
         ctx.beginPath();
-        ctx.arc(logoX + 200, H * 0.5, 480, 0, Math.PI * 2);
+        ctx.arc(circleCenterX, circleCenterY, 990, 0, Math.PI * 2);
         ctx.stroke();
 
-        // Inner Concentric Hero Arc
-        ctx.lineWidth = 1.5;
+        // Arc 2: Middle Concentric Arc (Radius 760px, 1.0px stroke, 7% opacity)
+        let strokeGrad2 = ctx.createLinearGradient(circleCenterX - 760, 0, circleCenterX + 760, H);
+        strokeGrad2.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        strokeGrad2.addColorStop(0.3, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.07)' : 'rgba(0, 165, 163, 0.070)');
+        strokeGrad2.addColorStop(0.85, 'rgba(0, 0, 0, 0)');
+
+        ctx.strokeStyle = strokeGrad2;
+        ctx.lineWidth = 1.0;
         ctx.beginPath();
-        ctx.arc(logoX + 200, H * 0.5, 340, 0, Math.PI * 2);
+        ctx.arc(circleCenterX, circleCenterY, 760, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Arc 3: Inner Concentric Arc (Radius 540px, 0.5px stroke, 5% opacity) — Frames Logo Inner Anchor
+        let strokeGrad3 = ctx.createLinearGradient(circleCenterX - 540, 0, circleCenterX + 540, H);
+        strokeGrad3.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        strokeGrad3.addColorStop(0.2, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.05)' : 'rgba(0, 165, 163, 0.055)');
+        strokeGrad3.addColorStop(0.9, 'rgba(0, 0, 0, 0)');
+
+        ctx.strokeStyle = strokeGrad3;
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.arc(circleCenterX, circleCenterY, 540, 0, Math.PI * 2);
         ctx.stroke();
       } else if (activeBgStyle === 'satellites') {
         // PRESET 3: PRIMITIVE 02 — SATELLITE CONCENTRIC RINGS (Organic Geometric Expansion)
