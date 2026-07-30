@@ -1086,41 +1086,38 @@
       });
       ctx.restore();
 
-      // 7. DIVISION BADGES (SOLID WHITE PILLS, 32px MANROPE 800, 1 HORIZONTAL ROW AT Y = 470px)
-      const pillarYStart = 470;
+      // 7. MINIMALIST DOT-SEPARATED TYPOGRAPHY LINE (EXECUTIVE BOX-FREE DESIGN AT Y = 450px)
+      const pillarYStart = 450;
       const pillars = [p1, p2, p3, p4].filter(p => p.trim() !== '');
 
-      let rX = contentX;
-      pillars.forEach((pillarText) => {
+      if (pillars.length > 0) {
         ctx.save();
-        if ('letterSpacing' in ctx) ctx.letterSpacing = '0.3px';
-        ctx.font = '800 32px "Manrope", sans-serif';
-        const textWidth = ctx.measureText(pillarText).width;
-        const pillWidth = textWidth + 66;
+        if ('letterSpacing' in ctx) ctx.letterSpacing = '0.5px';
+        ctx.font = '800 36px "Manrope", sans-serif';
 
-        // Pure Solid White Pill for 100% Maximum Contrast
-        ctx.fillStyle = '#FFFFFF';
-        ctx.strokeStyle = '#00A5A3';
-        ctx.lineWidth = 2.5;
+        let pX = contentX;
+        pillars.forEach((pillarText, idx) => {
+          // Draw Division Title Text
+          ctx.fillStyle = (activeTheme === 'light') ? '#01373D' : '#FFFFFF';
+          ctx.fillText(pillarText, pX, pillarYStart);
 
-        ctx.beginPath();
-        ctx.roundRect(rX, pillarYStart, pillWidth, 64, 32);
-        ctx.fill();
-        ctx.stroke();
+          const textWidth = ctx.measureText(pillarText).width;
+          pX += textWidth;
 
-        // Vibrant Electric Teal Dot Indicator
-        ctx.fillStyle = '#00A5A3';
-        ctx.beginPath();
-        ctx.arc(rX + 26, pillarYStart + 32, 8, 0, Math.PI * 2);
-        ctx.fill();
+          // Draw Glowing Dot Separator if not the last item
+          if (idx < pillars.length - 1) {
+            ctx.save();
+            ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
+            ctx.beginPath();
+            ctx.arc(pX + 25, pillarYStart - 12, 7, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
 
-        // Deep Dark Teal Text
-        ctx.fillStyle = '#01373D';
-        ctx.fillText(pillarText, rX + 46, pillarYStart + 43);
-
+            pX += 50; // Spacing after bullet dot
+          }
+        });
         ctx.restore();
-        rX += pillWidth + 20;
-      });
+      }
 
       // 8. SINGLE LINE FOOTER SECTION AT Y = 717px (EXACT USER BLUEPRINT SPEC)
       // Line 1: tresconglobal.com (40px Bold Electric Lime) + UAE • India • Singapore • Saudi Arabia • Qatar (30px White)
