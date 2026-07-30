@@ -161,29 +161,64 @@ body {
   transform: translateY(-1px);
 }
 
-/* MAIN TWO-PANEL STUDIO LAYOUT */
+/* MAIN THREE-PANEL STUDIO LAYOUT */
 .studio-main-layout {
   display: flex;
   width: 100%;
   height: calc(100vh - 54px);
   margin-top: 54px;
   overflow: hidden;
+  background-color: #07090b;
 }
 
-/* --- Left Panel: Editor Config --- */
-.editor-sidebar {
-  width: 420px;
+/* Left Panel: Content & Copy Settings (310px) */
+.editor-sidebar-left {
+  width: 320px;
   background-color: #0c0e11;
-  border-right: 1px solid rgba(255, 255, 255, 0.04);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 4px 0 24px rgba(0, 0, 0, 0.25);
-  padding: 1.8rem 1.6rem;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
   height: 100%;
   overflow-y: auto;
   flex-shrink: 0;
-  backdrop-filter: blur(16px);
+  z-index: 10;
+}
+
+/* Center Panel: Live Poster Canvas Workspace */
+.preview-workspace-center {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #0f1823 0%, #06090d 100%);
+  padding: 1.5rem;
+}
+
+/* Right Panel: Style, Theme & Format (290px) */
+.editor-sidebar-right {
+  width: 300px;
+  background-color: #0c0e11;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+/* Responsive Drawer Behavior for Laptops (<1366px) */
+@media (max-width: 1366px) {
+  .editor-sidebar-left {
+    width: 290px;
+  }
+  .editor-sidebar-right {
+    width: 270px;
+  }
 }
 
 .sidebar-header {
