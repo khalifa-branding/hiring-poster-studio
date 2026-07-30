@@ -686,14 +686,14 @@
         </div>
       </div>
 
-      <!-- APPROVED TRESCON BRANDBOOK BACKGROUND GRAPHIC SYSTEM -->
+      <!-- FORMALIZED TRESCON CIRCULAR GRAPHIC DNA PRIMITIVES -->
       <div class="control-group">
-        <h3>Brandbook Graphic Language</h3>
+        <h3>Brandbook Graphic Language (Circular DNA)</h3>
         <div class="preset-grid">
-          <div class="preset-card active" id="bgCardDotmatrix" onclick="selectBgStyle('dotmatrix')">Official Dot Matrix</div>
-          <div class="preset-card" id="bgCardWaverays" onclick="selectBgStyle('waverays')">Backdrop Wave Rays</div>
-          <div class="preset-card" id="bgCardBrandgrid" onclick="selectBgStyle('brandgrid')">Stationery Grid</div>
-          <div class="preset-card" id="bgCardGradient" onclick="selectBgStyle('gradient')">Executive Gradient</div>
+          <div class="preset-card active" id="bgCardDotmatrix" onclick="selectBgStyle('dotmatrix')">Logo Dot Matrix</div>
+          <div class="preset-card" id="bgCardHerocircle" onclick="selectBgStyle('herocircle')">Hero Circle Arc</div>
+          <div class="preset-card" id="bgCardSatellites" onclick="selectBgStyle('satellites')">Satellite Rings</div>
+          <div class="preset-card" id="bgCardGradient" onclick="selectBgStyle('gradient')">Gradient Depth</div>
         </div>
       </div>
 
@@ -896,7 +896,7 @@
 
     function selectBgStyle(style) {
       activeBgStyle = style;
-      ['Dotmatrix', 'Waverays', 'Brandgrid', 'Gradient'].forEach(s => {
+      ['Dotmatrix', 'Herocircle', 'Satellites', 'Gradient'].forEach(s => {
         const el = document.getElementById('bgCard' + s);
         if (el) el.classList.remove('active');
       });
@@ -930,7 +930,7 @@
       const showGlow = document.getElementById('checkGlowEffect').checked;
       const useAnniversaryLogo = document.getElementById('checkAnniversaryLogo').checked;
 
-      // 1. BACKGROUND CANVAS ATMOSPHERE PER THEME
+      // 1. BACKGROUND CANVAS ATMOSPHERE PER THEME (PRIMITIVE 04: GRADIENT DEPTH)
       if (activeTheme === 'light') {
         let bgGrad = ctx.createLinearGradient(0, 0, W, H);
         bgGrad.addColorStop(0, '#FFFFFF');
@@ -984,11 +984,11 @@
         }
       }
 
-      // 3. 4 DISTINCT APPROVED TRESCON BRANDBOOK GRAPHIC ENGINES (100% VISUALLY DIFFERENT)
+      // 3. FORMALIZED TRESCON CIRCULAR DNA ENGINES (100% BRANDBOOK ACCURATE)
       ctx.save();
       
       if (activeBgStyle === 'dotmatrix') {
-        // PRESET 1: OFFICIAL LOGO DOT MATRIX (Brandbook Page 21: Derived from circle dot of logo)
+        // PRESET 1: OFFICIAL LOGO DOT MATRIX (Brandbook Page 21: Derived from circle in dot of logo)
         let dotColor = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.04)' : 'rgba(255, 255, 255, 0.04)';
         const spacing = 44;
         for (let x = 30; x < W; x += spacing) {
@@ -999,45 +999,47 @@
             ctx.fill();
           }
         }
-      } else if (activeBgStyle === 'waverays') {
-        // PRESET 2: EVENT BACKDROP WAVE RAYS (Brandbook Page 24 & Page 46: Fabric Backdrop Adaptations)
-        let waveColor = (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.22)' : 'rgba(0, 165, 163, 0.20)';
-        ctx.strokeStyle = waveColor;
+      } else if (activeBgStyle === 'herocircle') {
+        // PRESET 2: PRIMITIVE 01 — HERO CIRCLE ARC (Oversized Cropped Arc Framing Right Quadrant)
+        let circleColor = (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.12)' : 'rgba(0, 165, 163, 0.14)';
+        ctx.strokeStyle = circleColor;
         ctx.lineWidth = 2.5;
 
-        for (let i = 0; i < 4; i++) {
+        // Outer Hero Arc
+        ctx.beginPath();
+        ctx.arc(logoX + 200, H * 0.5, 480, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Inner Concentric Hero Arc
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(logoX + 200, H * 0.5, 340, 0, Math.PI * 2);
+        ctx.stroke();
+      } else if (activeBgStyle === 'satellites') {
+        // PRESET 3: PRIMITIVE 02 — SATELLITE CONCENTRIC RINGS (Organic Geometric Expansion)
+        let ringColor = (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.12)' : 'rgba(0, 165, 163, 0.12)';
+        ctx.strokeStyle = ringColor;
+        ctx.lineWidth = 1.5;
+
+        // Satellite Ring Set 1 (Mid-Gap)
+        const sat1X = W * 0.62;
+        const sat1Y = H * 0.35;
+        for (let r = 80; r <= 240; r += 80) {
           ctx.beginPath();
-          ctx.moveTo(W * 0.45 + i * 80, 0);
-          ctx.bezierCurveTo(W * 0.65 + i * 60, H * 0.3, W * 0.70 - i * 40, H * 0.7, W * 0.85 + i * 100, H);
+          ctx.arc(sat1X, sat1Y, r, 0, Math.PI * 2);
           ctx.stroke();
         }
-      } else if (activeBgStyle === 'brandgrid') {
-        // PRESET 3: STATIONERY ALIGNMENT GRID (Brandbook Page 42: Print & Stationery Grid System)
-        let gridColor = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.04)' : 'rgba(255, 255, 255, 0.04)';
-        ctx.strokeStyle = gridColor;
-        ctx.lineWidth = 1;
 
-        const gridStep = 88;
-        for (let x = 0; x < W; x += gridStep) {
+        // Satellite Ring Set 2 (Lower Right)
+        const sat2X = W * 0.88;
+        const sat2Y = H * 0.75;
+        for (let r = 60; r <= 180; r += 60) {
           ctx.beginPath();
-          ctx.moveTo(x, 0);
-          ctx.lineTo(x, H);
+          ctx.arc(sat2X, sat2Y, r, 0, Math.PI * 2);
           ctx.stroke();
-        }
-        for (let y = 0; y < H; y += gridStep) {
-          ctx.beginPath();
-          ctx.moveTo(0, y);
-          ctx.lineTo(W, y);
-          ctx.stroke();
-
-          // Micro Crosshair Nodes at Grid Intersections
-          for (let x = 0; x < W; x += gridStep * 2) {
-            ctx.fillStyle = 'rgba(192, 244, 60, 0.08)';
-            ctx.fillRect(x - 2, y - 2, 4, 4);
-          }
         }
       } else {
-        // PRESET 4: PURE EXECUTIVE GRADIENT (Brandbook Page 14: Dark Background Gradient Depth - 0% Clutter)
+        // PRESET 4: PRIMITIVE 04 — PURE GRADIENT DEPTH (Brandbook Page 14: Pure Executive Minimalism - 0% Clutter)
         // Clean deep gradient atmosphere with sub-8% ambient lighting glow
       }
       
