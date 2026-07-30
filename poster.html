@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=19.0">
+  <link rel="stylesheet" href="style.css?v=20.0">
 </head>
 <body>
 
@@ -118,6 +118,15 @@
           </div>
 
         </div>
+
+        <!-- LEFT PANEL FOOTER: AUTO-SAVED STATUS INDICATOR -->
+        <footer class="sidebar-status-footer">
+          <div class="status-indicator" id="status-indicator">
+            <span class="status-check-icon">✓</span>
+            <span class="status-text" id="status-text">All changes saved</span>
+          </div>
+        </footer>
+
       </aside>
 
       <!-- COLUMN 2: CENTER WORKSPACE (POSTER CANVAS) -->
@@ -318,13 +327,8 @@
 
         </div>
 
-        <!-- STICKY AUTO-SAVED & SECONDARY CONTROL FOOTER -->
-        <footer class="sidebar-status-footer">
-          <div class="status-indicator" id="status-indicator">
-            <span class="status-check-icon">✓</span>
-            <span class="status-text" id="status-text">All changes saved</span>
-          </div>
-
+        <!-- RIGHT PANEL FOOTER: ACTION BUTTONS -->
+        <footer class="sidebar-status-footer" style="justify-content: flex-end;">
           <div class="sidebar-footer-actions">
             <button id="btn-reset-form" class="btn-ghost-sm" title="Reset to default form settings" aria-label="Reset form settings">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
@@ -345,6 +349,6 @@
 
   <!-- HTML2Canvas Image Export Library -->
   <script src="html2canvas.min.js"></script>
-  <script src="app.js?v=19.0"></script>
+  <script src="app.js?v=20.0"></script>
 </body>
 </html>
