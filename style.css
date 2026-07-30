@@ -2417,9 +2417,21 @@ select.form-input option,
   margin-top: auto;
 }
 
+.preview-workspace-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: auto;
+  padding: 2rem 2rem 6rem 2rem;
+  background-color: #050608;
+}
+
 /* FLOATING GLASS CONTROL DOCK (CANVA / FIGMA STYLE) */
 .canvas-floating-dock {
-  position: absolute;
+  position: fixed;
   bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
@@ -2427,19 +2439,21 @@ select.form-input option,
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  background: rgba(15, 18, 25, 0.85);
+  background: rgba(15, 18, 25, 0.88);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 9999px;
   padding: 0.35rem 0.85rem;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.05);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  opacity: 0.6;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .canvas-floating-dock:hover {
-  border-color: rgba(255, 255, 255, 0.22);
-  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.65), 0 0 16px rgba(163, 230, 53, 0.15);
+  opacity: 1;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.7), 0 0 20px rgba(163, 230, 53, 0.2);
 }
 
 .dock-status {
