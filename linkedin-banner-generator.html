@@ -1007,13 +1007,13 @@
       ctx.stroke();
       ctx.restore();
 
-      // Top electric brand accent bar (24px height per spec)
+      // Top electric brand accent bar (12px height)
       let topBarGrad = ctx.createLinearGradient(0, 0, W, 0);
       topBarGrad.addColorStop(0, '#00A5A3');
       topBarGrad.addColorStop(0.5, '#C0F43C');
       topBarGrad.addColorStop(1, '#00A5A3');
       ctx.fillStyle = topBarGrad;
-      ctx.fillRect(0, 0, W, 24);
+      ctx.fillRect(0, 0, W, 12);
 
       // 5. MATHEMATICAL ZERO-COLLISION GRID ARCHITECTURE
       const contentX = 960;
@@ -1041,12 +1041,12 @@
       }
       ctx.restore();
 
-      // 6. MAIN TAGLINE (88px ANEK DEVANAGARI 600 WEIGHT, 2 LINES ANCHORED AT X = 960px)
-      const startHeadlineY = 145;
+      // 6. MAIN TAGLINE (96px ANEK DEVANAGARI 600 WEIGHT, START Y = 170px)
+      const startHeadlineY = 170;
 
       ctx.save();
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
-      let headlineFontSize = 88;
+      let headlineFontSize = 96;
       ctx.font = `600 ${headlineFontSize}px "Anek Devanagari", sans-serif`;
       
       if (activeTheme === 'light') {
@@ -1081,13 +1081,13 @@
       headlineLines.forEach((hLine, i) => {
         ctx.fillText(hLine, contentX, currentY);
         if (i < headlineLines.length - 1) {
-          currentY += headlineFontSize + 10;
+          currentY += headlineFontSize + 12;
         }
       });
       ctx.restore();
 
-      // 7. DIVISION BADGES (SOLID WHITE PILLS, 32px MANROPE 800, 1 HORIZONTAL ROW)
-      const pillarYStart = 375;
+      // 7. DIVISION BADGES (SOLID WHITE PILLS, 32px MANROPE 800, 1 HORIZONTAL ROW AT Y = 385px)
+      const pillarYStart = 385;
       const pillars = [p1, p2, p3, p4].filter(p => p.trim() !== '');
 
       let rX = contentX;
