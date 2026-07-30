@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=14.0">
+  <link rel="stylesheet" href="style.css?v=15.0">
 </head>
 <body>
 
@@ -67,7 +67,7 @@
             <button class="accordion-header" aria-expanded="true" aria-controls="acc-body-headings">
               <div class="acc-title-group">
                 <svg class="acc-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                <span class="acc-title">1. Campaign Headings</span>
+                <span class="acc-title">1. Campaign Headings & Quote</span>
               </div>
               <svg class="acc-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </button>
@@ -83,6 +83,11 @@
                   <input type="text" id="subtitle-input" class="form-input" value="We're looking for enthusiastic individuals to join us in these key roles:" placeholder="We're looking for enthusiastic individuals to join us in these key roles:">
                 </div>
               </div>
+              <!-- CUSTOMIZABLE CANDIDATE QUALIFIER QUOTE -->
+              <div class="form-group" style="margin-top: 0.75rem;">
+                <label for="qualifier-input">Candidate Qualifier Quote (Optional)</label>
+                <input type="text" id="qualifier-input" class="form-input" value="Whether you're a fresher eager to kickstart your career or someone experienced looking for your next opportunity, we'd love to hear from you." placeholder="Leave blank to remove quote block completely">
+              </div>
             </div>
           </div>
 
@@ -91,7 +96,7 @@
             <button class="accordion-header" aria-expanded="false" aria-controls="acc-body-roles">
               <div class="acc-title-group">
                 <svg class="acc-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                <span class="acc-title">2. Open Positions</span>
+                <span class="acc-title">2. Open Positions & Exp</span>
                 <span id="roles-limit-warning" class="warning-tag" style="display: none;">Max 5</span>
               </div>
               <svg class="acc-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -102,6 +107,17 @@
                 <!-- Dynamically populated by app.js -->
               </div>
               <button id="add-role-btn" class="add-role-btn">+ Add Position</button>
+              
+              <!-- TOGGLE TO REMOVE SERIAL NUMBERS (01, 02...) -->
+              <div class="form-group" style="margin-top: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 0.65rem;">
+                <div class="switch-container">
+                  <label class="switch">
+                    <input type="checkbox" id="show-numbers-toggle" checked>
+                    <span class="slider"></span>
+                  </label>
+                  <span class="switch-label">Show Position Numbers (01, 02...)</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -305,7 +321,7 @@
             </div>
             
             <!-- Qualifier text block -->
-            <p class="candidate-qualifier">
+            <p class="candidate-qualifier" id="flyer-candidate-qualifier">
               Whether you're a fresher eager to kickstart your career or someone experienced looking for your next opportunity, we'd love to hear from you.
             </p>
             
@@ -337,6 +353,6 @@
 
   <!-- HTML2Canvas Image Export Library -->
   <script src="html2canvas.min.js"></script>
-  <script src="app.js?v=14.0"></script>
+  <script src="app.js?v=15.0"></script>
 </body>
 </html>

@@ -8,10 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Inputs
   const titleInput = document.getElementById('title-input');
   const subtitleInput = document.getElementById('subtitle-input');
+  const qualifierInput = document.getElementById('qualifier-input');
   const locationInput = document.getElementById('location-input');
   const highlightInput = document.getElementById('highlight-input');
   const emailInput = document.getElementById('email-input');
   const ctaLabelInput = document.getElementById('cta-label-input');
+  const showNumbersToggle = document.getElementById('show-numbers-toggle');
   const patternOpacity = document.getElementById('pattern-opacity');
   const addRoleBtn = document.getElementById('add-role-btn');
   const rolesContainer = document.getElementById('roles-input-container');
@@ -19,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Dynamic Outputs on Flyer
   const flyerTitle = document.getElementById('flyer-title-text');
   const flyerSubtitle = document.getElementById('flyer-subtitle-text');
+  const flyerQualifier = document.getElementById('flyer-candidate-qualifier');
   const flyerRoles = document.getElementById('flyer-roles-list');
   const flyerLocation = document.getElementById('flyer-location-text');
   const flyerHighlight = document.getElementById('flyer-highlight-text');
@@ -30,20 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeRadios = document.getElementsByName('theme-preset');
   const patternRadios = document.getElementsByName('pattern-preset');
   const logoRadios = document.getElementsByName('logo-preset');
-
-  // Experience level options list
-  const expOptions = ['0-2 Yrs', '1-3 Yrs', '2-4 Yrs', '3-5 Yrs', '5+ Yrs', 'Fresher', 'Experienced'];
-
-  // Helper function to safely escape HTML string values
-  const escapeHtml = (str) => {
-    if (!str) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  };
 
   // Pre-configured default roles with metadata experience levels
   let roles = [
@@ -67,6 +56,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (subtitleInput && flyerSubtitle) {
       flyerSubtitle.textContent = subtitleInput.value.trim() !== '' ? subtitleInput.value : defaultSubtitle;
     }
+    
+    // CUSTOMIZABLE & REMOVABLE QUALIFIER QUOTE
+    if (qualifierInput && flyerQualifier) {
+      const quoteVal = qualifierInput.value.trim();
+      if (quoteVal !== '') {
+        flyerQualifier.textContent = quoteVal;
+        flyerQualifier.style.display = 'block';
+      } else {
+        flyerQualifier.style.display = 'none';
+      }
+    }
+
     if (locationInput && flyerLocation) {
       flyerLocation.textContent = locationInput.value.trim() !== '' ? locationInput.value : defaultLocation;
     }
@@ -88,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Bind immediate real-time input event listeners to every text field
-  [titleInput, subtitleInput, locationInput, highlightInput, emailInput, ctaLabelInput].forEach(input => {
+  [titleInput, subtitleInput, qualifierInput, locationInput, highlightInput, emailInput, ctaLabelInput].forEach(input => {
     if (input) {
       input.addEventListener('input', () => {
         syncTextFields();
@@ -97,6 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Bind Serial Numbers Toggle Switch (01, 02...)
+  if (showNumbersToggle) {
+    showNumbersToggle.addEventListener('change', () => {
+      renderPreviewRoles();
+      triggerAutoSavePulse();
+    });
+  }
+
   // Render roles on the flyer preview
   const renderPreviewRoles = () => {
     if (!flyerRoles || !flyerCanvas) return;
@@ -104,7 +113,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Filter active non-empty roles
     const activeRoles = roles.filter(roleObj => roleObj.title.trim() !== '');
-    
+    const showNumbers = showNumbersToggle ? showNumbersToggle.checked : true;
+
     // Dynamic Auto Layout Adjustments based on role count
     flyerCanvas.classList.remove('canvas-roles-3', 'canvas-roles-4', 'canvas-roles-5');
     if (activeRoles.length <= 3) {
@@ -119,9 +129,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const roleCard = document.createElement('div');
       roleCard.className = 'role-card';
       
-      const numberBadge = document.createElement('div');
-      numberBadge.className = 'role-card-number';
-      numberBadge.textContent = `0${index + 1}`;
+      // SERIAL NUMBER (CONDITIONAL VISIBILITY)
+      if (showNumbers) {
+        const numberBadge = document.createElement('div');
+        numberBadge.className = 'role-card-number';
+        numberBadge.textContent = `0${index + 1}`;
+        roleCard.appendChild(numberBadge);
+      }
       
       const info = document.createElement('div');
       info.className = 'role-card-info';
@@ -133,19 +147,21 @@ document.addEventListener('DOMContentLoaded', () => {
       title.className = 'role-card-title';
       title.textContent = roleObj.title;
       
-      const typeBadge = document.createElement('span');
-      typeBadge.className = 'role-type-badge';
-      typeBadge.textContent = roleObj.type;
-      
       titleRow.appendChild(title);
-      titleRow.appendChild(typeBadge);
+
+      // CUSTOMIZABLE EXPERIENCE BADGE (render if not empty)
+      if (roleObj.type && roleObj.type.trim() !== '') {
+        const typeBadge = document.createElement('span');
+        typeBadge.className = 'role-type-badge';
+        typeBadge.textContent = roleObj.type;
+        titleRow.appendChild(typeBadge);
+      }
       
       const chevron = document.createElement('div');
       chevron.className = 'role-card-chevron';
       chevron.innerHTML = '&rarr;';
       
       info.appendChild(titleRow);
-      roleCard.appendChild(numberBadge);
       roleCard.appendChild(info);
       roleCard.appendChild(chevron);
       
@@ -172,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const row = document.createElement('div');
       row.className = 'role-input-row';
       
+      // Job Title Input
       const input = document.createElement('input');
       input.type = 'text';
       input.className = 'form-input role-title-input';
@@ -186,20 +203,17 @@ document.addEventListener('DOMContentLoaded', () => {
         triggerAutoSavePulse();
       });
 
-      const select = document.createElement('select');
-      select.className = 'form-input role-exp-select';
-      select.setAttribute('aria-label', `Experience requirement for role ${index + 1}`);
-      
-      expOptions.forEach(type => {
-        const opt = document.createElement('option');
-        opt.value = type;
-        opt.textContent = type;
-        if (roleObj.type === type) opt.selected = true;
-        select.appendChild(opt);
-      });
-      
-      select.addEventListener('change', (e) => {
+      // FREEFORM CUSTOMIZABLE EXPERIENCE INPUT
+      const expInput = document.createElement('input');
+      expInput.type = 'text';
+      expInput.className = 'form-input role-exp-input';
+      expInput.value = roleObj.type;
+      expInput.placeholder = 'Exp (e.g. 1-3 Yrs)';
+      expInput.setAttribute('aria-label', `Experience for role ${index + 1}`);
+      expInput.setAttribute('title', roleObj.type);
+      expInput.addEventListener('input', (e) => {
         roles[index].type = e.target.value;
+        e.target.setAttribute('title', e.target.value);
         renderPreviewRoles();
         triggerAutoSavePulse();
       });
@@ -217,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       
       row.appendChild(input);
-      row.appendChild(select);
+      row.appendChild(expInput);
       row.appendChild(deleteBtn);
       rolesContainer.appendChild(row);
     });
@@ -314,30 +328,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Logo preset handling
-  const handleLogoChange = () => {
-    let selectedLogo = 'auto';
-    logoRadios.forEach(radio => {
-      if (radio.checked) selectedLogo = radio.value;
-    });
-    
-    if (selectedLogo === 'auto') {
-      let isThemeLight = flyerCanvas.classList.contains('theme-corporate-light');
-      flyerLogo.src = isThemeLight ? 'brand_assets/10-years-trescon-logo-B.png' : 'brand_assets/10-years-trescon-logo-W.png';
-      flyerLogo.style.display = 'block';
-    } else if (selectedLogo === 'white') {
-      flyerLogo.src = 'brand_assets/10-years-trescon-logo-W.png';
-      flyerLogo.style.display = 'block';
-    } else if (selectedLogo === 'dark') {
-      flyerLogo.src = 'brand_assets/10-years-trescon-logo-B.png';
-      flyerLogo.style.display = 'block';
-    } else if (selectedLogo === 'none') {
-      flyerLogo.style.display = 'none';
-    }
-    triggerAutoSavePulse();
-  };
-  logoRadios.forEach(radio => radio.addEventListener('change', handleLogoChange));
-
   // High-Res PNG Exporter using html2canvas
   const exportPosterPNG = () => {
     if (typeof html2canvas === 'undefined') {
@@ -400,10 +390,12 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('btn-confirm-reset-action').addEventListener('click', () => {
         titleInput.value = "We're growing our team at Trescon Manipal!";
         subtitleInput.value = "We're looking for enthusiastic individuals to join us in these key roles:";
+        if (qualifierInput) qualifierInput.value = "Whether you're a fresher eager to kickstart your career or someone experienced looking for your next opportunity, we'd love to hear from you.";
         locationInput.value = "Manipal";
         highlightInput.value = "Immediate Joiners Preferred";
         emailInput.value = "hr@tresconglobal.com";
         ctaLabelInput.value = "APPLY DIRECTLY VIA EMAIL";
+        if (showNumbersToggle) showNumbersToggle.checked = true;
         roles = [
           { title: "Speaker Acquisition Executive", type: "1-3 Yrs" },
           { title: "Commercial Executive", type: "0-2 Yrs" },
