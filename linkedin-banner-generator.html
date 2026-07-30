@@ -1045,29 +1045,6 @@
       }
       ctx.restore();
 
-      // TOP-RIGHT BRAND CREST BADGE (X = 1850px)
-      ctx.save();
-      const badgeX = 1850;
-      const badgeY = 65;
-      ctx.font = '700 24px "Manrope", sans-serif';
-      if ('letterSpacing' in ctx) ctx.letterSpacing = '1px';
-      
-      const badgeText = "EST. 2016  •  CELEBRATING 10 YEARS";
-      const bTextWidth = ctx.measureText(badgeText).width;
-      const bPillWidth = bTextWidth + 48;
-
-      ctx.fillStyle = (activeTheme === 'light') ? 'rgba(0, 165, 163, 0.12)' : 'rgba(255, 255, 255, 0.08)';
-      ctx.strokeStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.roundRect(badgeX, badgeY, bPillWidth, 48, 24);
-      ctx.fill();
-      ctx.stroke();
-
-      ctx.fillStyle = (activeTheme === 'light') ? '#01373D' : '#C0F43C';
-      ctx.fillText(badgeText, badgeX + 24, badgeY + 32);
-      ctx.restore();
-
       // 6. MAIN TAGLINE (READABLE 86px SEMIBOLD ANEK DEVANAGARI)
       const maxTextWidth = 1000;
       const startHeadlineY = 150;
