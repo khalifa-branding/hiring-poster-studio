@@ -989,44 +989,29 @@
       
       if (activeBgStyle === 'dotmatrix') {
         // PRESET 1: OFFICIAL LOGO DOT MATRIX (Brandbook Page 21: Derived from circle in dot of logo)
-        let dotColor = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.35)' : 'rgba(255, 255, 255, 0.35)';
+        let dotColor = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.22)' : 'rgba(255, 255, 255, 0.22)';
         const spacing = 44;
         for (let x = 30; x < W; x += spacing) {
           for (let y = 30; y < H; y += spacing) {
-            ctx.fillStyle = ((x + y) % (spacing * 4) === 0) ? 'rgba(192, 244, 60, 0.75)' : dotColor;
+            ctx.fillStyle = ((x + y) % (spacing * 4) === 0) ? 'rgba(192, 244, 60, 0.50)' : dotColor;
             ctx.beginPath();
-            ctx.arc(x, y, 5.5, 0, Math.PI * 2);
+            ctx.arc(x, y, 4.5, 0, Math.PI * 2);
             ctx.fill();
           }
         }
       } else if (activeBgStyle === 'herocircle') {
-        // PRESET 2: AGY V14 MULTI-LAYERED DOTTED CIRCULAR DNA SYSTEM (150% Height Hero Circle + Secondary Rings)
+        // PRESET 2: AGY V15 ENTERPRISE BRAND SYSTEM (Subconscious Circular DNA Architecture)
         const circleCenterX = logoX + 150; // 2555px (Upper-Right Offset)
         const circleCenterY = 60;           // Upper Right Offset (60px)
 
         // Layer 1: Oversized Cropped Dotted Hero Circle (Radius 1200px = 150% Height, 22% Opacity)
         const r1 = 1200;
         const dotsCount1 = 180;
-        ctx.fillStyle = (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.55)' : 'rgba(0, 165, 163, 0.55)';
+        ctx.fillStyle = (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.40)' : 'rgba(0, 165, 163, 0.40)';
         for (let i = 0; i < dotsCount1; i++) {
           const angle = (i / dotsCount1) * Math.PI * 2;
           const dx = circleCenterX + r1 * Math.cos(angle);
           const dy = circleCenterY + r1 * Math.sin(angle);
-          if (dx >= -50 && dx <= W + 50 && dy >= -50 && dy <= H + 50) {
-            ctx.beginPath();
-            ctx.arc(dx, dy, 6.0, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        }
-
-        // Layer 2: Secondary Concentric Dotted Ring (Radius 880px, 18% Opacity)
-        const r2 = 880;
-        const dotsCount2 = 130;
-        ctx.fillStyle = (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.45)' : 'rgba(0, 165, 163, 0.45)';
-        for (let i = 0; i < dotsCount2; i++) {
-          const angle = (i / dotsCount2) * Math.PI * 2;
-          const dx = circleCenterX + r2 * Math.cos(angle);
-          const dy = circleCenterY + r2 * Math.sin(angle);
           if (dx >= -50 && dx <= W + 50 && dy >= -50 && dy <= H + 50) {
             ctx.beginPath();
             ctx.arc(dx, dy, 5.0, 0, Math.PI * 2);
@@ -1034,34 +1019,49 @@
           }
         }
 
+        // Layer 2: Secondary Concentric Dotted Ring (Radius 880px, 18% Opacity)
+        const r2 = 880;
+        const dotsCount2 = 130;
+        ctx.fillStyle = (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.32)' : 'rgba(0, 165, 163, 0.32)';
+        for (let i = 0; i < dotsCount2; i++) {
+          const angle = (i / dotsCount2) * Math.PI * 2;
+          const dx = circleCenterX + r2 * Math.cos(angle);
+          const dy = circleCenterY + r2 * Math.sin(angle);
+          if (dx >= -50 && dx <= W + 50 && dy >= -50 && dy <= H + 50) {
+            ctx.beginPath();
+            ctx.arc(dx, dy, 4.0, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
         // Layer 3: Inner Framing Concentric Ring (Radius 560px, 12% Opacity Stroke — Logo Emerging Anchor)
         let strokeGrad3 = ctx.createLinearGradient(circleCenterX - 560, 0, circleCenterX + 560, H);
         strokeGrad3.addColorStop(0, 'rgba(0, 0, 0, 0)');
-        strokeGrad3.addColorStop(0.2, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.40)' : 'rgba(0, 165, 163, 0.40)');
+        strokeGrad3.addColorStop(0.2, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.28)' : 'rgba(0, 165, 163, 0.28)');
         strokeGrad3.addColorStop(0.95, 'rgba(0, 0, 0, 0)');
 
         ctx.strokeStyle = strokeGrad3;
-        ctx.lineWidth = 3.5;
+        ctx.lineWidth = 3.0;
         ctx.beginPath();
         ctx.arc(circleCenterX, circleCenterY, 560, 0, Math.PI * 2);
         ctx.stroke();
 
         // Layer 4: Soft Substrate Dot Grid Transition
-        let dotColorSub = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.15)' : 'rgba(255, 255, 255, 0.18)';
+        let dotColorSub = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.10)' : 'rgba(255, 255, 255, 0.12)';
         const spacingSub = 54;
-        for (let x = W * 0.55; x < W; x += spacingSub) {
+        for (let x = W * 0.58; x < W; x += spacingSub) {
           for (let y = 20; y < H; y += spacingSub) {
             ctx.fillStyle = dotColorSub;
             ctx.beginPath();
-            ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+            ctx.arc(x, y, 2.2, 0, Math.PI * 2);
             ctx.fill();
           }
         }
       } else if (activeBgStyle === 'satellites') {
         // PRESET 3: PRIMITIVE 02 — SATELLITE CONCENTRIC RINGS (Organic Geometric Expansion)
-        let ringColor = (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.50)' : 'rgba(0, 165, 163, 0.50)';
+        let ringColor = (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.35)' : 'rgba(0, 165, 163, 0.35)';
         ctx.strokeStyle = ringColor;
-        ctx.lineWidth = 5.0;
+        ctx.lineWidth = 4.0;
 
         // Satellite Ring Set 1 (Mid-Gap)
         const sat1X = W * 0.62;
