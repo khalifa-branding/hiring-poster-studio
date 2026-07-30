@@ -1020,7 +1020,7 @@
       const logoX = 2380;
       const logoW = 440;
 
-      // DRAW LOGO LOCKUP ANCHORED AT FAR RIGHT (X = 2380px, Y = 70px)
+      // DRAW LOGO LOCKUP ANCHORED AT FAR RIGHT (X = 2380px, Y = 115px)
       ctx.save();
       if (useAnniversaryLogo) {
         let activeLogo = logo10W;
@@ -1032,17 +1032,17 @@
 
         if (activeLogo.complete && activeLogo.naturalWidth > 0) {
           const logoH = logoW * (activeLogo.naturalHeight / activeLogo.naturalWidth);
-          ctx.drawImage(activeLogo, logoX, 70, logoW, logoH);
+          ctx.drawImage(activeLogo, logoX, 115, logoW, logoH);
         } else {
-          drawTresconLogo(ctx, logoX, 75, 0.82, (activeTheme === 'light') ? 'dark' : 'white');
+          drawTresconLogo(ctx, logoX, 120, 0.82, (activeTheme === 'light') ? 'dark' : 'white');
         }
       } else {
-        drawTresconLogo(ctx, logoX, 75, 0.82, (activeTheme === 'light') ? 'dark' : 'white');
+        drawTresconLogo(ctx, logoX, 120, 0.82, (activeTheme === 'light') ? 'dark' : 'white');
       }
       ctx.restore();
 
-      // 6. MAIN TAGLINE (96px ANEK DEVANAGARI 600 WEIGHT, START Y = 250px)
-      const startHeadlineY = 250;
+      // 6. MAIN TAGLINE (96px ANEK DEVANAGARI 600 WEIGHT, START Y = 275px)
+      const startHeadlineY = 275;
 
       ctx.save();
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
@@ -1086,38 +1086,41 @@
       });
       ctx.restore();
 
-      // 7. MINIMALIST DOT-SEPARATED TYPOGRAPHY LINE (EXECUTIVE BOX-FREE DESIGN AT Y = 450px)
-      const pillarYStart = 450;
+      // 7. DIVISION BADGES (SOLID WHITE PILLS, 32px MANROPE 800, 1 HORIZONTAL ROW AT Y = 495px)
+      const pillarYStart = 495;
       const pillars = [p1, p2, p3, p4].filter(p => p.trim() !== '');
 
-      if (pillars.length > 0) {
+      let rX = contentX;
+      pillars.forEach((pillarText) => {
         ctx.save();
-        if ('letterSpacing' in ctx) ctx.letterSpacing = '0.5px';
-        ctx.font = '800 36px "Manrope", sans-serif';
+        if ('letterSpacing' in ctx) ctx.letterSpacing = '0.3px';
+        ctx.font = '800 32px "Manrope", sans-serif';
+        const textWidth = ctx.measureText(pillarText).width;
+        const pillWidth = textWidth + 66;
 
-        let pX = contentX;
-        pillars.forEach((pillarText, idx) => {
-          // Draw Division Title Text
-          ctx.fillStyle = (activeTheme === 'light') ? '#01373D' : '#FFFFFF';
-          ctx.fillText(pillarText, pX, pillarYStart);
+        // Pure Solid White Pill for 100% Maximum Contrast
+        ctx.fillStyle = '#FFFFFF';
+        ctx.strokeStyle = '#00A5A3';
+        ctx.lineWidth = 2.5;
 
-          const textWidth = ctx.measureText(pillarText).width;
-          pX += textWidth;
+        ctx.beginPath();
+        ctx.roundRect(rX, pillarYStart, pillWidth, 64, 32);
+        ctx.fill();
+        ctx.stroke();
 
-          // Draw Glowing Dot Separator if not the last item
-          if (idx < pillars.length - 1) {
-            ctx.save();
-            ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
-            ctx.beginPath();
-            ctx.arc(pX + 25, pillarYStart - 12, 7, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
+        // Vibrant Electric Teal Dot Indicator
+        ctx.fillStyle = '#00A5A3';
+        ctx.beginPath();
+        ctx.arc(rX + 26, pillarYStart + 32, 8, 0, Math.PI * 2);
+        ctx.fill();
 
-            pX += 50; // Spacing after bullet dot
-          }
-        });
+        // Deep Dark Teal Text
+        ctx.fillStyle = '#01373D';
+        ctx.fillText(pillarText, rX + 46, pillarYStart + 43);
+
         ctx.restore();
-      }
+        rX += pillWidth + 20;
+      });
 
       // 8. SINGLE LINE FOOTER SECTION AT Y = 717px (EXACT USER BLUEPRINT SPEC)
       // Line 1: tresconglobal.com (40px Bold Electric Lime) + UAE • India • Singapore • Saudi Arabia • Qatar (30px White)
