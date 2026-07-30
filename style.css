@@ -996,9 +996,9 @@ select.form-input option,
 }
 
 .theme-corporate-light .role-card:hover {
-  background: #F1F5F9 !important;
-  border-color: #0284C7 !important;
-  box-shadow: 0 8px 24px rgba(2, 132, 199, 0.12) !important;
+  background: #F8FAFC !important;
+  border-color: #061A12 !important;
+  box-shadow: 0 8px 24px rgba(6, 26, 18, 0.12) !important;
 }
 
 .role-card-number {
@@ -1049,13 +1049,13 @@ select.form-input option,
 }
 
 .theme-corporate-light .role-card-number {
-  color: #0284C7 !important;
+  color: #061A12 !important;
 }
 .theme-corporate-light .role-card-number::after {
-  background-color: rgba(2, 132, 199, 0.25) !important;
+  background-color: rgba(6, 26, 18, 0.2) !important;
 }
 .theme-corporate-light .role-card:hover .role-card-number {
-  color: #0369A1 !important;
+  color: #15803D !important;
 }
 
 .role-card-info {
@@ -1113,10 +1113,10 @@ select.form-input option,
 }
 
 .theme-corporate-light .role-type-badge {
-  background: rgba(16, 185, 129, 0.12) !important;
-  border: 1px solid rgba(16, 185, 129, 0.3) !important;
-  color: #047857 !important;
-  font-weight: 700 !important;
+  background: #061A12 !important;
+  border: 1px solid #061A12 !important;
+  color: #A3E635 !important;
+  font-weight: 800 !important;
 }
 
 .role-card-sub {
@@ -1149,7 +1149,7 @@ select.form-input option,
 }
 
 .theme-corporate-light .role-card-chevron {
-  color: var(--color-dark-teal);
+  color: #061A12 !important;
 }
 
 /* Metadata Badges */
@@ -1205,16 +1205,16 @@ select.form-input option,
 }
 
 .theme-corporate-light .info-badge {
-  background: rgba(2, 132, 199, 0.08) !important;
-  border: 1px solid rgba(2, 132, 199, 0.25) !important;
-  color: #0369A1 !important;
-  font-weight: 600 !important;
+  background: rgba(6, 26, 18, 0.06) !important;
+  border: 1px solid rgba(6, 26, 18, 0.2) !important;
+  color: #061A12 !important;
+  font-weight: 700 !important;
 }
 .theme-corporate-light .info-badge.badge-highlight {
-  background: rgba(16, 185, 129, 0.12) !important;
-  border: 1px solid rgba(16, 185, 129, 0.3) !important;
-  color: #047857 !important;
-  font-weight: 600 !important;
+  background: #061A12 !important;
+  border: 1px solid #061A12 !important;
+  color: #A3E635 !important;
+  font-weight: 800 !important;
 }
 
 .info-badge svg {
@@ -1237,8 +1237,8 @@ select.form-input option,
 }
 
 .theme-corporate-light .candidate-qualifier {
-  border-top-color: rgba(2, 132, 199, 0.15) !important;
-  color: #475569 !important;
+  border-top-color: rgba(6, 26, 18, 0.12) !important;
+  color: #334155 !important;
 }
 
 /* Call to Action Container (Refined Executive Layout) */
@@ -1289,12 +1289,12 @@ select.form-input option,
 
 .theme-corporate-light .cta-box {
   background: #FFFFFF !important;
-  border: 1.5px solid #0284C7 !important;
-  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.1) !important;
+  border: 1.5px solid #061A12 !important;
+  box-shadow: 0 6px 20px rgba(6, 26, 18, 0.08) !important;
 }
 
 .theme-corporate-light .cta-box::before {
-  background: #0284C7 !important;
+  background: #A3E635 !important;
 }
 
 .cta-info {
@@ -1330,13 +1330,13 @@ select.form-input option,
 }
 
 .theme-corporate-light .cta-highlight {
-  color: #0284C7 !important;
+  color: #061A12 !important;
   font-weight: 800 !important;
 }
 
 .theme-corporate-light .cta-text {
-  color: #64748B !important;
-  opacity: 0.9 !important;
+  color: #475569 !important;
+  opacity: 0.95 !important;
 }
 
 .cta-highlight:hover {
@@ -1348,7 +1348,7 @@ select.form-input option,
 }
 
 .theme-corporate-light .cta-highlight:hover {
-  color: #0369A1 !important;
+  color: #15803D !important;
 }
 
 .cta-right-col {
@@ -1400,14 +1400,15 @@ select.form-input option,
 }
 
 .theme-corporate-light .cta-website-badge {
-  color: #FFFFFF !important;
-  background: #0284C7 !important; /* Pure Electric Cyan */
+  color: #A3E635 !important;
+  background: #061A12 !important; /* Pure Electric Cyan */
   border: none !important;
   font-weight: 800 !important;
 }
 
 .theme-corporate-light .cta-website-badge:hover {
-  background: #0369A1 !important;
+  background: #112A20 !important;
+  color: #B4F34A !important;
 }
 
 .cta-website-badge:hover {
