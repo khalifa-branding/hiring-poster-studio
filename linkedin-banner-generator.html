@@ -721,7 +721,7 @@
         <h3>Footer Details</h3>
         <div class="form-field">
           <label>Website</label>
-          <input type="text" id="inputWebsite" value="www.tresconglobal.com" oninput="render()">
+          <input type="text" id="inputWebsite" value="tresconglobal.com" oninput="render()">
         </div>
         <div class="form-field">
           <label>Global Hubs</label>
@@ -1007,13 +1007,13 @@
       ctx.stroke();
       ctx.restore();
 
-      // Top electric brand accent bar
+      // Top electric brand accent bar (24px height per spec)
       let topBarGrad = ctx.createLinearGradient(0, 0, W, 0);
       topBarGrad.addColorStop(0, '#00A5A3');
       topBarGrad.addColorStop(0.5, '#C0F43C');
       topBarGrad.addColorStop(1, '#00A5A3');
       ctx.fillStyle = topBarGrad;
-      ctx.fillRect(0, 0, W, 12);
+      ctx.fillRect(0, 0, W, 24);
 
       // 5. MATHEMATICAL ZERO-COLLISION GRID ARCHITECTURE
       const contentX = 960;
@@ -1041,13 +1041,13 @@
       }
       ctx.restore();
 
-      // 6. MAIN TAGLINE (EXPLICIT 2-LINE SLOGAN ANCHORED AT X = 960px)
+      // 6. MAIN TAGLINE (88px ANEK DEVANAGARI 600 WEIGHT, 2 LINES ANCHORED AT X = 960px)
       const startHeadlineY = 145;
 
       ctx.save();
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
       let headlineFontSize = 88;
-      ctx.font = `800 ${headlineFontSize}px "Anek Devanagari", sans-serif`;
+      ctx.font = `600 ${headlineFontSize}px "Anek Devanagari", sans-serif`;
       
       if (activeTheme === 'light') {
         ctx.fillStyle = '#01373D';
@@ -1086,75 +1086,72 @@
       });
       ctx.restore();
 
-      // 7. SOLID HIGH-CONTRAST WHITE DIVISIONS BADGES AT X = 960px
-      const pillarYStart = Math.max(currentY + 35, 355);
+      // 7. DIVISION BADGES (SOLID WHITE PILLS, 32px MANROPE 800, 1 HORIZONTAL ROW)
+      const pillarYStart = 375;
       const pillars = [p1, p2, p3, p4].filter(p => p.trim() !== '');
 
-      const row1 = pillars.slice(0, 2);
-      const row2 = pillars.slice(2, 4);
+      let rX = contentX;
+      pillars.forEach((pillarText) => {
+        ctx.save();
+        if ('letterSpacing' in ctx) ctx.letterSpacing = '0.3px';
+        ctx.font = '800 32px "Manrope", sans-serif';
+        const textWidth = ctx.measureText(pillarText).width;
+        const pillWidth = textWidth + 66;
 
-      [row1, row2].forEach((rowPillars, rowIndex) => {
-        let rX = contentX;
-        const currentPillarY = pillarYStart + (rowIndex * 74);
+        // Pure Solid White Pill for 100% Maximum Contrast
+        ctx.fillStyle = '#FFFFFF';
+        ctx.strokeStyle = '#00A5A3';
+        ctx.lineWidth = 2.5;
 
-        rowPillars.forEach((pillarText) => {
-          ctx.save();
-          if ('letterSpacing' in ctx) ctx.letterSpacing = '0.3px';
-          ctx.font = '800 32px "Manrope", sans-serif';
-          const textWidth = ctx.measureText(pillarText).width;
-          const pillWidth = textWidth + 66;
+        ctx.beginPath();
+        ctx.roundRect(rX, pillarYStart, pillWidth, 64, 32);
+        ctx.fill();
+        ctx.stroke();
 
-          // Pure Solid White Pill for 100% Maximum Contrast
-          ctx.fillStyle = '#FFFFFF';
-          ctx.strokeStyle = '#00A5A3';
-          ctx.lineWidth = 2.5;
+        // Vibrant Electric Teal Dot Indicator
+        ctx.fillStyle = '#00A5A3';
+        ctx.beginPath();
+        ctx.arc(rX + 26, pillarYStart + 32, 8, 0, Math.PI * 2);
+        ctx.fill();
 
-          ctx.beginPath();
-          ctx.roundRect(rX, currentPillarY, pillWidth, 64, 32);
-          ctx.fill();
-          ctx.stroke();
+        // Deep Dark Teal Text
+        ctx.fillStyle = '#01373D';
+        ctx.fillText(pillarText, rX + 46, pillarYStart + 43);
 
-          // Vibrant Electric Teal Dot Indicator
-          ctx.fillStyle = '#00A5A3';
-          ctx.beginPath();
-          ctx.arc(rX + 26, currentPillarY + 32, 8, 0, Math.PI * 2);
-          ctx.fill();
-
-          // Deep Dark Teal Text
-          ctx.fillStyle = '#01373D';
-          ctx.fillText(pillarText, rX + 46, currentPillarY + 43);
-
-          ctx.restore();
-          rX += pillWidth + 22;
-        });
+        ctx.restore();
+        rX += pillWidth + 20;
       });
 
-      // 8. VERTICALLY STACKED FOOTER WITH GENEROUS BREATHING GAP (v12.1 SPEC)
-      // Separator Line at Y = H - 128 (664px)
-      // Line 1: Website URL at Y = H - 75 (717px) -> 40px Bold Electric Lime
-      // Line 2: Regional Hubs at Y = H - 24 (768px) -> 30px Bold White
-      // Baseline gap: 51px (leaving 13px clean breathing space under descender 'g')
+      // 8. SINGLE LINE FOOTER SECTION AT Y = 717px (EXACT USER BLUEPRINT SPEC)
+      // Line 1: tresconglobal.com (40px Bold Electric Lime) + UAE • India • Singapore • Saudi Arabia • Qatar (30px White)
       ctx.save();
       
-      // Separator Line above Footer
+      // Separator Line above Footer at Y = 664px
       ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.2)' : 'rgba(255, 255, 255, 0.25)';
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(contentX, H - 128);
-      ctx.lineTo(2900, H - 128);
+      ctx.moveTo(contentX, 664);
+      ctx.lineTo(2900, 664);
       ctx.stroke();
 
-      // Line 1: Website URL (40px Bold Electric Lime at X = 960px, Y = H - 75)
+      const footerY = 717;
+
+      // Part 1: Website URL (40px Bold Electric Lime at X = 960px, Y = 717px)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
       ctx.font = '800 40px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
-      ctx.fillText(website, contentX, H - 75);
+      
+      // Strip 'www.' if present for clean domain format
+      const cleanWebsite = website.replace(/^https?:\/\//, '').replace(/^www\./, '');
+      ctx.fillText(cleanWebsite, contentX, footerY);
 
-      // Line 2: Regional Hubs (30px Bold White at X = 960px, Y = H - 24)
+      const urlWidth = ctx.measureText(cleanWebsite).width;
+
+      // Part 2: Regional Hubs (30px Bold White at X = 960px + urlWidth + 40px, Y = 717px)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '0.5px';
       ctx.font = '700 30px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#01373D' : '#FFFFFF';
-      ctx.fillText(hubs, contentX, H - 24);
+      ctx.fillText(hubs, contentX + urlWidth + 40, footerY);
 
       ctx.restore();
 
