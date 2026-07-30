@@ -987,102 +987,24 @@
       // 3. FORMALIZED TRESCON CIRCULAR DNA ENGINES (100% BRANDBOOK ACCURATE)
       ctx.save();
       
-      if (activeBgStyle === 'dotmatrix') {
-        // PRESET 1: OFFICIAL LOGO DOT MATRIX (Brandbook Page 21: Derived from circle in dot of logo)
-        let dotColor = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.22)' : 'rgba(255, 255, 255, 0.22)';
-        const spacing = 44;
-        for (let x = 30; x < W; x += spacing) {
-          for (let y = 30; y < H; y += spacing) {
-            ctx.fillStyle = ((x + y) % (spacing * 4) === 0) ? 'rgba(192, 244, 60, 0.50)' : dotColor;
-            ctx.beginPath();
-            ctx.arc(x, y, 4.5, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        }
-      } else if (activeBgStyle === 'herocircle') {
-        // PRESET 2: AGY V15 ENTERPRISE BRAND SYSTEM (Subconscious Circular DNA Architecture)
-        const circleCenterX = logoX + 150; // 2555px (Upper-Right Offset)
-        const circleCenterY = 60;           // Upper Right Offset (60px)
+      if (activeBgStyle === 'dotmatrix' || activeBgStyle === 'herocircle' || activeBgStyle === 'satellites') {
+        // FIRST PRINCIPLES: SINGLE OVERSIZED CROPPED CIRCULAR FORM (IMPLIED GEOMETRY FROM LOGO DOT)
+        const circleCenterX = logoX + 220; // 2625px (Upper-Right Offset)
+        const circleCenterY = -150;        // Upward Offset (-150px)
+        const heroRadius = 1100;           // 140% Banner Height
 
-        // Layer 1: Oversized Cropped Dotted Hero Circle (Radius 1200px = 150% Height, 22% Opacity)
-        const r1 = 1200;
-        const dotsCount1 = 180;
-        ctx.fillStyle = (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.40)' : 'rgba(0, 165, 163, 0.40)';
-        for (let i = 0; i < dotsCount1; i++) {
-          const angle = (i / dotsCount1) * Math.PI * 2;
-          const dx = circleCenterX + r1 * Math.cos(angle);
-          const dy = circleCenterY + r1 * Math.sin(angle);
-          if (dx >= -50 && dx <= W + 50 && dy >= -50 && dy <= H + 50) {
-            ctx.beginPath();
-            ctx.arc(dx, dy, 5.0, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        }
+        let strokeGrad = ctx.createLinearGradient(circleCenterX - heroRadius, 0, circleCenterX + heroRadius, H);
+        strokeGrad.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        strokeGrad.addColorStop(0.3, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.22)' : 'rgba(0, 165, 163, 0.22)');
+        strokeGrad.addColorStop(0.85, 'rgba(0, 0, 0, 0)');
 
-        // Layer 2: Secondary Concentric Dotted Ring (Radius 880px, 18% Opacity)
-        const r2 = 880;
-        const dotsCount2 = 130;
-        ctx.fillStyle = (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.32)' : 'rgba(0, 165, 163, 0.32)';
-        for (let i = 0; i < dotsCount2; i++) {
-          const angle = (i / dotsCount2) * Math.PI * 2;
-          const dx = circleCenterX + r2 * Math.cos(angle);
-          const dy = circleCenterY + r2 * Math.sin(angle);
-          if (dx >= -50 && dx <= W + 50 && dy >= -50 && dy <= H + 50) {
-            ctx.beginPath();
-            ctx.arc(dx, dy, 4.0, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        }
-
-        // Layer 3: Inner Framing Concentric Ring (Radius 560px, 12% Opacity Stroke — Logo Emerging Anchor)
-        let strokeGrad3 = ctx.createLinearGradient(circleCenterX - 560, 0, circleCenterX + 560, H);
-        strokeGrad3.addColorStop(0, 'rgba(0, 0, 0, 0)');
-        strokeGrad3.addColorStop(0.2, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.28)' : 'rgba(0, 165, 163, 0.28)');
-        strokeGrad3.addColorStop(0.95, 'rgba(0, 0, 0, 0)');
-
-        ctx.strokeStyle = strokeGrad3;
+        ctx.strokeStyle = strokeGrad;
         ctx.lineWidth = 3.0;
         ctx.beginPath();
-        ctx.arc(circleCenterX, circleCenterY, 560, 0, Math.PI * 2);
+        ctx.arc(circleCenterX, circleCenterY, heroRadius, 0, Math.PI * 2);
         ctx.stroke();
-
-        // Layer 4: Soft Substrate Dot Grid Transition
-        let dotColorSub = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.10)' : 'rgba(255, 255, 255, 0.12)';
-        const spacingSub = 54;
-        for (let x = W * 0.58; x < W; x += spacingSub) {
-          for (let y = 20; y < H; y += spacingSub) {
-            ctx.fillStyle = dotColorSub;
-            ctx.beginPath();
-            ctx.arc(x, y, 2.2, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        }
-      } else if (activeBgStyle === 'satellites') {
-        // PRESET 3: PRIMITIVE 02 — SATELLITE CONCENTRIC RINGS (Organic Geometric Expansion)
-        let ringColor = (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.35)' : 'rgba(0, 165, 163, 0.35)';
-        ctx.strokeStyle = ringColor;
-        ctx.lineWidth = 4.0;
-
-        // Satellite Ring Set 1 (Mid-Gap)
-        const sat1X = W * 0.62;
-        const sat1Y = H * 0.35;
-        for (let r = 80; r <= 240; r += 80) {
-          ctx.beginPath();
-          ctx.arc(sat1X, sat1Y, r, 0, Math.PI * 2);
-          ctx.stroke();
-        }
-
-        // Satellite Ring Set 2 (Lower Right)
-        const sat2X = W * 0.88;
-        const sat2Y = H * 0.75;
-        for (let r = 60; r <= 180; r += 60) {
-          ctx.beginPath();
-          ctx.arc(sat2X, sat2Y, r, 0, Math.PI * 2);
-          ctx.stroke();
-        }
       } else {
-        // PRESET 4: PRIMITIVE 04 — PURE GRADIENT DEPTH (Brandbook Page 14: Pure Executive Minimalism - 0% Clutter)
-        // Clean deep gradient atmosphere with sub-8% ambient lighting glow
+        // PURE EXECUTIVE GRADIENT (100% CLEAN DEEP TEAL ATMOSPHERE)
       }
       
       ctx.restore();
