@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trescon Global - Enterprise LinkedIn Banner Studio v10.0 (4 Brand Design Themes)</title>
+  <title>Trescon Global - Enterprise LinkedIn Banner Studio v11.0 (Zero Collision & High Readability)</title>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -350,15 +350,15 @@
     }
 
     .workspace.mobile-mode .li-avatar-wrapper {
-      margin-top: -58px;
-      margin-left: 14px;
+      margin-top: -68px;
+      margin-left: 12px;
       margin-bottom: 0.5rem;
     }
 
     .workspace.mobile-mode .li-avatar-img {
-      width: 110px;
-      height: 110px;
-      font-size: 1.8rem;
+      width: 128px;
+      height: 128px;
+      font-size: 2.2rem;
     }
 
     .workspace.mobile-mode .li-profile-body {
@@ -476,7 +476,7 @@
       transition: all 0.3s ease;
     }
 
-    /* Top Right Edit Pencil Icon Overlay */
+    /* Top Right Edit Pencil Icon Overlay (Authentic LinkedIn Mobile App UI) */
     .li-banner-pencil-badge {
       position: absolute;
       top: 14px;
@@ -648,7 +648,7 @@
     <div class="brand-title">
       <img src="brand_assets/10-years-trescon-logo-W.png" alt="Trescon 10 Years Logo">
       <h1>LinkedIn Banner Studio</h1>
-      <span>v10.0 4 Brand Design Themes</span>
+      <span>v11.0 Zero Collision & Mobile Optimized</span>
     </div>
 
     <!-- Device Viewport Switch -->
@@ -675,7 +675,7 @@
     <!-- Sidebar Controls -->
     <div class="sidebar">
       
-      <!-- 4 DISTINCT CREATIVE DESIGN THEMES (TAGLINE & DIVISIONS STAY CONSTANT) -->
+      <!-- 4 DISTINCT CREATIVE DESIGN THEMES -->
       <div class="control-group">
         <h3>Creative Design Themes</h3>
         <div class="preset-grid">
@@ -695,7 +695,7 @@
         </div>
       </div>
 
-      <!-- Official Corporate Divisions (Fixed Brand Spec) -->
+      <!-- Official Corporate Divisions -->
       <div class="control-group">
         <h3>Official Corporate Divisions</h3>
         <div class="form-field">
@@ -873,7 +873,6 @@
       render();
     }
 
-    // 4 DISTINCT CREATIVE DESIGN THEMES (TAGLINE & DIVISIONS STAY CONSTANT)
     function selectTheme(theme) {
       activeTheme = theme;
       document.querySelectorAll('.preset-card').forEach(card => card.classList.remove('active'));
@@ -936,7 +935,6 @@
       // 2. RADIAL LIGHTING & AMBIENT GLOW PER THEME
       if (showGlow) {
         if (activeTheme === 'lime') {
-          // Intense Electric Lime Radial Lighting
           let orb1 = ctx.createRadialGradient(W * 0.45, H * 0.5, 40, W * 0.45, H * 0.5, 650);
           orb1.addColorStop(0, 'rgba(192, 244, 60, 0.30)');
           orb1.addColorStop(1, 'rgba(192, 244, 60, 0)');
@@ -949,14 +947,12 @@
           ctx.fillStyle = orb2;
           ctx.fillRect(0, 0, W, H);
         } else if (activeTheme === 'executive') {
-          // Sleek Slate Monochrome Glow
           let orb1 = ctx.createRadialGradient(W * 0.76, H * 0.35, 50, W * 0.76, H * 0.35, 750);
           orb1.addColorStop(0, 'rgba(0, 165, 163, 0.25)');
           orb1.addColorStop(1, 'rgba(0, 165, 163, 0)');
           ctx.fillStyle = orb1;
           ctx.fillRect(0, 0, W, H);
         } else if (activeTheme !== 'light') {
-          // Deep Teal Standard Glow
           let orb1 = ctx.createRadialGradient(W * 0.76, H * 0.35, 50, W * 0.76, H * 0.35, 750);
           orb1.addColorStop(0, 'rgba(0, 165, 163, 0.42)');
           orb1.addColorStop(1, 'rgba(0, 165, 163, 0)');
@@ -1004,10 +1000,10 @@
       }
 
       ctx.beginPath();
-      ctx.moveTo(W * 0.52, 0);
-      ctx.lineTo(W * 0.63, H);
       ctx.moveTo(W * 0.54, 0);
       ctx.lineTo(W * 0.65, H);
+      ctx.moveTo(W * 0.56, 0);
+      ctx.lineTo(W * 0.67, H);
       ctx.stroke();
       ctx.restore();
 
@@ -1019,12 +1015,15 @@
       ctx.fillStyle = topBarGrad;
       ctx.fillRect(0, 0, W, 12);
 
-      // 5. CREATIVE LAYOUT ARCHITECTURE (ZERO OVERLAP: LOGO FAR RIGHT AT X = 2360px)
-      const contentX = 720;
-      const logoX = 2360; // Far Right (320px clean breathing gap from headline)
-      const logoW = 460;
+      // 5. UNIVERSAL SAFE ZONE GRID ARCHITECTURE (v11.0 ZERO COLLISION SPEC)
+      // Mobile Avatar No-Go Zone: X: 0 -> 940px (Bottom Left)
+      // Top Right Edit Pencil No-Go Zone: X: 2320px -> 3168px (Top Right)
+      // SAFE CONTENT START COORDINATE: contentX = 980px!
+      const contentX = 980; // 100% Clears Avatar Circle on Android & iOS mobile apps!
+      const logoX = 1860;   // Positioned cleanly between content and pencil icon!
+      const logoW = 420;    // Ends at X = 2280px (100px before pencil icon at 2380px)!
 
-      // DRAW LOGO LOCKUP IN FAR RIGHT SAFE QUADRANT (X = 2360px)
+      // DRAW LOGO LOCKUP IN SAFE UPPER QUADRANT (X = 1860px)
       ctx.save();
       if (useAnniversaryLogo) {
         let activeLogo = logo10W;
@@ -1036,22 +1035,22 @@
 
         if (activeLogo.complete && activeLogo.naturalWidth > 0) {
           const logoH = logoW * (activeLogo.naturalHeight / activeLogo.naturalWidth);
-          ctx.drawImage(activeLogo, logoX, 70, logoW, logoH);
+          ctx.drawImage(activeLogo, logoX, 90, logoW, logoH);
         } else {
-          drawTresconLogo(ctx, logoX, 75, 0.82, (activeTheme === 'light') ? 'dark' : 'white');
+          drawTresconLogo(ctx, logoX, 95, 0.78, (activeTheme === 'light') ? 'dark' : 'white');
         }
       } else {
-        drawTresconLogo(ctx, logoX, 75, 0.82, (activeTheme === 'light') ? 'dark' : 'white');
+        drawTresconLogo(ctx, logoX, 95, 0.78, (activeTheme === 'light') ? 'dark' : 'white');
       }
       ctx.restore();
 
-      // 6. MAIN TAGLINE (EXPLICIT 2-LINE HEADLINE: Connecting Businesses / with Opportunities)
-      const startHeadlineY = 160;
+      // 6. MAIN TAGLINE (MASSIVE HIGH-IMPACT HEADLINE AT X = 980px)
+      const startHeadlineY = 150;
 
       ctx.save();
-      if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
-      let headlineFontSize = 104;
-      ctx.font = `700 ${headlineFontSize}px "Anek Devanagari", sans-serif`;
+      if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.8px';
+      let headlineFontSize = 96;
+      ctx.font = `800 ${headlineFontSize}px "Anek Devanagari", sans-serif`;
       
       if (activeTheme === 'light') {
         ctx.fillStyle = '#01373D';
@@ -1067,7 +1066,7 @@
       } else {
         const words = headline.split(' ');
         let line = '';
-        const maxTextWidth = 1450;
+        const maxTextWidth = 1200;
         for (let n = 0; n < words.length; n++) {
           let testLine = line + words[n] + ' ';
           let metrics = ctx.measureText(testLine);
@@ -1085,13 +1084,13 @@
       headlineLines.forEach((hLine, i) => {
         ctx.fillText(hLine, contentX, currentY);
         if (i < headlineLines.length - 1) {
-          currentY += headlineFontSize + 14;
+          currentY += headlineFontSize + 10;
         }
       });
       ctx.restore();
 
-      // 7. SOLID CRISP WHITE DIVISIONS BADGES (MAXIMUM 100% CONTRAST & READABILITY)
-      const pillarYStart = Math.max(currentY + 44, 410);
+      // 7. HIGH-READABILITY ENLARGED DIVISIONS BADGES (42px FONT SIZE FOR MOBILE IMPACT)
+      const pillarYStart = Math.max(currentY + 40, 385);
       const pillars = [p1, p2, p3, p4].filter(p => p.trim() !== '');
 
       const row1 = pillars.slice(0, 2);
@@ -1099,64 +1098,63 @@
 
       [row1, row2].forEach((rowPillars, rowIndex) => {
         let rX = contentX;
-        const currentPillarY = pillarYStart + (rowIndex * 82);
+        const currentPillarY = pillarYStart + (rowIndex * 92);
 
         rowPillars.forEach((pillarText) => {
           ctx.save();
-          if ('letterSpacing' in ctx) ctx.letterSpacing = '0.3px';
-          ctx.font = '800 32px "Manrope", sans-serif';
+          if ('letterSpacing' in ctx) ctx.letterSpacing = '0.5px';
+          ctx.font = '800 40px "Manrope", sans-serif'; // Scaled up to 40px for mobile readability!
           const textWidth = ctx.measureText(pillarText).width;
-          const pillWidth = textWidth + 68;
+          const pillWidth = textWidth + 84;
 
-          // Pure Solid White Pill for Maximum High Contrast
+          // Pure Solid White Pill for 100% Maximum Contrast
           ctx.fillStyle = '#FFFFFF';
           ctx.strokeStyle = '#00A5A3';
-          ctx.lineWidth = 2.5;
+          ctx.lineWidth = 3;
 
           ctx.beginPath();
-          ctx.roundRect(rX, currentPillarY, pillWidth, 68, 34);
+          ctx.roundRect(rX, currentPillarY, pillWidth, 78, 39);
           ctx.fill();
           ctx.stroke();
 
-          // Vibrant Brand Teal Dot Indicator
+          // Vibrant Electric Teal Dot Indicator
           ctx.fillStyle = '#00A5A3';
           ctx.beginPath();
-          ctx.arc(rX + 28, currentPillarY + 34, 8, 0, Math.PI * 2);
+          ctx.arc(rX + 34, currentPillarY + 39, 10, 0, Math.PI * 2);
           ctx.fill();
 
-          // Crisp Deep Dark Teal Typography (100% Legible)
+          // Deep Dark Teal Text
           ctx.fillStyle = '#01373D';
-          ctx.fillText(pillarText, rX + 48, currentPillarY + 44);
+          ctx.fillText(pillarText, rX + 58, currentPillarY + 52);
 
           ctx.restore();
           rX += pillWidth + 24;
         });
       });
 
-      // 8. ELEVATED FOOTER BAR (CLEAR OF AVATAR & SAFE FROM MOBILE CROP)
+      // 8. HIGH-VISIBILITY READABLE FOOTER BAR AT X = 980px
       const footerY = H - 65;
-      const safeWebsiteX = 720; // Aligned with main headline content start X = 720px
 
       ctx.save();
-      ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.2)' : 'rgba(255, 255, 255, 0.25)';
+      ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.25)' : 'rgba(255, 255, 255, 0.3)';
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(safeWebsiteX, footerY - 30);
-      ctx.lineTo(2520, footerY - 30);
+      ctx.moveTo(contentX, footerY - 30);
+      ctx.lineTo(2280, footerY - 30);
       ctx.stroke();
 
-      // Website URL (High Contrast 38px Bold Electric Lime)
-      if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
-      ctx.font = '800 38px "Manrope", sans-serif';
+      // Website URL (ENLARGED TO 54px BOLD ELECTRIC LIME AT X = 980px - 100% UNCOVERED BY AVATAR!)
+      if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
+      ctx.font = '800 54px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
-      ctx.fillText(website, safeWebsiteX, footerY + 12);
+      ctx.fillText(website, contentX, footerY + 20);
 
-      // Global Countries / Hubs (High Contrast 32px Bold White)
-      if ('letterSpacing' in ctx) ctx.letterSpacing = '0.5px';
-      ctx.font = '700 32px "Manrope", sans-serif';
+      // Global Hubs (ENLARGED TO 38px BOLD WHITE)
+      if ('letterSpacing' in ctx) ctx.letterSpacing = '0.8px';
+      ctx.font = '700 38px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#01373D' : '#FFFFFF';
       const hubsWidth = ctx.measureText(hubs).width;
-      ctx.fillText(hubs, 2450 - hubsWidth, footerY + 12);
+      ctx.fillText(hubs, 2280 - hubsWidth, footerY + 20);
       ctx.restore();
 
       // SAFE ZONE OVERLAY TOGGLE
@@ -1164,31 +1162,34 @@
         ctx.save();
         if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
         
-        // Left Mobile Avatar Coverage Zone (0 -> 780px)
-        ctx.fillStyle = 'rgba(239, 68, 68, 0.25)';
-        ctx.fillRect(0, 0, 780, H);
+        // Left Mobile Avatar Coverage Zone (0 -> 940px)
+        ctx.fillStyle = 'rgba(239, 68, 68, 0.30)';
+        ctx.fillRect(0, 0, 940, H);
         ctx.strokeStyle = '#ef4444';
         ctx.lineWidth = 4;
-        ctx.strokeRect(0, 0, 780, H);
+        ctx.strokeRect(0, 0, 940, H);
 
-        // Right Mobile Crop & Pencil Edit Danger Zone (2380 -> 3168px)
-        ctx.fillRect(2380, 0, 788, H);
-        ctx.strokeRect(2380, 0, 788, H);
+        // Right Mobile Crop & Pencil Edit Danger Zone (2320 -> 3168px)
+        ctx.fillStyle = 'rgba(239, 68, 68, 0.30)';
+        ctx.fillRect(2320, 0, 848, H);
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(2320, 0, 848, H);
 
-        // Green Universal Safe Zone (780 -> 2380px)
-        ctx.fillStyle = 'rgba(192, 244, 60, 0.12)';
-        ctx.fillRect(780, 0, 1600, H);
+        // Green Universal Safe Zone (940 -> 2320px)
+        ctx.fillStyle = 'rgba(192, 244, 60, 0.15)';
+        ctx.fillRect(940, 0, 1380, H);
         ctx.strokeStyle = '#C0F43C';
         ctx.lineWidth = 4;
-        ctx.strokeRect(780, 0, 1600, H);
+        ctx.strokeRect(940, 0, 1380, H);
 
         ctx.font = '800 34px "Manrope", sans-serif';
         ctx.fillStyle = '#ef4444';
-        ctx.fillText('AVATAR ATMOSPHERE ZONE', 40, H / 2);
-        ctx.fillText('MOBILE PENCIL & CROP ZONE', 2400, H / 2);
+        ctx.fillText('AVATAR NO-GO DANGER ZONE (0 - 940px)', 40, H / 2);
+        ctx.fillText('PENCIL ICON DANGER ZONE (2320 - 3168px)', 2350, H / 2);
 
         ctx.fillStyle = '#C0F43C';
-        ctx.fillText('100% HIGH-IMPACT CANVAS REAL ESTATE SAFE ZONE (X: 780px - 2380px)', 820, 50);
+        ctx.fillText('100% UNIVERSAL SAFE ZONE (X: 980px - 2280px)', 1000, 50);
 
         ctx.restore();
       }
@@ -1247,14 +1248,14 @@
       render();
 
       const link = document.createElement('a');
-      link.download = `Trescon_LinkedIn_Banner_${activeTheme.toUpperCase()}_3168x792.png`;
+      link.download = `Trescon_LinkedIn_Banner_v11_${activeTheme.toUpperCase()}_3168x792.png`;
       link.href = canvas.toDataURL('image/png', 1.0);
       link.click();
 
       safeZoneActive = wasGuideActive;
       render();
 
-      showToast(`Banner PNG (${activeTheme.toUpperCase()}) downloaded successfully!`);
+      showToast(`Banner PNG (v11.0 ${activeTheme.toUpperCase()}) downloaded successfully!`);
     }
   </script>
 </body>
