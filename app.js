@@ -465,21 +465,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 600);
   }
 
-  // Accordion Collapsible Sections Interaction
+  // Independent Accordion Collapsible Sections Interaction
   const accordionItems = document.querySelectorAll('.accordion-item');
   accordionItems.forEach(item => {
     const headerBtn = item.querySelector('.accordion-header');
     if (headerBtn) {
       headerBtn.addEventListener('click', () => {
         const isOpen = item.classList.contains('open');
-        
-        accordionItems.forEach(otherItem => {
-          otherItem.classList.remove('open');
-          const otherHeader = otherItem.querySelector('.accordion-header');
-          if (otherHeader) otherHeader.setAttribute('aria-expanded', 'false');
-        });
-
-        if (!isOpen) {
+        if (isOpen) {
+          item.classList.remove('open');
+          headerBtn.setAttribute('aria-expanded', 'false');
+        } else {
           item.classList.add('open');
           headerBtn.setAttribute('aria-expanded', 'true');
         }

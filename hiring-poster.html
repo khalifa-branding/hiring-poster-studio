@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=16.0">
+  <link rel="stylesheet" href="style.css?v=17.0">
 </head>
 <body>
 
@@ -51,15 +51,15 @@
     <!-- MAIN THREE-COLUMN STUDIO LAYOUT -->
     <div class="studio-main-layout">
       
-      <!-- COLUMN 1: LEFT SIDEBAR (CONTENT & COPY) -->
+      <!-- COLUMN 1: LEFT SIDEBAR (CONTENT & POSITIONS - 50/50 DIVIDE) -->
       <aside class="editor-sidebar-left">
         <div class="sidebar-header-clean">
-          <h2>1. Content & Copy</h2>
+          <h2>1. Content & Positions</h2>
         </div>
 
         <div class="accordion-container">
           
-          <!-- ACCORDION 1: CAMPAIGN HEADINGS -->
+          <!-- ACCORDION 1: CAMPAIGN HEADINGS (OPEN BY DEFAULT) -->
           <div class="accordion-item open" id="acc-item-headings">
             <button class="accordion-header" aria-expanded="true" aria-controls="acc-body-headings">
               <div class="acc-title-group">
@@ -85,7 +85,7 @@
             </div>
           </div>
 
-          <!-- ACCORDION 2: OPEN POSITIONS & EXPERIENCE -->
+          <!-- ACCORDION 2: OPEN POSITIONS & EXPERIENCE (OPEN BY DEFAULT) -->
           <div class="accordion-item open" id="acc-item-roles">
             <button class="accordion-header" aria-expanded="true" aria-controls="acc-body-roles">
               <div class="acc-title-group">
@@ -110,36 +110,6 @@
                   </label>
                   <span class="switch-label">Show Position Numbers (01, 02...)</span>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ACCORDION 3: CONTACT & LOCATION -->
-          <div class="accordion-item" id="acc-item-contact">
-            <button class="accordion-header" aria-expanded="false" aria-controls="acc-body-contact">
-              <div class="acc-title-group">
-                <svg class="acc-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                <span class="acc-title">Contact & Location</span>
-              </div>
-              <svg class="acc-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </button>
-
-            <div class="accordion-body" id="acc-body-contact">
-              <div class="form-group">
-                <label for="location-input">Office Location</label>
-                <input type="text" id="location-input" class="form-input" value="Manipal" placeholder="Manipal">
-              </div>
-              <div class="form-group" style="margin-top: 0.65rem;">
-                <label for="highlight-input">Candidate Priority</label>
-                <input type="text" id="highlight-input" class="form-input" value="Immediate Joiners Preferred" placeholder="Immediate Joiners Preferred">
-              </div>
-              <div class="form-group" style="margin-top: 0.65rem;">
-                <label for="email-input">Recruitment Email</label>
-                <input type="email" id="email-input" class="form-input" value="hr@tresconglobal.com" placeholder="hr@tresconglobal.com">
-              </div>
-              <div class="form-group" style="margin-top: 0.65rem;">
-                <label for="cta-label-input">CTA Prompt</label>
-                <input type="text" id="cta-label-input" class="form-input" value="APPLY DIRECTLY VIA EMAIL" placeholder="APPLY DIRECTLY VIA EMAIL">
               </div>
             </div>
           </div>
@@ -218,14 +188,45 @@
         </div>
       </main>
 
-      <!-- COLUMN 3: RIGHT SIDEBAR (THEME & FORMAT) -->
+      <!-- COLUMN 3: RIGHT SIDEBAR (CONTACT & STYLE - 50/50 DIVIDE) -->
       <aside class="editor-sidebar-right">
         <div class="sidebar-header-clean">
-          <h2>2. Style & Format</h2>
+          <h2>2. Details & Styling</h2>
         </div>
 
         <div class="accordion-container">
           
+          <!-- ACCORDION 3: CONTACT & LOCATION (OPEN BY DEFAULT) -->
+          <div class="accordion-item open" id="acc-item-contact">
+            <button class="accordion-header" aria-expanded="true" aria-controls="acc-body-contact">
+              <div class="acc-title-group">
+                <svg class="acc-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span class="acc-title">Contact & Location</span>
+              </div>
+              <svg class="acc-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+
+            <div class="accordion-body" id="acc-body-contact">
+              <div class="form-group">
+                <label for="location-input">Office Location</label>
+                <input type="text" id="location-input" class="form-input" value="Manipal" placeholder="Manipal">
+              </div>
+              <div class="form-group" style="margin-top: 0.65rem;">
+                <label for="highlight-input">Candidate Priority</label>
+                <input type="text" id="highlight-input" class="form-input" value="Immediate Joiners Preferred" placeholder="Immediate Joiners Preferred">
+              </div>
+              <div class="form-group" style="margin-top: 0.65rem;">
+                <label for="email-input">Recruitment Email</label>
+                <input type="email" id="email-input" class="form-input" value="hr@tresconglobal.com" placeholder="hr@tresconglobal.com">
+              </div>
+              <div class="form-group" style="margin-top: 0.65rem;">
+                <label for="cta-label-input">CTA Prompt</label>
+                <input type="text" id="cta-label-input" class="form-input" value="APPLY DIRECTLY VIA EMAIL" placeholder="APPLY DIRECTLY VIA EMAIL">
+              </div>
+            </div>
+          </div>
+
+          <!-- ACCORDION 4: THEME & FORMAT (OPEN BY DEFAULT) -->
           <div class="accordion-item open" id="acc-item-style">
             <button class="accordion-header" aria-expanded="true" aria-controls="acc-body-style">
               <div class="acc-title-group">
@@ -341,6 +342,6 @@
 
   <!-- HTML2Canvas Image Export Library -->
   <script src="html2canvas.min.js"></script>
-  <script src="app.js?v=16.0"></script>
+  <script src="app.js?v=17.0"></script>
 </body>
 </html>
