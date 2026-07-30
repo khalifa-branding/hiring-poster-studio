@@ -1090,8 +1090,8 @@
       });
       ctx.restore();
 
-      // 7. HIGH-CONTRAST DIVISIONS BADGES (HIGHLY READABLE ON MOBILE)
-      const pillarYStart = Math.max(currentY + 44, 400);
+      // 7. SOLID CRISP WHITE DIVISIONS BADGES (MAXIMUM 100% CONTRAST & READABILITY)
+      const pillarYStart = Math.max(currentY + 48, 415);
       const pillars = [p1, p2, p3, p4].filter(p => p.trim() !== '');
 
       const row1 = pillars.slice(0, 2);
@@ -1099,46 +1099,37 @@
 
       [row1, row2].forEach((rowPillars, rowIndex) => {
         let rX = contentX;
-        const currentPillarY = pillarYStart + (rowIndex * 74);
+        const currentPillarY = pillarYStart + (rowIndex * 84);
 
         rowPillars.forEach((pillarText) => {
           ctx.save();
-          if ('letterSpacing' in ctx) ctx.letterSpacing = '0.5px';
-          ctx.font = '700 30px "Manrope", sans-serif';
+          if ('letterSpacing' in ctx) ctx.letterSpacing = '0.3px';
+          ctx.font = '800 34px "Manrope", sans-serif';
           const textWidth = ctx.measureText(pillarText).width;
-          const pillWidth = textWidth + 60;
+          const pillWidth = textWidth + 72;
 
-          if (activeTheme === 'light') {
-            ctx.fillStyle = '#01373D';
-            ctx.strokeStyle = '#00A5A3';
-          } else if (activeTheme === 'lime') {
-            ctx.fillStyle = '#012B30';
-            ctx.strokeStyle = '#C0F43C';
-          } else if (activeTheme === 'executive') {
-            ctx.fillStyle = '#162230';
-            ctx.strokeStyle = '#00A5A3';
-          } else { // 'teal'
-            ctx.fillStyle = '#012429';
-            ctx.strokeStyle = '#C0F43C';
-          }
-
+          // Pure Solid White Pill for Maximum High Contrast
+          ctx.fillStyle = '#FFFFFF';
+          ctx.strokeStyle = '#00A5A3';
           ctx.lineWidth = 2.5;
+
           ctx.beginPath();
-          ctx.roundRect(rX, currentPillarY, pillWidth, 60, 30);
+          ctx.roundRect(rX, currentPillarY, pillWidth, 72, 36);
           ctx.fill();
           ctx.stroke();
 
-          // High contrast Lime Dot indicator
-          ctx.fillStyle = '#C0F43C';
+          // Vibrant Brand Teal Dot Indicator
+          ctx.fillStyle = '#00A5A3';
           ctx.beginPath();
-          ctx.arc(rX + 26, currentPillarY + 30, 7, 0, Math.PI * 2);
+          ctx.arc(rX + 30, currentPillarY + 36, 8.5, 0, Math.PI * 2);
           ctx.fill();
 
-          ctx.fillStyle = '#FFFFFF';
-          ctx.fillText(pillarText, rX + 46, currentPillarY + 40);
+          // Crisp Deep Dark Teal Typography (100% Legible)
+          ctx.fillStyle = '#01373D';
+          ctx.fillText(pillarText, rX + 52, currentPillarY + 47);
 
           ctx.restore();
-          rX += pillWidth + 24;
+          rX += pillWidth + 28;
         });
       });
 
