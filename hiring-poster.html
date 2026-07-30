@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=24.0">
+  <link rel="stylesheet" href="style.css?v=25.0">
 </head>
 <body>
 
@@ -48,7 +48,7 @@
 
         <div class="accordion-container">
           
-          <!-- ACCORDION 1: CAMPAIGN HEADINGS (OPEN BY DEFAULT) -->
+          <!-- ACCORDION 1: CAMPAIGN HEADINGS & PRIORITY (OPEN BY DEFAULT) -->
           <div class="accordion-item open" id="acc-item-headings">
             <button class="accordion-header" aria-expanded="true" aria-controls="acc-body-headings">
               <div class="acc-title-group">
@@ -70,6 +70,11 @@
               <div class="form-group" style="margin-top: 0.5rem;">
                 <label for="qualifier-input">Candidate Qualifier Quote (Optional)</label>
                 <input type="text" id="qualifier-input" class="form-input" value="Whether you're a fresher eager to kickstart your career or someone experienced looking for your next opportunity, we'd love to hear from you." placeholder="Leave blank to remove quote">
+              </div>
+              <!-- SHIFTED: CANDIDATE PRIORITY UNDER CANDIDATE QUALIFIER QUOTE -->
+              <div class="form-group" style="margin-top: 0.5rem;">
+                <label for="highlight-input">Candidate Priority</label>
+                <input type="text" id="highlight-input" class="form-input" value="Immediate Joiners Preferred" placeholder="e.g. Immediate Joiners Preferred">
               </div>
             </div>
           </div>
@@ -243,10 +248,6 @@
                 <input type="text" id="location-input" class="form-input" value="Manipal" placeholder="Manipal">
               </div>
               <div class="form-group" style="margin-top: 0.5rem;">
-                <label for="highlight-input">Candidate Priority</label>
-                <input type="text" id="highlight-input" class="form-input" value="Immediate Joiners Preferred" placeholder="Immediate Joiners Preferred">
-              </div>
-              <div class="form-group" style="margin-top: 0.5rem;">
                 <label for="email-input">Recruitment Email</label>
                 <input type="email" id="email-input" class="form-input" value="hr@tresconglobal.com" placeholder="hr@tresconglobal.com">
               </div>
@@ -352,6 +353,6 @@
 
   <!-- HTML2Canvas Image Export Library -->
   <script src="html2canvas.min.js"></script>
-  <script src="app.js?v=24.0"></script>
+  <script src="app.js?v=25.0"></script>
 </body>
 </html>
