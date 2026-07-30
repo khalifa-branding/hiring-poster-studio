@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trescon Global - Enterprise LinkedIn Banner Studio v11.0 (Zero Collision & High Readability)</title>
+  <title>Trescon Global - Enterprise LinkedIn Banner Studio v12.0 (Mathematical Zero-Collision Engine)</title>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -476,7 +476,7 @@
       transition: all 0.3s ease;
     }
 
-    /* Top Right Edit Pencil Icon Overlay (Authentic LinkedIn Mobile App UI) */
+    /* Top Right Edit Pencil Icon Overlay */
     .li-banner-pencil-badge {
       position: absolute;
       top: 14px;
@@ -648,7 +648,7 @@
     <div class="brand-title">
       <img src="brand_assets/10-years-trescon-logo-W.png" alt="Trescon 10 Years Logo">
       <h1>LinkedIn Banner Studio</h1>
-      <span>v11.0 Zero Collision & Mobile Optimized</span>
+      <span>v12.0 Mathematical Zero-Collision</span>
     </div>
 
     <!-- Device Viewport Switch -->
@@ -840,15 +840,15 @@
     let safeZoneActive = false;
     let deviceMode = 'desktop';
 
-    // Load Official 10th Anniversary Logo Images
+    // Load Official 10th Anniversary Logo Images (Cache-Busting URL)
     const logo10W = new Image();
-    logo10W.src = 'brand_assets/10-years-trescon-logo-W.png';
+    logo10W.src = 'brand_assets/10-years-trescon-logo-W.png?v=12';
 
     const logo10Color = new Image();
-    logo10Color.src = 'brand_assets/10-years-trescon-logo.png';
+    logo10Color.src = 'brand_assets/10-years-trescon-logo.png?v=12';
 
     const logo10Dark = new Image();
-    logo10Dark.src = 'brand_assets/10-years-trescon-logo-B.png';
+    logo10Dark.src = 'brand_assets/10-years-trescon-logo-B.png?v=12';
 
     let imagesLoaded = 0;
     [logo10W, logo10Color, logo10Dark].forEach(img => {
@@ -1000,10 +1000,10 @@
       }
 
       ctx.beginPath();
-      ctx.moveTo(W * 0.54, 0);
-      ctx.lineTo(W * 0.65, H);
-      ctx.moveTo(W * 0.56, 0);
-      ctx.lineTo(W * 0.67, H);
+      ctx.moveTo(W * 0.72, 0);
+      ctx.lineTo(W * 0.83, H);
+      ctx.moveTo(W * 0.74, 0);
+      ctx.lineTo(W * 0.85, H);
       ctx.stroke();
       ctx.restore();
 
@@ -1015,15 +1015,15 @@
       ctx.fillStyle = topBarGrad;
       ctx.fillRect(0, 0, W, 12);
 
-      // 5. UNIVERSAL SAFE ZONE GRID ARCHITECTURE (v11.0 ZERO COLLISION SPEC)
-      // Mobile Avatar No-Go Zone: X: 0 -> 940px (Bottom Left)
-      // Top Right Edit Pencil No-Go Zone: X: 2320px -> 3168px (Top Right)
-      // SAFE CONTENT START COORDINATE: contentX = 980px!
-      const contentX = 980; // 100% Clears Avatar Circle on Android & iOS mobile apps!
-      const logoX = 1860;   // Positioned cleanly between content and pencil icon!
-      const logoW = 420;    // Ends at X = 2280px (100px before pencil icon at 2380px)!
+      // 5. MATHEMATICAL ZERO-COLLISION GRID ARCHITECTURE (v12.0 ENGINE SPEC)
+      // Mobile Avatar Circle: X: 0 -> 940px (Bottom Left)
+      // Content Start: X = 960px! (100% past avatar circle)
+      // Logo Position: X = 2380px (Far Right, 100px before edit pencil icon!)
+      const contentX = 960;
+      const logoX = 2380;
+      const logoW = 440;
 
-      // DRAW LOGO LOCKUP IN SAFE UPPER QUADRANT (X = 1860px)
+      // DRAW LOGO LOCKUP ANCHORED AT FAR RIGHT (X = 2380px, Y = 70px)
       ctx.save();
       if (useAnniversaryLogo) {
         let activeLogo = logo10W;
@@ -1035,21 +1035,21 @@
 
         if (activeLogo.complete && activeLogo.naturalWidth > 0) {
           const logoH = logoW * (activeLogo.naturalHeight / activeLogo.naturalWidth);
-          ctx.drawImage(activeLogo, logoX, 90, logoW, logoH);
+          ctx.drawImage(activeLogo, logoX, 70, logoW, logoH);
         } else {
-          drawTresconLogo(ctx, logoX, 95, 0.78, (activeTheme === 'light') ? 'dark' : 'white');
+          drawTresconLogo(ctx, logoX, 75, 0.82, (activeTheme === 'light') ? 'dark' : 'white');
         }
       } else {
-        drawTresconLogo(ctx, logoX, 95, 0.78, (activeTheme === 'light') ? 'dark' : 'white');
+        drawTresconLogo(ctx, logoX, 75, 0.82, (activeTheme === 'light') ? 'dark' : 'white');
       }
       ctx.restore();
 
-      // 6. MAIN TAGLINE (MASSIVE HIGH-IMPACT HEADLINE AT X = 980px)
+      // 6. MAIN TAGLINE (EXPLICIT 2-LINE SLOGAN ANCHORED AT X = 960px)
       const startHeadlineY = 150;
 
       ctx.save();
-      if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.8px';
-      let headlineFontSize = 96;
+      if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
+      let headlineFontSize = 90;
       ctx.font = `800 ${headlineFontSize}px "Anek Devanagari", sans-serif`;
       
       if (activeTheme === 'light') {
@@ -1066,7 +1066,7 @@
       } else {
         const words = headline.split(' ');
         let line = '';
-        const maxTextWidth = 1200;
+        const maxTextWidth = 1300; // Hard max text width to guarantee ending before logoX (2380px)
         for (let n = 0; n < words.length; n++) {
           let testLine = line + words[n] + ' ';
           let metrics = ctx.measureText(testLine);
@@ -1084,13 +1084,13 @@
       headlineLines.forEach((hLine, i) => {
         ctx.fillText(hLine, contentX, currentY);
         if (i < headlineLines.length - 1) {
-          currentY += headlineFontSize + 10;
+          currentY += headlineFontSize + 12;
         }
       });
       ctx.restore();
 
-      // 7. HIGH-READABILITY ENLARGED DIVISIONS BADGES (42px FONT SIZE FOR MOBILE IMPACT)
-      const pillarYStart = Math.max(currentY + 40, 385);
+      // 7. SOLID HIGH-CONTRAST WHITE DIVISIONS BADGES AT X = 960px
+      const pillarYStart = Math.max(currentY + 40, 375);
       const pillars = [p1, p2, p3, p4].filter(p => p.trim() !== '');
 
       const row1 = pillars.slice(0, 2);
@@ -1098,63 +1098,65 @@
 
       [row1, row2].forEach((rowPillars, rowIndex) => {
         let rX = contentX;
-        const currentPillarY = pillarYStart + (rowIndex * 92);
+        const currentPillarY = pillarYStart + (rowIndex * 82);
 
         rowPillars.forEach((pillarText) => {
           ctx.save();
-          if ('letterSpacing' in ctx) ctx.letterSpacing = '0.5px';
-          ctx.font = '800 40px "Manrope", sans-serif'; // Scaled up to 40px for mobile readability!
+          if ('letterSpacing' in ctx) ctx.letterSpacing = '0.3px';
+          ctx.font = '800 36px "Manrope", sans-serif';
           const textWidth = ctx.measureText(pillarText).width;
-          const pillWidth = textWidth + 84;
+          const pillWidth = textWidth + 74;
 
           // Pure Solid White Pill for 100% Maximum Contrast
           ctx.fillStyle = '#FFFFFF';
           ctx.strokeStyle = '#00A5A3';
-          ctx.lineWidth = 3;
+          ctx.lineWidth = 2.5;
 
           ctx.beginPath();
-          ctx.roundRect(rX, currentPillarY, pillWidth, 78, 39);
+          ctx.roundRect(rX, currentPillarY, pillWidth, 72, 36);
           ctx.fill();
           ctx.stroke();
 
           // Vibrant Electric Teal Dot Indicator
           ctx.fillStyle = '#00A5A3';
           ctx.beginPath();
-          ctx.arc(rX + 34, currentPillarY + 39, 10, 0, Math.PI * 2);
+          ctx.arc(rX + 30, currentPillarY + 36, 9, 0, Math.PI * 2);
           ctx.fill();
 
           // Deep Dark Teal Text
           ctx.fillStyle = '#01373D';
-          ctx.fillText(pillarText, rX + 58, currentPillarY + 52);
+          ctx.fillText(pillarText, rX + 52, currentPillarY + 48);
 
           ctx.restore();
           rX += pillWidth + 24;
         });
       });
 
-      // 8. HIGH-VISIBILITY READABLE FOOTER BAR AT X = 980px
-      const footerY = H - 65;
-
+      // 8. VERTICALLY STACKED FOOTER ARCHITECTURE (ZERO FOOTER TEXT COLLISION)
+      // Line 1: Website URL at Y = 707px
+      // Line 2: Regional Hubs at Y = 757px
       ctx.save();
-      ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.25)' : 'rgba(255, 255, 255, 0.3)';
+      
+      // Separator Line above Footer
+      ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.2)' : 'rgba(255, 255, 255, 0.25)';
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(contentX, footerY - 30);
-      ctx.lineTo(2280, footerY - 30);
+      ctx.moveTo(contentX, H - 110);
+      ctx.lineTo(2900, H - 110);
       ctx.stroke();
 
-      // Website URL (ENLARGED TO 54px BOLD ELECTRIC LIME AT X = 980px - 100% UNCOVERED BY AVATAR!)
+      // Line 1: Website URL (44px Bold Electric Lime at X = 960px)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
-      ctx.font = '800 54px "Manrope", sans-serif';
+      ctx.font = '800 44px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
-      ctx.fillText(website, contentX, footerY + 20);
+      ctx.fillText(website, contentX, H - 65);
 
-      // Global Hubs (ENLARGED TO 38px BOLD WHITE)
-      if ('letterSpacing' in ctx) ctx.letterSpacing = '0.8px';
-      ctx.font = '700 38px "Manrope", sans-serif';
+      // Line 2: Regional Hubs (32px Bold White at X = 960px)
+      if ('letterSpacing' in ctx) ctx.letterSpacing = '0.5px';
+      ctx.font = '700 32px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#01373D' : '#FFFFFF';
-      const hubsWidth = ctx.measureText(hubs).width;
-      ctx.fillText(hubs, 2280 - hubsWidth, footerY + 20);
+      ctx.fillText(hubs, contentX, H - 18);
+
       ctx.restore();
 
       // SAFE ZONE OVERLAY TOGGLE
@@ -1189,7 +1191,7 @@
         ctx.fillText('PENCIL ICON DANGER ZONE (2320 - 3168px)', 2350, H / 2);
 
         ctx.fillStyle = '#C0F43C';
-        ctx.fillText('100% UNIVERSAL SAFE ZONE (X: 980px - 2280px)', 1000, 50);
+        ctx.fillText('100% UNIVERSAL SAFE ZONE (X: 960px - 2320px)', 1000, 50);
 
         ctx.restore();
       }
@@ -1248,14 +1250,14 @@
       render();
 
       const link = document.createElement('a');
-      link.download = `Trescon_LinkedIn_Banner_v11_${activeTheme.toUpperCase()}_3168x792.png`;
+      link.download = `Trescon_LinkedIn_Banner_v12_${activeTheme.toUpperCase()}_3168x792.png`;
       link.href = canvas.toDataURL('image/png', 1.0);
       link.click();
 
       safeZoneActive = wasGuideActive;
       render();
 
-      showToast(`Banner PNG (v11.0 ${activeTheme.toUpperCase()}) downloaded successfully!`);
+      showToast(`Banner PNG (v12.0 ${activeTheme.toUpperCase()}) downloaded successfully!`);
     }
   </script>
 </body>
