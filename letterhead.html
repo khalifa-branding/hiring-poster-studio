@@ -27,8 +27,11 @@
         <h1 class="brand-title">Executive Letterhead Studio</h1>
       </div>
 
-      <!-- EXPORT ACTIONS (Word Template ONLY) -->
-      <div class="ribbon-actions">
+      <!-- EXPORT ACTIONS & TOOL SWITCHER -->
+      <div class="ribbon-actions" style="display: flex; align-items: center; gap: 0.75rem;">
+        <a href="index.html" class="btn btn-outline btn-sm" style="color: var(--color-lime); border-color: rgba(163, 230, 53, 0.4); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
+          <span>📊</span> Hiring Hub & Poster Studio
+        </a>
         <button id="btn-download-docx-top" class="btn btn-primary btn-sm" onclick="exportToDocx()">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           Download Word Template
