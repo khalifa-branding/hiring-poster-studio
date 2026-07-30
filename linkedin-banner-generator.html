@@ -914,9 +914,9 @@
       const W = canvas.width;  // 3168
       const H = canvas.height; // 792
 
-      const contentX = 960;
-      const logoX = 2380;
-      const logoW = 440;
+      const contentX = 960;  // Single Invisible Vertical Alignment Axis (Zero Optical Drift)
+      const logoX = 2405;    // Shifted 25px right and 10px up for perfect executive breathing room
+      const logoW = 430;
 
       const headline = document.getElementById('inputHeadline').value;
       const p1 = document.getElementById('inputPillar1').value;
@@ -961,43 +961,43 @@
         ctx.fillRect(0, 0, W, H);
       }
 
-      // 2. RADIAL LIGHTING & AMBIENT GLOW PER THEME (OPTION B: SOFT LOGO AMBIENT GLOW)
+      // 2. RESTRAINED AMBIENT GLOW (OPTION B: IMPERCEPTIBLE SUB-8% LOGO GLOW)
       if (showGlow) {
-        // Soft logo ambient radial glow behind upper-right quadrant
-        let logoGlow = ctx.createRadialGradient(logoX + 220, 180, 20, logoX + 220, 180, 480);
-        logoGlow.addColorStop(0, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.20)' : 'rgba(0, 165, 163, 0.25)');
+        // Soft logo ambient radial glow behind upper-right quadrant (< 8% opacity)
+        let logoGlow = ctx.createRadialGradient(logoX + 215, 175, 20, logoX + 215, 175, 500);
+        logoGlow.addColorStop(0, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.08)' : 'rgba(0, 165, 163, 0.075)');
         logoGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = logoGlow;
         ctx.fillRect(0, 0, W, H);
 
         if (activeTheme === 'lime') {
           let orb1 = ctx.createRadialGradient(W * 0.45, H * 0.5, 40, W * 0.45, H * 0.5, 650);
-          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.22)');
+          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.16)');
           orb1.addColorStop(1, 'rgba(192, 244, 60, 0)');
           ctx.fillStyle = orb1;
           ctx.fillRect(0, 0, W, H);
         } else if (activeTheme !== 'light') {
           let orb1 = ctx.createRadialGradient(W * 0.32, H * 0.65, 40, W * 0.32, H * 0.65, 550);
-          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.16)');
+          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.12)');
           orb1.addColorStop(1, 'rgba(192, 244, 60, 0)');
           ctx.fillStyle = orb1;
           ctx.fillRect(0, 0, W, H);
         }
       }
 
-      // 3. BRAND DOT-MATRIX PATTERN
+      // 3. BRAND DOT-MATRIX PATTERN (REDUCED OPACITY BY 10% PER BRIEF)
       if (showDotPattern && activeBgStyle !== 'hex' && activeBgStyle !== 'network') {
         ctx.save();
-        let dotColor = 'rgba(255, 255, 255, 0.045)';
-        if (activeTheme === 'light') dotColor = 'rgba(1, 55, 61, 0.04)';
-        if (activeTheme === 'executive') dotColor = 'rgba(255, 255, 255, 0.035)';
+        let dotColor = 'rgba(255, 255, 255, 0.035)';
+        if (activeTheme === 'light') dotColor = 'rgba(1, 55, 61, 0.03)';
+        if (activeTheme === 'executive') dotColor = 'rgba(255, 255, 255, 0.028)';
         
         ctx.fillStyle = dotColor;
         const spacing = 44;
         for (let x = 30; x < W; x += spacing) {
           for (let y = 30; y < H; y += spacing) {
             ctx.beginPath();
-            ctx.arc(x, y, 2.8, 0, Math.PI * 2);
+            ctx.arc(x, y, 2.6, 0, Math.PI * 2);
             ctx.fill();
           }
         }
@@ -1006,16 +1006,16 @@
 
       // 4. DYNAMIC BACKGROUND GRAPHIC STYLES RENDERER
       ctx.save();
-      let accentColor = 'rgba(192, 244, 60, 0.20)';
-      if (activeTheme === 'lime') accentColor = 'rgba(192, 244, 60, 0.30)';
-      if (activeTheme === 'light') accentColor = 'rgba(0, 165, 163, 0.18)';
-      if (activeTheme === 'executive') accentColor = 'rgba(0, 165, 163, 0.22)';
+      let accentColor = 'rgba(192, 244, 60, 0.16)';
+      if (activeTheme === 'lime') accentColor = 'rgba(192, 244, 60, 0.25)';
+      if (activeTheme === 'light') accentColor = 'rgba(0, 165, 163, 0.14)';
+      if (activeTheme === 'executive') accentColor = 'rgba(0, 165, 163, 0.18)';
 
       if (activeBgStyle === 'network') {
         // B2B CONSTELLATION NETWORK GRAPHIC
         ctx.strokeStyle = accentColor;
         ctx.fillStyle = accentColor;
-        ctx.lineWidth = 1.5;
+        ctx.lineWidth = 1.2;
 
         const nodes = [
           {x: W*0.08, y: H*0.2}, {x: W*0.18, y: H*0.65}, {x: W*0.28, y: H*0.3},
@@ -1025,7 +1025,7 @@
 
         for (let i = 0; i < nodes.length; i++) {
           ctx.beginPath();
-          ctx.arc(nodes[i].x, nodes[i].y, 4, 0, Math.PI * 2);
+          ctx.arc(nodes[i].x, nodes[i].y, 3.5, 0, Math.PI * 2);
           ctx.fill();
 
           for (let j = i + 1; j < nodes.length; j++) {
@@ -1041,8 +1041,8 @@
       } else if (activeBgStyle === 'hex') {
         // CYBER HEXAGON GRID GRAPHIC
         ctx.strokeStyle = accentColor;
-        ctx.lineWidth = 1.5;
-        const r = 52;
+        ctx.lineWidth = 1.2;
+        const r = 54;
         const a = 2 * Math.PI / 6;
 
         for (let x = 40; x < W + 100; x += r * 3) {
@@ -1058,7 +1058,7 @@
       } else if (activeBgStyle === 'waves') {
         // FLOWING ORGANIC WAVES GRAPHIC
         ctx.strokeStyle = accentColor;
-        ctx.lineWidth = 2.5;
+        ctx.lineWidth = 2.0;
         for (let offset = 0; offset < 4; offset++) {
           ctx.beginPath();
           ctx.moveTo(0, H * 0.4 + offset * 50);
@@ -1066,27 +1066,27 @@
           ctx.stroke();
         }
       } else {
-        // TECH MESH RAYS (Shuffled to Mid-Gap X: 1837px -> 2154px)
-        ctx.lineWidth = 2.5;
+        // TECH MESH RAYS (EXTENDED TOWARD LOWER RIGHT AT W * 0.72)
+        ctx.lineWidth = 2.0;
         ctx.strokeStyle = accentColor;
         ctx.beginPath();
         ctx.moveTo(W * 0.58, 0);
-        ctx.lineTo(W * 0.70, H);
-        ctx.moveTo(W * 0.60, 0);
         ctx.lineTo(W * 0.72, H);
+        ctx.moveTo(W * 0.60, 0);
+        ctx.lineTo(W * 0.74, H);
         ctx.stroke();
       }
       ctx.restore();
 
-      // Top electric brand accent bar (12px height)
+      // SECTION 8: SLEEK 2px TOP ACCENT LINE (PRECISE ENTERPRISE BORDER)
       let topBarGrad = ctx.createLinearGradient(0, 0, W, 0);
       topBarGrad.addColorStop(0, '#00A5A3');
       topBarGrad.addColorStop(0.5, '#C0F43C');
       topBarGrad.addColorStop(1, '#00A5A3');
       ctx.fillStyle = topBarGrad;
-      ctx.fillRect(0, 0, W, 12);
+      ctx.fillRect(0, 0, W, 2); // 2px exact precision thickness
 
-      // 5. DRAW LOGO LOCKUP ANCHORED AT FAR RIGHT (X = 2380px, Y = 115px)
+      // SECTION 6: LOGO POSITIONING (SHIFTED 25px RIGHT TO X = 2405px, 10px UP TO Y = 105px)
       ctx.save();
       if (useAnniversaryLogo) {
         let activeLogo = logo10W;
@@ -1098,17 +1098,17 @@
 
         if (activeLogo.complete && activeLogo.naturalWidth > 0) {
           const logoH = logoW * (activeLogo.naturalHeight / activeLogo.naturalWidth);
-          ctx.drawImage(activeLogo, logoX, 115, logoW, logoH);
+          ctx.drawImage(activeLogo, logoX, 105, logoW, logoH);
         } else {
-          drawTresconLogo(ctx, logoX, 120, 0.82, (activeTheme === 'light') ? 'dark' : 'white');
+          drawTresconLogo(ctx, logoX, 105, 0.80, (activeTheme === 'light') ? 'dark' : 'white');
         }
       } else {
-        drawTresconLogo(ctx, logoX, 120, 0.82, (activeTheme === 'light') ? 'dark' : 'white');
+        drawTresconLogo(ctx, logoX, 105, 0.80, (activeTheme === 'light') ? 'dark' : 'white');
       }
       ctx.restore();
 
-      // 6. MAIN TAGLINE (96px ANEK DEVANAGARI 600 WEIGHT, START Y = 275px) — VISUAL DOMINANCE
-      const startHeadlineY = 275;
+      // SECTION 1: HEADLINE REFINEMENT (START Y = 280px, 6-8% INCREASED LINE HEIGHT = 114px)
+      const startHeadlineY = 280;
 
       ctx.save();
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
@@ -1147,61 +1147,61 @@
       headlineLines.forEach((hLine, i) => {
         ctx.fillText(hLine, contentX, currentY);
         if (i < headlineLines.length - 1) {
-          currentY += headlineFontSize + 12;
+          currentY += headlineFontSize + 18; // 114px line height (6-8% increased for lighter premium elegance)
         }
       });
       ctx.restore();
 
-      // 7. SECONDARY SERVICE PILLS (50px HEIGHT, 1.5px LIGHT BORDER, 85% TRANSLUCENT FILL, 600 MEDIUM TEXT)
-      const pillarYStart = 495;
+      // SECTION 2 & 5: REFINED SERVICE PILLS (45px HEIGHT, 600 MEDIUM TEXT 25px, 35% BORDER, 80% GLASS FILL, 26px GAP)
+      const pillarYStart = 508; // +20px vertical breathing room below headline
       const pillars = [p1, p2, p3, p4].filter(p => p.trim() !== '');
 
       let rX = contentX;
       pillars.forEach((pillarText) => {
         ctx.save();
         if ('letterSpacing' in ctx) ctx.letterSpacing = '0.2px';
-        ctx.font = '600 28px "Manrope", sans-serif'; // Medium 600 weight so pills don't compete with headline
+        ctx.font = '600 25px "Manrope", sans-serif'; // Medium 600 weight 25px
         const textWidth = ctx.measureText(pillarText).width;
-        const pillWidth = textWidth + 56;
+        const pillWidth = textWidth + 50;
 
-        // Soft Translucent White Fill (85% Opacity) + Lightweight 1.5px Border
-        ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.08)' : 'rgba(255, 255, 255, 0.85)';
-        ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(0, 165, 163, 0.35)' : 'rgba(0, 165, 163, 0.80)';
-        ctx.lineWidth = 1.5;
+        // Subtle Glass Effect (80% Opacity) + 35% Border Opacity
+        ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.06)' : 'rgba(255, 255, 255, 0.80)';
+        ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(0, 165, 163, 0.25)' : 'rgba(0, 165, 163, 0.35)';
+        ctx.lineWidth = 1.2;
 
         ctx.beginPath();
-        ctx.roundRect(rX, pillarYStart, pillWidth, 50, 25); // 50px height (reduced for refined secondary hierarchy)
+        ctx.roundRect(rX, pillarYStart, pillWidth, 45, 22.5); // 45px height (5-8% reduced for category label feel)
         ctx.fill();
         ctx.stroke();
 
-        // Subtle Teal Accent Dot Indicator
+        // Vibrant Teal Accent Dot Indicator
         ctx.fillStyle = '#00A5A3';
         ctx.beginPath();
-        ctx.arc(rX + 22, pillarYStart + 25, 6, 0, Math.PI * 2);
+        ctx.arc(rX + 20, pillarYStart + 22.5, 5, 0, Math.PI * 2);
         ctx.fill();
 
         // Deep Dark Teal Text
         ctx.fillStyle = '#01373D';
-        ctx.fillText(pillarText, rX + 38, pillarYStart + 35);
+        ctx.fillText(pillarText, rX + 34, pillarYStart + 31.5);
 
         ctx.restore();
-        rX += pillWidth + 16;
+        rX += pillWidth + 26; // Increased horizontal gap by 10px (26px gap)
       });
 
-      // 8. STRENGTHENED FOOTER HIERARCHY WITH GLOBAL PRESENCE DESCRIPTOR AT Y = 717px
+      // SECTION 3 & 4 & 5: FOOTER HIERARCHY & PERFECT 1-AXIS ALIGNMENT (AT Y = 722px)
       ctx.save();
       
-      // Separator Line above Footer at Y = 664px
-      ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.18)' : 'rgba(255, 255, 255, 0.20)';
-      ctx.lineWidth = 1.5;
+      // Separator Line above Footer at Y = 665px (+20px breathing room below pills)
+      ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.15)' : 'rgba(255, 255, 255, 0.18)';
+      ctx.lineWidth = 1.2;
       ctx.beginPath();
-      ctx.moveTo(contentX, 664);
-      ctx.lineTo(2900, 664);
+      ctx.moveTo(contentX, 665);
+      ctx.lineTo(2900, 665);
       ctx.stroke();
 
-      const footerY = 717;
+      const footerY = 722; // +15px breathing room below separator line
 
-      // Part 1: Website URL Anchor (800 ExtraBold Electric Lime at X = 960px, Y = 717px)
+      // Part 1: Website URL Anchor (800 ExtraBold Electric Lime at X = 960px, Y = 722px)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
       ctx.font = '800 40px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
@@ -1210,19 +1210,19 @@
       ctx.fillText(cleanWebsite, contentX, footerY);
 
       const urlWidth = ctx.measureText(cleanWebsite).width;
-      let nextX = contentX + urlWidth + 40;
+      let nextX = contentX + urlWidth + 45; // Increased spacing after website anchor
 
-      // Part 2: Geographic Presence Descriptor ("Global Presence" in 500 Medium Translucent)
+      // Part 2: Geographic Presence Metadata ("Global Presence" in 500 Medium at 70% Opacity)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '0.6px';
-      ctx.font = '500 28px "Manrope", sans-serif';
-      ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.60)' : 'rgba(255, 255, 255, 0.65)';
+      ctx.font = '500 26px "Manrope", sans-serif';
+      ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.60)' : 'rgba(255, 255, 255, 0.70)';
       ctx.fillText('Global Presence  •', nextX, footerY);
 
       const descWidth = ctx.measureText('Global Presence  •').width;
-      nextX += descWidth + 14;
+      nextX += descWidth + 16; // Increased spacing after metadata label
 
-      // Part 3: Geographic Countries (700 Bold White)
-      ctx.font = '700 28px "Manrope", sans-serif';
+      // Part 3: Brighter Country Reach (700 Bold White 26px)
+      ctx.font = '700 26px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#01373D' : '#FFFFFF';
       ctx.fillText('UAE  •  Saudi Arabia  •  India  •  Singapore  •  Qatar', nextX, footerY);
 

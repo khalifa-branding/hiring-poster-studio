@@ -3,227 +3,1331 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trescon Global - Executive Letterhead Studio</title>
-  <meta name="description" content="Official Trescon Global executive letterhead generator and editor. Fill out letter details in the left form, view live A4 preview, and download clean Word templates.">
+  <title>Trescon Global - Enterprise LinkedIn Banner Studio v12.1 (Generous Footer Spacing)</title>
   
-  <!-- Google Fonts: Anek Devanagari & Manrope -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <!-- Quill.js Rich Text Editor CSS -->
-  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-  <link rel="stylesheet" href="letterhead.css?v=5.0">
+  <style>
+    :root {
+      /* Official Trescon Brand Palette */
+      --trescon-deep-teal: #01373D;
+      --trescon-gradient-end: #015153;
+      --trescon-primary-teal: #00A5A3;
+      --trescon-lime: #C0F43C;
+      --trescon-yellow: #F4ED3C;
+      --trescon-dark-gray: #1E2124;
+      --trescon-slate-gray: #464D53;
+      --trescon-light-bg: #F6FAFA;
+      
+      /* Authentic LinkedIn Dark Theme Colors */
+      --li-bg: #000000;
+      --li-card-bg: #1d2226;
+      --li-text-primary: rgba(255, 255, 255, 0.9);
+      --li-text-secondary: rgba(255, 255, 255, 0.6);
+      --li-border: #38434f;
+      --li-blue: #70b5f9;
+      --li-btn-bg: #70b5f9;
+      
+      --font-heading: 'Anek Devanagari', sans-serif;
+      --font-body: 'Manrope', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--li-bg);
+      color: var(--li-text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Studio Navigation Bar */
+    header {
+      background: rgba(1, 55, 61, 0.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 165, 163, 0.4);
+      padding: 0.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-title img {
+      height: 36px;
+    }
+
+    .brand-title h1 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+    }
+
+    .brand-title span {
+      color: var(--trescon-lime);
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(192, 244, 60, 0.15);
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(192, 244, 60, 0.4);
+      text-transform: uppercase;
+    }
+
+    .actions-top {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .btn {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--trescon-lime);
+      color: var(--trescon-deep-teal);
+      box-shadow: 0 0 15px rgba(192, 244, 60, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: #d4f76c;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(0, 165, 163, 0.2);
+      color: #ffffff;
+      border: 1px solid var(--trescon-primary-teal);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(0, 165, 163, 0.4);
+    }
+
+    .device-switch {
+      display: flex;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      padding: 2px;
+    }
+
+    .device-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .device-btn.active {
+      background: var(--trescon-primary-teal);
+      color: #ffffff;
+    }
+
+    /* Main App Workspace */
+    .app-container {
+      display: grid;
+      grid-template-columns: 390px 1fr;
+      flex: 1;
+      height: calc(100vh - 61px);
+      overflow: hidden;
+    }
+
+    /* Sidebar Controls */
+    .sidebar {
+      background: #11161b;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .control-group {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1.2rem;
+    }
+
+    .control-group h3 {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--trescon-lime);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .preset-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+
+    .preset-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 0.75rem 0.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+
+    .preset-card:hover, .preset-card.active {
+      border-color: var(--trescon-lime);
+      background: rgba(192, 244, 60, 0.12);
+      color: var(--trescon-lime);
+    }
+
+    .form-field {
+      margin-bottom: 1rem;
+    }
+
+    .form-field:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      padding: 0.6rem 0.8rem;
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+    }
+
+    .form-field textarea#inputHeadline {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.95rem;
+      line-height: 1.3;
+    }
+
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+      outline: none;
+      border-color: var(--trescon-primary-teal);
+    }
+
+    .checkbox-field {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      margin-top: 0.5rem;
+    }
+
+    .checkbox-field input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--trescon-lime);
+      cursor: pointer;
+    }
+
+    /* Workspace Simulator */
+    .workspace {
+      background: #000000;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    /* REAL SMARTPHONE DEVICE SHELL MOCKUP (MOBILE MODE) */
+    .workspace.mobile-mode {
+      padding: 1rem;
+    }
+
+    .workspace.mobile-mode .phone-frame-wrapper {
+      width: 410px;
+      background: #1c1c1e;
+      border: 10px solid #2c2c2e;
+      border-radius: 46px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 0 2px rgba(255,255,255,0.1);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .workspace.mobile-mode .phone-notch {
+      width: 130px;
+      height: 22px;
+      background: #000000;
+      border-radius: 0 0 16px 16px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 20;
+    }
+
+    .workspace.mobile-mode .linkedin-global-nav {
+      max-width: 100%;
+      border-radius: 0;
+      padding: 0.5rem 1rem;
+      background: #1d2226;
+    }
+
+    .workspace.mobile-mode .li-nav-items {
+      display: none;
+    }
+
+    .workspace.mobile-mode .li-search-input {
+      width: 270px;
+      font-size: 0.78rem;
+    }
+
+    .workspace.mobile-mode .linkedin-profile-card {
+      max-width: 100%;
+      border-radius: 0;
+      border: none;
+    }
+
+    /* Mobile Crop Behavior Simulation */
+    .workspace.mobile-mode .banner-canvas-container {
+      padding-top: 32%;
+      overflow: hidden;
+    }
+
+    .workspace.mobile-mode #bannerCanvas {
+      width: 120%;
+      left: -10%;
+    }
+
+    .workspace.mobile-mode .li-avatar-wrapper {
+      margin-top: -68px;
+      margin-left: 12px;
+      margin-bottom: 0.5rem;
+    }
+
+    .workspace.mobile-mode .li-avatar-img {
+      width: 128px;
+      height: 128px;
+      font-size: 2.2rem;
+    }
+
+    .workspace.mobile-mode .li-profile-body {
+      padding: 0 1rem 1.2rem 1rem;
+    }
+
+    .workspace.mobile-mode .li-user-name {
+      font-size: 1.25rem;
+    }
+
+    .workspace.mobile-mode .li-user-headline {
+      font-size: 0.82rem;
+    }
+
+    /* Authentic LinkedIn Global Header Bar */
+    .linkedin-global-nav {
+      width: 100%;
+      max-width: 1120px;
+      background: #1d2226;
+      border-bottom: 1px solid var(--li-border);
+      border-radius: 8px 8px 0 0;
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      transition: all 0.3s ease;
+    }
+
+    .li-search-box {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .li-logo {
+      background: #0a66c2;
+      color: #fff;
+      font-weight: 900;
+      font-size: 1.1rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .li-search-input {
+      background: #38434f;
+      border: none;
+      border-radius: 4px;
+      padding: 0.45rem 0.8rem;
+      color: #fff;
+      font-size: 0.85rem;
+      width: 220px;
+      transition: all 0.3s;
+    }
+
+    .li-nav-items {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      color: var(--li-text-secondary);
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .li-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+    }
+
+    .li-nav-item.active {
+      color: #ffffff;
+      border-bottom: 2px solid #ffffff;
+      padding-bottom: 2px;
+    }
+
+    /* Desktop Outer Card */
+    .phone-frame-wrapper {
+      width: 100%;
+      max-width: 1120px;
+      transition: all 0.3s ease;
+    }
+
+    /* LinkedIn Profile Card Container */
+    .linkedin-profile-card {
+      width: 100%;
+      background: var(--li-card-bg);
+      border: 1px solid var(--li-border);
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    /* Banner Canvas Wrapper inside LinkedIn Profile Card */
+    .banner-canvas-container {
+      width: 100%;
+      padding-top: 25%; /* 4:1 aspect ratio */
+      position: relative;
+      background: #01373D;
+      transition: all 0.3s ease;
+    }
+
+    #bannerCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    /* Top Right Edit Pencil Icon Overlay */
+    .li-banner-pencil-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(0, 0, 0, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      z-index: 15;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    /* LinkedIn Profile User Header Info */
+    .li-profile-body {
+      padding: 0 2rem 2rem 2rem;
+      position: relative;
+    }
+
+    .li-avatar-wrapper {
+      position: relative;
+      margin-top: -110px;
+      margin-bottom: 0.8rem;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .li-avatar-img {
+      width: 168px;
+      height: 168px;
+      border-radius: 50%;
+      border: 4px solid var(--li-card-bg);
+      background: linear-gradient(135deg, #01373D, #00A5A3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 3rem;
+      font-weight: 800;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      transition: all 0.3s;
+    }
+
+    .li-camera-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .li-user-name {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .li-badge-verified {
+      background: #0a66c2;
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    .li-user-headline {
+      font-size: 1rem;
+      color: var(--li-text-primary);
+      margin-top: 0.3rem;
+      font-weight: 400;
+      line-height: 1.4;
+      max-width: 800px;
+    }
+
+    .li-user-submeta {
+      font-size: 0.85rem;
+      color: var(--li-text-secondary);
+      margin-top: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .li-user-submeta span strong {
+      color: var(--li-blue);
+    }
+
+    .li-actions-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    .li-btn {
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 0.4rem 1.1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .li-btn-primary {
+      background: var(--li-btn-bg);
+      color: #000000;
+    }
+
+    .li-btn-secondary {
+      background: transparent;
+      color: var(--li-blue);
+      border-color: var(--li-blue);
+    }
+
+    .li-btn-more {
+      background: transparent;
+      color: var(--li-text-secondary);
+      border-color: var(--li-text-secondary);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--trescon-deep-teal);
+      border: 1px solid var(--trescon-lime);
+      color: #fff;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 600;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
 
-  <div class="studio-app-container">
+  <!-- Top Header Bar -->
+  <header>
+    <div class="brand-title">
+      <img src="brand_assets/10-years-trescon-logo-W.png" alt="Trescon 10 Years Logo">
+      <h1>LinkedIn Banner Studio</h1>
+      <span>v12.1 Generous Spacing Edition</span>
+    </div>
+
+    <!-- Device Viewport Switch -->
+    <div class="device-switch">
+      <button class="device-btn active" id="btnDesktop" onclick="setDeviceMode('desktop')">💻 Desktop App</button>
+      <button class="device-btn" id="btnMobile" onclick="setDeviceMode('mobile')">📱 Smartphone App (iOS/Android)</button>
+    </div>
+
+    <div class="actions-top">
+      <button class="btn btn-secondary" onclick="toggleSafeZone()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        Toggle Safe Zone Overlay
+      </button>
+      <button class="btn btn-primary" onclick="downloadBanner()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Download 2X PNG (3168x792)
+      </button>
+    </div>
+  </header>
+
+  <!-- App Main Layout -->
+  <div class="app-container">
     
-    <!-- TOP FIXED NAVIGATION RIBBON -->
-    <header class="studio-top-ribbon no-print">
-      <div class="ribbon-brand">
-        <img src="brand_assets/trescon-logo-white-2025.png" alt="Trescon Logo" class="brand-logo-img">
-        <div class="brand-divider"></div>
-        <h1 class="brand-title">Executive Letterhead Studio</h1>
-      </div>
-
-      <!-- EXPORT ACTIONS & TOOL SWITCHER -->
-      <div class="ribbon-actions" style="display: flex; align-items: center; gap: 0.75rem;">
-        <a href="index.html" class="btn btn-outline btn-sm" style="color: var(--color-lime); border-color: rgba(163, 230, 53, 0.4); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
-          <span>📊</span> Hiring Hub & Poster Studio
-        </a>
-        <button id="btn-download-docx-top" class="btn btn-primary btn-sm" onclick="exportToDocx()">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Download Word Template
-        </button>
-      </div>
-    </header>
-
-    <!-- MAIN TWO-PANEL STUDIO LAYOUT -->
-    <div class="studio-main-layout">
+    <!-- Sidebar Controls -->
+    <div class="sidebar">
       
-      <!-- LEFT FORM INPUTS SIDEBAR -->
-      <aside class="sidebar-form no-print">
-        <div class="sidebar-header">
-          <h2>Document Configuration</h2>
-          <p>Fill out the fields below to update the live A4 preview.</p>
+      <!-- 4 DISTINCT CREATIVE DESIGN THEMES -->
+      <div class="control-group">
+        <h3>Creative Design Themes</h3>
+        <div class="preset-grid">
+          <div class="preset-card active" onclick="selectTheme('teal')">Deep Teal Standard</div>
+          <div class="preset-card" onclick="selectTheme('lime')">Electric Lime Tech</div>
+          <div class="preset-card" onclick="selectTheme('executive')">Executive Slate</div>
+          <div class="preset-card" onclick="selectTheme('light')">Clean Light Mode</div>
         </div>
+      </div>
 
-        <form id="letterhead-form" onsubmit="event.preventDefault();">
-          
-          <!-- SECTION 1: OFFICE LOCATION PRESET -->
-          <div class="form-group">
-            <label for="office-preset">Regional Office Location</label>
-            <select id="office-preset" class="form-control" onchange="updateFooter()">
-              <option value="bangalore" selected>Bangalore (HQ) — India</option>
-              <option value="manipal">Manipal — India</option>
-              <option value="mangalore">Mangalore — India</option>
-              <option value="dubai">Dubai (DIFC) — UAE</option>
-            </select>
-          </div>
-
-          <!-- SECTION 2: DATE -->
-          <div class="form-group">
-            <label for="input-date">Letter Date</label>
-            <input type="text" id="input-date" class="form-control" value="Date: July 27, 2026" placeholder="e.g. Date: July 27, 2026">
-          </div>
-
-          <!-- SECTION 3: RECIPIENT INFORMATION -->
-          <div class="form-section-title">Recipient Information</div>
-          <div class="form-group">
-            <label for="input-recip-name">Recipient Name</label>
-            <input type="text" id="input-recip-name" class="form-control" value="Mr. Alex Turner" placeholder="e.g. Mr. Alex Turner">
-          </div>
-          <div class="form-group">
-            <label for="input-recip-title">Designation & Company</label>
-            <input type="text" id="input-recip-title" class="form-control" value="Chief Executive Officer, Apex Global Innovations Ltd." placeholder="e.g. Chief Executive Officer, Apex Global Ltd.">
-          </div>
-          <div class="form-group">
-            <label for="input-recip-address">City & Country</label>
-            <input type="text" id="input-recip-address" class="form-control" value="Bengaluru, Karnataka" placeholder="e.g. Bengaluru, Karnataka">
-          </div>
-
-          <!-- SECTION 4: SUBJECT & SALUTATION -->
-          <div class="form-section-title">Subject & Greeting</div>
-          <div class="form-group">
-            <label for="input-subject">Subject Line</label>
-            <input type="text" id="input-subject" class="form-control" value="Subject: Formal Proposal & Corporate Partnership Engagement" placeholder="e.g. Subject: Strategic Partnership Engagement">
-          </div>
-          <div class="form-group">
-            <label for="input-salutation">Salutation</label>
-            <input type="text" id="input-salutation" class="form-control" value="Dear Mr. Turner," placeholder="e.g. Dear Stakeholders,">
-          </div>
-
-          <!-- SECTION 5: LETTER BODY CONTENT -->
-          <div class="form-section-title">Letter Content</div>
-          <div class="form-group">
-            <label for="input-body">Letter Body</label>
-            <div id="editor-sidebar-toolbar"></div>
-            <div id="input-body-editor" class="body-rich-editor"></div>
-          </div>
-
-          <!-- SECTION 6: SIGNATORY INFORMATION -->
-          <div class="form-section-title">Signatory Details</div>
-          <div class="form-group">
-            <label for="input-sign-closing">Closing Phrase</label>
-            <input type="text" id="input-sign-closing" class="form-control" value="Warm regards," placeholder="e.g. Warm regards,">
-          </div>
-          <div class="form-group">
-            <label for="input-sign-name">Signatory Name</label>
-            <input type="text" id="input-sign-name" class="form-control" value="Mohammed Saleem" placeholder="e.g. Mohammed Saleem">
-          </div>
-          <div class="form-group">
-            <label for="input-sign-title">Signatory Title</label>
-            <input type="text" id="input-sign-title" class="form-control" value="Founder & Chairman" placeholder="e.g. Founder & Chairman">
-          </div>
-
-          <!-- SUBMIT CTA BUTTON -->
-          <div class="form-action-box">
-            <button type="button" id="btn-download-docx-side" class="btn btn-primary btn-block" onclick="exportToDocx()">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Download Word Template (.docx)
-            </button>
-          </div>
-
-        </form>
-      </aside>
-
-      <!-- RIGHT DISPLAY AREA: LIVE A4 PAPER PREVIEW -->
-      <main class="preview-area">
-        
-        <div class="paper-container" id="sheets-wrapper">
-          
-          <!-- PAGE 1 SHEET -->
-          <article class="a4-sheet" id="letterhead-sheet">
-            
-            <!-- TOP ACCENT RULE -->
-            <div class="top-accent-bar"></div>
-
-            <!-- HEADER SECTION -->
-            <header class="letter-header">
-              <div class="header-logo-block">
-                <img src="brand_assets/10-years-trescon-logo.png" alt="Trescon Global Logo" class="letterhead-logo">
-                <span class="brand-tagline">Connecting Businesses<br>with Opportunities</span>
-              </div>
-              <div class="header-meta-block" id="preview-header-contacts">
-                <div class="header-contact-line">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                  <span id="preview-date">Date: July 27, 2026</span>
-                </div>
-                <div class="header-contact-line">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-                  <span id="preview-email">info@tresconglobal.com</span>
-                </div>
-                <div class="header-contact-line">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A5A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                  <span id="preview-web">tresconglobal.com</span>
-                </div>
-              </div>
-            </header>
-            <div class="header-gradient-rule"></div>
-
-            <!-- RECIPIENT BLOCK PREVIEW -->
-            <div class="recipient-block" id="preview-recipient-block">
-              <p class="recip-line recip-to">To,</p>
-              <p class="recip-line recip-name" id="preview-recipient-name">Mr. Alex Turner</p>
-              <p class="recip-line recip-title" id="preview-recipient-title">Chief Executive Officer, Apex Global Innovations Ltd.</p>
-              <p class="recip-line recip-address" id="preview-recipient-address">Bengaluru, Karnataka</p>
-            </div>
-
-            <!-- SUBJECT LINE PREVIEW -->
-            <div class="subject-block" id="preview-subject-block">
-              <p class="subject-text" id="preview-subject">Subject: Formal Proposal & Corporate Partnership Engagement</p>
-            </div>
-
-            <!-- SALUTATION PREVIEW -->
-            <div class="salutation-block" id="preview-salutation-block">
-              <p class="salutation-text" id="preview-salutation">Dear Mr. Turner,</p>
-            </div>
-
-            <!-- LETTER BODY PREVIEW -->
-            <div class="letter-body full-canvas-editor" id="preview-body"></div>
-
-            <!-- SIGNATURE BLOCK PREVIEW -->
-            <div class="signature-block" id="preview-signature-block">
-              <p class="closing-phrase" id="preview-sign-closing">Warm regards,</p>
-              <div class="signature-space"></div>
-              <p class="signatory-name" id="preview-sign-name">Mohammed Saleem</p>
-              <p class="signatory-title" id="preview-sign-title">Founder & Chairman</p>
-            </div>
-
-            <!-- FOOTER SECTION -->
-            <footer class="letter-footer">
-              <div class="footer-divider"></div>
-              <div class="footer-columns" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 6px;">
-                <div class="footer-col-left" style="flex: 1;">
-                  <p class="footer-company-name" id="preview-footer-company" style="font-weight: 700; font-size: 0.85rem; color: #01373D; margin-bottom: 2px;">Trescon Global Business Solutions Pvt Ltd</p>
-                  <p class="footer-address" id="preview-footer-address" style="font-size: 0.78rem; color: #4A5568; line-height: 1.35;">
-                    1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka – 560034
-                  </p>
-                </div>
-                <div class="footer-col-right" style="text-align: right; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; padding-left: 15px;">
-                  <p class="footer-extra" id="preview-footer-extra" style="font-size: 0.78rem; color: #4A5568; margin-bottom: 2px;"></p>
-                  <p class="footer-cin" id="preview-footer-cin" style="font-size: 0.78rem; font-weight: 700; color: #00A5A3;">CIN: U74900KA2016PTC086221</p>
-                </div>
-              </div>
-              <p class="footer-disclaimer" style="font-size: 0.7rem; color: #718096; line-height: 1.35; padding-top: 6px; margin-top: 4px; border-top: 1px solid #DCE3E6;">
-                <strong>Disclaimer:</strong> The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. &copy; 2025 Trescon. All rights reserved.
-              </p>
-            </footer>
-
-          </article>
-
+      <!-- BACKGROUND GRAPHIC STYLE SELECTOR -->
+      <div class="control-group">
+        <h3>Background Graphic Style</h3>
+        <div class="preset-grid">
+          <div class="preset-card active" id="bgCardRays" onclick="selectBgStyle('rays')">Tech Mesh Rays</div>
+          <div class="preset-card" id="bgCardNetwork" onclick="selectBgStyle('network')">B2B Network</div>
+          <div class="preset-card" id="bgCardHex" onclick="selectBgStyle('hex')">Cyber Hex Grid</div>
+          <div class="preset-card" id="bgCardWaves" onclick="selectBgStyle('waves')">Flowing Waves</div>
         </div>
+      </div>
 
-      </main>
+      <!-- Standard Corporate Tagline -->
+      <div class="control-group">
+        <h3>Standard Corporate Tagline</h3>
+        <div class="form-field">
+          <label>Headline / Tagline (Anek Devanagari 800)</label>
+          <textarea id="inputHeadline" rows="2" oninput="render()">Connecting Businesses with Opportunities</textarea>
+        </div>
+      </div>
+
+      <!-- Official Corporate Divisions -->
+      <div class="control-group">
+        <h3>Official Corporate Divisions</h3>
+        <div class="form-field">
+          <label>Division 1</label>
+          <input type="text" id="inputPillar1" value="Signature Events" oninput="render()">
+        </div>
+        <div class="form-field">
+          <label>Division 2</label>
+          <input type="text" id="inputPillar2" value="Managed Events" oninput="render()">
+        </div>
+        <div class="form-field">
+          <label>Division 3</label>
+          <input type="text" id="inputPillar3" value="Bespoke Events" oninput="render()">
+        </div>
+        <div class="form-field">
+          <label>Division 4</label>
+          <input type="text" id="inputPillar4" value="Demand Solutions" oninput="render()">
+        </div>
+      </div>
+
+      <!-- Footer & Details -->
+      <div class="control-group">
+        <h3>Footer Details</h3>
+        <div class="form-field">
+          <label>Website</label>
+          <input type="text" id="inputWebsite" value="tresconglobal.com" oninput="render()">
+        </div>
+        <div class="form-field">
+          <label>Global Hubs</label>
+          <input type="text" id="inputHubs" value="UAE  •  India  •  Singapore  •  Saudi Arabia  •  Qatar" oninput="render()">
+        </div>
+      </div>
+
+      <!-- Styling & Elements -->
+      <div class="control-group">
+        <h3>Visual Enhancements</h3>
+        <label class="checkbox-field">
+          <input type="checkbox" id="checkDotPattern" checked onchange="render()">
+          Brand Dot Matrix Pattern
+        </label>
+        <label class="checkbox-field">
+          <input type="checkbox" id="checkGlowEffect" checked onchange="render()">
+          Electric Glow Lighting
+        </label>
+        <label class="checkbox-field">
+          <input type="checkbox" id="checkAnniversaryLogo" checked onchange="render()">
+          Use 10th Anniversary Logo Lockup
+        </label>
+      </div>
 
     </div>
 
+    <!-- Live Authentic LinkedIn Global Page Simulation Workspace -->
+    <div class="workspace" id="workspaceContainer">
+      
+      <!-- Phone Frame Outer Container -->
+      <div class="phone-frame-wrapper" id="phoneFrame">
+        
+        <!-- Smartphone Top Dynamic Notch (Mobile Only) -->
+        <div class="phone-notch" id="phoneNotch" style="display:none;"></div>
+
+        <!-- Authentic LinkedIn Global Top Nav -->
+        <div class="linkedin-global-nav">
+          <div class="li-search-box">
+            <div class="li-logo">in</div>
+            <input type="text" class="li-search-input" value="Search Trescon Global..." readonly>
+          </div>
+          <div class="li-nav-items">
+            <div class="li-nav-item"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home</div>
+            <div class="li-nav-item"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>My Network</div>
+            <div class="li-nav-item"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>Jobs</div>
+            <div class="li-nav-item"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>Messaging</div>
+            <div class="li-nav-item"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>Notifications</div>
+            <div class="li-nav-item active"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M12 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z"/></svg>Me</div>
+          </div>
+        </div>
+
+        <!-- Authentic LinkedIn Profile Main Card -->
+        <div class="linkedin-profile-card">
+          
+          <!-- Live Custom Banner Canvas Area -->
+          <div class="banner-canvas-container">
+            <!-- Top Right Pencil Edit Button Badge (Authentic LinkedIn Mobile App UI) -->
+            <div class="li-banner-pencil-badge" title="Edit Profile Banner">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            </div>
+            <canvas id="bannerCanvas" width="3168" height="792"></canvas>
+          </div>
+
+          <!-- Live LinkedIn User Details below Banner -->
+          <div class="li-profile-body">
+            
+            <!-- Avatar Overlapping Banner -->
+            <div class="li-avatar-wrapper">
+              <div class="li-avatar-img" id="dispAvatarInitials">KR</div>
+              <div class="li-camera-badge" title="Change Profile Picture">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+              </div>
+            </div>
+
+            <!-- Live Editable Profile Typography -->
+            <div class="li-user-name" id="dispName">
+              Khalifatur Rahman
+              <span class="li-badge-verified">✓ Verified</span>
+            </div>
+
+            <div class="li-user-headline" id="dispTitle">
+              About 2 decades of experience in Designing & Branding, 400+ B2B Events, Mentor, Trainer, Team Builder
+            </div>
+
+            <div class="li-user-submeta">
+              <span>Greater Bengaluru Area • <strong>Contact info</strong></span>
+              <span><strong>500+ connections</strong></span>
+            </div>
+
+            <!-- Action Buttons Bar -->
+            <div class="li-actions-row">
+              <button class="li-btn li-btn-primary">Open to</button>
+              <button class="li-btn li-btn-secondary">Add section</button>
+              <button class="li-btn li-btn-more">Enhance profile</button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-  <script src="letterhead.js?v=5.0"></script>
+  <div class="toast" id="toast">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C0F43C" stroke-width="2"><path d="M22 11.08V12a10 10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+    <span id="toastMsg">Banner PNG (3168x792) downloaded successfully!</span>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('bannerCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    let activeTheme = 'teal'; // 'teal', 'lime', 'executive', 'light'
+    let activeBgStyle = 'rays'; // 'rays', 'network', 'hex', 'waves'
+    let safeZoneActive = false;
+    let deviceMode = 'desktop';
+
+    // Load Official 10th Anniversary Logo Images (Cache-Busting URL)
+    const logo10W = new Image();
+    logo10W.src = 'brand_assets/10-years-trescon-logo-W.png?v=13.6';
+
+    const logo10Color = new Image();
+    logo10Color.src = 'brand_assets/10-years-trescon-logo.png?v=13.6';
+
+    const logo10Dark = new Image();
+    logo10Dark.src = 'brand_assets/10-years-trescon-logo-B.png?v=13.6';
+
+    let imagesLoaded = 0;
+    [logo10W, logo10Color, logo10Dark].forEach(img => {
+      img.onload = () => {
+        imagesLoaded++;
+        if (imagesLoaded >= 1) render();
+      };
+    });
+
+    window.addEventListener('load', () => {
+      document.fonts.ready.then(() => {
+        render();
+      });
+    });
+
+    function setDeviceMode(mode) {
+      deviceMode = mode;
+      document.getElementById('btnDesktop').classList.toggle('active', mode === 'desktop');
+      document.getElementById('btnMobile').classList.toggle('active', mode === 'mobile');
+      document.getElementById('workspaceContainer').classList.toggle('mobile-mode', mode === 'mobile');
+      document.getElementById('phoneNotch').style.display = (mode === 'mobile') ? 'block' : 'none';
+      render();
+    }
+
+    function selectTheme(theme) {
+      activeTheme = theme;
+      document.querySelectorAll('.preset-card').forEach(card => {
+        if (card.onclick && card.onclick.toString().includes('selectTheme')) card.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      render();
+    }
+
+    function selectBgStyle(style) {
+      activeBgStyle = style;
+      ['Rays', 'Network', 'Hex', 'Waves'].forEach(s => {
+        const el = document.getElementById('bgCard' + s);
+        if (el) el.classList.remove('active');
+      });
+      const currentEl = document.getElementById('bgCard' + style.charAt(0).toUpperCase() + style.slice(1));
+      if (currentEl) currentEl.classList.add('active');
+      render();
+    }
+
+    function toggleSafeZone() {
+      safeZoneActive = !safeZoneActive;
+      render();
+    }
+
+    function render() {
+      const W = canvas.width;  // 3168
+      const H = canvas.height; // 792
+
+      const contentX = 960;  // Single Invisible Vertical Alignment Axis (Zero Optical Drift)
+      const logoX = 2405;    // Shifted 25px right and 10px up for perfect executive breathing room
+      const logoW = 430;
+
+      const headline = document.getElementById('inputHeadline').value;
+      const p1 = document.getElementById('inputPillar1').value;
+      const p2 = document.getElementById('inputPillar2').value;
+      const p3 = document.getElementById('inputPillar3').value;
+      const p4 = document.getElementById('inputPillar4').value;
+      const website = document.getElementById('inputWebsite').value;
+      const hubs = document.getElementById('inputHubs').value;
+
+      const showDotPattern = document.getElementById('checkDotPattern').checked;
+      const showGlow = document.getElementById('checkGlowEffect').checked;
+      const useAnniversaryLogo = document.getElementById('checkAnniversaryLogo').checked;
+
+      // 1. BACKGROUND CANVAS ATMOSPHERE PER THEME
+      if (activeTheme === 'light') {
+        let bgGrad = ctx.createLinearGradient(0, 0, W, H);
+        bgGrad.addColorStop(0, '#FFFFFF');
+        bgGrad.addColorStop(0.5, '#F6FAFA');
+        bgGrad.addColorStop(1, '#E2EEF0');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, W, H);
+      } else if (activeTheme === 'lime') {
+        let bgGrad = ctx.createLinearGradient(0, 0, W, H);
+        bgGrad.addColorStop(0, '#012429');
+        bgGrad.addColorStop(0.5, '#013A40');
+        bgGrad.addColorStop(1, '#014A4E');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, W, H);
+      } else if (activeTheme === 'executive') {
+        let bgGrad = ctx.createLinearGradient(0, 0, W, H);
+        bgGrad.addColorStop(0, '#0B0F14');
+        bgGrad.addColorStop(0.5, '#161F28');
+        bgGrad.addColorStop(1, '#1C2733');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, W, H);
+      } else { // 'teal' - Deep Teal Standard
+        let bgGrad = ctx.createLinearGradient(0, 0, W, H);
+        bgGrad.addColorStop(0, '#011D22');
+        bgGrad.addColorStop(0.45, '#01373D');
+        bgGrad.addColorStop(1, '#015155');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, W, H);
+      }
+
+      // 2. RESTRAINED AMBIENT GLOW (OPTION B: IMPERCEPTIBLE SUB-8% LOGO GLOW)
+      if (showGlow) {
+        // Soft logo ambient radial glow behind upper-right quadrant (< 8% opacity)
+        let logoGlow = ctx.createRadialGradient(logoX + 215, 175, 20, logoX + 215, 175, 500);
+        logoGlow.addColorStop(0, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.08)' : 'rgba(0, 165, 163, 0.075)');
+        logoGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = logoGlow;
+        ctx.fillRect(0, 0, W, H);
+
+        if (activeTheme === 'lime') {
+          let orb1 = ctx.createRadialGradient(W * 0.45, H * 0.5, 40, W * 0.45, H * 0.5, 650);
+          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.16)');
+          orb1.addColorStop(1, 'rgba(192, 244, 60, 0)');
+          ctx.fillStyle = orb1;
+          ctx.fillRect(0, 0, W, H);
+        } else if (activeTheme !== 'light') {
+          let orb1 = ctx.createRadialGradient(W * 0.32, H * 0.65, 40, W * 0.32, H * 0.65, 550);
+          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.12)');
+          orb1.addColorStop(1, 'rgba(192, 244, 60, 0)');
+          ctx.fillStyle = orb1;
+          ctx.fillRect(0, 0, W, H);
+        }
+      }
+
+      // 3. BRAND DOT-MATRIX PATTERN (REDUCED OPACITY BY 10% PER BRIEF)
+      if (showDotPattern && activeBgStyle !== 'hex' && activeBgStyle !== 'network') {
+        ctx.save();
+        let dotColor = 'rgba(255, 255, 255, 0.035)';
+        if (activeTheme === 'light') dotColor = 'rgba(1, 55, 61, 0.03)';
+        if (activeTheme === 'executive') dotColor = 'rgba(255, 255, 255, 0.028)';
+        
+        ctx.fillStyle = dotColor;
+        const spacing = 44;
+        for (let x = 30; x < W; x += spacing) {
+          for (let y = 30; y < H; y += spacing) {
+            ctx.beginPath();
+            ctx.arc(x, y, 2.6, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+        ctx.restore();
+      }
+
+      // 4. DYNAMIC BACKGROUND GRAPHIC STYLES RENDERER
+      ctx.save();
+      let accentColor = 'rgba(192, 244, 60, 0.16)';
+      if (activeTheme === 'lime') accentColor = 'rgba(192, 244, 60, 0.25)';
+      if (activeTheme === 'light') accentColor = 'rgba(0, 165, 163, 0.14)';
+      if (activeTheme === 'executive') accentColor = 'rgba(0, 165, 163, 0.18)';
+
+      if (activeBgStyle === 'network') {
+        // B2B CONSTELLATION NETWORK GRAPHIC
+        ctx.strokeStyle = accentColor;
+        ctx.fillStyle = accentColor;
+        ctx.lineWidth = 1.2;
+
+        const nodes = [
+          {x: W*0.08, y: H*0.2}, {x: W*0.18, y: H*0.65}, {x: W*0.28, y: H*0.3},
+          {x: W*0.64, y: H*0.2}, {x: W*0.72, y: H*0.75}, {x: W*0.82, y: H*0.4},
+          {x: W*0.90, y: H*0.82}, {x: W*0.96, y: H*0.3}
+        ];
+
+        for (let i = 0; i < nodes.length; i++) {
+          ctx.beginPath();
+          ctx.arc(nodes[i].x, nodes[i].y, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dist = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+            if (dist < 650) {
+              ctx.beginPath();
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+      } else if (activeBgStyle === 'hex') {
+        // CYBER HEXAGON GRID GRAPHIC
+        ctx.strokeStyle = accentColor;
+        ctx.lineWidth = 1.2;
+        const r = 54;
+        const a = 2 * Math.PI / 6;
+
+        for (let x = 40; x < W + 100; x += r * 3) {
+          for (let y = 30; y < H + 100; y += r * Math.sqrt(3)) {
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+              ctx.lineTo(x + r * Math.cos(a * i), y + r * Math.sin(a * i));
+            }
+            ctx.closePath();
+            ctx.stroke();
+          }
+        }
+      } else if (activeBgStyle === 'waves') {
+        // FLOWING ORGANIC WAVES GRAPHIC
+        ctx.strokeStyle = accentColor;
+        ctx.lineWidth = 2.0;
+        for (let offset = 0; offset < 4; offset++) {
+          ctx.beginPath();
+          ctx.moveTo(0, H * 0.4 + offset * 50);
+          ctx.bezierCurveTo(W * 0.3, H * 0.1 + offset * 40, W * 0.6, H * 0.9 - offset * 30, W, H * 0.3 + offset * 60);
+          ctx.stroke();
+        }
+      } else {
+        // TECH MESH RAYS (EXTENDED TOWARD LOWER RIGHT AT W * 0.72)
+        ctx.lineWidth = 2.0;
+        ctx.strokeStyle = accentColor;
+        ctx.beginPath();
+        ctx.moveTo(W * 0.58, 0);
+        ctx.lineTo(W * 0.72, H);
+        ctx.moveTo(W * 0.60, 0);
+        ctx.lineTo(W * 0.74, H);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // SECTION 8: SLEEK 2px TOP ACCENT LINE (PRECISE ENTERPRISE BORDER)
+      let topBarGrad = ctx.createLinearGradient(0, 0, W, 0);
+      topBarGrad.addColorStop(0, '#00A5A3');
+      topBarGrad.addColorStop(0.5, '#C0F43C');
+      topBarGrad.addColorStop(1, '#00A5A3');
+      ctx.fillStyle = topBarGrad;
+      ctx.fillRect(0, 0, W, 2); // 2px exact precision thickness
+
+      // SECTION 6: LOGO POSITIONING (SHIFTED 25px RIGHT TO X = 2405px, 10px UP TO Y = 105px)
+      ctx.save();
+      if (useAnniversaryLogo) {
+        let activeLogo = logo10W;
+        if (activeTheme === 'light') {
+          activeLogo = logo10Dark;
+        } else if (activeTheme === 'lime') {
+          activeLogo = logo10Color;
+        }
+
+        if (activeLogo.complete && activeLogo.naturalWidth > 0) {
+          const logoH = logoW * (activeLogo.naturalHeight / activeLogo.naturalWidth);
+          ctx.drawImage(activeLogo, logoX, 105, logoW, logoH);
+        } else {
+          drawTresconLogo(ctx, logoX, 105, 0.80, (activeTheme === 'light') ? 'dark' : 'white');
+        }
+      } else {
+        drawTresconLogo(ctx, logoX, 105, 0.80, (activeTheme === 'light') ? 'dark' : 'white');
+      }
+      ctx.restore();
+
+      // SECTION 1: HEADLINE REFINEMENT (START Y = 280px, 6-8% INCREASED LINE HEIGHT = 114px)
+      const startHeadlineY = 280;
+
+      ctx.save();
+      if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
+      let headlineFontSize = 96;
+      ctx.font = `600 ${headlineFontSize}px "Anek Devanagari", sans-serif`;
+      
+      if (activeTheme === 'light') {
+        ctx.fillStyle = '#01373D';
+      } else {
+        ctx.fillStyle = '#FFFFFF';
+      }
+      
+      let headlineLines = [];
+      if (headline.includes('\n')) {
+        headlineLines = headline.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+      } else if (headline.trim().toLowerCase() === "connecting businesses with opportunities") {
+        headlineLines = ["Connecting Businesses", "with Opportunities"];
+      } else {
+        const words = headline.split(' ');
+        let line = '';
+        const maxTextWidth = 1300;
+        for (let n = 0; n < words.length; n++) {
+          let testLine = line + words[n] + ' ';
+          let metrics = ctx.measureText(testLine);
+          if (metrics.width > maxTextWidth && n > 0) {
+            headlineLines.push(line.trim());
+            line = words[n] + ' ';
+          } else {
+            line = testLine;
+          }
+        }
+        if (line.trim()) headlineLines.push(line.trim());
+      }
+
+      let currentY = startHeadlineY;
+      headlineLines.forEach((hLine, i) => {
+        ctx.fillText(hLine, contentX, currentY);
+        if (i < headlineLines.length - 1) {
+          currentY += headlineFontSize + 18; // 114px line height (6-8% increased for lighter premium elegance)
+        }
+      });
+      ctx.restore();
+
+      // SECTION 2 & 5: REFINED SERVICE PILLS (45px HEIGHT, 600 MEDIUM TEXT 25px, 35% BORDER, 80% GLASS FILL, 26px GAP)
+      const pillarYStart = 508; // +20px vertical breathing room below headline
+      const pillars = [p1, p2, p3, p4].filter(p => p.trim() !== '');
+
+      let rX = contentX;
+      pillars.forEach((pillarText) => {
+        ctx.save();
+        if ('letterSpacing' in ctx) ctx.letterSpacing = '0.2px';
+        ctx.font = '600 25px "Manrope", sans-serif'; // Medium 600 weight 25px
+        const textWidth = ctx.measureText(pillarText).width;
+        const pillWidth = textWidth + 50;
+
+        // Subtle Glass Effect (80% Opacity) + 35% Border Opacity
+        ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.06)' : 'rgba(255, 255, 255, 0.80)';
+        ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(0, 165, 163, 0.25)' : 'rgba(0, 165, 163, 0.35)';
+        ctx.lineWidth = 1.2;
+
+        ctx.beginPath();
+        ctx.roundRect(rX, pillarYStart, pillWidth, 45, 22.5); // 45px height (5-8% reduced for category label feel)
+        ctx.fill();
+        ctx.stroke();
+
+        // Vibrant Teal Accent Dot Indicator
+        ctx.fillStyle = '#00A5A3';
+        ctx.beginPath();
+        ctx.arc(rX + 20, pillarYStart + 22.5, 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Deep Dark Teal Text
+        ctx.fillStyle = '#01373D';
+        ctx.fillText(pillarText, rX + 34, pillarYStart + 31.5);
+
+        ctx.restore();
+        rX += pillWidth + 26; // Increased horizontal gap by 10px (26px gap)
+      });
+
+      // SECTION 3 & 4 & 5: FOOTER HIERARCHY & PERFECT 1-AXIS ALIGNMENT (AT Y = 722px)
+      ctx.save();
+      
+      // Separator Line above Footer at Y = 665px (+20px breathing room below pills)
+      ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.15)' : 'rgba(255, 255, 255, 0.18)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(contentX, 665);
+      ctx.lineTo(2900, 665);
+      ctx.stroke();
+
+      const footerY = 722; // +15px breathing room below separator line
+
+      // Part 1: Website URL Anchor (800 ExtraBold Electric Lime at X = 960px, Y = 722px)
+      if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
+      ctx.font = '800 40px "Manrope", sans-serif';
+      ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
+      
+      const cleanWebsite = website.replace(/^https?:\/\//, '').replace(/^www\./, '');
+      ctx.fillText(cleanWebsite, contentX, footerY);
+
+      const urlWidth = ctx.measureText(cleanWebsite).width;
+      let nextX = contentX + urlWidth + 45; // Increased spacing after website anchor
+
+      // Part 2: Geographic Presence Metadata ("Global Presence" in 500 Medium at 70% Opacity)
+      if ('letterSpacing' in ctx) ctx.letterSpacing = '0.6px';
+      ctx.font = '500 26px "Manrope", sans-serif';
+      ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.60)' : 'rgba(255, 255, 255, 0.70)';
+      ctx.fillText('Global Presence  •', nextX, footerY);
+
+      const descWidth = ctx.measureText('Global Presence  •').width;
+      nextX += descWidth + 16; // Increased spacing after metadata label
+
+      // Part 3: Brighter Country Reach (700 Bold White 26px)
+      ctx.font = '700 26px "Manrope", sans-serif';
+      ctx.fillStyle = (activeTheme === 'light') ? '#01373D' : '#FFFFFF';
+      ctx.fillText('UAE  •  Saudi Arabia  •  India  •  Singapore  •  Qatar', nextX, footerY);
+
+      ctx.restore();
+
+      // SAFE ZONE OVERLAY TOGGLE
+      if (safeZoneActive) {
+        ctx.save();
+        if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+        
+        // Left Mobile Avatar Coverage Zone (0 -> 940px)
+        ctx.fillStyle = 'rgba(239, 68, 68, 0.30)';
+        ctx.fillRect(0, 0, 940, H);
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(0, 0, 940, H);
+
+        // Right Mobile Crop & Pencil Edit Danger Zone (2320 -> 3168px)
+        ctx.fillStyle = 'rgba(239, 68, 68, 0.30)';
+        ctx.fillRect(2320, 0, 848, H);
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(2320, 0, 848, H);
+
+        // Green Universal Safe Zone (940 -> 2320px)
+        ctx.fillStyle = 'rgba(192, 244, 60, 0.15)';
+        ctx.fillRect(940, 0, 1380, H);
+        ctx.strokeStyle = '#C0F43C';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(940, 0, 1380, H);
+
+        ctx.font = '800 34px "Manrope", sans-serif';
+        ctx.fillStyle = '#ef4444';
+        ctx.fillText('AVATAR NO-GO DANGER ZONE (0 - 940px)', 40, H / 2);
+        ctx.fillText('PENCIL ICON DANGER ZONE (2320 - 3168px)', 2350, H / 2);
+
+        ctx.fillStyle = '#C0F43C';
+        ctx.fillText('100% UNIVERSAL SAFE ZONE (X: 960px - 2320px)', 1000, 50);
+
+        ctx.restore();
+      }
+    }
+
+    // Custom vector renderer for Trescon Brand Logo on Canvas
+    function drawTresconLogo(ctx, x, y, scale = 1, theme = 'white') {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.scale(scale, scale);
+
+      const textColor = (theme === 'white') ? '#FFFFFF' : '#01373D';
+      ctx.fillStyle = textColor;
+
+      let pathT = new Path2D("M28.1349 86.8801C14.5438 86.8801 7.36255 79.3455 7.36255 65.0831V38.9023H0L0 22.6384H7.36059V0L24.8467 0V22.6433H37.8331V38.9072H24.8467V63.5618C24.8467 69.5319 26.7402 70.6222 30.4725 70.6222C32.3004 70.6222 33.7352 70.4883 34.9878 70.1971L37.1107 69.7051V85.8174L35.7758 86.1333C33.6715 86.6312 31.0988 86.8831 28.1349 86.8801Z");
+      ctx.fill(pathT);
+
+      let pathR = new Path2D("M59.7669 85.2391H42.4004V22.6613H59.7669V27.5824C63.503 23.6916 69.0691 21.4844 75.5603 21.4844C77.299 21.4844 78.827 21.6163 80.1041 21.8721L81.4968 22.1536V39.306L79.4239 38.8908C77.6117 38.5247 75.7691 38.3397 73.9216 38.3378C65.1898 38.3378 59.7669 43.7381 59.7669 52.4358L59.7669 85.2391Z");
+      ctx.fill(pathR);
+
+      let pathE = new Path2D("M136.971 30.1128C131.318 24.065 123.86 20.9988 114.796 20.9988C105.373 20.9988 97.4996 24.0464 91.3778 30.0705C85.3041 36.1685 82.2227 44.2011 82.2227 53.9409V54.4103C82.2227 64.0891 85.312 71.9622 91.4014 77.8309C97.4751 83.68 105.466 86.6448 115.148 86.6448C125.447 86.6448 134.204 82.9134 141.173 75.546L142.373 74.2983L131.509 63.6915L130.304 64.9039C126.108 69.1135 121.288 71.1957 115.638 71.1957C106.873 71.1957 100.955 66.6495 99.795 59.1946H145.279L145.4 57.5896C145.524 55.9444 145.639 54.3207 145.639 52.5308C145.639 43.6608 142.727 36.1114 136.99 30.1089L136.971 30.1128ZM100.28 45.87C100.918 43.5437 102.317 41.559 104.526 39.8527C107.406 37.6052 110.859 36.443 114.795 36.443C118.403 36.443 121.431 37.5678 124.079 39.9048C126.11 41.616 127.336 43.6156 127.744 45.868H100.303L100.28 45.87Z");
+      ctx.fill(pathE);
+
+      let pathS = new Path2D("M170.917 86.7655C158.648 86.7655 149.225 82.0629 145.076 73.8493L144.453 72.6429L156.012 62.848L157.078 64.5218C159.661 68.5838 165.055 71.1108 171.15 71.1108C173.794 71.1108 179.933 66.3963 179.933 66.3963C179.933 64.7333 178.211 63.6381 177.47 63.2475L177.348 63.1776C176.246 62.474 173.847 61.6721 172.254 61.1387L170.551 60.5847C168.719 59.9973 166.446 59.2681 164.924 58.6432C154.14 54.7593 149.329 49.116 149.329 40.3621C149.329 34.394 151.555 29.591 155.921 26.0948C160.37 22.6458 165.718 20.9061 171.834 20.9061C180.584 20.9061 187.448 24.0559 192.245 30.2612L193.153 31.4351L182.927 42.3183L181.683 40.7311C179.473 37.9227 176.078 36.4683 171.596 36.4683C169.11 36.4683 166.204 37.3953 166.204 40.0079C166.204 41.11 166.63 41.7033 168.095 42.65C168.422 42.8556 169.454 43.3929 172.487 44.5698C174.094 45.0018 176.778 45.973 178.949 46.7169L179.882 47.0466C191.595 51.2159 196.813 57.1544 196.813 66.2861C196.813 78.9328 186.885 86.7902 170.898 86.7902L170.917 86.7655Z");
+      ctx.fill(pathS);
+
+      let pathC = new Path2D("M232.674 86.8797C223.214 86.8797 215.145 83.7181 208.688 77.4813C202.216 71.2259 198.934 63.2672 198.934 53.8235C198.934 44.4576 202.216 36.5392 208.688 30.2838C215.223 23.9644 223.297 20.7585 232.674 20.7585C242.55 20.7585 250.919 24.3816 257.536 31.5197L258.656 32.7242L247.613 44.2559L246.368 42.9314C242.852 39.0888 237.868 36.9377 232.673 37.0243C227.967 37.0243 224.121 38.584 220.932 41.7919C217.862 44.9988 216.297 49.0136 216.297 53.8186C216.297 58.6256 217.865 62.659 220.957 65.861C224.154 69.0709 227.95 70.6099 232.68 70.6099C238.072 70.6099 242.68 68.6193 246.373 64.7019L247.618 63.3754L258.662 74.914L257.542 76.1185C250.921 83.2546 242.556 86.8758 232.68 86.8758H232.674V86.8797Z");
+      ctx.fill(pathC);
+
+      let pathO = new Path2D("M312.899 30.3981C306.361 24.0787 298.313 20.8796 288.918 20.8796C279.525 20.8796 271.47 24.0826 264.931 30.3981C258.376 36.7312 255.053 44.6546 255.053 53.9408C255.053 63.226 258.377 71.1483 264.931 77.4805C271.47 83.7999 279.513 86.9999 288.918 86.9999C298.325 86.9999 306.361 83.7999 312.899 77.4805C319.45 71.1523 322.776 63.2299 322.776 53.9408C322.776 44.6496 319.45 36.7293 312.899 30.3981ZM300.68 65.9694C297.482 69.1793 293.643 70.737 288.943 70.737C284.165 70.737 280.288 69.1813 277.1 65.9891C273.97 62.6179 272.446 58.6778 272.446 53.9427C272.446 49.1683 273.97 45.2637 277.1 42.0164C280.253 38.7386 284.127 37.1465 288.943 37.1465C293.671 37.1465 297.504 38.7367 300.68 42.0341C303.877 45.244 305.429 49.1407 305.429 53.9408C305.427 58.7172 303.869 62.6562 300.68 65.9694Z");
+      ctx.fill(pathO);
+
+      let pathN = new Path2D("M382.016 85.8295C374.934 85.8295 366.491 82.8214 366.491 68.6062V48.9002C366.491 41.6539 362.613 37.4994 355.843 37.4994C348.911 37.4994 344.255 42.3132 344.255 49.4847V85.2381H326.891V22.6613H344.255V27.5066C348.076 23.7064 353.764 21.4844 360.163 21.4844C374.782 21.4844 383.856 31.2312 383.856 46.9243V65.5705C383.856 70.0488 384.606 70.0488 386.099 70.0488C386.651 70.035 387.202 69.9661 387.741 69.8471L389.812 69.4475V84.6733L388.561 85.0364C386.759 85.553 384.611 85.8108 382.006 85.8108L382.016 85.8295Z");
+      ctx.fill(pathN);
+
+      // Electric Lime Dot
+      ctx.fillStyle = '#C0F43C';
+      let pathDot = new Path2D("M389.139 30.6101C383.151 30.6101 378.279 25.7186 378.279 19.7072C378.286 13.6889 383.144 8.81212 389.139 8.80621C395.126 8.80621 399.999 13.6929 399.999 19.7072C399.999 25.7205 395.123 30.6101 389.139 30.6101Z");
+      ctx.fill(pathDot);
+
+      ctx.restore();
+    }
+
+    function showToast(msg) {
+      document.getElementById('toastMsg').innerText = msg;
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+
+    function downloadBanner() {
+      const wasGuideActive = safeZoneActive;
+      safeZoneActive = false;
+      render();
+
+      const link = document.createElement('a');
+      link.download = `Trescon_LinkedIn_Banner_v12.1_${activeTheme.toUpperCase()}_3168x792.png`;
+      link.href = canvas.toDataURL('image/png', 1.0);
+      link.click();
+
+      safeZoneActive = wasGuideActive;
+      render();
+
+      showToast(`Banner PNG (v12.1 ${activeTheme.toUpperCase()}) downloaded successfully!`);
+    }
+  </script>
 </body>
 </html>
