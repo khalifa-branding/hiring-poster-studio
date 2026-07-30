@@ -686,6 +686,17 @@
         </div>
       </div>
 
+      <!-- BACKGROUND GRAPHIC STYLE SELECTOR -->
+      <div class="control-group">
+        <h3>Background Graphic Style</h3>
+        <div class="preset-grid">
+          <div class="preset-card active" id="bgCardRays" onclick="selectBgStyle('rays')">Tech Mesh Rays</div>
+          <div class="preset-card" id="bgCardNetwork" onclick="selectBgStyle('network')">B2B Network</div>
+          <div class="preset-card" id="bgCardHex" onclick="selectBgStyle('hex')">Cyber Hex Grid</div>
+          <div class="preset-card" id="bgCardWaves" onclick="selectBgStyle('waves')">Flowing Waves</div>
+        </div>
+      </div>
+
       <!-- Standard Corporate Tagline -->
       <div class="control-group">
         <h3>Standard Corporate Tagline</h3>
@@ -837,18 +848,19 @@
     const ctx = canvas.getContext('2d');
     
     let activeTheme = 'teal'; // 'teal', 'lime', 'executive', 'light'
+    let activeBgStyle = 'rays'; // 'rays', 'network', 'hex', 'waves'
     let safeZoneActive = false;
     let deviceMode = 'desktop';
 
     // Load Official 10th Anniversary Logo Images (Cache-Busting URL)
     const logo10W = new Image();
-    logo10W.src = 'brand_assets/10-years-trescon-logo-W.png?v=12.1';
+    logo10W.src = 'brand_assets/10-years-trescon-logo-W.png?v=13.6';
 
     const logo10Color = new Image();
-    logo10Color.src = 'brand_assets/10-years-trescon-logo.png?v=12.1';
+    logo10Color.src = 'brand_assets/10-years-trescon-logo.png?v=13.6';
 
     const logo10Dark = new Image();
-    logo10Dark.src = 'brand_assets/10-years-trescon-logo-B.png?v=12.1';
+    logo10Dark.src = 'brand_assets/10-years-trescon-logo-B.png?v=13.6';
 
     let imagesLoaded = 0;
     [logo10W, logo10Color, logo10Dark].forEach(img => {
@@ -875,8 +887,21 @@
 
     function selectTheme(theme) {
       activeTheme = theme;
-      document.querySelectorAll('.preset-card').forEach(card => card.classList.remove('active'));
+      document.querySelectorAll('.preset-card').forEach(card => {
+        if (card.onclick && card.onclick.toString().includes('selectTheme')) card.classList.remove('active');
+      });
       event.target.classList.add('active');
+      render();
+    }
+
+    function selectBgStyle(style) {
+      activeBgStyle = style;
+      ['Rays', 'Network', 'Hex', 'Waves'].forEach(s => {
+        const el = document.getElementById('bgCard' + s);
+        if (el) el.classList.remove('active');
+      });
+      const currentEl = document.getElementById('bgCard' + style.charAt(0).toUpperCase() + style.slice(1));
+      if (currentEl) currentEl.classList.add('active');
       render();
     }
 
@@ -968,7 +993,7 @@
       }
 
       // 3. BRAND DOT-MATRIX PATTERN
-      if (showDotPattern) {
+      if (showDotPattern && activeBgStyle !== 'hex' && activeBgStyle !== 'network') {
         ctx.save();
         let dotColor = 'rgba(255, 255, 255, 0.055)';
         if (activeTheme === 'light') dotColor = 'rgba(1, 55, 61, 0.05)';
@@ -986,25 +1011,78 @@
         ctx.restore();
       }
 
-      // 4. GEOMETRIC TECH ACCENT LINES PER THEME
+      // 4. DYNAMIC BACKGROUND GRAPHIC STYLES RENDERER
       ctx.save();
-      ctx.lineWidth = 3.5;
-      if (activeTheme === 'lime') {
-        ctx.strokeStyle = 'rgba(192, 244, 60, 0.45)';
-      } else if (activeTheme === 'light') {
-        ctx.strokeStyle = 'rgba(0, 165, 163, 0.25)';
-      } else if (activeTheme === 'executive') {
-        ctx.strokeStyle = 'rgba(0, 165, 163, 0.30)';
-      } else {
-        ctx.strokeStyle = 'rgba(192, 244, 60, 0.25)';
-      }
+      let accentColor = 'rgba(192, 244, 60, 0.25)';
+      if (activeTheme === 'lime') accentColor = 'rgba(192, 244, 60, 0.45)';
+      if (activeTheme === 'light') accentColor = 'rgba(0, 165, 163, 0.25)';
+      if (activeTheme === 'executive') accentColor = 'rgba(0, 165, 163, 0.30)';
 
-      ctx.beginPath();
-      ctx.moveTo(W * 0.72, 0);
-      ctx.lineTo(W * 0.83, H);
-      ctx.moveTo(W * 0.74, 0);
-      ctx.lineTo(W * 0.85, H);
-      ctx.stroke();
+      if (activeBgStyle === 'network') {
+        // B2B CONSTELLATION NETWORK GRAPHIC
+        ctx.strokeStyle = accentColor;
+        ctx.fillStyle = accentColor;
+        ctx.lineWidth = 2;
+
+        const nodes = [
+          {x: W*0.08, y: H*0.2}, {x: W*0.18, y: H*0.65}, {x: W*0.28, y: H*0.3},
+          {x: W*0.68, y: H*0.15}, {x: W*0.75, y: H*0.75}, {x: W*0.82, y: H*0.35},
+          {x: W*0.89, y: H*0.8}, {x: W*0.95, y: H*0.25}
+        ];
+
+        for (let i = 0; i < nodes.length; i++) {
+          ctx.beginPath();
+          ctx.arc(nodes[i].x, nodes[i].y, 6, 0, Math.PI * 2);
+          ctx.fill();
+
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dist = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+            if (dist < 700) {
+              ctx.beginPath();
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+      } else if (activeBgStyle === 'hex') {
+        // CYBER HEXAGON GRID GRAPHIC
+        ctx.strokeStyle = accentColor;
+        ctx.lineWidth = 1.8;
+        const r = 48;
+        const a = 2 * Math.PI / 6;
+
+        for (let x = 40; x < W + 100; x += r * 3) {
+          for (let y = 30; y < H + 100; y += r * Math.sqrt(3)) {
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+              ctx.lineTo(x + r * Math.cos(a * i), y + r * Math.sin(a * i));
+            }
+            ctx.closePath();
+            ctx.stroke();
+          }
+        }
+      } else if (activeBgStyle === 'waves') {
+        // FLOWING ORGANIC WAVES GRAPHIC
+        ctx.strokeStyle = accentColor;
+        ctx.lineWidth = 4;
+        for (let offset = 0; offset < 4; offset++) {
+          ctx.beginPath();
+          ctx.moveTo(0, H * 0.4 + offset * 50);
+          ctx.bezierCurveTo(W * 0.3, H * 0.1 + offset * 40, W * 0.6, H * 0.9 - offset * 30, W, H * 0.3 + offset * 60);
+          ctx.stroke();
+        }
+      } else {
+        // TECH MESH RAYS (DEFAULT DYNAMIC RAYS)
+        ctx.lineWidth = 3.5;
+        ctx.strokeStyle = accentColor;
+        ctx.beginPath();
+        ctx.moveTo(W * 0.72, 0);
+        ctx.lineTo(W * 0.83, H);
+        ctx.moveTo(W * 0.74, 0);
+        ctx.lineTo(W * 0.85, H);
+        ctx.stroke();
+      }
       ctx.restore();
 
       // Top electric brand accent bar (12px height)
