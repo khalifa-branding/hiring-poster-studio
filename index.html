@@ -862,19 +862,30 @@
     const logo10Dark = new Image();
     logo10Dark.src = 'brand_assets/10-years-trescon-logo-B.png?v=13.6';
 
-    let imagesLoaded = 0;
+    function initStudio() {
+      try {
+        render();
+      } catch (err) {
+        console.error("Render error during initStudio:", err);
+      }
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+          try { render(); } catch (e) {}
+        }).catch(() => {});
+      }
+    }
+
     [logo10W, logo10Color, logo10Dark].forEach(img => {
-      img.onload = () => {
-        imagesLoaded++;
-        if (imagesLoaded >= 1) render();
-      };
+      img.onload = () => { try { render(); } catch(e){} };
+      img.onerror = () => { try { render(); } catch(e){} };
     });
 
-    window.addEventListener('load', () => {
-      document.fonts.ready.then(() => {
-        render();
-      });
-    });
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setTimeout(initStudio, 10);
+    } else {
+      document.addEventListener('DOMContentLoaded', initStudio);
+      window.addEventListener('load', initStudio);
+    }
 
     // Robust Polyfill for Canvas roundRect
     if (!CanvasRenderingContext2D.prototype.roundRect) {
