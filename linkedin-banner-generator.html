@@ -1122,39 +1122,58 @@
       // SECTION 3 & 4 & 5: FOOTER HIERARCHY & PERFECT 1-AXIS ALIGNMENT (AT Y = 722px)
       ctx.save();
       
-      // Separator Line above Footer at Y = 660px (Bounded to Universal Safe Zone X = 2320px)
-      ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.15)' : 'rgba(255, 255, 255, 0.18)';
+      const footerY = 722;
+      const cleanWebsite = website.replace(/^https?:\/\//, '').replace(/^www\./, '');
+      const countriesText = 'UAE  •  Saudi Arabia  •  India  •  Singapore  •  Qatar';
+
+      // Measure total footer width to calculate exact line length
+      if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
+      ctx.font = '600 42px "Manrope", sans-serif';
+      const urlWidth = ctx.measureText(cleanWebsite).width;
+      const bulletGap = 20;
+      const bulletRadius = 5;
+      const bulletSpace = (bulletRadius * 2) + (bulletGap * 2);
+      
+      if ('letterSpacing' in ctx) ctx.letterSpacing = '0.4px';
+      ctx.font = '600 42px "Manrope", sans-serif';
+      const countriesWidth = ctx.measureText(countriesText).width;
+      const totalFooterWidth = urlWidth + bulletSpace + countriesWidth;
+      const exactLineEndX = contentX + totalFooterWidth;
+
+      // Separator Line above Footer at Y = 645px with Soft Fade-Out Linear Gradient
+      let lineGrad = ctx.createLinearGradient(contentX, 0, exactLineEndX + 20, 0);
+      lineGrad.addColorStop(0, (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.20)' : 'rgba(255, 255, 255, 0.22)');
+      lineGrad.addColorStop(0.80, (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.18)' : 'rgba(255, 255, 255, 0.20)');
+      lineGrad.addColorStop(1, (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.0)' : 'rgba(255, 255, 255, 0.0)');
+
+      ctx.strokeStyle = lineGrad;
       ctx.lineWidth = 1.2;
       ctx.beginPath();
-      ctx.moveTo(contentX, 660);
-      ctx.lineTo(2320, 660); // Bounded to Universal Safe Zone right edge (2320px)
+      ctx.moveTo(contentX, 645); // Recalibrated to Y = 645px for balanced vertical breathing room
+      ctx.lineTo(exactLineEndX + 20, 645); // Soft fade-out exactly over Qatar
       ctx.stroke();
-
-      const footerY = 722;
 
       // Part 1: Website URL Anchor (42px 600 SemiBold Electric Lime at X = 960px, Y = 722px)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
       ctx.font = '600 42px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
-      
-      const cleanWebsite = website.replace(/^https?:\/\//, '').replace(/^www\./, '');
       ctx.fillText(cleanWebsite, contentX, footerY);
 
-      const urlWidth = ctx.measureText(cleanWebsite).width;
-      let nextX = contentX + urlWidth + 20; // Spacing before Electric Lime bullet
+      let nextX = contentX + urlWidth + bulletGap;
 
-      // Part 2: Vibrant Electric Lime Bullet Separator (42px)
+      // Part 2: Vector Circle Accent Dot (5px Radius) optically centered with 42px text baseline
       ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
-      ctx.fillText('•', nextX, footerY);
+      ctx.beginPath();
+      ctx.arc(nextX + bulletRadius, footerY - 14, bulletRadius, 0, Math.PI * 2);
+      ctx.fill();
 
-      const bulletWidth = ctx.measureText('•').width;
-      nextX += bulletWidth + 20; // Spacing after Electric Lime bullet
+      nextX += (bulletRadius * 2) + bulletGap;
 
       // Part 3: Subordinate Soft White Country Reach (42px 600 SemiBold 85% Opacity)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '0.4px';
       ctx.font = '600 42px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.85)' : 'rgba(255, 255, 255, 0.85)';
-      ctx.fillText('UAE  •  Saudi Arabia  •  India  •  Singapore  •  Qatar', nextX, footerY);
+      ctx.fillText(countriesText, nextX, footerY);
 
       ctx.restore();
 
