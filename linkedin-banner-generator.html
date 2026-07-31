@@ -1105,15 +1105,15 @@
         ctx.fill();
         ctx.stroke();
 
-        // Vibrant Teal Accent Dot Indicator (7px Radius)
+        // Vibrant Teal Accent Dot Indicator (7px Radius, 25px Center X)
         ctx.fillStyle = '#00A5A3';
         ctx.beginPath();
-        ctx.arc(rX + 26, pillarYStart + 30, 7, 0, Math.PI * 2);
+        ctx.arc(rX + 25, pillarYStart + 30, 7, 0, Math.PI * 2);
         ctx.fill();
 
         // Deep Dark Teal Text
         ctx.fillStyle = '#01373D';
-        ctx.fillText(pillarText, rX + 44, pillarYStart + 42);
+        ctx.fillText(pillarText, rX + 41, pillarYStart + 42);
 
         ctx.restore();
         rX += pillWidth + 30; // 30px horizontal gap
@@ -1140,17 +1140,22 @@
       const totalFooterWidth = urlWidth + bulletSpace + countriesWidth;
       const exactLineEndX = contentX + totalFooterWidth;
 
-      // Separator Line above Footer at Y = 645px with Soft Fade-Out Linear Gradient
-      let lineGrad = ctx.createLinearGradient(contentX, 0, exactLineEndX + 20, 0);
-      lineGrad.addColorStop(0, (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.20)' : 'rgba(255, 255, 255, 0.22)');
-      lineGrad.addColorStop(0.80, (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.18)' : 'rgba(255, 255, 255, 0.20)');
+      // Bi-Directional Soft Linear Gradient Fade (Fades in at 930px, Fades out at 2290px)
+      const lineStartX = contentX - 30; // 930px
+      const lineEndX = exactLineEndX + 20;
+      const totalLineLen = lineEndX - lineStartX;
+
+      let lineGrad = ctx.createLinearGradient(lineStartX, 0, lineEndX, 0);
+      lineGrad.addColorStop(0, (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.0)' : 'rgba(255, 255, 255, 0.0)');
+      lineGrad.addColorStop(0.04, (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.20)' : 'rgba(255, 255, 255, 0.22)');
+      lineGrad.addColorStop(0.85, (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.18)' : 'rgba(255, 255, 255, 0.20)');
       lineGrad.addColorStop(1, (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.0)' : 'rgba(255, 255, 255, 0.0)');
 
       ctx.strokeStyle = lineGrad;
       ctx.lineWidth = 1.2;
       ctx.beginPath();
-      ctx.moveTo(contentX, 645); // Recalibrated to Y = 645px for balanced vertical breathing room
-      ctx.lineTo(exactLineEndX + 20, 645); // Soft fade-out exactly over Qatar
+      ctx.moveTo(lineStartX, 645);
+      ctx.lineTo(lineEndX, 645);
       ctx.stroke();
 
       // Part 1: Website URL Anchor (42px 600 SemiBold Electric Lime at X = 960px, Y = 722px)
