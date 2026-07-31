@@ -221,18 +221,13 @@ window.exportToDocx = async function() {
             children: [
               new Paragraph({
                 alignment: AlignmentType.RIGHT,
-                children: [new TextRun({ text: dateStr, bold: true, size: 14, color: '1E2124', font: 'Manrope' })],
-                spacing: { after: 10 }
-              }),
-              new Paragraph({
-                alignment: AlignmentType.RIGHT,
                 children: [new TextRun({ text: data.email, size: 13, color: '464D53', font: 'Manrope' })],
                 spacing: { after: 10 }
               }),
               new Paragraph({
                 alignment: AlignmentType.RIGHT,
                 children: [new TextRun({ text: data.web, bold: true, size: 13, color: '00A5A3', font: 'Manrope' })],
-                spacing: { after: 30 }
+                spacing: { after: 20 }
               })
             ]
           })
@@ -385,7 +380,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  bindInputToPreview('input-date', 'preview-date');
   bindInputToPreview('input-recip-name', 'preview-recipient-name');
   bindInputToPreview('input-recip-title', 'preview-recipient-title');
   bindInputToPreview('input-recip-address', 'preview-recipient-address');
