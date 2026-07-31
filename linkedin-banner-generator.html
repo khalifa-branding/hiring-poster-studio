@@ -1132,9 +1132,9 @@
 
       const footerY = 722;
 
-      // Part 1: Website URL Anchor (48px 600 SemiBold Electric Lime at X = 960px, Y = 722px)
+      // Part 1: Website URL Anchor (42px 600 SemiBold Electric Lime at X = 960px, Y = 722px)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
-      ctx.font = '600 48px "Manrope", sans-serif';
+      ctx.font = '600 42px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
       
       const cleanWebsite = website.replace(/^https?:\/\//, '').replace(/^www\./, '');
@@ -1143,16 +1143,16 @@
       const urlWidth = ctx.measureText(cleanWebsite).width;
       let nextX = contentX + urlWidth + 20; // Spacing before Electric Lime bullet
 
-      // Part 2: Vibrant Electric Lime Bullet Separator (48px)
+      // Part 2: Vibrant Electric Lime Bullet Separator (42px)
       ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
       ctx.fillText('•', nextX, footerY);
 
       const bulletWidth = ctx.measureText('•').width;
       nextX += bulletWidth + 20; // Spacing after Electric Lime bullet
 
-      // Part 3: Subordinate Soft White Country Reach (36px 600 SemiBold 85% Opacity)
+      // Part 3: Subordinate Soft White Country Reach (42px 600 SemiBold 85% Opacity)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '0.4px';
-      ctx.font = '600 36px "Manrope", sans-serif';
+      ctx.font = '600 42px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.85)' : 'rgba(255, 255, 255, 0.85)';
       ctx.fillText('UAE  •  Saudi Arabia  •  India  •  Singapore  •  Qatar', nextX, footerY);
 
