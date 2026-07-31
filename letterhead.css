@@ -657,8 +657,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .letterhead-logo {
-  height: 36px !important;
-  max-height: 36px !important;
+  height: 48px !important;
+  max-height: 48px !important;
   width: auto !important;
   object-fit: contain !important;
   display: block !important;
@@ -666,7 +666,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .header-tagline-divider {
   width: 1.5px !important;
-  height: 36px !important;
+  height: 48px !important;
   background-color: var(--trescon-teal) !important;
   border-radius: 1px !important;
   flex-shrink: 0 !important;
