@@ -930,7 +930,7 @@
       const showGlow = document.getElementById('checkGlowEffect').checked;
       const useAnniversaryLogo = document.getElementById('checkAnniversaryLogo').checked;
 
-      // 1. BACKGROUND CANVAS ATMOSPHERE PER THEME (PRIMITIVE 04: GRADIENT DEPTH)
+      // 1. BACKGROUND CANVAS ATMOSPHERE PER THEME
       if (activeTheme === 'light') {
         let bgGrad = ctx.createLinearGradient(0, 0, W, H);
         bgGrad.addColorStop(0, '#FFFFFF');
@@ -947,9 +947,9 @@
         ctx.fillRect(0, 0, W, H);
       } else if (activeTheme === 'executive') {
         let bgGrad = ctx.createLinearGradient(0, 0, W, H);
-        bgGrad.addColorStop(0, '#0B0F14');
-        bgGrad.addColorStop(0.5, '#161F28');
-        bgGrad.addColorStop(1, '#1C2733');
+        bgGrad.addColorStop(0, '#050A0C');
+        bgGrad.addColorStop(0.5, '#0B1417');
+        bgGrad.addColorStop(1, '#101C20');
         ctx.fillStyle = bgGrad;
         ctx.fillRect(0, 0, W, H);
       } else { // 'teal' - Deep Teal Standard
@@ -961,41 +961,29 @@
         ctx.fillRect(0, 0, W, H);
       }
 
-      // 2. RESTRAINED AMBIENT GLOW (SUBTLE LOGO GLOW < 8% OPACITY PER BRIEF)
+      // 2. RESTRAINED AMBIENT GLOW
       if (showGlow) {
-        let logoGlow = ctx.createRadialGradient(logoX + 215, 175, 20, logoX + 215, 175, 500);
+        let logoGlow = ctx.createRadialGradient(targetLogoX + 171, 160, 20, targetLogoX + 171, 160, 500);
         logoGlow.addColorStop(0, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.08)' : 'rgba(0, 165, 163, 0.075)');
         logoGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = logoGlow;
         ctx.fillRect(0, 0, W, H);
-
-        if (activeTheme === 'lime') {
-          let orb1 = ctx.createRadialGradient(W * 0.45, H * 0.5, 40, W * 0.45, H * 0.5, 650);
-          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.14)');
-          orb1.addColorStop(1, 'rgba(192, 244, 60, 0)');
-          ctx.fillStyle = orb1;
-          ctx.fillRect(0, 0, W, H);
-        } else if (activeTheme !== 'light') {
-          let orb1 = ctx.createRadialGradient(W * 0.32, H * 0.65, 40, W * 0.32, H * 0.65, 550);
-          orb1.addColorStop(0, 'rgba(192, 244, 60, 0.10)');
-          orb1.addColorStop(1, 'rgba(192, 244, 60, 0)');
-          ctx.fillStyle = orb1;
-          ctx.fillRect(0, 0, W, H);
-        }
       }
 
-      // 3. FORMALIZED TRESCON CIRCULAR DNA ENGINES (100% BRANDBOOK ACCURATE)
+      // 3. FORMALIZED TRESCON CIRCULAR DNA ENGINES
       ctx.save();
-      
       if (activeBgStyle === 'dotmatrix' || activeBgStyle === 'herocircle' || activeBgStyle === 'satellites') {
-        // FIRST PRINCIPLES: SINGLE OVERSIZED CROPPED CIRCULAR FORM (IMPLIED GEOMETRY FROM LOGO DOT)
-        const circleCenterX = logoX + 220; // 2625px (Upper-Right Offset)
-        const circleCenterY = -150;        // Upward Offset (-150px)
-        const heroRadius = 1100;           // 140% Banner Height
+        const circleCenterX = 2640; 
+        const circleCenterY = -150;        
+        const heroRadius = 1100;           
+
+        let heroStrokeColor = 'rgba(0, 165, 163, 0.22)';
+        if (activeTheme === 'lime') heroStrokeColor = 'rgba(192, 244, 60, 0.25)';
+        else if (activeTheme === 'light') heroStrokeColor = 'rgba(1, 55, 61, 0.18)';
 
         let strokeGrad = ctx.createLinearGradient(circleCenterX - heroRadius, 0, circleCenterX + heroRadius, H);
         strokeGrad.addColorStop(0, 'rgba(0, 0, 0, 0)');
-        strokeGrad.addColorStop(0.3, (activeTheme === 'lime') ? 'rgba(192, 244, 60, 0.22)' : 'rgba(0, 165, 163, 0.22)');
+        strokeGrad.addColorStop(0.3, heroStrokeColor);
         strokeGrad.addColorStop(0.85, 'rgba(0, 0, 0, 0)');
 
         ctx.strokeStyle = strokeGrad;
@@ -1003,34 +991,24 @@
         ctx.beginPath();
         ctx.arc(circleCenterX, circleCenterY, heroRadius, 0, Math.PI * 2);
         ctx.stroke();
-      } else {
-        // PURE EXECUTIVE GRADIENT (100% CLEAN DEEP TEAL ATMOSPHERE)
       }
-      
       ctx.restore();
 
-      // SECTION 8: SLEEK 2px TOP ACCENT LINE (PRECISE ENTERPRISE BORDER)
+      // SECTION 8: SLEEK 2px TOP ACCENT LINE
       let topBarGrad = ctx.createLinearGradient(0, 0, W, 0);
       topBarGrad.addColorStop(0, '#00A5A3');
       topBarGrad.addColorStop(0.5, '#C0F43C');
       topBarGrad.addColorStop(1, '#00A5A3');
       ctx.fillStyle = topBarGrad;
-      ctx.fillRect(0, 0, W, 2); // 2px exact precision thickness
+      ctx.fillRect(0, 0, W, 2);
 
-      // SECTION 6: TOP-LEFT LOGO POSITIONING (targetLogoX = 180px, targetLogoY = 105px, targetLogoW = 342px)
+      // SECTION 6: TOP-LEFT LOGO POSITIONING
       const targetLogoW = 342;
-      const targetLogoX = 180;
-      const targetLogoY = 105;
-
       ctx.save();
       if (useAnniversaryLogo) {
         let activeLogo = logo10W;
-        if (activeTheme === 'light') {
-          activeLogo = logo10Dark;
-        } else if (activeTheme === 'lime') {
-          activeLogo = logo10Color;
-        }
-
+        if (activeTheme === 'light') activeLogo = logo10Dark;
+        else if (activeTheme === 'lime') activeLogo = logo10Color;
         if (activeLogo.complete && activeLogo.naturalWidth > 0) {
           const logoH = targetLogoW * (activeLogo.naturalHeight / activeLogo.naturalWidth);
           ctx.drawImage(activeLogo, targetLogoX, targetLogoY, targetLogoW, logoH);
@@ -1042,20 +1020,14 @@
       }
       ctx.restore();
 
-      // SECTION 1: HEADLINE REFINEMENT (START Y = 265px, 108px FONT SIZE, 128px LINE HEIGHT)
+      // SECTION 1: HEADLINE
       const startHeadlineY = 265;
-
       ctx.save();
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
       let headlineFontSize = 108;
       ctx.font = `600 ${headlineFontSize}px "Anek Devanagari", sans-serif`;
-      
-      if (activeTheme === 'light') {
-        ctx.fillStyle = '#01373D';
-      } else {
-        ctx.fillStyle = '#FFFFFF';
-      }
-      
+      ctx.fillStyle = (activeTheme === 'light') ? '#01373D' : '#FFFFFF';
+
       let headlineLines = [];
       if (headline.includes('\n')) {
         headlineLines = headline.split('\n').map(l => l.trim()).filter(l => l.length > 0);
@@ -1087,74 +1059,79 @@
       });
       ctx.restore();
 
-      // SECTION 2 & 5: REFINED SERVICE PILLS (60px HEIGHT, 700 BOLD TEXT 36px, 35% BORDER, 80% GLASS FILL, 30px GAP)
-      const pillarYStart = 500; // Recalibrated for 60px height
+      // SERVICE PILLS
+      const pillarYStart = 500;
       const pillars = [p1, p2, p3, p4].filter(p => p.trim() !== '');
-
       let rX = contentX;
       pillars.forEach((pillarText) => {
         ctx.save();
-        if ('letterSpacing' in ctx) ctx.letterSpacing = '0.2px';
-        ctx.font = '700 36px "Manrope", sans-serif'; // Bold 700 weight 36px
+        ctx.font = '700 36px "Manrope", sans-serif';
         const textWidth = ctx.measureText(pillarText).width;
-        const pillWidth = textWidth + 66; // 66px padding for 36px font
+        const pillWidth = textWidth + 66;
 
-        // Subtle Glass Effect (80% Opacity) + 35% Border Opacity
-        ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.06)' : 'rgba(255, 255, 255, 0.80)';
-        ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(0, 165, 163, 0.25)' : 'rgba(0, 165, 163, 0.35)';
+        let pillFill = 'rgba(255, 255, 255, 0.80)';
+        let pillBorder = 'rgba(0, 165, 163, 0.35)';
+        let pillDotColor = '#00A5A3';
+        if (activeTheme === 'light') {
+          pillFill = 'rgba(1, 55, 61, 0.06)';
+          pillBorder = 'rgba(0, 165, 163, 0.30)';
+          pillDotColor = '#00A5A3';
+        } else if (activeTheme === 'lime') {
+          pillFill = 'rgba(255, 255, 255, 0.82)';
+          pillBorder = 'rgba(192, 244, 60, 0.45)';
+          pillDotColor = '#C0F43C';
+        }
+
+        ctx.fillStyle = pillFill;
+        ctx.strokeStyle = pillBorder;
         ctx.lineWidth = 1.4;
-
         ctx.beginPath();
-        ctx.roundRect(rX, pillarYStart, pillWidth, 60, 30); // 60px height, 30px radius
+        ctx.roundRect(rX, pillarYStart, pillWidth, 60, 30);
         ctx.fill();
         ctx.stroke();
 
-        // Vibrant Teal Accent Dot Indicator (7px Radius, 25px Center X)
-        ctx.fillStyle = '#00A5A3';
+        ctx.fillStyle = pillDotColor;
         ctx.beginPath();
         ctx.arc(rX + 25, pillarYStart + 30, 7, 0, Math.PI * 2);
         ctx.fill();
 
-        // Deep Dark Teal Text
         ctx.fillStyle = '#01373D';
         ctx.fillText(pillarText, rX + 41, pillarYStart + 42);
-
         ctx.restore();
-        rX += pillWidth + 30; // 30px horizontal gap
+        rX += pillWidth + 30;
       });
 
-      // SECTION 3 & 4 & 5: FOOTER HIERARCHY & PERFECT 1-AXIS ALIGNMENT (AT Y = 722px)
-      ctx.save();
-      
+      // FOOTER
       const footerY = 722;
       const cleanWebsite = website.replace(/^https?:\/\//, '').replace(/^www\./, '');
       const countriesText = 'UAE  •  India  •  Mauritius  •  Qatar';
-
-      // Measure total footer width to calculate exact line length
-      if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
-      ctx.font = '600 42px "Manrope", sans-serif';
-      const urlWidth = ctx.measureText(cleanWebsite).width;
+      
       const bulletGap = 20;
       const bulletRadius = 5;
       const bulletSpace = (bulletRadius * 2) + (bulletGap * 2);
-      
+
+      if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
+      ctx.font = '600 42px "Manrope", sans-serif';
+      const urlWidth = ctx.measureText(cleanWebsite).width;
+
       if ('letterSpacing' in ctx) ctx.letterSpacing = '0.4px';
       ctx.font = '600 42px "Manrope", sans-serif';
       const countriesWidth = ctx.measureText(countriesText).width;
       const totalFooterWidth = urlWidth + bulletSpace + countriesWidth;
       const exactLineEndX = contentX + totalFooterWidth;
 
-      // Bi-Directional Soft Linear Gradient Fade (Fades in at 930px, Fades out at 2290px)
-      const lineStartX = contentX - 30; // 930px
+      const lineStartX = contentX - 30;
       const lineEndX = exactLineEndX + 20;
-      const totalLineLen = lineEndX - lineStartX;
+      let lineStrokeColor = 'rgba(255, 255, 255, 0.22)';
+      if (activeTheme === 'light') lineStrokeColor = 'rgba(1, 55, 61, 0.20)';
+      else if (activeTheme === 'lime') lineStrokeColor = 'rgba(192, 244, 60, 0.30)';
+      else if (activeTheme === 'executive') lineStrokeColor = 'rgba(0, 165, 163, 0.25)';
 
       let lineGrad = ctx.createLinearGradient(lineStartX, 0, lineEndX, 0);
-      lineGrad.addColorStop(0, (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.0)' : 'rgba(255, 255, 255, 0.0)');
-      lineGrad.addColorStop(0.04, (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.20)' : 'rgba(255, 255, 255, 0.22)');
-      lineGrad.addColorStop(0.85, (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.18)' : 'rgba(255, 255, 255, 0.20)');
-      lineGrad.addColorStop(1, (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.0)' : 'rgba(255, 255, 255, 0.0)');
-
+      lineGrad.addColorStop(0, 'rgba(0, 0, 0, 0)');
+      lineGrad.addColorStop(0.04, lineStrokeColor);
+      lineGrad.addColorStop(0.85, lineStrokeColor);
+      lineGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
       ctx.strokeStyle = lineGrad;
       ctx.lineWidth = 1.2;
       ctx.beginPath();
@@ -1162,9 +1139,6 @@
       ctx.lineTo(lineEndX, 645);
       ctx.stroke();
 
-      // Part 1: Website URL Anchor (42px 600 SemiBold Electric Lime at X = 960px, Y = 722px)
-      if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
-      ctx.font = '600 42px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
       ctx.fillText(cleanWebsite, contentX, footerY);
 
