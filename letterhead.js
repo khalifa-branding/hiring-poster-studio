@@ -158,7 +158,7 @@ window.exportToDocx = async function() {
       const imgBuffer = await imgRes.arrayBuffer();
       logoImageRun = new ImageRun({
         data: imgBuffer,
-        transformation: { width: 125, height: 38 }
+        transformation: { width: 125, height: 40 }
       });
     }
   } catch (e) {

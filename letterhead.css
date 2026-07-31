@@ -650,37 +650,42 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .header-logo-block {
-  display: flex !important;
+  display: inline-flex !important;
   flex-direction: row !important;
-  align-items: flex-end !important;
-  gap: 10px !important;
+  align-items: stretch !important;
+  gap: 12px !important;
+  height: 40px !important;
 }
 
 .letterhead-logo {
-  height: 44px !important;
-  max-height: 44px !important;
+  height: 40px !important;
+  max-height: 40px !important;
   width: auto !important;
   object-fit: contain !important;
   display: block !important;
-  margin-bottom: -5px !important;
+  margin: 0 !important;
 }
 
 .header-tagline-divider {
   width: 1.5px !important;
-  height: 38px !important;
+  height: 100% !important;
   background-color: var(--trescon-teal) !important;
   border-radius: 1px !important;
   flex-shrink: 0 !important;
-  margin-bottom: 2px !important;
+  margin: 0 !important;
 }
 
 .brand-tagline {
-  font-size: 0.76rem !important;
+  display: inline-flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  font-size: 0.73rem !important;
   color: var(--trescon-dark) !important;
   font-weight: 600 !important;
-  line-height: 1.25 !important;
+  line-height: 1.15 !important;
   letter-spacing: 0.2px !important;
-  padding-bottom: 2px !important;
+  padding: 2px 0 !important;
+  margin: 0 !important;
 }
 
 .header-meta-block {
