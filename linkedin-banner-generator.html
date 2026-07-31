@@ -1038,12 +1038,12 @@
       }
       ctx.restore();
 
-      // SECTION 1: HEADLINE REFINEMENT (START Y = 280px, 6-8% INCREASED LINE HEIGHT = 114px)
-      const startHeadlineY = 280;
+      // SECTION 1: HEADLINE REFINEMENT (START Y = 265px, 108px FONT SIZE, 128px LINE HEIGHT)
+      const startHeadlineY = 265;
 
       ctx.save();
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
-      let headlineFontSize = 96;
+      let headlineFontSize = 108;
       ctx.font = `600 ${headlineFontSize}px "Anek Devanagari", sans-serif`;
       
       if (activeTheme === 'light') {
@@ -1060,7 +1060,7 @@
       } else {
         const words = headline.split(' ');
         let line = '';
-        const maxTextWidth = 1300;
+        const maxTextWidth = 1350;
         for (let n = 0; n < words.length; n++) {
           let testLine = line + words[n] + ' ';
           let metrics = ctx.measureText(testLine);
@@ -1078,7 +1078,7 @@
       headlineLines.forEach((hLine, i) => {
         ctx.fillText(hLine, contentX, currentY);
         if (i < headlineLines.length - 1) {
-          currentY += headlineFontSize + 18; // 114px line height (6-8% increased for lighter premium elegance)
+          currentY += headlineFontSize + 20; // 128px line height
         }
       });
       ctx.restore();
