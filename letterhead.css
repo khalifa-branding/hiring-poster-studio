@@ -640,12 +640,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background: linear-gradient(90deg, var(--trescon-teal) 0%, var(--trescon-dark) 100%);
 }
 
-/* Letterhead Header */
+/* Letterhead Header (Compact Refinement) */
 .letter-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding-bottom: 10px;
+  padding-bottom: 4px;
   margin-bottom: 0;
 }
 
@@ -653,38 +653,38 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 4px;
+  gap: 2px;
 }
 
 .letterhead-logo {
-  max-height: 68px;
+  max-height: 48px;
   width: auto;
   object-fit: contain;
 }
 
 .brand-tagline {
-  font-size: 0.85rem;
+  font-size: 0.74rem;
   color: var(--trescon-dark);
-  font-weight: 400;
-  line-height: 1.25;
-  letter-spacing: 0.3px;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: 0.2px;
 }
 
 .header-meta-block {
   text-align: left !important;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   color: var(--trescon-dark);
   display: flex !important;
   flex-direction: column !important;
   align-items: flex-start !important;
-  gap: 4px !important;
+  gap: 2px !important;
   font-weight: 500;
 }
 
 .header-contact-line {
   display: flex !important;
   align-items: center !important;
-  gap: 8px !important;
+  gap: 6px !important;
   width: 100% !important;
   justify-content: flex-start !important;
 }
@@ -695,9 +695,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .contact-icon {
-  width: 14px !important;
-  height: 14px !important;
-  min-width: 14px !important;
+  width: 12px !important;
+  height: 12px !important;
+  min-width: 12px !important;
   flex-shrink: 0 !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -706,11 +706,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* Header Gradient Rule */
 .header-gradient-rule {
-  height: 2.5px;
+  height: 2px;
   width: 100%;
   background: linear-gradient(90deg, var(--trescon-teal) 0%, var(--trescon-lime) 100%);
-  margin-top: 6px;
-  margin-bottom: 24px;
+  margin-top: 4px;
+  margin-bottom: 16px;
   border-radius: 2px;
 }
 

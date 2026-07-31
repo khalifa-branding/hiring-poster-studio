@@ -150,7 +150,7 @@ window.exportToDocx = async function() {
     new Paragraph({ children: [new TextRun({ text: signTitle, color: "464D53", size: 18, font: "Manrope" })], spacing: { after: 100 } })
   );
 
-  // Fetch Logo
+  // Fetch Logo (Compact Dimensions)
   let logoImageRun = null;
   try {
     const imgRes = await fetch('brand_assets/10-years-trescon-logo.png');
@@ -158,18 +158,18 @@ window.exportToDocx = async function() {
       const imgBuffer = await imgRes.arrayBuffer();
       logoImageRun = new ImageRun({
         data: imgBuffer,
-        transformation: { width: 130, height: 42 }
+        transformation: { width: 105, height: 34 }
       });
     }
   } catch (e) {
     console.warn('Logo fetch error:', e);
   }
 
-  // Native 2-Column Word Header Table
+  // Native 2-Column Word Header Table (Compact Heights)
   const headerTable = new Table({
     width: { size: 100, type: WidthType.PERCENTAGE },
     borders: {
-      bottom: { style: BorderStyle.SINGLE, size: 12, color: '00A5A3' },
+      bottom: { style: BorderStyle.SINGLE, size: 8, color: '00A5A3' },
       top: { style: BorderStyle.NONE },
       left: { style: BorderStyle.NONE },
       right: { style: BorderStyle.NONE }
@@ -182,13 +182,13 @@ window.exportToDocx = async function() {
             borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
             children: [
               ...(logoImageRun ? [
-                new Paragraph({ children: [logoImageRun], spacing: { after: 60 } })
+                new Paragraph({ children: [logoImageRun], spacing: { after: 30 } })
               ] : [
-                new Paragraph({ children: [new TextRun({ text: 'TRESCON GLOBAL', bold: true, size: 24, color: '00A5A3', font: 'Anek Devanagari' })], spacing: { after: 40 } })
+                new Paragraph({ children: [new TextRun({ text: 'TRESCON GLOBAL', bold: true, size: 20, color: '00A5A3', font: 'Anek Devanagari' })], spacing: { after: 20 } })
               ]),
               new Paragraph({
-                children: [new TextRun({ text: 'CONNECTING BUSINESSES WITH OPPORTUNITIES', bold: true, size: 12, color: '00A5A3', font: 'Manrope' })],
-                spacing: { after: 120 }
+                children: [new TextRun({ text: 'CONNECTING BUSINESSES WITH OPPORTUNITIES', bold: true, size: 11, color: '00A5A3', font: 'Manrope' })],
+                spacing: { after: 50 }
               })
             ]
           }),
@@ -198,18 +198,18 @@ window.exportToDocx = async function() {
             children: [
               new Paragraph({
                 alignment: AlignmentType.RIGHT,
-                children: [new TextRun({ text: dateStr, bold: true, size: 16, color: '1E2124', font: 'Manrope' })],
-                spacing: { after: 30 }
+                children: [new TextRun({ text: dateStr, bold: true, size: 14, color: '1E2124', font: 'Manrope' })],
+                spacing: { after: 10 }
               }),
               new Paragraph({
                 alignment: AlignmentType.RIGHT,
-                children: [new TextRun({ text: data.email, size: 15, color: '464D53', font: 'Manrope' })],
-                spacing: { after: 30 }
+                children: [new TextRun({ text: data.email, size: 13, color: '464D53', font: 'Manrope' })],
+                spacing: { after: 10 }
               }),
               new Paragraph({
                 alignment: AlignmentType.RIGHT,
-                children: [new TextRun({ text: data.web, bold: true, size: 15, color: '00A5A3', font: 'Manrope' })],
-                spacing: { after: 120 }
+                children: [new TextRun({ text: data.web, bold: true, size: 13, color: '00A5A3', font: 'Manrope' })],
+                spacing: { after: 50 }
               })
             ]
           })
@@ -223,6 +223,7 @@ window.exportToDocx = async function() {
   const cleanExtra = stripHtmlEntities(data.extra);
   const cleanCin = stripHtmlEntities(data.cin);
 
+  // Native 2-Column Word Footer Table (Compact Margins)
   const footerTable = new Table({
     width: { size: 100, type: WidthType.PERCENTAGE },
     borders: {
@@ -238,8 +239,8 @@ window.exportToDocx = async function() {
             width: { size: 60, type: WidthType.PERCENTAGE },
             borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
             children: [
-              new Paragraph({ children: [new TextRun({ text: cleanEntity, bold: true, color: '01373D', size: 16, font: 'Anek Devanagari' })], spacing: { after: 40 } }),
-              new Paragraph({ children: [new TextRun({ text: cleanAddress, color: '464D53', size: 14, font: 'Manrope' })], spacing: { after: 40 } })
+              new Paragraph({ children: [new TextRun({ text: cleanEntity, bold: true, color: '01373D', size: 14, font: 'Anek Devanagari' })], spacing: { after: 20 } }),
+              new Paragraph({ children: [new TextRun({ text: cleanAddress, color: '464D53', size: 12, font: 'Manrope' })], spacing: { after: 20 } })
             ]
           }),
           new TableCell({
@@ -248,13 +249,13 @@ window.exportToDocx = async function() {
             children: [
               ...(cleanExtra ? [new Paragraph({
                 alignment: AlignmentType.RIGHT,
-                children: [new TextRun({ text: cleanExtra, color: '464D53', size: 14, font: 'Manrope' })],
-                spacing: { after: 20 }
+                children: [new TextRun({ text: cleanExtra, color: '464D53', size: 12, font: 'Manrope' })],
+                spacing: { after: 10 }
               })] : []),
               ...(cleanCin ? [new Paragraph({
                 alignment: AlignmentType.RIGHT,
-                children: [new TextRun({ text: cleanCin, bold: true, color: '00A5A3', size: 14, font: 'Manrope' })],
-                spacing: { after: 40 }
+                children: [new TextRun({ text: cleanCin, bold: true, color: '00A5A3', size: 12, font: 'Manrope' })],
+                spacing: { after: 20 }
               })] : [])
             ]
           })
@@ -268,12 +269,12 @@ window.exportToDocx = async function() {
       properties: {
         page: {
           margin: {
-            top: 1440,
-            bottom: 1440,
+            top: 1080,
+            bottom: 1080,
             left: 1440,
             right: 1440,
-            header: 720,
-            footer: 720
+            header: 432,
+            footer: 432
           }
         }
       },
@@ -290,12 +291,12 @@ window.exportToDocx = async function() {
               children: [
                 new TextRun({
                   text: "Disclaimer: The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. © 2025 Trescon. All rights reserved.",
-                  size: 11,
+                  size: 10,
                   color: "718096",
                   font: "Manrope"
                 })
               ],
-              spacing: { before: 120 }
+              spacing: { before: 40 }
             })
           ]
         })
