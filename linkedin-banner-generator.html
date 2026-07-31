@@ -1017,7 +1017,11 @@
       ctx.fillStyle = topBarGrad;
       ctx.fillRect(0, 0, W, 2); // 2px exact precision thickness
 
-      // SECTION 6: LOGO POSITIONING (SHIFTED 25px RIGHT TO X = 2405px, 10px UP TO Y = 105px)
+      // SECTION 6: PIXEL-PERFECT LOGO POSITIONING (logoX = 2420px, logoY = 115px, target width = 342px)
+      const targetLogoW = 342;
+      const targetLogoX = 2420;
+      const targetLogoY = 115;
+
       ctx.save();
       if (useAnniversaryLogo) {
         let activeLogo = logo10W;
@@ -1028,13 +1032,13 @@
         }
 
         if (activeLogo.complete && activeLogo.naturalWidth > 0) {
-          const logoH = logoW * (activeLogo.naturalHeight / activeLogo.naturalWidth);
-          ctx.drawImage(activeLogo, logoX, 105, logoW, logoH);
+          const logoH = targetLogoW * (activeLogo.naturalHeight / activeLogo.naturalWidth);
+          ctx.drawImage(activeLogo, targetLogoX, targetLogoY, targetLogoW, logoH);
         } else {
-          drawTresconLogo(ctx, logoX, 105, 0.80, (activeTheme === 'light') ? 'dark' : 'white');
+          drawTresconLogo(ctx, targetLogoX, targetLogoY, 0.85, (activeTheme === 'light') ? 'dark' : 'white');
         }
       } else {
-        drawTresconLogo(ctx, logoX, 105, 0.80, (activeTheme === 'light') ? 'dark' : 'white');
+        drawTresconLogo(ctx, targetLogoX, targetLogoY, 0.85, (activeTheme === 'light') ? 'dark' : 'white');
       }
       ctx.restore();
 
