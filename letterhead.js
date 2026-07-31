@@ -165,7 +165,40 @@ window.exportToDocx = async function() {
     console.warn('Logo fetch error:', e);
   }
 
-  // Native 2-Column Word Header Table (Compact Heights)
+  // Native 2-Column Word Header Table (Logo | Vertical Divider | 2-Line Tagline)
+  const headerLeftCellContent = new Table({
+    borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
+    rows: [
+      new TableRow({
+        children: [
+          new TableCell({
+            borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' } },
+            children: [
+              ...(logoImageRun ? [
+                new Paragraph({ children: [logoImageRun], spacing: { after: 0 } })
+              ] : [
+                new Paragraph({ children: [new TextRun({ text: 'TRESCON GLOBAL', bold: true, size: 20, color: '00A5A3', font: 'Anek Devanagari' })] })
+              ])
+            ]
+          }),
+          new TableCell({
+            borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
+            children: [
+              new Paragraph({
+                children: [new TextRun({ text: "  Connecting Businesses", bold: true, size: 11, color: "01373D", font: "Manrope" })],
+                spacing: { after: 10 }
+              }),
+              new Paragraph({
+                children: [new TextRun({ text: "  with Opportunities", bold: true, size: 11, color: "01373D", font: "Manrope" })],
+                spacing: { after: 0 }
+              })
+            ]
+          })
+        ]
+      })
+    ]
+  });
+
   const headerTable = new Table({
     width: { size: 100, type: WidthType.PERCENTAGE },
     borders: {
@@ -178,22 +211,12 @@ window.exportToDocx = async function() {
       new TableRow({
         children: [
           new TableCell({
-            width: { size: 60, type: WidthType.PERCENTAGE },
+            width: { size: 62, type: WidthType.PERCENTAGE },
             borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
-            children: [
-              ...(logoImageRun ? [
-                new Paragraph({ children: [logoImageRun], spacing: { after: 30 } })
-              ] : [
-                new Paragraph({ children: [new TextRun({ text: 'TRESCON GLOBAL', bold: true, size: 20, color: '00A5A3', font: 'Anek Devanagari' })], spacing: { after: 20 } })
-              ]),
-              new Paragraph({
-                children: [new TextRun({ text: 'CONNECTING BUSINESSES WITH OPPORTUNITIES', bold: true, size: 11, color: '00A5A3', font: 'Manrope' })],
-                spacing: { after: 50 }
-              })
-            ]
+            children: [headerLeftCellContent]
           }),
           new TableCell({
-            width: { size: 40, type: WidthType.PERCENTAGE },
+            width: { size: 38, type: WidthType.PERCENTAGE },
             borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
             children: [
               new Paragraph({
@@ -209,7 +232,7 @@ window.exportToDocx = async function() {
               new Paragraph({
                 alignment: AlignmentType.RIGHT,
                 children: [new TextRun({ text: data.web, bold: true, size: 13, color: '00A5A3', font: 'Manrope' })],
-                spacing: { after: 50 }
+                spacing: { after: 30 }
               })
             ]
           })

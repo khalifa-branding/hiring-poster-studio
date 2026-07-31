@@ -650,23 +650,30 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .header-logo-block {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
 }
 
 .letterhead-logo {
-  max-height: 48px;
+  max-height: 44px;
   width: auto;
   object-fit: contain;
 }
 
+.header-tagline-divider {
+  width: 1.5px;
+  height: 30px;
+  background-color: var(--trescon-teal);
+  border-radius: 1px;
+}
+
 .brand-tagline {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: var(--trescon-dark);
-  font-weight: 500;
-  line-height: 1.15;
+  font-weight: 600;
+  line-height: 1.2;
   letter-spacing: 0.2px;
 }
 
