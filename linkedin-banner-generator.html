@@ -1132,29 +1132,28 @@
 
       const footerY = 722;
 
-      // Part 1: Website URL Anchor (600 SemiBold 54px Electric Lime at X = 960px, Y = 722px)
+      // Part 1: Website URL Anchor (54px 600 SemiBold Electric Lime at X = 960px, Y = 722px)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
-      ctx.font = '600 54px "Manrope", sans-serif'; // 54px 600 SemiBold
+      ctx.font = '600 54px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
       
       const cleanWebsite = website.replace(/^https?:\/\//, '').replace(/^www\./, '');
       ctx.fillText(cleanWebsite, contentX, footerY);
 
       const urlWidth = ctx.measureText(cleanWebsite).width;
-      let nextX = contentX + urlWidth + 48; // Spacing after website anchor
+      let nextX = contentX + urlWidth + 24; // Spacing before Electric Lime bullet
 
-      // Part 2: Geographic Presence Metadata ("Global Presence" in 500 Medium at 70% Opacity 36px)
-      if ('letterSpacing' in ctx) ctx.letterSpacing = '0.6px';
-      ctx.font = '500 36px "Manrope", sans-serif';
-      ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.60)' : 'rgba(255, 255, 255, 0.70)';
-      ctx.fillText('Global Presence  •', nextX, footerY);
+      // Part 2: Vibrant Electric Lime Bullet Separator (54px)
+      ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
+      ctx.fillText('•', nextX, footerY);
 
-      const descWidth = ctx.measureText('Global Presence  •').width;
-      nextX += descWidth + 18;
+      const bulletWidth = ctx.measureText('•').width;
+      nextX += bulletWidth + 24; // Spacing after Electric Lime bullet
 
-      // Part 3: Brighter Country Reach (700 Bold White 36px)
-      ctx.font = '700 36px "Manrope", sans-serif';
-      ctx.fillStyle = (activeTheme === 'light') ? '#01373D' : '#FFFFFF';
+      // Part 3: Subordinate Soft White Country Reach (48px 600 SemiBold 85% Opacity)
+      if ('letterSpacing' in ctx) ctx.letterSpacing = '0.4px';
+      ctx.font = '600 48px "Manrope", sans-serif';
+      ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.85)' : 'rgba(255, 255, 255, 0.85)';
       ctx.fillText('UAE  •  Saudi Arabia  •  India  •  Singapore  •  Qatar', nextX, footerY);
 
       ctx.restore();
