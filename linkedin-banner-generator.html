@@ -1122,12 +1122,12 @@
       // SECTION 3 & 4 & 5: FOOTER HIERARCHY & PERFECT 1-AXIS ALIGNMENT (AT Y = 722px)
       ctx.save();
       
-      // Separator Line above Footer at Y = 660px
+      // Separator Line above Footer at Y = 660px (Bounded to Universal Safe Zone X = 2320px)
       ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.15)' : 'rgba(255, 255, 255, 0.18)';
       ctx.lineWidth = 1.2;
       ctx.beginPath();
       ctx.moveTo(contentX, 660);
-      ctx.lineTo(2900, 660);
+      ctx.lineTo(2320, 660); // Bounded to Universal Safe Zone right edge (2320px)
       ctx.stroke();
 
       const footerY = 722;
