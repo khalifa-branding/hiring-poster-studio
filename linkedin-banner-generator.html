@@ -1083,77 +1083,77 @@
       });
       ctx.restore();
 
-      // SECTION 2 & 5: REFINED SERVICE PILLS (45px HEIGHT, 600 MEDIUM TEXT 25px, 35% BORDER, 80% GLASS FILL, 26px GAP)
-      const pillarYStart = 508; // +20px vertical breathing room below headline
+      // SECTION 2 & 5: REFINED SERVICE PILLS (60px HEIGHT, 700 BOLD TEXT 36px, 35% BORDER, 80% GLASS FILL, 30px GAP)
+      const pillarYStart = 500; // Recalibrated for 60px height
       const pillars = [p1, p2, p3, p4].filter(p => p.trim() !== '');
 
       let rX = contentX;
       pillars.forEach((pillarText) => {
         ctx.save();
         if ('letterSpacing' in ctx) ctx.letterSpacing = '0.2px';
-        ctx.font = '600 25px "Manrope", sans-serif'; // Medium 600 weight 25px
+        ctx.font = '700 36px "Manrope", sans-serif'; // Bold 700 weight 36px
         const textWidth = ctx.measureText(pillarText).width;
-        const pillWidth = textWidth + 50;
+        const pillWidth = textWidth + 66; // 66px padding for 36px font
 
         // Subtle Glass Effect (80% Opacity) + 35% Border Opacity
         ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.06)' : 'rgba(255, 255, 255, 0.80)';
         ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(0, 165, 163, 0.25)' : 'rgba(0, 165, 163, 0.35)';
-        ctx.lineWidth = 1.2;
+        ctx.lineWidth = 1.4;
 
         ctx.beginPath();
-        ctx.roundRect(rX, pillarYStart, pillWidth, 45, 22.5); // 45px height (5-8% reduced for category label feel)
+        ctx.roundRect(rX, pillarYStart, pillWidth, 60, 30); // 60px height, 30px radius
         ctx.fill();
         ctx.stroke();
 
-        // Vibrant Teal Accent Dot Indicator
+        // Vibrant Teal Accent Dot Indicator (7px Radius)
         ctx.fillStyle = '#00A5A3';
         ctx.beginPath();
-        ctx.arc(rX + 20, pillarYStart + 22.5, 5, 0, Math.PI * 2);
+        ctx.arc(rX + 26, pillarYStart + 30, 7, 0, Math.PI * 2);
         ctx.fill();
 
         // Deep Dark Teal Text
         ctx.fillStyle = '#01373D';
-        ctx.fillText(pillarText, rX + 34, pillarYStart + 31.5);
+        ctx.fillText(pillarText, rX + 44, pillarYStart + 42);
 
         ctx.restore();
-        rX += pillWidth + 26; // Increased horizontal gap by 10px (26px gap)
+        rX += pillWidth + 30; // 30px horizontal gap
       });
 
       // SECTION 3 & 4 & 5: FOOTER HIERARCHY & PERFECT 1-AXIS ALIGNMENT (AT Y = 722px)
       ctx.save();
       
-      // Separator Line above Footer at Y = 665px (+20px breathing room below pills)
+      // Separator Line above Footer at Y = 660px
       ctx.strokeStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.15)' : 'rgba(255, 255, 255, 0.18)';
       ctx.lineWidth = 1.2;
       ctx.beginPath();
-      ctx.moveTo(contentX, 665);
-      ctx.lineTo(2900, 665);
+      ctx.moveTo(contentX, 660);
+      ctx.lineTo(2900, 660);
       ctx.stroke();
 
-      const footerY = 722; // +15px breathing room below separator line
+      const footerY = 722;
 
-      // Part 1: Website URL Anchor (800 ExtraBold Electric Lime at X = 960px, Y = 722px)
+      // Part 1: Website URL Anchor (600 SemiBold 54px Electric Lime at X = 960px, Y = 722px)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '-0.5px';
-      ctx.font = '800 40px "Manrope", sans-serif';
+      ctx.font = '600 54px "Manrope", sans-serif'; // 54px 600 SemiBold
       ctx.fillStyle = (activeTheme === 'light') ? '#00A5A3' : '#C0F43C';
       
       const cleanWebsite = website.replace(/^https?:\/\//, '').replace(/^www\./, '');
       ctx.fillText(cleanWebsite, contentX, footerY);
 
       const urlWidth = ctx.measureText(cleanWebsite).width;
-      let nextX = contentX + urlWidth + 45; // Increased spacing after website anchor
+      let nextX = contentX + urlWidth + 48; // Spacing after website anchor
 
-      // Part 2: Geographic Presence Metadata ("Global Presence" in 500 Medium at 70% Opacity)
+      // Part 2: Geographic Presence Metadata ("Global Presence" in 500 Medium at 70% Opacity 36px)
       if ('letterSpacing' in ctx) ctx.letterSpacing = '0.6px';
-      ctx.font = '500 26px "Manrope", sans-serif';
+      ctx.font = '500 36px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? 'rgba(1, 55, 61, 0.60)' : 'rgba(255, 255, 255, 0.70)';
       ctx.fillText('Global Presence  •', nextX, footerY);
 
       const descWidth = ctx.measureText('Global Presence  •').width;
-      nextX += descWidth + 16; // Increased spacing after metadata label
+      nextX += descWidth + 18;
 
-      // Part 3: Brighter Country Reach (700 Bold White 26px)
-      ctx.font = '700 26px "Manrope", sans-serif';
+      // Part 3: Brighter Country Reach (700 Bold White 36px)
+      ctx.font = '700 36px "Manrope", sans-serif';
       ctx.fillStyle = (activeTheme === 'light') ? '#01373D' : '#FFFFFF';
       ctx.fillText('UAE  •  Saudi Arabia  •  India  •  Singapore  •  Qatar', nextX, footerY);
 
