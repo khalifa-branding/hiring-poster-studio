@@ -652,14 +652,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .header-logo-block {
   display: inline-flex !important;
   flex-direction: row !important;
-  align-items: stretch !important;
-  gap: 12px !important;
-  height: 40px !important;
+  align-items: flex-end !important;
+  gap: 10px !important;
 }
 
 .letterhead-logo {
-  height: 40px !important;
-  max-height: 40px !important;
+  height: 38px !important;
+  max-height: 38px !important;
   width: auto !important;
   object-fit: contain !important;
   display: block !important;
@@ -667,10 +666,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .header-tagline-divider {
-  width: 1.5px !important;
-  height: 100% !important;
+  width: 1px !important;
+  height: 30px !important;
   background-color: var(--trescon-teal) !important;
-  border-radius: 1px !important;
   flex-shrink: 0 !important;
   margin: 0 !important;
 }
@@ -678,13 +676,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .brand-tagline {
   display: inline-flex !important;
   flex-direction: column !important;
-  justify-content: space-between !important;
+  justify-content: flex-end !important;
   font-size: 0.73rem !important;
   color: var(--trescon-dark) !important;
   font-weight: 600 !important;
-  line-height: 1.15 !important;
+  line-height: 1.2 !important;
   letter-spacing: 0.2px !important;
-  padding: 2px 0 !important;
+  padding: 0 !important;
   margin: 0 !important;
 }
 

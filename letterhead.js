@@ -172,7 +172,7 @@ window.exportToDocx = async function() {
       new TableRow({
         children: [
           new TableCell({
-            borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.SINGLE, size: 10, color: '00A5A3' } },
+            borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' } },
             children: [
               ...(logoImageRun ? [
                 new Paragraph({ children: [logoImageRun], spacing: { after: 0 } })
