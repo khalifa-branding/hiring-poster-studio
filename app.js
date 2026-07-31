@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const emailInput = document.getElementById('email-input');
   const ctaLabelInput = document.getElementById('cta-label-input');
   const showNumbersToggle = document.getElementById('show-numbers-toggle');
+  const showPriorityToggle = document.getElementById('show-priority-toggle');
   const patternOpacity = document.getElementById('pattern-opacity');
   const addRoleBtn = document.getElementById('add-role-btn');
   const rolesContainer = document.getElementById('roles-input-container');
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const flyerRoles = document.getElementById('flyer-roles-list');
   const flyerLocation = document.getElementById('flyer-location-text');
   const flyerHighlight = document.getElementById('flyer-highlight-text');
+  const flyerHighlightBadge = document.getElementById('flyer-highlight-badge');
   const flyerEmail = document.getElementById('flyer-email-text');
   const flyerCtaLabel = document.getElementById('flyer-cta-label-text');
   
@@ -71,9 +73,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (locationInput && flyerLocation) {
       flyerLocation.textContent = locationInput.value.trim() !== '' ? locationInput.value : defaultLocation;
     }
-    if (highlightInput && flyerHighlight) {
-      flyerHighlight.textContent = highlightInput.value.trim() !== '' ? highlightInput.value : defaultHighlight;
+    
+    // CUSTOMIZABLE & TOGGLEABLE CANDIDATE PRIORITY BADGE
+    const targetBadge = flyerHighlightBadge || (flyerHighlight ? flyerHighlight.parentElement : null);
+    if (targetBadge && flyerHighlight) {
+      const isPriorityEnabled = showPriorityToggle ? showPriorityToggle.checked : true;
+      const highlightVal = highlightInput ? highlightInput.value.trim() : '';
+      if (isPriorityEnabled && highlightVal !== '') {
+        flyerHighlight.textContent = highlightVal;
+        targetBadge.style.display = 'inline-flex';
+      } else {
+        targetBadge.style.display = 'none';
+      }
     }
+
     if (emailInput && flyerEmail) {
       flyerEmail.textContent = emailInput.value.trim() !== '' ? emailInput.value : defaultEmail;
     }
@@ -102,6 +115,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (showNumbersToggle) {
     showNumbersToggle.addEventListener('change', () => {
       renderPreviewRoles();
+      triggerAutoSavePulse();
+    });
+  }
+
+  // Bind Candidate Priority Badge Toggle Switch
+  if (showPriorityToggle) {
+    showPriorityToggle.addEventListener('change', () => {
+      syncTextFields();
       triggerAutoSavePulse();
     });
   }
@@ -396,6 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
         emailInput.value = "hr@tresconglobal.com";
         ctaLabelInput.value = "APPLY DIRECTLY VIA EMAIL";
         if (showNumbersToggle) showNumbersToggle.checked = true;
+        if (showPriorityToggle) showPriorityToggle.checked = true;
         roles = [
           { title: "Speaker Acquisition Executive", type: "1-3 Yrs" },
           { title: "Commercial Executive", type: "0-2 Yrs" },
