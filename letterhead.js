@@ -165,14 +165,14 @@ window.exportToDocx = async function() {
     console.warn('Logo fetch error:', e);
   }
 
-  // Native 2-Column Word Header Table (Logo | Vertical Divider | 2-Line Tagline)
+  // Native 2-Column Word Header Table (Logo | Vertical Divider | 2-Line Tagline - Bottom Aligned)
   const headerLeftCellContent = new Table({
     borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
     rows: [
       new TableRow({
         children: [
           new TableCell({
-            borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' } },
+            borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.SINGLE, size: 10, color: '00A5A3' } },
             children: [
               ...(logoImageRun ? [
                 new Paragraph({ children: [logoImageRun], spacing: { after: 0 } })
@@ -186,7 +186,7 @@ window.exportToDocx = async function() {
             children: [
               new Paragraph({
                 children: [new TextRun({ text: "  Connecting Businesses", bold: true, size: 11, color: "01373D", font: "Manrope" })],
-                spacing: { after: 10 }
+                spacing: { before: 30, after: 10 }
               }),
               new Paragraph({
                 children: [new TextRun({ text: "  with Opportunities", bold: true, size: 11, color: "01373D", font: "Manrope" })],

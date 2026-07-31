@@ -640,52 +640,58 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background: linear-gradient(90deg, var(--trescon-teal) 0%, var(--trescon-dark) 100%);
 }
 
-/* Letterhead Header (Compact Refinement) */
+/* Letterhead Header (Pixel-Perfect Baseline Alignment) */
 .letter-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding-bottom: 4px;
-  margin-bottom: 0;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-end !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 .header-logo-block {
   display: flex !important;
   flex-direction: row !important;
-  align-items: center !important;
+  align-items: flex-end !important;
   gap: 10px !important;
 }
 
 .letterhead-logo {
-  max-height: 44px;
-  width: auto;
-  object-fit: contain;
+  height: 36px !important;
+  max-height: 36px !important;
+  width: auto !important;
+  object-fit: contain !important;
+  display: block !important;
 }
 
 .header-tagline-divider {
-  width: 1.5px;
-  height: 30px;
-  background-color: var(--trescon-teal);
-  border-radius: 1px;
+  width: 1.5px !important;
+  height: 36px !important;
+  background-color: var(--trescon-teal) !important;
+  border-radius: 1px !important;
+  flex-shrink: 0 !important;
 }
 
 .brand-tagline {
-  font-size: 0.72rem;
-  color: var(--trescon-dark);
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: 0.2px;
+  font-size: 0.72rem !important;
+  color: var(--trescon-dark) !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.2px !important;
+  padding-bottom: 1px !important;
 }
 
 .header-meta-block {
   text-align: left !important;
-  font-size: 0.76rem;
-  color: var(--trescon-dark);
+  font-size: 0.76rem !important;
+  color: var(--trescon-dark) !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: flex-start !important;
+  justify-content: flex-end !important;
   gap: 2px !important;
-  font-weight: 500;
+  font-weight: 500 !important;
+  padding-bottom: 1px !important;
 }
 
 .header-contact-line {
@@ -711,14 +717,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   justify-content: center !important;
 }
 
-/* Header Gradient Rule */
+/* Header Gradient Rule (12px gap from bottom of logo/tagline) */
 .header-gradient-rule {
-  height: 2px;
-  width: 100%;
-  background: linear-gradient(90deg, var(--trescon-teal) 0%, var(--trescon-lime) 100%);
-  margin-top: 4px;
-  margin-bottom: 16px;
-  border-radius: 2px;
+  height: 2px !important;
+  width: 100% !important;
+  background: linear-gradient(90deg, var(--trescon-teal) 0%, var(--trescon-lime) 100%) !important;
+  margin-top: 12px !important;
+  margin-bottom: 20px !important;
+  border-radius: 2px !important;
 }
 
 /* Recipient Block */
