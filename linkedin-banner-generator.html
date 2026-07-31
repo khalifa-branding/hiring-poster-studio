@@ -914,9 +914,10 @@
       const W = canvas.width;  // 3168
       const H = canvas.height; // 792
 
-      const contentX = 960;  // Single Invisible Vertical Alignment Axis (Zero Optical Drift)
-      const logoX = 2405;    // Shifted 25px right and 10px up for perfect executive breathing room
-      const logoW = 430;
+      const contentX = 960;    // Single Invisible Vertical Alignment Axis (Zero Optical Drift)
+      const targetLogoX = 180; // Top-Left Logo Alignment Anchor
+      const targetLogoY = 105;
+      const targetLogoW = 342;
 
       const headline = document.getElementById('inputHeadline').value;
       const p1 = document.getElementById('inputPillar1').value;
