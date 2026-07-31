@@ -679,10 +679,10 @@
       <div class="control-group">
         <h3>Creative Design Themes</h3>
         <div class="preset-grid">
-          <div class="preset-card active" onclick="selectTheme('teal')">Deep Teal Standard</div>
-          <div class="preset-card" onclick="selectTheme('lime')">Electric Lime Tech</div>
-          <div class="preset-card" onclick="selectTheme('executive')">Executive Slate</div>
-          <div class="preset-card" onclick="selectTheme('light')">Clean Light Mode</div>
+          <div class="preset-card active" onclick="selectTheme('teal', this)">Deep Teal Standard</div>
+          <div class="preset-card" onclick="selectTheme('lime', this)">Electric Lime Tech</div>
+          <div class="preset-card" onclick="selectTheme('executive', this)">Executive Midnight</div>
+          <div class="preset-card" onclick="selectTheme('light', this)">Clean Light Mode</div>
         </div>
       </div>
 
@@ -876,6 +876,26 @@
       });
     });
 
+    // Robust Polyfill for Canvas roundRect
+    if (!CanvasRenderingContext2D.prototype.roundRect) {
+      CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+        if (typeof r === 'number') r = [r, r, r, r];
+        const [tl, tr, br, bl] = r;
+        this.beginPath();
+        this.moveTo(x + tl, y);
+        this.lineTo(x + w - tr, y);
+        this.quadraticCurveTo(x + w, y, x + w, y + tr);
+        this.lineTo(x + w, y + h - br);
+        this.quadraticCurveTo(x + w, y + h, x + w - br, y + h);
+        this.lineTo(x + bl, y + h);
+        this.quadraticCurveTo(x, y + h, x, y + h - bl);
+        this.lineTo(x, y + tl);
+        this.quadraticCurveTo(x, y, x + tl, y);
+        this.closePath();
+        return this;
+      };
+    }
+
     function setDeviceMode(mode) {
       deviceMode = mode;
       document.getElementById('btnDesktop').classList.toggle('active', mode === 'desktop');
@@ -885,12 +905,18 @@
       render();
     }
 
-    function selectTheme(theme) {
+    function selectTheme(theme, el) {
       activeTheme = theme;
       document.querySelectorAll('.preset-card').forEach(card => {
-        if (card.onclick && card.onclick.toString().includes('selectTheme')) card.classList.remove('active');
+        if (card.getAttribute('onclick') && card.getAttribute('onclick').includes('selectTheme')) {
+          card.classList.remove('active');
+        }
       });
-      event.target.classList.add('active');
+      if (el) {
+        el.classList.add('active');
+      } else if (window.event && window.event.target) {
+        window.event.target.classList.add('active');
+      }
       render();
     }
 
