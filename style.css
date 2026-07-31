@@ -1532,6 +1532,33 @@ select.form-input option,
   color: rgba(255, 255, 255, 0.8);
 }
 
+/* Inline Single-Row Switch + Input Control */
+.switch-input-container {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+}
+
+.switch-form-input {
+  flex: 1;
+  font-size: 0.82rem !important;
+  padding: 0.4rem 0.65rem !important;
+  height: 32px !important;
+  line-height: 1.2 !important;
+  transition: all 0.2s ease !important;
+}
+
+.switch-input-container.disabled {
+  opacity: 0.45;
+}
+
+.switch-input-container.disabled .switch-form-input {
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
 /* Tooltip Feedback styles for Copy actions */
 .cta-info {
   position: relative;

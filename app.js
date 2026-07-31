@@ -76,9 +76,21 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // CUSTOMIZABLE & TOGGLEABLE CANDIDATE PRIORITY BADGE
     const targetBadge = flyerHighlightBadge || (flyerHighlight ? flyerHighlight.parentElement : null);
+    const switchInputContainer = highlightInput ? highlightInput.closest('.switch-input-container') : null;
+    const isPriorityEnabled = showPriorityToggle ? showPriorityToggle.checked : true;
+    const highlightVal = highlightInput ? highlightInput.value.trim() : '';
+
+    if (switchInputContainer) {
+      if (isPriorityEnabled) {
+        switchInputContainer.classList.remove('disabled');
+        if (highlightInput) highlightInput.disabled = false;
+      } else {
+        switchInputContainer.classList.add('disabled');
+        if (highlightInput) highlightInput.disabled = true;
+      }
+    }
+
     if (targetBadge && flyerHighlight) {
-      const isPriorityEnabled = showPriorityToggle ? showPriorityToggle.checked : true;
-      const highlightVal = highlightInput ? highlightInput.value.trim() : '';
       if (isPriorityEnabled && highlightVal !== '') {
         flyerHighlight.textContent = highlightVal;
         targetBadge.style.display = 'inline-flex';

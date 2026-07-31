@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=28.0">
+  <link rel="stylesheet" href="style.css?v=29.0">
 </head>
 <body>
 
@@ -67,22 +67,20 @@
                 <label for="subtitle-input">Sub-Headline Text</label>
                 <input type="text" id="subtitle-input" class="form-input" value="We're looking for enthusiastic individuals to join us in these key roles:" placeholder="Sub-headline text">
               </div>
-              <!-- CANDIDATE PRIORITY WITH TOGGLE SWITCH -->
-              <div class="form-group" style="margin-top: 0.5rem;">
-                <label for="highlight-input">Candidate Priority</label>
-                <input type="text" id="highlight-input" class="form-input" value="Immediate Joiners Preferred" placeholder="e.g. Immediate Joiners Preferred">
-                <div class="switch-container" style="margin-top: 0.4rem;">
-                  <label class="switch">
-                    <input type="checkbox" id="show-priority-toggle" checked>
-                    <span class="slider"></span>
-                  </label>
-                  <span class="switch-label">Show Priority Badge ("Immediate Joiners...")</span>
-                </div>
-              </div>
               <!-- CANDIDATE QUALIFIER QUOTE -->
               <div class="form-group" style="margin-top: 0.5rem;">
                 <label for="qualifier-input">Candidate Qualifier Quote (Optional)</label>
                 <input type="text" id="qualifier-input" class="form-input" value="Whether you're a fresher eager to kickstart your career or someone experienced looking for your next opportunity, we'd love to hear from you." placeholder="Leave blank to remove quote">
+              </div>
+              <!-- SINGLE-ROW EDITABLE CANDIDATE PRIORITY TOGGLE CONTROL -->
+              <div class="form-group" style="margin-top: 0.6rem; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 0.5rem;">
+                <div class="switch-input-container">
+                  <label class="switch" title="Toggle Candidate Priority ON/OFF">
+                    <input type="checkbox" id="show-priority-toggle" checked>
+                    <span class="slider"></span>
+                  </label>
+                  <input type="text" id="highlight-input" class="form-input switch-form-input" value="Immediate Joiners Preferred" placeholder="Candidate Priority (e.g. Immediate Joiners Preferred)">
+                </div>
               </div>
             </div>
           </div>
@@ -361,6 +359,6 @@
 
   <!-- HTML2Canvas Image Export Library -->
   <script src="html2canvas.min.js"></script>
-  <script src="app.js?v=28.0"></script>
+  <script src="app.js?v=29.0"></script>
 </body>
 </html>
