@@ -150,7 +150,7 @@ window.exportToDocx = async function() {
     new Paragraph({ children: [new TextRun({ text: signTitle, color: "464D53", size: 18, font: "Manrope" })], spacing: { after: 100 } })
   );
 
-  // Fetch Logo (Prominent Dimensions)
+  // Fetch Logo (Exact Optical Dimensions)
   let logoImageRun = null;
   try {
     const imgRes = await fetch('brand_assets/10-years-trescon-logo.png');
@@ -158,7 +158,7 @@ window.exportToDocx = async function() {
       const imgBuffer = await imgRes.arrayBuffer();
       logoImageRun = new ImageRun({
         data: imgBuffer,
-        transformation: { width: 145, height: 46 }
+        transformation: { width: 125, height: 38 }
       });
     }
   } catch (e) {
