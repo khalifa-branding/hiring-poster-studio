@@ -18,34 +18,22 @@
 <body>
 
   <div class="studio-app-container">
-    
-    <!-- TOP FIXED NAVIGATION RIBBON -->
-    <header class="studio-top-ribbon no-print">
-      <div class="ribbon-brand">
-        <img src="brand_assets/trescon-logo-white-2025.png" alt="Trescon Logo" class="brand-logo-img">
-        <div class="brand-divider"></div>
-        <h1 class="brand-title">Executive Letterhead Studio</h1>
-      </div>
 
-      <!-- EXPORT ACTIONS & TOOL SWITCHER -->
-      <div class="ribbon-actions" style="display: flex; align-items: center; gap: 0.75rem;">
-        <a href="index.html" class="btn btn-outline btn-sm" style="color: var(--color-lime); border-color: rgba(163, 230, 53, 0.4); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
-          <span>📊</span> Hiring Hub & Poster Studio
-        </a>
-        <button id="btn-download-docx-top" class="btn btn-primary btn-sm" onclick="exportToDocx()">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Download Word Template
-        </button>
-      </div>
-    </header>
-
-    <!-- MAIN TWO-PANEL STUDIO LAYOUT -->
-    <div class="studio-main-layout">
+    <!-- MAIN TWO-PANEL STUDIO LAYOUT (FULL VIEWPORT HEIGHT) -->
+    <div class="studio-main-layout" style="height: 100vh; margin-top: 0;">
       
       <!-- LEFT FORM INPUTS SIDEBAR -->
-      <aside class="sidebar-form no-print">
+      <aside class="sidebar-form no-print" style="width: 340px; min-width: 340px; background-color: #070d14; border-right: 1px solid #1e2936; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+        
+        <!-- SIDEBAR BRAND HEADER -->
+        <div class="sidebar-brand-block" style="display: flex; align-items: center; gap: 10px; padding-bottom: 16px; border-bottom: 1px solid #1e2936;">
+          <img src="brand_assets/trescon-logo-white-2025.png" alt="Trescon Logo" style="height: 26px; width: auto;">
+          <div style="width: 1px; height: 22px; background: #2d3748;"></div>
+          <h1 style="font-size: 0.95rem; font-weight: 700; color: #ffffff; margin: 0; line-height: 1.2;">Executive Studio</h1>
+        </div>
+
         <div class="sidebar-header">
-          <h2>Document Configuration</h2>
+          <h2 style="font-size: 0.9rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Document Configuration</h2>
         </div>
 
         <form id="letterhead-form" onsubmit="event.preventDefault();">

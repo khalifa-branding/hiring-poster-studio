@@ -11,44 +11,35 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="letterhead.css?v=14.0">
+  <link rel="stylesheet" href="letterhead.css?v=15.0">
 </head>
 <body>
 
   <div class="studio-app-container">
-    
-    <!-- TOP FIXED NAVIGATION RIBBON -->
-    <header class="studio-top-ribbon no-print">
-      <div class="ribbon-brand">
-        <img src="brand_assets/trescon-logo-white-2025.png" alt="Trescon Logo" class="brand-logo-img">
-        <div class="brand-divider"></div>
-        <h1 class="brand-title">Executive Letterhead Studio</h1>
-      </div>
 
-      <!-- EXPORT ACTIONS (Word Template ONLY) -->
-      <div class="ribbon-actions">
-        <button id="btn-download-docx-top" class="btn btn-primary btn-sm" onclick="exportToDocx(true)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Download Word Template (.docx)
-        </button>
-      </div>
-    </header>
-
-    <!-- MAIN TWO-PANEL STUDIO LAYOUT -->
-    <div class="studio-main-layout">
+    <!-- MAIN TWO-PANEL STUDIO LAYOUT (FULL VIEWPORT HEIGHT) -->
+    <div class="studio-main-layout" style="height: 100vh; margin-top: 0;">
       
       <!-- LEFT FORM INPUTS SIDEBAR -->
-      <aside class="sidebar-form no-print">
+      <aside class="sidebar-form no-print" style="width: 320px; min-width: 320px; background-color: #070d14; border-right: 1px solid #1e2936; padding: 24px; display: flex; flex-direction: column; gap: 20px;">
+        
+        <!-- SIDEBAR BRAND HEADER -->
+        <div class="sidebar-brand-block" style="display: flex; align-items: center; gap: 10px; padding-bottom: 16px; border-bottom: 1px solid #1e2936;">
+          <img src="brand_assets/trescon-logo-white-2025.png" alt="Trescon Logo" style="height: 26px; width: auto;">
+          <div style="width: 1px; height: 22px; background: #2d3748;"></div>
+          <h1 style="font-size: 0.95rem; font-weight: 700; color: #ffffff; margin: 0; line-height: 1.2;">Executive Studio</h1>
+        </div>
+
         <div class="sidebar-header">
-          <h2>Document Configuration</h2>
+          <h2 style="font-size: 0.85rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Document Configuration</h2>
         </div>
 
         <form id="letterhead-form" onsubmit="event.preventDefault();">
           
           <!-- SECTION 1: OFFICE LOCATION PRESET -->
           <div class="form-group">
-            <label for="office-preset">Regional Office Location</label>
-            <select id="office-preset" class="form-control" onchange="updateFooter()">
+            <label for="office-preset" style="font-size: 0.8rem; font-weight: 600; color: #cbd5e1; margin-bottom: 6px; display: block;">Regional Office Location</label>
+            <select id="office-preset" class="form-control" onchange="updateFooter()" style="background: #16202c; color: #ffffff; border: 1px solid #2d3748; padding: 8px 10px; font-size: 0.82rem; border-radius: 6px; width: 100%; outline: none;">
               <option value="bangalore" selected>Bangalore (HQ) — India</option>
               <option value="manipal">Manipal — India</option>
               <option value="mangalore">Mangalore — India</option>
@@ -58,7 +49,7 @@
 
           <!-- SUBMIT CTA BUTTON -->
           <div class="form-action-box" style="margin-top: 16px;">
-            <button type="button" id="btn-download-docx-side" class="btn btn-primary btn-block" onclick="exportToDocx(true)">
+            <button type="button" id="btn-download-docx-side" class="btn btn-primary btn-block" onclick="exportToDocx(true)" style="width: 100%; padding: 10px 14px; font-size: 0.82rem; font-weight: 700; background-color: #00A5A3; color: #ffffff; border: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
               Download Word Template (.docx)
             </button>
@@ -67,8 +58,8 @@
         </form>
       </aside>
 
-      <!-- RIGHT DISPLAY AREA: LIVE A4 PAPER PREVIEW -->
-      <main class="preview-area">
+      <!-- RIGHT DISPLAY AREA: FULL VIEWPORT A4 DOCUMENT WORKSPACE -->
+      <main class="preview-area" style="flex: 1; background-color: #070a0f; padding: 24px 16px; overflow-y: auto; height: 100vh; display: flex; justify-content: center; align-items: flex-start;">
         
         <div class="paper-container" id="sheets-wrapper">
           
@@ -127,6 +118,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="letterhead.js?v=14.0"></script>
+  <script src="letterhead.js?v=15.0"></script>
 </body>
 </html>
