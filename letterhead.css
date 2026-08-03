@@ -496,11 +496,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: #070a0f !important;
     background-image: radial-gradient(#1e2936 1px, transparent 1px) !important;
     background-size: 24px 24px !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    padding: 16px !important;
-    overflow: hidden !important;
+    display: block !important;
+    padding: 32px 16px !important;
+    overflow-y: auto !important;
     height: 100vh !important;
     height: 100dvh !important;
   }
@@ -508,26 +506,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .paper-container {
     display: flex !important;
     justify-content: center !important;
-    align-items: center !important;
-    margin: auto !important;
+    align-items: flex-start !important;
+    margin: 0 auto 32px auto !important;
     position: relative !important;
-    transition: transform 0.15s ease-out;
+    width: 100% !important;
   }
 
   .a4-sheet {
     width: 210mm !important;
-    height: 297mm !important;
-    background-color: #ffffff;
-    color: var(--trescon-charcoal);
-    padding: 7mm 10mm 8mm 10mm;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 2px rgba(0, 0, 0, 0.2);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    overflow: visible;
-    margin: 0 auto;
-    transform-origin: top center;
-    font-family: var(--font-body);
+    min-height: 297mm !important;
+    height: auto !important;
+    background-color: #ffffff !important;
+    color: var(--trescon-charcoal) !important;
+    padding: 7mm 10mm 7mm 10mm !important;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 2px rgba(0, 0, 0, 0.2) !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: visible !important;
+    margin: 0 auto !important;
+    transform-origin: top center !important;
+    font-family: var(--font-body) !important;
   }
 }
 
