@@ -508,8 +508,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .paper-container {
     display: flex !important;
     justify-content: center !important;
-    align-items: flex-start !important;
-    margin: 0 auto !important;
+    align-items: center !important;
+    margin: auto !important;
     position: relative !important;
     transition: transform 0.15s ease-out;
   }
@@ -519,8 +519,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 297mm !important;
     background-color: #ffffff;
     color: var(--trescon-charcoal);
-    padding: 7mm 10mm 7mm 10mm;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 2px rgba(0, 0, 0, 0.2);
+    padding: 7mm 10mm 8mm 10mm;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 2px rgba(0, 0, 0, 0.2);
     position: relative;
     display: flex;
     flex-direction: column;

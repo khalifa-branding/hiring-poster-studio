@@ -410,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Trigger Initial Footer Sync
   window.updateFooter();
 
-  // Auto-Fit Letterhead Canvas to Viewport (Zero-Scrollbar Perfect Fit Engine)
+  // Auto-Fit Letterhead Canvas to Viewport (Zero-Scrollbar Symmetrical Centering Engine)
   function autoFitCanvas() {
     const previewArea = document.querySelector('.preview-area');
     const paperContainer = document.querySelector('.paper-container');
@@ -420,9 +420,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sheet.style.transform = 'none';
 
-    // Subtract 48px padding buffer so the document fits with zero bottom cutoff and zero scrollbar
+    // Subtract 52px padding buffer for perfectly symmetrical vertical centering and zero scrollbars
     const containerWidth = Math.max(previewArea.clientWidth - 48, 280);
-    const containerHeight = Math.max(previewArea.clientHeight - 48, 350);
+    const containerHeight = Math.max(previewArea.clientHeight - 52, 350);
 
     // Standard A4 pixel dimensions at 96 DPI: 794px width x 1123px height
     const sheetWidth = 794;
@@ -431,7 +431,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const scaleX = containerWidth / sheetWidth;
     const scaleY = containerHeight / sheetHeight;
 
-    // Use smaller scale factor so the ENTIRE document fits without clipping
+    // Use smaller scale factor so the ENTIRE document fits cleanly inside the screen
     const scale = Math.min(scaleX, scaleY, 1.0);
 
     sheet.style.transform = `scale(${scale})`;
@@ -439,7 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     paperContainer.style.height = `${sheetHeight * scale}px`;
     paperContainer.style.width = `${sheetWidth * scale}px`;
-    paperContainer.style.margin = '0 auto';
+    paperContainer.style.margin = 'auto';
   }
 
   window.autoFitCanvas = autoFitCanvas;
