@@ -173,21 +173,23 @@ window.exportToDocx = async function(isBlankBody = false) {
     console.warn('Logo fetch error:', e);
   }
 
-  // Native Clean 3-Column Word Header Table (Logo | Vertical Divider + Tagline | Contact Info)
+  // Native Clean Word Header Table (Logo | Vertical Divider + Tagline | Contact Info)
   const headerTable = new Table({
     width: { size: 100, type: WidthType.PERCENTAGE },
     borders: {
       bottom: { style: BorderStyle.SINGLE, size: 12, color: '00A5A3' },
       top: { style: BorderStyle.NONE },
       left: { style: BorderStyle.NONE },
-      right: { style: BorderStyle.NONE }
+      right: { style: BorderStyle.NONE },
+      insideVertical: { style: BorderStyle.NONE },
+      insideHorizontal: { style: BorderStyle.NONE }
     },
     rows: [
       new TableRow({
         children: [
-          // COL 1: LOGO (35%)
+          // COL 1: LOGO (38%)
           new TableCell({
-            width: { size: 35, type: WidthType.PERCENTAGE },
+            width: { size: 38, type: WidthType.PERCENTAGE },
             borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
             children: [
               ...(logoImageRun ? [
@@ -197,39 +199,39 @@ window.exportToDocx = async function(isBlankBody = false) {
               ])
             ]
           }),
-          // COL 2: VERTICAL DIVIDER & TAGLINE (35%)
+          // COL 2: VERTICAL DIVIDER & TAGLINE (34%)
           new TableCell({
-            width: { size: 35, type: WidthType.PERCENTAGE },
+            width: { size: 34, type: WidthType.PERCENTAGE },
             borders: {
               top: { style: BorderStyle.NONE },
               bottom: { style: BorderStyle.NONE },
-              left: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' },
+              left: { style: BorderStyle.SINGLE, size: 8, color: '00A5A3' },
               right: { style: BorderStyle.NONE }
             },
             children: [
               new Paragraph({
-                children: [new TextRun({ text: "  Connecting Businesses", bold: true, size: 20, color: "01373D", font: "Manrope" })],
-                spacing: { before: 80, after: 20 }
+                children: [new TextRun({ text: "  Connecting Businesses", bold: true, size: 19, color: "01373D", font: "Manrope" })],
+                spacing: { before: 100, after: 20 }
               }),
               new Paragraph({
-                children: [new TextRun({ text: "  with Opportunities", bold: true, size: 20, color: "01373D", font: "Manrope" })],
+                children: [new TextRun({ text: "  with Opportunities", bold: true, size: 19, color: "01373D", font: "Manrope" })],
                 spacing: { after: 40 }
               })
             ]
           }),
-          // COL 3: CONTACT META (30%)
+          // COL 3: CONTACT META (28%)
           new TableCell({
-            width: { size: 30, type: WidthType.PERCENTAGE },
+            width: { size: 28, type: WidthType.PERCENTAGE },
             borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
             children: [
               new Paragraph({
                 alignment: AlignmentType.RIGHT,
-                children: [new TextRun({ text: data.email, size: 20, color: '464D53', font: 'Manrope' })],
-                spacing: { before: 80, after: 20 }
+                children: [new TextRun({ text: data.email, size: 19, color: '464D53', font: 'Manrope' })],
+                spacing: { before: 100, after: 20 }
               }),
               new Paragraph({
                 alignment: AlignmentType.RIGHT,
-                children: [new TextRun({ text: data.web, bold: true, size: 20, color: '00A5A3', font: 'Manrope' })],
+                children: [new TextRun({ text: data.web, bold: true, size: 19, color: '00A5A3', font: 'Manrope' })],
                 spacing: { after: 40 }
               })
             ]
@@ -248,14 +250,16 @@ window.exportToDocx = async function(isBlankBody = false) {
     cinOrExtra = `[${stripHtmlEntities(data.extra)}]`;
   }
 
-  // Native Full-Width Word Footer Table (Company Name + 2-Line Address + Disclaimer)
+  // Native Full-Width Word Footer Table (Company Name + 2-Line Address)
   const footerTable = new Table({
     width: { size: 100, type: WidthType.PERCENTAGE },
     borders: {
       top: { style: BorderStyle.SINGLE, size: 8, color: '00A5A3' },
       bottom: { style: BorderStyle.NONE },
       left: { style: BorderStyle.NONE },
-      right: { style: BorderStyle.NONE }
+      right: { style: BorderStyle.NONE },
+      insideVertical: { style: BorderStyle.NONE },
+      insideHorizontal: { style: BorderStyle.NONE }
     },
     rows: [
       new TableRow({
@@ -281,18 +285,21 @@ window.exportToDocx = async function(isBlankBody = false) {
       properties: {
         page: {
           margin: {
-            top: 1134,
-            bottom: 1134,
-            left: 567,
-            right: 567,
-            header: 397,
-            footer: 397
+            top: 1600,     // 28mm page top margin guarantees cursor sits comfortably below header rule
+            bottom: 1200,  // 21mm page bottom margin
+            left: 567,     // 10mm left margin
+            right: 567,    // 10mm right margin
+            header: 397,   // 7mm header position
+            footer: 397    // 7mm footer position
           }
         }
       },
       headers: {
         default: new Header({
-          children: [headerTable]
+          children: [
+            headerTable,
+            new Paragraph({ children: [], spacing: { after: 120 } })
+          ]
         })
       },
       footers: {
