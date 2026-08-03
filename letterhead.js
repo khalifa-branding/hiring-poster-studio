@@ -241,7 +241,7 @@ window.exportToDocx = async function() {
   const cleanExtra = stripHtmlEntities(data.extra);
   const cleanCin = stripHtmlEntities(data.cin);
 
-  // Native 2-Column Word Footer Table (Compact Margins)
+  // Native 2-Column Word Footer Table (Ultra-Compact Heights)
   const footerTable = new Table({
     width: { size: 100, type: WidthType.PERCENTAGE },
     borders: {
@@ -254,26 +254,26 @@ window.exportToDocx = async function() {
       new TableRow({
         children: [
           new TableCell({
-            width: { size: 60, type: WidthType.PERCENTAGE },
+            width: { size: 72, type: WidthType.PERCENTAGE },
             borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
             children: [
-              new Paragraph({ children: [new TextRun({ text: cleanEntity, bold: true, color: '01373D', size: 14, font: 'Anek Devanagari' })], spacing: { after: 20 } }),
-              new Paragraph({ children: [new TextRun({ text: cleanAddress, color: '464D53', size: 12, font: 'Manrope' })], spacing: { after: 20 } })
+              new Paragraph({ children: [new TextRun({ text: cleanEntity, bold: true, color: '01373D', size: 13, font: 'Anek Devanagari' })], spacing: { after: 10 } }),
+              new Paragraph({ children: [new TextRun({ text: cleanAddress, color: '464D53', size: 11, font: 'Manrope' })], spacing: { after: 10 } })
             ]
           }),
           new TableCell({
-            width: { size: 40, type: WidthType.PERCENTAGE },
+            width: { size: 28, type: WidthType.PERCENTAGE },
             borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
             children: [
               ...(cleanExtra ? [new Paragraph({
                 alignment: AlignmentType.RIGHT,
-                children: [new TextRun({ text: cleanExtra, color: '464D53', size: 12, font: 'Manrope' })],
+                children: [new TextRun({ text: cleanExtra, color: '464D53', size: 11, font: 'Manrope' })],
                 spacing: { after: 10 }
               })] : []),
               ...(cleanCin ? [new Paragraph({
                 alignment: AlignmentType.RIGHT,
-                children: [new TextRun({ text: cleanCin, bold: true, color: '00A5A3', size: 12, font: 'Manrope' })],
-                spacing: { after: 20 }
+                children: [new TextRun({ text: cleanCin, bold: true, color: '00A5A3', size: 11, font: 'Manrope' })],
+                spacing: { after: 10 }
               })] : [])
             ]
           })
