@@ -498,9 +498,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-size: 24px 24px !important;
     display: flex !important;
     justify-content: center !important;
-    align-items: center !important;
-    padding: 16px !important;
-    overflow: hidden !important;
+    align-items: flex-start !important;
+    padding: 20px !important;
+    overflow-y: auto !important;
     height: 100vh !important;
     height: 100dvh !important;
   }
@@ -508,17 +508,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .paper-container {
     display: flex !important;
     justify-content: center !important;
-    align-items: center !important;
-    overflow: hidden !important;
+    align-items: flex-start !important;
+    margin: 0 auto !important;
+    position: relative !important;
     transition: transform 0.15s ease-out;
   }
 
   .a4-sheet {
-    width: 210mm;
-    min-height: 297mm;
-    max-height: calc(100vh - 32px);
-    max-width: calc(100% - 32px);
-    aspect-ratio: 210 / 297;
+    width: 210mm !important;
+    height: 297mm !important;
     background-color: #ffffff;
     color: var(--trescon-charcoal);
     padding: 7mm 10mm 7mm 10mm;
@@ -528,6 +526,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     flex-direction: column;
     overflow: visible;
     margin: 0 auto;
+    transform-origin: top center;
     font-family: var(--font-body);
   }
 }

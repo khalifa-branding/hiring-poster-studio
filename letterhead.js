@@ -410,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Trigger Initial Footer Sync
   window.updateFooter();
 
-  // Auto-Fit Letterhead Canvas to Viewport
+  // Auto-Fit Letterhead Canvas to Viewport (Top-Aligned Non-Clipping Engine)
   function autoFitCanvas() {
     const previewArea = document.querySelector('.preview-area');
     const paperContainer = document.querySelector('.paper-container');
@@ -420,15 +420,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sheet.style.transform = 'none';
 
-    const containerWidth = previewArea.clientWidth - 32;
-    const containerHeight = previewArea.clientHeight - 32;
+    // Measure available space inside preview workspace (subtracting 40px for top/bottom padding)
+    const containerWidth = Math.max(previewArea.clientWidth - 40, 300);
+    const containerHeight = Math.max(previewArea.clientHeight - 40, 400);
 
-    const sheetWidth = sheet.offsetWidth || 794;
-    const sheetHeight = sheet.offsetHeight || 1123;
+    // Standard A4 pixel dimensions at 96 DPI: 794px width x 1123px height
+    const sheetWidth = 794;
+    const sheetHeight = 1123;
 
     const scaleX = containerWidth / sheetWidth;
     const scaleY = containerHeight / sheetHeight;
 
+    // Use smaller scale factor so the ENTIRE document fits without clipping
     const scale = Math.min(scaleX, scaleY, 1.0);
 
     sheet.style.transform = `scale(${scale})`;
@@ -436,9 +439,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     paperContainer.style.height = `${sheetHeight * scale}px`;
     paperContainer.style.width = `${sheetWidth * scale}px`;
+    paperContainer.style.margin = '0 auto';
   }
 
   window.autoFitCanvas = autoFitCanvas;
   window.addEventListener('resize', autoFitCanvas);
-  setTimeout(autoFitCanvas, 80);
+  setTimeout(autoFitCanvas, 50);
 });
