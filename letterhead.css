@@ -586,6 +586,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   right: 0;
   height: 5px;
   background: linear-gradient(90deg, var(--trescon-teal) 0%, var(--trescon-dark) 100%);
+  margin-bottom: 20px !important;
 }
 
 /* Letterhead Header (Pixel-Perfect Baseline Alignment & Robust Display) */
@@ -686,8 +687,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   height: 2px !important;
   width: 100% !important;
   background: linear-gradient(90deg, var(--trescon-teal) 0%, var(--trescon-lime) 100%) !important;
-  margin-top: 6px !important;
-  margin-bottom: 14px !important;
+  margin-top: 16px !important;
+  margin-bottom: 24px !important;
   border-radius: 2px !important;
 }
 
