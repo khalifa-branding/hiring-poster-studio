@@ -916,8 +916,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .footer-divider {
   height: 1px;
   background-color: var(--trescon-teal);
-  margin-top: 16px !important;
-  margin-bottom: 12px !important;
+  margin-top: 8px !important;
+  margin-bottom: 6px !important;
   opacity: 0.7;
 }
 
@@ -954,7 +954,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .footer-address {
   font-size: 0.72rem;
   color: var(--trescon-slate);
-  line-height: 1.35;
+  line-height: 1.15 !important;
 }
 
 .footer-license {
@@ -966,11 +966,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .footer-disclaimer {
   border-top: 1px solid #dce3e6 !important;
-  margin-top: 10px !important;
-  padding-top: 8px !important;
+  margin-top: 6px !important;
+  padding-top: 4px !important;
   font-size: 12px !important;
   color: #475569 !important;
-  line-height: 1.35 !important;
+  line-height: 1.15 !important;
   text-align: justify !important;
   margin-bottom: 0 !important;
 }
