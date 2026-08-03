@@ -962,7 +962,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .footer-disclaimer {
-  font-size: clamp(12px, 0.8vw, 14px) !important;
+  font-size: 12px !important;
   color: #475569 !important;
   line-height: 1.35 !important;
   text-align: justify !important;
