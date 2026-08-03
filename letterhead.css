@@ -492,15 +492,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-size: 24px 24px !important;
   display: flex !important;
   justify-content: center !important;
-  align-items: flex-start !important;
-  padding: 24px 16px !important;
-  overflow-y: auto !important;
+  align-items: center !important;
+  padding: 16px !important;
+  overflow: hidden !important;
   height: 100vh !important;
 }
 
 .paper-container {
-  display: flex;
-  justify-content: center;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  overflow: hidden !important;
+  transition: all 0.15s ease;
 }
 
 /* A4 Sheet Dimensions & Google Docs Canvas Engine */

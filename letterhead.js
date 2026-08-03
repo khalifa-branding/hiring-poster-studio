@@ -409,4 +409,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Trigger Initial Footer Sync
   window.updateFooter();
+
+  // Auto-Fit Letterhead Canvas to Viewport
+  function autoFitCanvas() {
+    const previewArea = document.querySelector('.preview-area');
+    const paperContainer = document.querySelector('.paper-container');
+    const sheet = document.getElementById('letterhead-sheet');
+
+    if (!previewArea || !paperContainer || !sheet) return;
+
+    sheet.style.transform = 'none';
+
+    const containerWidth = previewArea.clientWidth - 32;
+    const containerHeight = previewArea.clientHeight - 32;
+
+    const sheetWidth = sheet.offsetWidth || 794;
+    const sheetHeight = sheet.offsetHeight || 1123;
+
+    const scaleX = containerWidth / sheetWidth;
+    const scaleY = containerHeight / sheetHeight;
+
+    const scale = Math.min(scaleX, scaleY, 1.0);
+
+    sheet.style.transform = `scale(${scale})`;
+    sheet.style.transformOrigin = 'top center';
+
+    paperContainer.style.height = `${sheetHeight * scale}px`;
+    paperContainer.style.width = `${sheetWidth * scale}px`;
+  }
+
+  window.autoFitCanvas = autoFitCanvas;
+  window.addEventListener('resize', autoFitCanvas);
+  setTimeout(autoFitCanvas, 80);
 });
