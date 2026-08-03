@@ -65,14 +65,14 @@ window.updateFooter = function() {
 
   if (companyElem) companyElem.textContent = data.entity;
 
-  let inlineAddr = data.address.replace(/<br\s*\/?>/gi, ' ');
+  let inlineAddr = data.address;
   if (data.cin) {
-    inlineAddr += ` [${data.cin}]`;
+    inlineAddr += `<br>[${data.cin}]`;
   } else if (data.extra) {
-    inlineAddr += ` [${data.extra}]`;
+    inlineAddr += `<br>[${data.extra}]`;
   }
 
-  if (addressElem) addressElem.textContent = inlineAddr;
+  if (addressElem) addressElem.innerHTML = inlineAddr;
   if (emailElem) emailElem.textContent = data.email;
   if (webElem) webElem.textContent = data.web;
 };
