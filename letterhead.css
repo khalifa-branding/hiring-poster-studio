@@ -586,7 +586,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   right: 0;
   height: 5px;
   background: linear-gradient(90deg, var(--trescon-teal) 0%, var(--trescon-dark) 100%);
-  margin-bottom: 20px !important;
+  margin-bottom: 8px !important;
 }
 
 /* Letterhead Header (Pixel-Perfect Baseline Alignment & Robust Display) */
@@ -687,8 +687,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   height: 2px !important;
   width: 100% !important;
   background: linear-gradient(90deg, var(--trescon-teal) 0%, var(--trescon-lime) 100%) !important;
-  margin-top: 16px !important;
-  margin-bottom: 24px !important;
+  margin-top: 10px !important;
+  margin-bottom: 16px !important;
   border-radius: 2px !important;
 }
 
@@ -964,8 +964,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .footer-disclaimer {
   border-top: 1px solid #dce3e6 !important;
-  margin-top: 16px !important;
-  padding-top: 8px !important;
+  margin-top: 10px !important;
+  padding-top: 4px !important;
   font-size: 12px !important;
   color: #475569 !important;
   line-height: 1.35 !important;
