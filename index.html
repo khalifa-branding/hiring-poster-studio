@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="letterhead.css?v=21.0">
+  <link rel="stylesheet" href="letterhead.css?v=22.0">
 </head>
 <body>
 
@@ -54,13 +54,13 @@
         </form>
       </aside>
 
-      <!-- RIGHT DISPLAY AREA: FULL VIEWPORT A4 DOCUMENT WORKSPACE -->
-      <main class="preview-area" style="flex: 1; background-color: #070a0f; padding: 32px 16px 64px 16px; overflow-y: auto; height: 100vh; display: block;">
+      <!-- RIGHT DISPLAY AREA: FULL VIEWPORT A4 DOCUMENT WORKSPACE (WITH 120PX PADDING-BOTTOM COMPENSATING FOR TOP OFFSET) -->
+      <main class="preview-area" style="flex: 1; background-color: #070a0f; padding: 32px 16px 120px 16px; overflow-y: auto; height: 100vh; display: block;">
         
-        <div class="paper-container" id="sheets-wrapper" style="display: flex; justify-content: center; align-items: flex-start; margin: 0 auto; padding-bottom: 48px; width: 100%;">
+        <div class="paper-container" id="sheets-wrapper" style="display: flex; justify-content: center; align-items: flex-start; margin: 0 auto; padding-bottom: 60px; width: 100%; height: auto; min-height: 100%; max-height: none;">
           
           <!-- PAGE 1 SHEET -->
-          <article class="a4-sheet" id="letterhead-sheet" style="margin-bottom: 40px;">
+          <article class="a4-sheet" id="letterhead-sheet" style="margin-bottom: 40px; height: auto; min-height: 297mm; max-height: none;">
             
             <!-- TOP ACCENT RULE -->
             <div class="top-accent-bar"></div>
@@ -114,6 +114,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="letterhead.js?v=21.0"></script>
+  <script src="letterhead.js?v=22.0"></script>
 </body>
 </html>

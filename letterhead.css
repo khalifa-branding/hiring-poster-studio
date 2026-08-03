@@ -497,7 +497,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-image: radial-gradient(#1e2936 1px, transparent 1px) !important;
     background-size: 24px 24px !important;
     display: block !important;
-    padding: 32px 16px 64px 16px !important;
+    padding: 32px 16px 120px 16px !important;
     overflow-y: auto !important;
     height: 100vh !important;
     height: 100dvh !important;
@@ -508,7 +508,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     justify-content: center !important;
     align-items: flex-start !important;
     margin: 0 auto !important;
-    padding-bottom: 48px !important;
+    height: auto !important;
+    min-height: 100% !important;
+    max-height: none !important;
+    padding-bottom: 60px !important;
     position: relative !important;
     width: 100% !important;
   }
@@ -517,6 +520,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 210mm !important;
     min-height: 297mm !important;
     height: auto !important;
+    max-height: none !important;
     background-color: #ffffff !important;
     color: var(--trescon-charcoal) !important;
     padding: 7mm 10mm 8mm 10mm !important;
