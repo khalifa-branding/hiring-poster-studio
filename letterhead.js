@@ -83,6 +83,32 @@ window.exportToDocx = async function(isBlankBody = false) {
   const selectedKey = selectElem ? selectElem.value : 'bangalore';
   const data = ADDRESS_PRESETS[selectedKey] || ADDRESS_PRESETS.bangalore;
 
+  // Direct serve pre-built native Word template for 100% guaranteed OpenXML compliance
+  if (isBlankBody) {
+    const fileMap = {
+      bangalore: 'Trescon_Letterhead_Bangalore_Blank.docx',
+      manipal: 'Trescon_Letterhead_Manipal_Blank.docx',
+      mangalore: 'Trescon_Letterhead_Mangalore_Blank.docx',
+      dubai: 'Trescon_Letterhead_Dubai_Blank.docx'
+    };
+    const targetFile = fileMap[selectedKey] || 'Trescon_Global_Letterhead_Template.docx';
+    try {
+      const resp = await fetch(targetFile);
+      if (resp.ok) {
+        const blob = await resp.blob();
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = targetFile;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        return;
+      }
+    } catch (e) {
+      console.warn('Pre-built template fetch failed, falling back to dynamic generation:', e);
+    }
+  }
+
   const recipName = document.getElementById('input-recip-name') ? document.getElementById('input-recip-name').value : 'Mr. Alex Turner';
   const recipTitle = document.getElementById('input-recip-title') ? document.getElementById('input-recip-title').value : 'Chief Executive Officer, Apex Global Innovations Ltd.';
   const recipAddr = document.getElementById('input-recip-address') ? document.getElementById('input-recip-address').value : 'Bengaluru, Karnataka';
