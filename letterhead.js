@@ -78,12 +78,11 @@ window.updateFooter = function() {
 };
 
 // Native Word (.docx) Exporter Engine
-window.exportToDocx = async function() {
+window.exportToDocx = async function(isBlankBody = false) {
   const selectElem = document.getElementById('office-preset');
   const selectedKey = selectElem ? selectElem.value : 'bangalore';
   const data = ADDRESS_PRESETS[selectedKey] || ADDRESS_PRESETS.bangalore;
 
-  const dateStr = document.getElementById('input-date') ? document.getElementById('input-date').value : 'Date: July 27, 2026';
   const recipName = document.getElementById('input-recip-name') ? document.getElementById('input-recip-name').value : 'Mr. Alex Turner';
   const recipTitle = document.getElementById('input-recip-title') ? document.getElementById('input-recip-title').value : 'Chief Executive Officer, Apex Global Innovations Ltd.';
   const recipAddr = document.getElementById('input-recip-address') ? document.getElementById('input-recip-address').value : 'Bengaluru, Karnataka';
@@ -100,59 +99,64 @@ window.exportToDocx = async function() {
 
   const bodyParagraphs = [];
 
-  // Add Recipient Block
-  bodyParagraphs.push(
-    new Paragraph({ children: [new TextRun({ text: "To,", bold: true, color: "01373D", size: 20, font: "Manrope" })], spacing: { after: 40 } }),
-    new Paragraph({ children: [new TextRun({ text: recipName, bold: true, color: "01373D", size: 20, font: "Manrope" })], spacing: { after: 40 } }),
-    new Paragraph({ children: [new TextRun({ text: recipTitle, color: "4A5568", size: 18, font: "Manrope" })], spacing: { after: 40 } }),
-    new Paragraph({ children: [new TextRun({ text: recipAddr, color: "4A5568", size: 18, font: "Manrope" })], spacing: { after: 240 } })
-  );
+  if (isBlankBody) {
+    // 100% Blank Document Canvas for Desktop Editing
+    bodyParagraphs.push(new Paragraph({ children: [] }));
+  } else {
+    // Add Recipient Block
+    bodyParagraphs.push(
+      new Paragraph({ children: [new TextRun({ text: "To,", bold: true, color: "01373D", size: 20, font: "Manrope" })], spacing: { after: 40 } }),
+      new Paragraph({ children: [new TextRun({ text: recipName, bold: true, color: "01373D", size: 20, font: "Manrope" })], spacing: { after: 40 } }),
+      new Paragraph({ children: [new TextRun({ text: recipTitle, color: "4A5568", size: 18, font: "Manrope" })], spacing: { after: 40 } }),
+      new Paragraph({ children: [new TextRun({ text: recipAddr, color: "4A5568", size: 18, font: "Manrope" })], spacing: { after: 240 } })
+    );
 
-  // Add Subject Line
-  bodyParagraphs.push(
-    new Paragraph({ children: [new TextRun({ text: subjectStr, bold: true, underline: {}, color: "01373D", size: 20, font: "Manrope" })], spacing: { after: 200 } })
-  );
+    // Add Subject Line
+    bodyParagraphs.push(
+      new Paragraph({ children: [new TextRun({ text: subjectStr, bold: true, underline: {}, color: "01373D", size: 20, font: "Manrope" })], spacing: { after: 200 } })
+    );
 
-  // Add Salutation
-  bodyParagraphs.push(
-    new Paragraph({ children: [new TextRun({ text: salutationStr, color: "1E2124", size: 20, font: "Manrope" })], spacing: { after: 180 } })
-  );
+    // Add Salutation
+    bodyParagraphs.push(
+      new Paragraph({ children: [new TextRun({ text: salutationStr, color: "1E2124", size: 20, font: "Manrope" })], spacing: { after: 180 } })
+    );
 
-  // Add Body Paragraphs & Bullet Lists
-  const tempDiv = document.createElement('div');
-  tempDiv.innerHTML = bodyHTML;
+    // Add Body Paragraphs & Bullet Lists
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = bodyHTML;
 
-  tempDiv.childNodes.forEach(node => {
-    if (node.nodeName === 'UL' || node.nodeName === 'OL') {
-      node.querySelectorAll('li').forEach(li => {
-        const text = stripHtmlEntities(li.innerText).trim();
-        if (text) {
-          bodyParagraphs.push(new Paragraph({
-            text: text,
-            bullet: { level: 0 },
-            spacing: { after: 100 }
-          }));
-        }
-      });
-    } else if (node.nodeType === Node.ELEMENT_NODE) {
-      if (node.nodeName === 'P' || node.nodeName === 'DIV' || node.nodeName.startsWith('H')) {
-        const text = stripHtmlEntities(node.innerText).trim();
-        if (text) {
-          bodyParagraphs.push(new Paragraph({
-            children: [new TextRun({ text: text, size: 20, font: "Manrope", color: "1E2124" })],
-            spacing: { after: 140 }
-          }));
+    tempDiv.childNodes.forEach(node => {
+      if (node.nodeName === 'UL' || node.nodeName === 'OL') {
+        node.querySelectorAll('li').forEach(li => {
+          const text = stripHtmlEntities(li.innerText).trim();
+          if (text) {
+            bodyParagraphs.push(new Paragraph({
+              text: text,
+              bullet: { level: 0 },
+              spacing: { after: 100 }
+            }));
+          }
+        });
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        if (node.nodeName === 'P' || node.nodeName === 'DIV' || node.nodeName.startsWith('H')) {
+          const text = stripHtmlEntities(node.innerText).trim();
+          if (text) {
+            bodyParagraphs.push(new Paragraph({
+              children: [new TextRun({ text: text, color: "1E2124", size: 20, font: "Manrope" })],
+              spacing: { after: 160 }
+            }));
+          }
         }
       }
-    }
-  });
+    });
 
-  // Add Signature Block
-  bodyParagraphs.push(
-    new Paragraph({ children: [new TextRun({ text: closingStr, color: "1E2124", size: 20, font: "Manrope" })], spacing: { before: 200, after: 400 } }),
-    new Paragraph({ children: [new TextRun({ text: signName, bold: true, color: "01373D", size: 20, font: "Anek Devanagari" })], spacing: { after: 40 } }),
-    new Paragraph({ children: [new TextRun({ text: signTitle, color: "464D53", size: 18, font: "Manrope" })], spacing: { after: 100 } })
-  );
+    // Add Signatory Block
+    bodyParagraphs.push(
+      new Paragraph({ children: [new TextRun({ text: closingStr, color: "1E2124", size: 20, font: "Manrope" })], spacing: { before: 240, after: 360 } }),
+      new Paragraph({ children: [new TextRun({ text: signName, bold: true, color: "01373D", size: 22, font: "Manrope" })], spacing: { after: 40 } }),
+      new Paragraph({ children: [new TextRun({ text: signTitle, color: "464D53", size: 18, font: "Manrope" })], spacing: { after: 100 } })
+    );
+  }
 
   // Fetch Logo (Exact Optical Dimensions)
   let logoImageRun = null;
