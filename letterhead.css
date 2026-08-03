@@ -525,7 +525,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: flex !important;
     flex-direction: column !important;
     overflow: visible !important;
-    margin: 0 auto !important;
+    margin: 0 auto 40px auto !important;
     transform-origin: top center !important;
     font-family: var(--font-body) !important;
   }
