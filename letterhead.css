@@ -1,6 +1,11 @@
-/* ==========================================================================
-   TRESCON GLOBAL EXECUTIVE LETTERHEAD STUDIO - STYLESHEET
-   ========================================================================== */
+/* Global Universal Reset & Predictable Border-Box Sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box !important;
+  margin: 0;
+  padding: 0;
+}
 
 :root {
   --trescon-teal: #007876;
@@ -32,6 +37,7 @@
     font-family: var(--font-body);
     background-color: #0d131a;
     color: #e0e6ed;
+    box-sizing: border-box !important;
   }
 
   .studio-app-container {
@@ -501,6 +507,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     overflow-y: auto !important;
     height: 100vh !important;
     height: 100dvh !important;
+    box-sizing: border-box !important;
   }
 
   .paper-container {
@@ -514,6 +521,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding-bottom: 60px !important;
     position: relative !important;
     width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .a4-sheet {
@@ -532,6 +540,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin: 0 auto 40px auto !important;
     transform-origin: top center !important;
     font-family: var(--font-body) !important;
+    box-sizing: border-box !important;
   }
 }
 

@@ -11,17 +11,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="letterhead.css?v=22.0">
+  <link rel="stylesheet" href="letterhead.css?v=23.0">
 </head>
 <body>
 
   <div class="studio-app-container">
 
     <!-- MAIN TWO-PANEL STUDIO LAYOUT (FULL VIEWPORT HEIGHT) -->
-    <div class="studio-main-layout" style="height: 100vh; margin-top: 0;">
+    <div class="studio-main-layout" style="height: 100vh; margin-top: 0; box-sizing: border-box;">
       
       <!-- LEFT FORM INPUTS SIDEBAR -->
-      <aside class="sidebar-form no-print" style="width: 320px; min-width: 320px; background-color: #070d14; border-right: 1px solid #1e2936; padding: 24px; display: flex; flex-direction: column; gap: 20px;">
+      <aside class="sidebar-form no-print" style="width: 320px; min-width: 320px; background-color: #070d14; border-right: 1px solid #1e2936; padding: 24px; display: flex; flex-direction: column; gap: 20px; box-sizing: border-box;">
         
         <!-- SIDEBAR BRAND HEADER -->
         <div class="sidebar-brand-block" style="display: flex; align-items: center; gap: 10px; padding-bottom: 16px; border-bottom: 1px solid #1e2936;">
@@ -35,7 +35,7 @@
           <!-- SECTION 1: OFFICE LOCATION PRESET -->
           <div class="form-group">
             <label for="office-preset" style="font-size: 0.8rem; font-weight: 600; color: #cbd5e1; margin-bottom: 6px; display: block;">Regional Office Location</label>
-            <select id="office-preset" class="form-control" onchange="updateFooter()" style="background: #16202c; color: #ffffff; border: 1px solid #2d3748; padding: 8px 10px; font-size: 0.82rem; border-radius: 6px; width: 100%; outline: none;">
+            <select id="office-preset" class="form-control" onchange="updateFooter()" style="background: #16202c; color: #ffffff; border: 1px solid #2d3748; padding: 8px 10px; font-size: 0.82rem; border-radius: 6px; width: 100%; outline: none; box-sizing: border-box;">
               <option value="bangalore" selected>Bangalore (HQ) — India</option>
               <option value="manipal">Manipal — India</option>
               <option value="mangalore">Mangalore — India</option>
@@ -45,7 +45,7 @@
 
           <!-- SUBMIT CTA BUTTON (WCAG AA 4.5:1 Contrast Compliant Background) -->
           <div class="form-action-box" style="margin-top: 16px;">
-            <button type="button" id="btn-download-docx-side" class="btn btn-primary btn-block" onclick="exportToDocx(true)" style="width: 100%; padding: 10px 14px; font-size: 0.82rem; font-weight: 700; background-color: #007876; color: #ffffff; border: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <button type="button" id="btn-download-docx-side" class="btn btn-primary btn-block" onclick="exportToDocx(true)" style="width: 100%; padding: 10px 14px; font-size: 0.82rem; font-weight: 700; background-color: #007876; color: #ffffff; border: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-sizing: border-box;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
               Download Word Template (.docx)
             </button>
@@ -55,12 +55,12 @@
       </aside>
 
       <!-- RIGHT DISPLAY AREA: FULL VIEWPORT A4 DOCUMENT WORKSPACE (WITH 120PX PADDING-BOTTOM COMPENSATING FOR TOP OFFSET) -->
-      <main class="preview-area" style="flex: 1; background-color: #070a0f; padding: 32px 16px 120px 16px; overflow-y: auto; height: 100vh; display: block;">
+      <main class="preview-area" style="flex: 1; background-color: #070a0f; padding: 32px 16px 120px 16px !important; overflow-y: auto; height: 100vh; display: block; box-sizing: border-box !important;">
         
-        <div class="paper-container" id="sheets-wrapper" style="display: flex; justify-content: center; align-items: flex-start; margin: 0 auto; padding-bottom: 60px; width: 100%; height: auto; min-height: 100%; max-height: none;">
+        <div class="paper-container" id="sheets-wrapper" style="display: flex; justify-content: center; align-items: flex-start; margin: 0 auto; padding-bottom: 60px; width: 100%; height: auto !important; min-height: 100% !important; max-height: none !important; box-sizing: border-box !important;">
           
           <!-- PAGE 1 SHEET -->
-          <article class="a4-sheet" id="letterhead-sheet" style="margin-bottom: 40px; height: auto; min-height: 297mm; max-height: none;">
+          <article class="a4-sheet" id="letterhead-sheet" style="margin-bottom: 40px; height: auto !important; min-height: 297mm; max-height: none !important; box-sizing: border-box !important;">
             
             <!-- TOP ACCENT RULE -->
             <div class="top-accent-bar"></div>
@@ -114,6 +114,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="letterhead.js?v=22.0"></script>
+  <script src="letterhead.js?v=23.0"></script>
 </body>
 </html>
