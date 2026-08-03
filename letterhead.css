@@ -3,13 +3,13 @@
    ========================================================================== */
 
 :root {
-  --trescon-teal: #00A5A3;
-  --trescon-teal-dark: #007D7B;
+  --trescon-teal: #007876;
+  --trescon-teal-dark: #005F5D;
   --trescon-teal-light: #E6F6F6;
   --trescon-dark: #01373D;
   --trescon-charcoal: #1E2124;
   --trescon-slate: #464D53;
-  --trescon-muted: #646E73;
+  --trescon-muted: #475569;
   --trescon-light-gray: #F4F6F7;
   --trescon-border: #DCE3E6;
   --trescon-lime: #C0F43C;
@@ -947,7 +947,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .footer-disclaimer {
   font-size: 0.63rem;
-  color: var(--trescon-muted);
+  color: #475569;
   line-height: 1.35;
   text-align: justify;
   margin-bottom: 0;
