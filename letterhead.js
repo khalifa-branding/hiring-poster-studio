@@ -444,8 +444,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.autoFitCanvas = autoFitCanvas;
   window.addEventListener('resize', autoFitCanvas);
-  window.addEventListener('orientationchange', autoFitCanvas);
-  autoFitCanvas();
   setTimeout(autoFitCanvas, 50);
-  setTimeout(autoFitCanvas, 200);
 });
