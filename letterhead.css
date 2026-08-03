@@ -524,12 +524,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     box-sizing: border-box !important;
   }
 
+  article#letterhead-sheet,
   .a4-sheet {
-    width: min(210mm, 100%) !important;
+    width: 100% !important;
     max-width: 210mm !important;
-    min-height: 297mm !important;
     aspect-ratio: 1 / 1.4142 !important;
     height: auto !important;
+    min-height: 0 !important;
     max-height: none !important;
     background-color: #ffffff !important;
     color: var(--trescon-charcoal) !important;
@@ -961,11 +962,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .footer-disclaimer {
-  font-size: 0.63rem;
-  color: #475569;
-  line-height: 1.35;
-  text-align: justify;
-  margin-bottom: 0;
+  font-size: clamp(12px, 0.8vw, 14px) !important;
+  color: #475569 !important;
+  line-height: 1.35 !important;
+  text-align: justify !important;
+  margin-bottom: 0 !important;
 }
 
 .footer-disclaimer strong {
