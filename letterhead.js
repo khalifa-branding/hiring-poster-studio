@@ -410,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Trigger Initial Footer Sync
   window.updateFooter();
 
-  // Auto-Fit Letterhead Canvas to Viewport (Top-Aligned Non-Clipping Engine)
+  // Auto-Fit Letterhead Canvas to Viewport (Zero-Scrollbar Perfect Fit Engine)
   function autoFitCanvas() {
     const previewArea = document.querySelector('.preview-area');
     const paperContainer = document.querySelector('.paper-container');
@@ -420,9 +420,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sheet.style.transform = 'none';
 
-    // Measure available space inside preview workspace (subtracting 40px for top/bottom padding)
-    const containerWidth = Math.max(previewArea.clientWidth - 40, 300);
-    const containerHeight = Math.max(previewArea.clientHeight - 40, 400);
+    // Subtract 48px padding buffer so the document fits with zero bottom cutoff and zero scrollbar
+    const containerWidth = Math.max(previewArea.clientWidth - 48, 280);
+    const containerHeight = Math.max(previewArea.clientHeight - 48, 350);
 
     // Standard A4 pixel dimensions at 96 DPI: 794px width x 1123px height
     const sheetWidth = 794;
