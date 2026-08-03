@@ -62,64 +62,11 @@
             </select>
           </div>
 
-          <!-- SECTION 2: RECIPIENT INFORMATION -->
-          <div class="form-section-title">Recipient Information</div>
-          <div class="form-group">
-            <label for="input-recip-name">Recipient Name</label>
-            <input type="text" id="input-recip-name" class="form-control" value="Mr. Alex Turner" placeholder="e.g. Mr. Alex Turner">
-          </div>
-          <div class="form-group">
-            <label for="input-recip-title">Designation & Company</label>
-            <input type="text" id="input-recip-title" class="form-control" value="Chief Executive Officer, Apex Global Innovations Ltd." placeholder="e.g. Chief Executive Officer, Apex Global Ltd.">
-          </div>
-          <div class="form-group">
-            <label for="input-recip-address">City & Country</label>
-            <input type="text" id="input-recip-address" class="form-control" value="Bengaluru, Karnataka" placeholder="e.g. Bengaluru, Karnataka">
-          </div>
-
-          <!-- SECTION 4: SUBJECT & SALUTATION -->
-          <div class="form-section-title">Subject & Greeting</div>
-          <div class="form-group">
-            <label for="input-subject">Subject Line</label>
-            <input type="text" id="input-subject" class="form-control" value="Subject: Formal Proposal & Corporate Partnership Engagement" placeholder="e.g. Subject: Strategic Partnership Engagement">
-          </div>
-          <div class="form-group">
-            <label for="input-salutation">Salutation</label>
-            <input type="text" id="input-salutation" class="form-control" value="Dear Mr. Turner," placeholder="e.g. Dear Stakeholders,">
-          </div>
-
-          <!-- SECTION 5: LETTER BODY CONTENT -->
-          <div class="form-section-title">Letter Content</div>
-          <div class="form-group">
-            <label for="input-body">Letter Body</label>
-            <div id="editor-sidebar-toolbar"></div>
-            <div id="input-body-editor" class="body-rich-editor"></div>
-          </div>
-
-          <!-- SECTION 6: SIGNATORY INFORMATION -->
-          <div class="form-section-title">Signatory Details</div>
-          <div class="form-group">
-            <label for="input-sign-closing">Closing Phrase</label>
-            <input type="text" id="input-sign-closing" class="form-control" value="Warm regards," placeholder="e.g. Warm regards,">
-          </div>
-          <div class="form-group">
-            <label for="input-sign-name">Signatory Name</label>
-            <input type="text" id="input-sign-name" class="form-control" value="Mohammed Saleem" placeholder="e.g. Mohammed Saleem">
-          </div>
-          <div class="form-group">
-            <label for="input-sign-title">Signatory Title</label>
-            <input type="text" id="input-sign-title" class="form-control" value="Founder & Chairman" placeholder="e.g. Founder & Chairman">
-          </div>
-
-          <!-- SUBMIT CTA BUTTONS -->
-          <div class="form-action-box" style="display: flex; flex-direction: column; gap: 8px;">
-            <button type="button" id="btn-download-docx-blank" class="btn btn-outline btn-block" style="border-color: #00A5A3; color: #00A5A3; font-weight: 600;" onclick="exportToDocx(true)">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Download Blank Word Template (.docx)
-            </button>
-            <button type="button" id="btn-download-docx-side" class="btn btn-primary btn-block" onclick="exportToDocx(false)">
+          <!-- SUBMIT CTA BUTTON -->
+          <div class="form-action-box" style="margin-top: 16px;">
+            <button type="button" id="btn-download-docx-side" class="btn btn-primary btn-block" onclick="exportToDocx(true)">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Download Filled Word Document (.docx)
+              Download Word Template (.docx)
             </button>
           </div>
 
@@ -157,34 +104,8 @@
             </header>
             <div class="header-gradient-rule"></div>
 
-            <!-- RECIPIENT BLOCK PREVIEW -->
-            <div class="recipient-block" id="preview-recipient-block">
-              <p class="recip-line recip-to">To,</p>
-              <p class="recip-line recip-name" id="preview-recipient-name">Mr. Alex Turner</p>
-              <p class="recip-line recip-title" id="preview-recipient-title">Chief Executive Officer, Apex Global Innovations Ltd.</p>
-              <p class="recip-line recip-address" id="preview-recipient-address">Bengaluru, Karnataka</p>
-            </div>
-
-            <!-- SUBJECT LINE PREVIEW -->
-            <div class="subject-block" id="preview-subject-block">
-              <p class="subject-text" id="preview-subject">Subject: Formal Proposal & Corporate Partnership Engagement</p>
-            </div>
-
-            <!-- SALUTATION PREVIEW -->
-            <div class="salutation-block" id="preview-salutation-block">
-              <p class="salutation-text" id="preview-salutation">Dear Mr. Turner,</p>
-            </div>
-
-            <!-- LETTER BODY PREVIEW -->
-            <div class="letter-body full-canvas-editor" id="preview-body"></div>
-
-            <!-- SIGNATURE BLOCK PREVIEW -->
-            <div class="signature-block" id="preview-signature-block">
-              <p class="closing-phrase" id="preview-sign-closing">Warm regards,</p>
-              <div class="signature-space"></div>
-              <p class="signatory-name" id="preview-sign-name">Mohammed Saleem</p>
-              <p class="signatory-title" id="preview-sign-title">Founder & Chairman</p>
-            </div>
+            <!-- BLANK LETTER CANVAS BODY -->
+            <div class="letter-body blank-canvas-space" style="flex: 1; min-height: 550px;"></div>
 
             <!-- FOOTER SECTION -->
             <footer class="letter-footer" style="margin-top: auto; padding-top: 2px; margin-bottom: 0; padding-bottom: 0;">
