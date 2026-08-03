@@ -574,6 +574,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* Letterhead Header (Pixel-Perfect Baseline Alignment & Robust Display) */
 .letter-header {
+  position: relative !important;
+  z-index: 5 !important;
   display: flex !important;
   justify-content: space-between !important;
   align-items: flex-end !important;
