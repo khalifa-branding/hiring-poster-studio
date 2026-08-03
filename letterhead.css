@@ -18,49 +18,56 @@
   --font-body: 'Manrope', Arial, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* --------------------------------------------------------------------------
+   SCREEN LAYOUT & VIEWPORT LOCK (@media screen)
+   -------------------------------------------------------------------------- */
+@media screen {
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    width: 100vw !important;
+    overflow: hidden !important;
+    font-family: var(--font-body);
+    background-color: #0d131a;
+    color: #e0e6ed;
+  }
 
-body {
-  font-family: var(--font-body);
-  background-color: #0d131a;
-  color: #e0e6ed;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+  .studio-app-container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    height: 100dvh;
+    width: 100vw;
+    overflow: hidden;
+  }
 
-/* Studio Full Page Viewport Layout */
-.studio-app-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
-}
+  .studio-main-layout {
+    display: flex;
+    flex-direction: row;
+    height: 100vh !important;
+    height: 100dvh !important;
+    width: 100vw !important;
+    overflow: hidden;
+    margin: 0 !important;
+  }
 
-.studio-main-layout {
-  display: flex;
-  height: 100vh !important;
-  width: 100vw !important;
-  overflow: hidden;
-  margin-top: 0 !important;
-}
-
-.sidebar-form {
-  width: 320px !important;
-  min-width: 320px !important;
-  background-color: #070d14 !important;
-  border-right: 1px solid #1e2936 !important;
-  padding: 24px !important;
-  overflow-y: auto !important;
-  color: #e2e8f0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 20px !important;
-  z-index: 20 !important;
+  .sidebar-form {
+    width: 320px !important;
+    min-width: 320px !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    background-color: #070d14 !important;
+    border-right: 1px solid #1e2936 !important;
+    padding: 24px !important;
+    overflow: hidden !important;
+    color: #e2e8f0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    z-index: 20 !important;
+  }
 }
 
 .sidebar-header h2 {
@@ -482,45 +489,47 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-color: rgba(0, 165, 163, 0.1);
 }
 
-/* --------------------------------------------------------------------------
-   Preview Sheet Canvas & A4 Page Styling
-   -------------------------------------------------------------------------- */
-.preview-area {
-  flex: 1 !important;
-  background-color: #070a0f !important;
-  background-image: radial-gradient(#1e2936 1px, transparent 1px) !important;
-  background-size: 24px 24px !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  padding: 16px !important;
-  overflow: hidden !important;
-  height: 100vh !important;
-}
+/* Preview Sheet Canvas & A4 Page Scaling */
+@media screen {
+  .preview-area {
+    flex: 1 !important;
+    background-color: #070a0f !important;
+    background-image: radial-gradient(#1e2936 1px, transparent 1px) !important;
+    background-size: 24px 24px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 16px !important;
+    overflow: hidden !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+  }
 
-.paper-container {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: flex-start !important;
-  overflow: hidden !important;
-  transition: all 0.15s ease;
-}
+  .paper-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: hidden !important;
+    transition: transform 0.15s ease-out;
+  }
 
-/* A4 Sheet Dimensions & Google Docs Canvas Engine */
-.a4-sheet {
-  width: 210mm;
-  min-height: 297mm;
-  height: auto;
-  background-color: #ffffff;
-  color: var(--trescon-charcoal);
-  padding: 7mm 10mm 7mm 10mm;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 2px rgba(0, 0, 0, 0.2);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  overflow: visible;
-  margin-bottom: 30px;
-  font-family: var(--font-body);
+  .a4-sheet {
+    width: 210mm;
+    min-height: 297mm;
+    max-height: calc(100vh - 32px);
+    max-width: calc(100% - 32px);
+    aspect-ratio: 210 / 297;
+    background-color: #ffffff;
+    color: var(--trescon-charcoal);
+    padding: 7mm 10mm 7mm 10mm;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 2px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    margin: 0 auto;
+    font-family: var(--font-body);
+  }
 }
 
 /* Visual Page Break Divider (Google Docs Style) */
