@@ -589,7 +589,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   height: auto;
   background-color: #ffffff;
   color: var(--trescon-charcoal);
-  padding: 15mm 15mm 15mm 15mm;
+  padding: 10mm 15mm 10mm 15mm;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 2px rgba(0, 0, 0, 0.2);
   position: relative;
   display: flex;
@@ -722,13 +722,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   justify-content: center !important;
 }
 
-/* Header Gradient Rule (12px gap from bottom of logo/tagline) */
+/* Header Gradient Rule (Compact Gap) */
 .header-gradient-rule {
   height: 2px !important;
   width: 100% !important;
   background: linear-gradient(90deg, var(--trescon-teal) 0%, var(--trescon-lime) 100%) !important;
-  margin-top: 12px !important;
-  margin-bottom: 20px !important;
+  margin-top: 6px !important;
+  margin-bottom: 14px !important;
   border-radius: 2px !important;
 }
 

@@ -287,12 +287,12 @@ window.exportToDocx = async function() {
       properties: {
         page: {
           margin: {
-            top: 1080,
-            bottom: 1080,
-            left: 1440,
-            right: 1440,
-            header: 432,
-            footer: 432
+            top: 720,
+            bottom: 720,
+            left: 1080,
+            right: 1080,
+            header: 288,
+            footer: 288
           }
         }
       },
