@@ -158,7 +158,7 @@ window.exportToDocx = async function(isBlankBody = false) {
     );
   }
 
-  // Fetch Logo (Exact Optical Dimensions)
+  // Fetch Logo (Exact Optical Dimensions 60px Height)
   let logoImageRun = null;
   try {
     const imgRes = await fetch('brand_assets/10-years-trescon-logo.png');
@@ -166,51 +166,18 @@ window.exportToDocx = async function(isBlankBody = false) {
       const imgBuffer = await imgRes.arrayBuffer();
       logoImageRun = new ImageRun({
         data: imgBuffer,
-        transformation: { width: 140, height: 45 }
+        transformation: { width: 187, height: 60 }
       });
     }
   } catch (e) {
     console.warn('Logo fetch error:', e);
   }
 
-  // Native 2-Column Word Header Table (Logo | Vertical Divider | 2-Line Tagline - Bottom Aligned)
-  const headerLeftCellContent = new Table({
-    borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
-    rows: [
-      new TableRow({
-        children: [
-          new TableCell({
-            borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' } },
-            children: [
-              ...(logoImageRun ? [
-                new Paragraph({ children: [logoImageRun], spacing: { after: 0 } })
-              ] : [
-                new Paragraph({ children: [new TextRun({ text: 'TRESCON GLOBAL', bold: true, size: 20, color: '00A5A3', font: 'Anek Devanagari' })] })
-              ])
-            ]
-          }),
-          new TableCell({
-            borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
-            children: [
-              new Paragraph({
-                children: [new TextRun({ text: "  Connecting Businesses", bold: true, size: 11, color: "01373D", font: "Manrope" })],
-                spacing: { before: 30, after: 10 }
-              }),
-              new Paragraph({
-                children: [new TextRun({ text: "  with Opportunities", bold: true, size: 11, color: "01373D", font: "Manrope" })],
-                spacing: { after: 0 }
-              })
-            ]
-          })
-        ]
-      })
-    ]
-  });
-
+  // Native Clean 3-Column Word Header Table (Logo | Vertical Divider + Tagline | Contact Info)
   const headerTable = new Table({
     width: { size: 100, type: WidthType.PERCENTAGE },
     borders: {
-      bottom: { style: BorderStyle.SINGLE, size: 8, color: '00A5A3' },
+      bottom: { style: BorderStyle.SINGLE, size: 12, color: '00A5A3' },
       top: { style: BorderStyle.NONE },
       left: { style: BorderStyle.NONE },
       right: { style: BorderStyle.NONE }
@@ -218,24 +185,52 @@ window.exportToDocx = async function(isBlankBody = false) {
     rows: [
       new TableRow({
         children: [
+          // COL 1: LOGO (35%)
           new TableCell({
-            width: { size: 62, type: WidthType.PERCENTAGE },
+            width: { size: 35, type: WidthType.PERCENTAGE },
             borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
-            children: [headerLeftCellContent]
+            children: [
+              ...(logoImageRun ? [
+                new Paragraph({ children: [logoImageRun], spacing: { after: 40 } })
+              ] : [
+                new Paragraph({ children: [new TextRun({ text: 'TRESCON GLOBAL', bold: true, size: 24, color: '00A5A3', font: 'Anek Devanagari' })] })
+              ])
+            ]
           }),
+          // COL 2: VERTICAL DIVIDER & TAGLINE (35%)
           new TableCell({
-            width: { size: 38, type: WidthType.PERCENTAGE },
+            width: { size: 35, type: WidthType.PERCENTAGE },
+            borders: {
+              top: { style: BorderStyle.NONE },
+              bottom: { style: BorderStyle.NONE },
+              left: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' },
+              right: { style: BorderStyle.NONE }
+            },
+            children: [
+              new Paragraph({
+                children: [new TextRun({ text: "  Connecting Businesses", bold: true, size: 20, color: "01373D", font: "Manrope" })],
+                spacing: { before: 80, after: 20 }
+              }),
+              new Paragraph({
+                children: [new TextRun({ text: "  with Opportunities", bold: true, size: 20, color: "01373D", font: "Manrope" })],
+                spacing: { after: 40 }
+              })
+            ]
+          }),
+          // COL 3: CONTACT META (30%)
+          new TableCell({
+            width: { size: 30, type: WidthType.PERCENTAGE },
             borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
             children: [
               new Paragraph({
                 alignment: AlignmentType.RIGHT,
-                children: [new TextRun({ text: data.email, size: 13, color: '464D53', font: 'Manrope' })],
-                spacing: { after: 10 }
+                children: [new TextRun({ text: data.email, size: 20, color: '464D53', font: 'Manrope' })],
+                spacing: { before: 80, after: 20 }
               }),
               new Paragraph({
                 alignment: AlignmentType.RIGHT,
-                children: [new TextRun({ text: data.web, bold: true, size: 13, color: '00A5A3', font: 'Manrope' })],
-                spacing: { after: 20 }
+                children: [new TextRun({ text: data.web, bold: true, size: 20, color: '00A5A3', font: 'Manrope' })],
+                spacing: { after: 40 }
               })
             ]
           })
@@ -245,18 +240,19 @@ window.exportToDocx = async function(isBlankBody = false) {
   });
 
   const cleanEntity = stripHtmlEntities(data.entity);
-  let inlineAddrWord = stripHtmlEntities(data.address);
+  const cleanAddr = stripHtmlEntities(data.address);
+  let cinOrExtra = '';
   if (data.cin) {
-    inlineAddrWord += ` [${stripHtmlEntities(data.cin)}]`;
+    cinOrExtra = `[${stripHtmlEntities(data.cin)}]`;
   } else if (data.extra) {
-    inlineAddrWord += ` [${stripHtmlEntities(data.extra)}]`;
+    cinOrExtra = `[${stripHtmlEntities(data.extra)}]`;
   }
 
-  // Native Full-Width Word Footer Table (2-Line Format: Company Name + Single Line Address [CIN/License])
+  // Native Full-Width Word Footer Table (Company Name + 2-Line Address + Disclaimer)
   const footerTable = new Table({
     width: { size: 100, type: WidthType.PERCENTAGE },
     borders: {
-      top: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' },
+      top: { style: BorderStyle.SINGLE, size: 8, color: '00A5A3' },
       bottom: { style: BorderStyle.NONE },
       left: { style: BorderStyle.NONE },
       right: { style: BorderStyle.NONE }
@@ -268,8 +264,11 @@ window.exportToDocx = async function(isBlankBody = false) {
             width: { size: 100, type: WidthType.PERCENTAGE },
             borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
             children: [
-              new Paragraph({ children: [new TextRun({ text: cleanEntity, bold: true, color: '01373D', size: 13, font: 'Anek Devanagari' })], spacing: { after: 10 } }),
-              new Paragraph({ children: [new TextRun({ text: inlineAddrWord, color: '464D53', size: 11, font: 'Manrope' })], spacing: { after: 10 } })
+              new Paragraph({ children: [new TextRun({ text: cleanEntity, bold: true, color: '01373D', size: 24, font: 'Anek Devanagari' })], spacing: { before: 60, after: 20 } }),
+              new Paragraph({ children: [new TextRun({ text: cleanAddr, color: '464D53', size: 22, font: 'Manrope' })], spacing: { after: 20 } }),
+              ...(cinOrExtra ? [
+                new Paragraph({ children: [new TextRun({ text: cinOrExtra, color: '464D53', size: 20, font: 'Manrope' })], spacing: { after: 60 } })
+              ] : [])
             ]
           })
         ]
@@ -282,12 +281,12 @@ window.exportToDocx = async function(isBlankBody = false) {
       properties: {
         page: {
           margin: {
-            top: 397,
-            bottom: 397,
+            top: 1134,
+            bottom: 1134,
             left: 567,
             right: 567,
-            header: 170,
-            footer: 144
+            header: 397,
+            footer: 397
           }
         }
       },
@@ -301,15 +300,16 @@ window.exportToDocx = async function(isBlankBody = false) {
           children: [
             footerTable,
             new Paragraph({
+              border: { top: { style: BorderStyle.SINGLE, size: 6, color: 'DCE3E6' } },
               children: [
                 new TextRun({
                   text: "Disclaimer: The information shared by Trescon is confidential and intended solely for the recipient. It may not be copied, distributed, or relied upon without prior written consent. Trescon makes no warranties regarding the accuracy or completeness of the content and accepts no liability for any loss arising from its use. © 2025 Trescon. All rights reserved.",
-                  size: 10,
-                  color: "718096",
+                  size: 20,
+                  color: "64748B",
                   font: "Manrope"
                 })
               ],
-              spacing: { before: 40 }
+              spacing: { before: 80, after: 40 }
             })
           ]
         })
