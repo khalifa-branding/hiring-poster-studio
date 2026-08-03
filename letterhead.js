@@ -288,11 +288,11 @@ window.exportToDocx = async function() {
         page: {
           margin: {
             top: 720,
-            bottom: 720,
+            bottom: 432,
             left: 1080,
             right: 1080,
             header: 288,
-            footer: 288
+            footer: 144
           }
         }
       },
