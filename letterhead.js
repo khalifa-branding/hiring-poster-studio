@@ -5,7 +5,7 @@
 // Preset Address Database
 const ADDRESS_PRESETS = {
   bangalore: {
-    entity: "Trescon Global Business Solutions Pvt Ltd",
+    entity: "Trescon Global Business Solutions Pvt Ltd.",
     address: "1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka – 560034",
     extra: "",
     cin: "CIN: U74900KA2016PTC086221",
@@ -13,15 +13,15 @@ const ADDRESS_PRESETS = {
     web: "tresconglobal.com"
   },
   manipal: {
-    entity: "Trescon Global Business Solutions Pvt Ltd",
-    address: "H (23), 5th Floor, Pragathi Business District #412, above Reliance Trends, Laxmindra Nagar,<br>Manipal, Udupi, Karnataka – 576104",
+    entity: "Trescon Global Business Solutions Pvt Ltd.",
+    address: "H (23), 5th Floor, Pragathi Business District #412, above Reliance Trends, Laxmindra Nagar, Manipal, Udupi, Karnataka – 576104",
     extra: "",
     cin: "CIN: U74900KA2016PTC086221",
     email: "info@tresconglobal.com",
     web: "tresconglobal.com"
   },
   mangalore: {
-    entity: "Trescon Global Business Solutions Pvt Ltd",
+    entity: "Trescon Global Business Solutions Pvt Ltd.",
     address: "1st Floor, Bejai Post, Ajantha Business Center, Bejai – Kapikad Road, Mangaluru, Karnataka – 575004",
     extra: "",
     cin: "CIN: U74900KA2016PTC086221",
@@ -60,15 +60,19 @@ window.updateFooter = function() {
 
   const companyElem = document.getElementById('preview-footer-company');
   const addressElem = document.getElementById('preview-footer-address');
-  const extraElem = document.getElementById('preview-footer-extra');
-  const cinElem = document.getElementById('preview-footer-cin');
   const emailElem = document.getElementById('preview-email');
   const webElem = document.getElementById('preview-web');
 
   if (companyElem) companyElem.textContent = data.entity;
-  if (addressElem) addressElem.innerHTML = data.address;
-  if (extraElem) extraElem.textContent = data.extra || '';
-  if (cinElem) cinElem.textContent = data.cin || '';
+
+  let inlineAddr = data.address.replace(/<br\s*\/?>/gi, ' ');
+  if (data.cin) {
+    inlineAddr += ` [${data.cin}]`;
+  } else if (data.extra) {
+    inlineAddr += ` [${data.extra}]`;
+  }
+
+  if (addressElem) addressElem.textContent = inlineAddr;
   if (emailElem) emailElem.textContent = data.email;
   if (webElem) webElem.textContent = data.web;
 };
@@ -237,15 +241,18 @@ window.exportToDocx = async function() {
   });
 
   const cleanEntity = stripHtmlEntities(data.entity);
-  const cleanAddress = stripHtmlEntities(data.address);
-  const cleanExtra = stripHtmlEntities(data.extra);
-  const cleanCin = stripHtmlEntities(data.cin);
+  let inlineAddrWord = stripHtmlEntities(data.address);
+  if (data.cin) {
+    inlineAddrWord += ` [${stripHtmlEntities(data.cin)}]`;
+  } else if (data.extra) {
+    inlineAddrWord += ` [${stripHtmlEntities(data.extra)}]`;
+  }
 
-  // Native 2-Column Word Footer Table (Ultra-Compact Heights)
+  // Native Full-Width Word Footer Table (2-Line Format: Company Name + Single Line Address [CIN/License])
   const footerTable = new Table({
     width: { size: 100, type: WidthType.PERCENTAGE },
     borders: {
-      top: { style: BorderStyle.SINGLE, size: 6, color: 'DCE3E6' },
+      top: { style: BorderStyle.SINGLE, size: 6, color: '00A5A3' },
       bottom: { style: BorderStyle.NONE },
       left: { style: BorderStyle.NONE },
       right: { style: BorderStyle.NONE }
@@ -254,27 +261,11 @@ window.exportToDocx = async function() {
       new TableRow({
         children: [
           new TableCell({
-            width: { size: 72, type: WidthType.PERCENTAGE },
+            width: { size: 100, type: WidthType.PERCENTAGE },
             borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
             children: [
               new Paragraph({ children: [new TextRun({ text: cleanEntity, bold: true, color: '01373D', size: 13, font: 'Anek Devanagari' })], spacing: { after: 10 } }),
-              new Paragraph({ children: [new TextRun({ text: cleanAddress, color: '464D53', size: 11, font: 'Manrope' })], spacing: { after: 10 } })
-            ]
-          }),
-          new TableCell({
-            width: { size: 28, type: WidthType.PERCENTAGE },
-            borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
-            children: [
-              ...(cleanExtra ? [new Paragraph({
-                alignment: AlignmentType.RIGHT,
-                children: [new TextRun({ text: cleanExtra, color: '464D53', size: 11, font: 'Manrope' })],
-                spacing: { after: 10 }
-              })] : []),
-              ...(cleanCin ? [new Paragraph({
-                alignment: AlignmentType.RIGHT,
-                children: [new TextRun({ text: cleanCin, bold: true, color: '00A5A3', size: 11, font: 'Manrope' })],
-                spacing: { after: 10 }
-              })] : [])
+              new Paragraph({ children: [new TextRun({ text: inlineAddrWord, color: '464D53', size: 11, font: 'Manrope' })], spacing: { after: 10 } })
             ]
           })
         ]
