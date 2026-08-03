@@ -525,8 +525,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 
   .a4-sheet {
-    width: 210mm !important;
+    width: min(210mm, 100%) !important;
+    max-width: 210mm !important;
     min-height: 297mm !important;
+    aspect-ratio: 1 / 1.4142 !important;
     height: auto !important;
     max-height: none !important;
     background-color: #ffffff !important;
@@ -633,7 +635,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: inline-flex !important;
   flex-direction: column !important;
   justify-content: flex-end !important;
-  font-size: 0.73rem !important;
+  font-size: clamp(12px, 0.73rem, 14px) !important;
   color: var(--trescon-dark) !important;
   font-weight: 600 !important;
   line-height: 1.2 !important;
@@ -644,7 +646,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .header-meta-block {
   text-align: left !important;
-  font-size: 0.76rem !important;
+  font-size: clamp(12px, 0.76rem, 14px) !important;
   color: var(--trescon-dark) !important;
   display: flex !important;
   flex-direction: column !important;
