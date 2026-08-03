@@ -573,13 +573,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background: linear-gradient(90deg, var(--trescon-teal) 0%, var(--trescon-dark) 100%);
 }
 
-/* Letterhead Header (Pixel-Perfect Baseline Alignment) */
+/* Letterhead Header (Pixel-Perfect Baseline Alignment & Robust Display) */
 .letter-header {
   display: flex !important;
   justify-content: space-between !important;
   align-items: flex-end !important;
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
+  width: 100% !important;
+  min-height: 48px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .header-logo-block {
@@ -587,15 +591,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   flex-direction: row !important;
   align-items: flex-end !important;
   gap: 10px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .letterhead-logo {
   height: 44px !important;
   max-height: 44px !important;
+  min-height: 38px !important;
   width: auto !important;
   object-fit: contain !important;
   display: block !important;
   margin: 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .header-tagline-divider {
