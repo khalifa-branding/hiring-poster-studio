@@ -510,7 +510,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   height: auto;
   background-color: #ffffff;
   color: var(--trescon-charcoal);
-  padding: 10mm 15mm 4mm 15mm;
+  padding: 7mm 10mm 7mm 10mm;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 2px rgba(0, 0, 0, 0.2);
   position: relative;
   display: flex;

@@ -282,11 +282,11 @@ window.exportToDocx = async function(isBlankBody = false) {
       properties: {
         page: {
           margin: {
-            top: 720,
-            bottom: 432,
-            left: 1080,
-            right: 1080,
-            header: 288,
+            top: 397,
+            bottom: 397,
+            left: 567,
+            right: 567,
+            header: 170,
             footer: 144
           }
         }
