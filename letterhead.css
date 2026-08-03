@@ -952,7 +952,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .footer-address {
-  font-size: 0.72rem;
+  font-size: 11px !important;
   color: var(--trescon-slate);
   line-height: 1.15 !important;
 }
@@ -968,8 +968,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-top: 1px solid #dce3e6 !important;
   margin-top: 6px !important;
   padding-top: 4px !important;
-  font-size: 12px !important;
-  color: #475569 !important;
+  font-size: 10px !important;
+  color: #64748b !important;
   line-height: 1.15 !important;
   text-align: justify !important;
   margin-bottom: 0 !important;
