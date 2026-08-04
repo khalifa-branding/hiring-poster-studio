@@ -57,12 +57,12 @@ def create_pixel_perfect_office_template(key, info, is_blank=False, output_filen
     section.page_width = Mm(210)
     section.page_height = Mm(297)
     
-    # Margins: Top 28mm (1587 dxa), Bottom 20mm (1134 dxa), Left/Right 10mm (567 dxa), Header 7mm (397 dxa)
-    section.top_margin = Mm(28)      # 1587 dxa (Clears header)
+    # Margins: Top 34mm (1927 dxa), Bottom 20mm (1134 dxa), Left/Right 10mm (567 dxa), Header 4mm (226 dxa)
+    section.top_margin = Mm(34)      # 1927 dxa (Guarantees generous clearance below bottom rule)
     section.bottom_margin = Mm(20)   # 1134 dxa
     section.left_margin = Mm(10)     # 567 dxa
     section.right_margin = Mm(10)    # 567 dxa
-    section.header_distance = Mm(7)  # 397 dxa
+    section.header_distance = Mm(4)  # 226 dxa (Positions top accent bar right at the top edge)
     section.footer_distance = Mm(7)  # 397 dxa
     
     # Color Palette Definitions
@@ -72,23 +72,34 @@ def create_pixel_perfect_office_template(key, info, is_blank=False, output_filen
     COLOR_MUTED = RGBColor(100, 116, 139)   # #64748B
     
     # -------------------------------------------------------------
-    # 2. HEADER SETUP (3-Column Layout: 190mm Printable Width)
+    # 2. HEADER SETUP (3-Column Layout with Top Accent Bar)
     # -------------------------------------------------------------
     header = section.header
     
-    # Col 1: Logo (70mm) | Col 2: Tagline (60mm) | Col 3: Contact Info (60mm)
+    # Top Accent Bar Paragraph at the top edge of the sheet
+    p_top_bar = header.paragraphs[0]
+    p_top_bar.paragraph_format.space_before = Pt(0)
+    p_top_bar.paragraph_format.space_after = Pt(8)
+    pBdr_top = parse_xml(
+        f'<w:pBdr {nsdecls("w")}>'
+        f'  <w:bottom w:val="single" w:sz="36" w:space="0" w:color="01373D"/>'
+        f'</w:pBdr>'
+    )
+    p_top_bar._p.get_or_add_pPr().append(pBdr_top)
+    
+    # Header Table (190mm Printable Width)
     table = header.add_table(rows=1, cols=3, width=Mm(190))
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.autofit = False
     
-    # Explicit Column Widths
+    # Explicit Column Widths: Logo 70mm, Tagline 60mm, Contact Meta 60mm
     col_widths = [Mm(70), Mm(60), Mm(60)]
     for i, col in enumerate(table.columns):
         col.width = col_widths[i]
         for cell in col.cells:
             cell.width = col_widths[i]
 
-    # Explicitly Remove All Table Borders & Inner Gridlines
+    # Remove All Table Borders & Inner Gridlines
     tblPr = table._tbl.tblPr
     tblBorders = parse_xml(
         f'<w:tblBorders {nsdecls("w")}>'
@@ -257,10 +268,11 @@ def create_pixel_perfect_office_template(key, info, is_blank=False, output_filen
     # -------------------------------------------------------------
     if is_blank:
         p_b = doc.add_paragraph()
-        p_b.paragraph_format.space_before = Pt(0)
+        p_b.paragraph_format.space_before = Pt(12)
         p_b.paragraph_format.space_after = Pt(0)
     else:
         p_recip = doc.add_paragraph()
+        p_recip.paragraph_format.space_before = Pt(12)
         p_recip.paragraph_format.space_after = Pt(14)
         run_recip = p_recip.add_run(
             "To,\n"
@@ -337,7 +349,7 @@ def create_pixel_perfect_office_template(key, info, is_blank=False, output_filen
 
     fn = output_filename or (info['blank_filename'] if is_blank else info['filename'])
     doc.save(fn)
-    print(f"Generated pixel-perfect Word document: {fn}")
+    print(f"Generated pixel-perfect Word document with top accent bar: {fn}")
 
 def main():
     for k, info in OFFICE_DATA.items():
