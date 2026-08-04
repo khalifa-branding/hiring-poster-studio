@@ -44,21 +44,50 @@ def generate_template(office_name, data):
     
     header = section.header
     
-    # 2. Flush Dark Teal Top Accent Bar (Reuses existing paragraph)
-    p_top = header.paragraphs[0]
-    p_top.text = ""
-    p_top.paragraph_format.space_before = Pt(0)
-    p_top.paragraph_format.space_after = Pt(6)
-    p_top.paragraph_format.line_spacing = Pt(2)
+    # 2. Flush Full-Bleed Top Accent Bar Table
+    top_bar_table = header.add_table(rows=1, cols=1, width=Mm(210))
+    top_bar_table.alignment = WD_TABLE_ALIGNMENT.CENTER
+    top_bar_table.autofit = False
     
-    p_top_border = parse_xml(
-        f'<w:pBdr {nsdecls("w")}>'
-        f'  <w:top w:val="single" w:sz="36" w:space="0" w:color="053B3F"/>'
-        f'</w:pBdr>'
+    # Force table to ignore 10mm side page margins and expand full 210mm width
+    tblPr = top_bar_table._tbl.tblPr
+    tblCellMar = parse_xml(
+        f'<w:tblCellMar {nsdecls("w")}>'
+        f'  <w:left w:w="0" w:type="dxa"/>'
+        f'  <w:right w:w="0" w:type="dxa"/>'
+        f'</w:tblCellMar>'
     )
-    p_top._p.get_or_add_pPr().append(p_top_border)
+    tblPr.append(tblCellMar)
+    
+    # Negative left indent to cancel section left margin (10mm = 567 dxa)
+    tblInd = parse_xml(f'<w:tblInd {nsdecls("w")} w:w="-567" w:type="dxa"/>')
+    tblPr.append(tblInd)
 
-    # 3. Clean 2-Column Header Table (NO TAGLINE - Logo image already includes tagline)
+    # Shading and sizing
+    cell_bar = top_bar_table.cell(0, 0)
+    cell_bar.width = Mm(210)
+    shading_elm = parse_xml(f'<w:shd {nsdecls("w")} w:fill="053B3F"/>')
+    cell_bar._tc.get_or_add_tcPr().append(shading_elm)
+    
+    p_bar = cell_bar.paragraphs[0]
+    p_bar.paragraph_format.space_before = Pt(0)
+    p_bar.paragraph_format.space_after = Pt(0)
+    p_bar.paragraph_format.line_spacing = Pt(3)
+
+    # Clear borders on top bar table
+    tblBorders_bar = parse_xml(
+        f'<w:tblBorders {nsdecls("w")}>'
+        f'  <w:top w:val="none"/>'
+        f'  <w:left w:val="none"/>'
+        f'  <w:bottom w:val="none"/>'
+        f'  <w:right w:val="none"/>'
+        f'  <w:insideH w:val="none"/>'
+        f'  <w:insideV w:val="none"/>'
+        f'</w:tblBorders>'
+    )
+    tblPr.append(tblBorders_bar)
+
+    # 3. Clean 2-Column Header Table (Logo 130mm, Contact Meta 60mm - NO TAGLINE)
     table = header.add_table(rows=1, cols=2, width=Mm(190))
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.autofit = False
@@ -70,8 +99,8 @@ def generate_template(office_name, data):
             cell.width = col_widths[i]
 
     # Explicitly clear all inner borders & padding
-    tblPr = table._tbl.tblPr
-    tblBorders = parse_xml(
+    tblPr2 = table._tbl.tblPr
+    tblBorders2 = parse_xml(
         f'<w:tblBorders {nsdecls("w")}>'
         f'  <w:top w:val="none"/>'
         f'  <w:left w:val="none"/>'
@@ -81,17 +110,18 @@ def generate_template(office_name, data):
         f'  <w:insideV w:val="none"/>'
         f'</w:tblBorders>'
     )
-    tblPr.append(tblBorders)
+    tblPr2.append(tblBorders2)
 
     for cell in table.rows[0].cells:
         tcPr = cell._tc.get_or_add_tcPr()
         tcBorders = parse_xml(r'<w:tcBorders %s><w:top w:val="none"/><w:left w:val="none"/><w:bottom w:val="none"/><w:right w:val="none"/></w:tcBorders>' % nsdecls('w'))
         tcPr.append(tcBorders)
 
-    # Cell 0: Logo Image (Contains logo + tagline graphic)
+    # Cell 0: Logo Image (Height = 60px @ 96 DPI = 571,500 EMUs)
     cell_logo = table.cell(0, 0)
     p_logo = cell_logo.paragraphs[0]
     p_logo.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    p_logo.paragraph_format.space_before = Pt(8)
     p_logo.paragraph_format.space_after = Pt(0)
     logo_path = 'brand_assets/10-years-trescon-logo.png'
     if os.path.exists(logo_path):
@@ -107,7 +137,7 @@ def generate_template(office_name, data):
     cell_meta = table.cell(0, 1)
     p_meta = cell_meta.paragraphs[0]
     p_meta.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    p_meta.paragraph_format.space_before = Pt(4)
+    p_meta.paragraph_format.space_before = Pt(12)
     
     r_eicon = p_meta.add_run("✉ ")
     r_eicon.font.name = 'Segoe UI Symbol'
@@ -133,7 +163,7 @@ def generate_template(office_name, data):
 
     # 4. Lime Accent Rule (Single paragraph under table)
     p_bottom = header.add_paragraph()
-    p_bottom.paragraph_format.space_before = Pt(4)
+    p_bottom.paragraph_format.space_before = Pt(6)
     p_bottom.paragraph_format.space_after = Pt(0)
     p_bottom_border = parse_xml(
         f'<w:pBdr {nsdecls("w")}>'
@@ -182,7 +212,7 @@ def generate_template(office_name, data):
     doc.save(filename)
     root_filename = f"Trescon_Letterhead_{office_name}_Blank.docx"
     doc.save(root_filename)
-    print(f"Successfully rendered clean tagline-free template: {filename} and {root_filename}")
+    print(f"Generated full-bleed top bar template: {filename} and {root_filename}")
 
 if __name__ == "__main__":
     for name, office_data in OFFICES.items():
