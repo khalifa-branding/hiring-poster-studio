@@ -78,37 +78,38 @@ window.updateFooter = function() {
 };
 
 window.downloadBlankTemplate = function(presetName) {
-  const capName = presetName ? (presetName.charAt(0).toUpperCase() + presetName.slice(1).toLowerCase()) : 'Bangalore';
-  const filename = `Trescon_Letterhead_${capName}_Blank.docx`;
-  const templateUrl = `./templates/${filename}`;
+    const capName = presetName ? (presetName.charAt(0).toUpperCase() + presetName.slice(1).toLowerCase()) : 'Bangalore';
+    // Append unique cache-busting parameter
+    const cacheBuster = `?v=${new Date().getTime()}`;
+    const filename = `Trescon_Letterhead_${capName}_Blank.docx`;
+    const templateUrl = `./templates/${filename}${cacheBuster}`;
 
-  fetch(templateUrl)
-    .then(response => {
-      if (!response.ok) {
-        return fetch(filename);
-      }
-      return response;
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Template network response failed: ${response.statusText}`);
-      }
-      return response.blob();
-    })
-    .then(blob => {
-      const downloadUrl = window.URL.createObjectURL(blob);
-      const anchor = document.createElement('a');
-      anchor.href = downloadUrl;
-      anchor.download = filename;
-      document.body.appendChild(anchor);
-      anchor.click();
-      document.body.removeChild(anchor);
-      window.URL.revokeObjectURL(downloadUrl);
-    })
-    .catch(err => {
-      console.error("Direct serve error, falling back to JS generator:", err);
-      exportToDocx(true);
-    });
+    fetch(templateUrl)
+        .then(response => {
+            if (!response.ok) {
+                return fetch(`${filename}${cacheBuster}`);
+            }
+            return response;
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Template download failed with HTTP status ${response.status}`);
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const anchor = document.createElement('a');
+            anchor.href = downloadUrl;
+            anchor.download = filename;
+            document.body.appendChild(anchor);
+            anchor.click();
+            document.body.removeChild(anchor);
+            window.URL.revokeObjectURL(downloadUrl);
+        })
+        .catch(err => {
+            console.error("Direct serve fetch error:", err);
+        });
 };
 
 // Native Word (.docx) Exporter Engine
