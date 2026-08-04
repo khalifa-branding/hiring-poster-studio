@@ -44,9 +44,9 @@ def generate_template(office_name, data):
     
     header = section.header
     
-    # 2. Use existing header paragraph for flush top accent bar (Prevents empty paragraph drift)
+    # 2. Flush Dark Teal Top Accent Bar (Reuses existing paragraph)
     p_top = header.paragraphs[0]
-    p_top.text = ""  # Ensure no text
+    p_top.text = ""
     p_top.paragraph_format.space_before = Pt(0)
     p_top.paragraph_format.space_after = Pt(6)
     p_top.paragraph_format.line_spacing = Pt(2)
@@ -58,12 +58,12 @@ def generate_template(office_name, data):
     )
     p_top._p.get_or_add_pPr().append(p_top_border)
 
-    # 3. Header Table (Exact Printable Width = 190mm)
-    table = header.add_table(rows=1, cols=3, width=Mm(190))
+    # 3. Clean 2-Column Header Table (NO TAGLINE - Logo image already includes tagline)
+    table = header.add_table(rows=1, cols=2, width=Mm(190))
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.autofit = False
     
-    col_widths = [Mm(65), Mm(65), Mm(60)]
+    col_widths = [Mm(130), Mm(60)]
     for i, col in enumerate(table.columns):
         col.width = col_widths[i]
         for cell in col.cells:
@@ -88,9 +88,11 @@ def generate_template(office_name, data):
         tcBorders = parse_xml(r'<w:tcBorders %s><w:top w:val="none"/><w:left w:val="none"/><w:bottom w:val="none"/><w:right w:val="none"/></w:tcBorders>' % nsdecls('w'))
         tcPr.append(tcBorders)
 
-    # Cell 0: Logo
+    # Cell 0: Logo Image (Contains logo + tagline graphic)
     cell_logo = table.cell(0, 0)
     p_logo = cell_logo.paragraphs[0]
+    p_logo.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    p_logo.paragraph_format.space_after = Pt(0)
     logo_path = 'brand_assets/10-years-trescon-logo.png'
     if os.path.exists(logo_path):
         p_logo.add_run().add_picture(logo_path, height=Emu(571500))
@@ -101,24 +103,11 @@ def generate_template(office_name, data):
         run_txt.font.bold = True
         run_txt.font.color.rgb = RGBColor(0, 165, 163)
 
-    # Cell 1: Tagline
-    cell_tag = table.cell(0, 1)
-    tcPr_tag = cell_tag._tc.get_or_add_tcPr()
-    tcBorders_tag = parse_xml(r'<w:tcBorders %s><w:top w:val="none"/><w:left w:val="single" w:sz="8" w:space="0" w:color="00A5A3"/><w:bottom w:val="none"/><w:right w:val="none"/></w:tcBorders>' % nsdecls('w'))
-    tcPr_tag.append(tcBorders_tag)
-
-    p_tag = cell_tag.paragraphs[0]
-    p_tag.paragraph_format.space_before = Pt(4)
-    run_tag = p_tag.add_run("  Connecting Businesses\n  with Opportunities")
-    run_tag.font.name = 'Manrope'
-    run_tag.font.size = Pt(9.5)
-    run_tag.font.bold = True
-    run_tag.font.color.rgb = RGBColor(0x0F, 0x4C, 0x5C)
-
-    # Cell 2: Contact Details
-    cell_meta = table.cell(0, 2)
+    # Cell 1: Contact Details (Right-Aligned)
+    cell_meta = table.cell(0, 1)
     p_meta = cell_meta.paragraphs[0]
     p_meta.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    p_meta.paragraph_format.space_before = Pt(4)
     
     r_eicon = p_meta.add_run("✉ ")
     r_eicon.font.name = 'Segoe UI Symbol'
@@ -153,7 +142,7 @@ def generate_template(office_name, data):
     )
     p_bottom._p.get_or_add_pPr().append(p_bottom_border)
 
-    # 5. Footer setup
+    # 5. Footer Setup
     footer = section.footer
     p_ftr_rule = footer.paragraphs[0]
     p_ftr_rule_border = parse_xml(
@@ -193,7 +182,7 @@ def generate_template(office_name, data):
     doc.save(filename)
     root_filename = f"Trescon_Letterhead_{office_name}_Blank.docx"
     doc.save(root_filename)
-    print(f"Successfully rendered: {filename} and {root_filename}")
+    print(f"Successfully rendered clean tagline-free template: {filename} and {root_filename}")
 
 if __name__ == "__main__":
     for name, office_data in OFFICES.items():
