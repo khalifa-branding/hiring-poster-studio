@@ -1,7 +1,7 @@
 import docx
-from docx.shared import Inches, Pt, RGBColor
+from docx.shared import Inches, Pt, RGBColor, Mm, Emu
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.enum.table import WD_TABLE_ALIGNMENT
+from docx.enum.table import WD_TABLE_ALIGNMENT, WD_ALIGN_VERTICAL
 from docx.oxml import parse_xml, OxmlElement
 from docx.oxml.ns import nsdecls, qn
 import os
@@ -9,6 +9,7 @@ import os
 OFFICE_DATA = {
     "bangalore": {
         "filename": "Trescon_Executive_Letterhead_Bangalore.docx",
+        "blank_filename": "Trescon_Letterhead_Bangalore_Blank.docx",
         "entity": "Trescon Global Business Solutions Pvt Ltd.",
         "address": "1st floor, Prom’S Complex, 3h, 7th C Main Rd, 3rd Block Koramangala, Bengaluru, Karnataka – 560034",
         "extra": "",
@@ -18,6 +19,7 @@ OFFICE_DATA = {
     },
     "manipal": {
         "filename": "Trescon_Executive_Letterhead_Manipal.docx",
+        "blank_filename": "Trescon_Letterhead_Manipal_Blank.docx",
         "entity": "Trescon Global Business Solutions Pvt Ltd.",
         "address": "H (23), 5th Floor, Pragathi Business District #412, above Reliance Trends, Laxmindra Nagar, Manipal, Udupi, Karnataka – 576104",
         "extra": "",
@@ -27,6 +29,7 @@ OFFICE_DATA = {
     },
     "mangalore": {
         "filename": "Trescon_Executive_Letterhead_Mangalore.docx",
+        "blank_filename": "Trescon_Letterhead_Mangalore_Blank.docx",
         "entity": "Trescon Global Business Solutions Pvt Ltd.",
         "address": "1st Floor, Bejai Post, Ajantha Business Center, Bejai – Kapikad Road, Mangaluru, Karnataka – 575004",
         "extra": "",
@@ -36,6 +39,7 @@ OFFICE_DATA = {
     },
     "dubai": {
         "filename": "Trescon_Executive_Letterhead_Dubai.docx",
+        "blank_filename": "Trescon_Letterhead_Dubai_Blank.docx",
         "entity": "Trescon Events Organizing Ltd.",
         "address": "Office 806, 8th Floor, Liberty House, Dubai International Financial Centre, DIFC, Dubai, UAE",
         "extra": "License number CL6668.",
@@ -45,22 +49,21 @@ OFFICE_DATA = {
     }
 }
 
-def create_office_letterhead(key, info, is_blank=False, output_filename=None):
+def create_pixel_perfect_office_template(key, info, is_blank=False, output_filename=None):
     doc = docx.Document()
     
-    # Page Setup - Exact A4 Dimensions
+    # 1. Page Setup (Exact A4 Dimensions & 96 DPI Formula)
     section = doc.sections[0]
-    section.page_width = Inches(8.27)
-    section.page_height = Inches(11.69)
+    section.page_width = Mm(210)
+    section.page_height = Mm(297)
     
-    # 7mm Top/Bottom (0.276 in), 10mm Left/Right (0.394 in)
-    section.top_margin = Inches(1.1)     # Generous clearance below header rule
-    section.bottom_margin = Inches(0.9)  # Clearance above footer
-    section.left_margin = Inches(0.4)    # 10mm
-    section.right_margin = Inches(0.4)   # 10mm
-    
-    section.header_distance = Inches(0.3)
-    section.footer_distance = Inches(0.3)
+    # Margins: Top 28mm (1587 dxa), Bottom 20mm (1134 dxa), Left/Right 10mm (567 dxa), Header 7mm (397 dxa)
+    section.top_margin = Mm(28)      # 1587 dxa (Clears header)
+    section.bottom_margin = Mm(20)   # 1134 dxa
+    section.left_margin = Mm(10)     # 567 dxa
+    section.right_margin = Mm(10)    # 567 dxa
+    section.header_distance = Mm(7)  # 397 dxa
+    section.footer_distance = Mm(7)  # 397 dxa
     
     # Color Palette Definitions
     COLOR_TEAL = RGBColor(0, 165, 163)       # #00A5A3
@@ -69,55 +72,67 @@ def create_office_letterhead(key, info, is_blank=False, output_filename=None):
     COLOR_MUTED = RGBColor(100, 116, 139)   # #64748B
     
     # -------------------------------------------------------------
-    # HEADER SETUP
+    # 2. HEADER SETUP (3-Column Layout: 190mm Printable Width)
     # -------------------------------------------------------------
     header = section.header
-    header_table = header.add_table(rows=1, cols=3, width=Inches(7.47))
-    header_table.alignment = WD_TABLE_ALIGNMENT.CENTER
     
-    # Strip all outer and inner borders from header table
-    tblPr = header_table._tbl.tblPr
+    # Col 1: Logo (70mm) | Col 2: Tagline (60mm) | Col 3: Contact Info (60mm)
+    table = header.add_table(rows=1, cols=3, width=Mm(190))
+    table.alignment = WD_TABLE_ALIGNMENT.CENTER
+    table.autofit = False
+    
+    # Explicit Column Widths
+    col_widths = [Mm(70), Mm(60), Mm(60)]
+    for i, col in enumerate(table.columns):
+        col.width = col_widths[i]
+        for cell in col.cells:
+            cell.width = col_widths[i]
+
+    # Explicitly Remove All Table Borders & Inner Gridlines
+    tblPr = table._tbl.tblPr
     tblBorders = parse_xml(
-        r'<w:tblBorders %s>'
-        r'<w:top w:val="none"/><w:left w:val="none"/><w:bottom w:val="single" w:sz="12" w:space="0" w:color="00A5A3"/><w:right w:val="none"/>'
-        r'<w:insideH w:val="none"/><w:insideV w:val="none"/>'
-        r'</w:tblBorders>' % nsdecls('w')
+        f'<w:tblBorders {nsdecls("w")}>'
+        f'  <w:top w:val="none"/>'
+        f'  <w:left w:val="none"/>'
+        f'  <w:bottom w:val="none"/>'
+        f'  <w:right w:val="none"/>'
+        f'  <w:insideH w:val="none"/>'
+        f'  <w:insideV w:val="none"/>'
+        f'</w:tblBorders>'
     )
     tblPr.append(tblBorders)
-    
-    for cell in header_table.rows[0].cells:
+
+    for cell in table.rows[0].cells:
         tcPr = cell._tc.get_or_add_tcPr()
         tcBorders = parse_xml(r'<w:tcBorders %s><w:top w:val="none"/><w:left w:val="none"/><w:bottom w:val="none"/><w:right w:val="none"/></w:tcBorders>' % nsdecls('w'))
         tcPr.append(tcBorders)
-    
-    # Column 1: Logo
-    cell_logo = header_table.cell(0, 0)
-    cell_logo.width = Inches(2.8)
-    logo_path = 'brand_assets/10-years-trescon-logo.png'
+
+    # Populate Header Content
+    # Cell 0: Logo Image (Height = 60px @ 96DPI = 571,500 EMUs)
+    cell_logo = table.cell(0, 0)
     p_logo = cell_logo.paragraphs[0]
     p_logo.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    p_logo.paragraph_format.space_after = Pt(2)
+    p_logo.paragraph_format.space_after = Pt(0)
     
+    logo_path = 'brand_assets/10-years-trescon-logo.png'
     if os.path.exists(logo_path):
-        run_logo = p_logo.add_run()
-        run_logo.add_picture(logo_path, width=Inches(2.45))
+        p_logo.add_run().add_picture(logo_path, height=Emu(571500))
     else:
-        r_txt = p_logo.add_run("TRESCON GLOBAL")
-        r_txt.font.name = 'Manrope'
-        r_txt.font.size = Pt(14)
-        r_txt.font.bold = True
-        r_txt.font.color.rgb = COLOR_TEAL
+        run_txt = p_logo.add_run("TRESCON GLOBAL")
+        run_txt.font.name = 'Anek Devanagari'
+        run_txt.font.size = Pt(14)
+        run_txt.font.bold = True
+        run_txt.font.color.rgb = COLOR_TEAL
 
-    # Column 2: Vertical Teal Line & Tagline
-    cell_tag = header_table.cell(0, 1)
-    cell_tag.width = Inches(2.6)
-    tcPr2 = cell_tag._tc.get_or_add_tcPr()
-    tcBorders2 = parse_xml(r'<w:tcBorders %s><w:top w:val="none"/><w:left w:val="single" w:sz="8" w:space="0" w:color="00A5A3"/><w:bottom w:val="none"/><w:right w:val="none"/></w:tcBorders>' % nsdecls('w'))
-    tcPr2.append(tcBorders2)
+    # Cell 1: Vertical Teal Line & Tagline
+    cell_tag = table.cell(0, 1)
+    tcPr_tag = cell_tag._tc.get_or_add_tcPr()
+    tcBorders_tag = parse_xml(r'<w:tcBorders %s><w:top w:val="none"/><w:left w:val="single" w:sz="8" w:space="0" w:color="00A5A3"/><w:bottom w:val="none"/><w:right w:val="none"/></w:tcBorders>' % nsdecls('w'))
+    tcPr_tag.append(tcBorders_tag)
     
     p_tag = cell_tag.paragraphs[0]
     p_tag.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    p_tag.paragraph_format.space_before = Pt(8)
+    p_tag.paragraph_format.space_before = Pt(6)
     p_tag.paragraph_format.space_after = Pt(0)
     run_tag = p_tag.add_run("  Connecting Businesses\n  with Opportunities")
     run_tag.font.name = 'Manrope'
@@ -125,49 +140,64 @@ def create_office_letterhead(key, info, is_blank=False, output_filename=None):
     run_tag.font.bold = True
     run_tag.font.color.rgb = COLOR_DARK
 
-    # Column 3: Contact Details
-    cell_meta = header_table.cell(0, 2)
-    cell_meta.width = Inches(2.07)
+    # Cell 2: Contact Meta (With Fallback Icons)
+    cell_meta = table.cell(0, 2)
     p_meta = cell_meta.paragraphs[0]
     p_meta.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    p_meta.paragraph_format.space_before = Pt(8)
+    p_meta.paragraph_format.space_before = Pt(6)
     p_meta.paragraph_format.space_after = Pt(0)
+    
+    run_eicon = p_meta.add_run("✉ ")
+    run_eicon.font.name = 'Segoe UI Symbol'
+    run_eicon.font.size = Pt(9)
+    run_eicon.font.color.rgb = COLOR_TEAL
     
     run_email = p_meta.add_run(info['email'] + "\n")
     run_email.font.name = 'Manrope'
-    run_email.font.size = Pt(9.0)
+    run_email.font.size = Pt(9)
     run_email.font.color.rgb = RGBColor(70, 77, 83)
+
+    run_wicon = p_meta.add_run("🌐 ")
+    run_wicon.font.name = 'Segoe UI Symbol'
+    run_wicon.font.size = Pt(9)
+    run_wicon.font.color.rgb = COLOR_TEAL
     
     run_web = p_meta.add_run(info['web'])
     run_web.font.name = 'Manrope'
-    run_web.font.size = Pt(9.0)
+    run_web.font.size = Pt(9)
     run_web.font.bold = True
     run_web.font.color.rgb = COLOR_TEAL
 
-    # Header Spacing Paragraph below table
-    p_space = header.add_paragraph()
-    p_space.paragraph_format.space_before = Pt(6)
-    p_space.paragraph_format.space_after = Pt(0)
+    # Teal Accent Rule Under Header
+    p_rule = header.add_paragraph()
+    p_rule.paragraph_format.space_before = Pt(8)
+    p_rule.paragraph_format.space_after = Pt(0)
+    p_rule_border = parse_xml(
+        f'<w:pBdr {nsdecls("w")}>'
+        f'  <w:bottom w:val="single" w:sz="12" w:space="1" w:color="00A5A3"/>'
+        f'</w:pBdr>'
+    )
+    p_rule._p.get_or_add_pPr().append(p_rule_border)
 
     # -------------------------------------------------------------
-    # FOOTER SETUP
+    # 3. FOOTER SETUP
     # -------------------------------------------------------------
     footer = section.footer
     
-    footer_table = footer.add_table(rows=1, cols=1, width=Inches(7.47))
+    footer_table = footer.add_table(rows=1, cols=1, width=Mm(190))
     footer_table.alignment = WD_TABLE_ALIGNMENT.CENTER
     
     ftblPr = footer_table._tbl.tblPr
     ftblBorders = parse_xml(
-        r'<w:tblBorders %s>'
-        r'<w:top w:val="single" w:sz="8" w:space="0" w:color="00A5A3"/><w:left w:val="none"/><w:bottom w:val="none"/><w:right w:val="none"/>'
-        r'<w:insideH w:val="none"/><w:insideV w:val="none"/>'
-        r'</w:tblBorders>' % nsdecls('w')
+        f'<w:tblBorders {nsdecls("w")}>'
+        f'  <w:top w:val="single" w:sz="8" w:space="0" w:color="00A5A3"/><w:left w:val="none"/><w:bottom w:val="none"/><w:right w:val="none"/>'
+        f'  <w:insideH w:val="none"/><w:insideV w:val="none"/>'
+        f'</w:tblBorders>'
     )
     ftblPr.append(ftblBorders)
     
     cell_foot = footer_table.cell(0, 0)
-    cell_foot.width = Inches(7.47)
+    cell_foot.width = Mm(190)
     tcPr_f = cell_foot._tc.get_or_add_tcPr()
     tcBorders_f = parse_xml(r'<w:tcBorders %s><w:top w:val="none"/><w:left w:val="none"/><w:bottom w:val="none"/><w:right w:val="none"/></w:tcBorders>' % nsdecls('w'))
     tcPr_f.append(tcBorders_f)
@@ -223,7 +253,7 @@ def create_office_letterhead(key, info, is_blank=False, output_filename=None):
     r_txt.font.color.rgb = COLOR_MUTED
 
     # -------------------------------------------------------------
-    # BODY CONTENT
+    # 4. BODY CONTENT
     # -------------------------------------------------------------
     if is_blank:
         p_b = doc.add_paragraph()
@@ -305,18 +335,17 @@ def create_office_letterhead(key, info, is_blank=False, output_filename=None):
         run_title.font.size = Pt(9.5)
         run_title.font.color.rgb = COLOR_MUTED
 
-    fn = output_filename or info['filename']
+    fn = output_filename or (info['blank_filename'] if is_blank else info['filename'])
     doc.save(fn)
-    print(f"Generated official Word document: {fn}")
+    print(f"Generated pixel-perfect Word document: {fn}")
 
 def main():
-    # Build official templates for all 4 office locations
     for k, info in OFFICE_DATA.items():
-        create_office_letterhead(k, info, is_blank=False)
-        create_office_letterhead(k, info, is_blank=True, output_filename=f"Trescon_Letterhead_{k.capitalize()}_Blank.docx")
+        create_pixel_perfect_office_template(k, info, is_blank=False)
+        create_pixel_perfect_office_template(k, info, is_blank=True)
     
-    # Build master template
-    create_office_letterhead("bangalore", OFFICE_DATA["bangalore"], is_blank=True, output_filename="Trescon_Global_Letterhead_Template.docx")
+    # Master Template
+    create_pixel_perfect_office_template("bangalore", OFFICE_DATA["bangalore"], is_blank=True, output_filename="Trescon_Global_Letterhead_Template.docx")
 
 if __name__ == '__main__':
     main()
