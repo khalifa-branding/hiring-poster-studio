@@ -62,7 +62,7 @@ def create_pixel_perfect_office_template(key, info, is_blank=False, output_filen
     section.bottom_margin = Mm(20)   # 1134 dxa
     section.left_margin = Mm(10)     # 567 dxa
     section.right_margin = Mm(10)    # 567 dxa
-    section.header_distance = Mm(4)  # 226 dxa (Positions top accent bar right at the top edge)
+    section.header_distance = Mm(4)  # 226 dxa (Positions top accent bar right at top edge)
     section.footer_distance = Mm(7)  # 397 dxa
     
     # Color Palette Definitions
@@ -72,11 +72,11 @@ def create_pixel_perfect_office_template(key, info, is_blank=False, output_filen
     COLOR_MUTED = RGBColor(100, 116, 139)   # #64748B
     
     # -------------------------------------------------------------
-    # 2. HEADER SETUP (3-Column Layout with Top Accent Bar)
+    # 2. HEADER SETUP (Clean 2-Column Layout Without Tagline)
     # -------------------------------------------------------------
     header = section.header
     
-    # Top Accent Bar Paragraph at the top edge of the sheet
+    # Top Accent Bar Paragraph at top edge of page
     p_top_bar = header.paragraphs[0]
     p_top_bar.paragraph_format.space_before = Pt(0)
     p_top_bar.paragraph_format.space_after = Pt(8)
@@ -87,13 +87,12 @@ def create_pixel_perfect_office_template(key, info, is_blank=False, output_filen
     )
     p_top_bar._p.get_or_add_pPr().append(pBdr_top)
     
-    # Header Table (190mm Printable Width)
-    table = header.add_table(rows=1, cols=3, width=Mm(190))
+    # Header Table (190mm Printable Width: Col 0 Logo 130mm, Col 1 Contact Meta 60mm)
+    table = header.add_table(rows=1, cols=2, width=Mm(190))
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.autofit = False
     
-    # Explicit Column Widths: Logo 70mm, Tagline 60mm, Contact Meta 60mm
-    col_widths = [Mm(70), Mm(60), Mm(60)]
+    col_widths = [Mm(130), Mm(60)]
     for i, col in enumerate(table.columns):
         col.width = col_widths[i]
         for cell in col.cells:
@@ -119,7 +118,7 @@ def create_pixel_perfect_office_template(key, info, is_blank=False, output_filen
         tcPr.append(tcBorders)
 
     # Populate Header Content
-    # Cell 0: Logo Image (Height = 60px @ 96DPI = 571,500 EMUs)
+    # Cell 0: Official Trescon Logo from OneDrive PNG Artboard 1 (Height = 60px @ 96DPI = 571,500 EMUs)
     cell_logo = table.cell(0, 0)
     p_logo = cell_logo.paragraphs[0]
     p_logo.alignment = WD_ALIGN_PARAGRAPH.LEFT
@@ -135,27 +134,11 @@ def create_pixel_perfect_office_template(key, info, is_blank=False, output_filen
         run_txt.font.bold = True
         run_txt.font.color.rgb = COLOR_TEAL
 
-    # Cell 1: Vertical Teal Line & Tagline
-    cell_tag = table.cell(0, 1)
-    tcPr_tag = cell_tag._tc.get_or_add_tcPr()
-    tcBorders_tag = parse_xml(r'<w:tcBorders %s><w:top w:val="none"/><w:left w:val="single" w:sz="8" w:space="0" w:color="00A5A3"/><w:bottom w:val="none"/><w:right w:val="none"/></w:tcBorders>' % nsdecls('w'))
-    tcPr_tag.append(tcBorders_tag)
-    
-    p_tag = cell_tag.paragraphs[0]
-    p_tag.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    p_tag.paragraph_format.space_before = Pt(6)
-    p_tag.paragraph_format.space_after = Pt(0)
-    run_tag = p_tag.add_run("  Connecting Businesses\n  with Opportunities")
-    run_tag.font.name = 'Manrope'
-    run_tag.font.size = Pt(9.5)
-    run_tag.font.bold = True
-    run_tag.font.color.rgb = COLOR_DARK
-
-    # Cell 2: Contact Meta (With Fallback Icons)
-    cell_meta = table.cell(0, 2)
+    # Cell 1: Contact Meta Right Aligned (Email & Web)
+    cell_meta = table.cell(0, 1)
     p_meta = cell_meta.paragraphs[0]
     p_meta.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    p_meta.paragraph_format.space_before = Pt(6)
+    p_meta.paragraph_format.space_before = Pt(8)
     p_meta.paragraph_format.space_after = Pt(0)
     
     run_eicon = p_meta.add_run("✉ ")
@@ -349,7 +332,7 @@ def create_pixel_perfect_office_template(key, info, is_blank=False, output_filen
 
     fn = output_filename or (info['blank_filename'] if is_blank else info['filename'])
     doc.save(fn)
-    print(f"Generated pixel-perfect Word document with top accent bar: {fn}")
+    print(f"Generated clean 2-column Word document with official OneDrive logo (no tagline): {fn}")
 
 def main():
     for k, info in OFFICE_DATA.items():
