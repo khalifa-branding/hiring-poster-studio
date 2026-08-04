@@ -77,6 +77,40 @@ window.updateFooter = function() {
   if (webElem) webElem.textContent = data.web;
 };
 
+window.downloadBlankTemplate = function(presetName) {
+  const capName = presetName ? (presetName.charAt(0).toUpperCase() + presetName.slice(1).toLowerCase()) : 'Bangalore';
+  const filename = `Trescon_Letterhead_${capName}_Blank.docx`;
+  const templateUrl = `./templates/${filename}`;
+
+  fetch(templateUrl)
+    .then(response => {
+      if (!response.ok) {
+        return fetch(filename);
+      }
+      return response;
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Template network response failed: ${response.statusText}`);
+      }
+      return response.blob();
+    })
+    .then(blob => {
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = downloadUrl;
+      anchor.download = filename;
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
+      window.URL.revokeObjectURL(downloadUrl);
+    })
+    .catch(err => {
+      console.error("Direct serve error, falling back to JS generator:", err);
+      exportToDocx(true);
+    });
+};
+
 // Native Word (.docx) Exporter Engine
 window.exportToDocx = async function(isBlankBody = false) {
   const selectElem = document.getElementById('office-preset');
@@ -85,28 +119,8 @@ window.exportToDocx = async function(isBlankBody = false) {
 
   // Direct serve pre-built native Word template for 100% guaranteed OpenXML compliance
   if (isBlankBody) {
-    const fileMap = {
-      bangalore: 'Trescon_Letterhead_Bangalore_Blank.docx',
-      manipal: 'Trescon_Letterhead_Manipal_Blank.docx',
-      mangalore: 'Trescon_Letterhead_Mangalore_Blank.docx',
-      dubai: 'Trescon_Letterhead_Dubai_Blank.docx'
-    };
-    const targetFile = fileMap[selectedKey] || 'Trescon_Global_Letterhead_Template.docx';
-    try {
-      const resp = await fetch(targetFile);
-      if (resp.ok) {
-        const blob = await resp.blob();
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = targetFile;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        return;
-      }
-    } catch (e) {
-      console.warn('Pre-built template fetch failed, falling back to dynamic generation:', e);
-    }
+    window.downloadBlankTemplate(selectedKey);
+    return;
   }
 
   const recipName = document.getElementById('input-recip-name') ? document.getElementById('input-recip-name').value : 'Mr. Alex Turner';
