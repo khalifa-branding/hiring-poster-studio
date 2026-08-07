@@ -981,6 +981,85 @@ img.letterhead-logo,
   color: var(--trescon-dark);
 }
 
+/* Direct Editable Canvas Editor Customizations */
+#quill-editor-canvas {
+  border: none !important;
+  background: transparent !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 !important;
+  font-family: var(--font-body) !important;
+}
+
+#quill-editor-canvas .ql-container {
+  font-family: var(--font-body) !important;
+  border: none !important;
+  font-size: inherit !important;
+}
+
+#quill-editor-canvas .ql-editor {
+  padding: 0 !important;
+  overflow-y: visible !important;
+  height: auto !important;
+  min-height: 100% !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.93rem !important;
+  line-height: 1.5 !important;
+  color: var(--trescon-charcoal) !important;
+  outline: none !important;
+}
+
+#quill-editor-canvas .ql-editor p {
+  margin-bottom: 12px !important;
+}
+
+#quill-editor-canvas .ql-editor ul,
+#quill-editor-canvas .ql-editor ol {
+  margin-bottom: 12px !important;
+  padding-left: 20px !important;
+}
+
+#quill-editor-canvas .ql-blank::before {
+  left: 0 !important;
+  right: 0 !important;
+  font-style: italic !important;
+  color: var(--trescon-slate) !important;
+  opacity: 0.6 !important;
+  padding: 0 !important;
+}
+
+/* Sidebar Toolbar Custom Styling */
+#editor-sidebar-toolbar .ql-toolbar.ql-snow {
+  border: none !important;
+  background: #16202c !important;
+  padding: 10px !important;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+#editor-sidebar-toolbar .ql-snow .ql-stroke {
+  stroke: #cbd5e1 !important;
+}
+
+#editor-sidebar-toolbar .ql-snow .ql-fill {
+  fill: #cbd5e1 !important;
+}
+
+#editor-sidebar-toolbar .ql-snow .ql-picker {
+  color: #cbd5e1 !important;
+}
+
+#editor-sidebar-toolbar .ql-snow.ql-toolbar button:hover .ql-stroke,
+#editor-sidebar-toolbar .ql-snow.ql-toolbar button.ql-active .ql-stroke {
+  stroke: var(--trescon-teal) !important;
+}
+
+#editor-sidebar-toolbar .ql-snow.ql-toolbar button:hover .ql-fill,
+#editor-sidebar-toolbar .ql-snow.ql-toolbar button.ql-active .ql-fill {
+  fill: var(--trescon-teal) !important;
+}
+
 /* --------------------------------------------------------------------------
    PRINT STYLES (@media print)
    -------------------------------------------------------------------------- */
@@ -998,7 +1077,8 @@ img.letterhead-logo,
   }
 
   .no-print,
-  .sidebar {
+  .sidebar,
+  .sidebar-form {
     display: none !important;
   }
 
@@ -1033,3 +1113,4 @@ img.letterhead-logo,
     print-color-adjust: exact !important;
   }
 }
+
