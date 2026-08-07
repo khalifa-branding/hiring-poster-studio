@@ -578,6 +578,40 @@ select.form-input option,
 }
 
 /* Density-Based Auto-Scaling overrides */
+.flyer-canvas.canvas-roles-1 {
+  font-size: 15.2px;
+}
+.ratio-square .flyer-canvas.canvas-roles-1 {
+  font-size: 13.5px;
+}
+.ratio-story .flyer-canvas.canvas-roles-1 {
+  font-size: 14.8px;
+}
+
+.flyer-canvas.canvas-roles-1 .flyer-subtitle {
+  -webkit-line-clamp: 5 !important;
+}
+.flyer-canvas.canvas-roles-1 .candidate-qualifier {
+  -webkit-line-clamp: 4 !important;
+}
+
+.flyer-canvas.canvas-roles-2 {
+  font-size: 14.8px;
+}
+.ratio-square .flyer-canvas.canvas-roles-2 {
+  font-size: 13.0px;
+}
+.ratio-story .flyer-canvas.canvas-roles-2 {
+  font-size: 14.2px;
+}
+
+.flyer-canvas.canvas-roles-2 .flyer-subtitle {
+  -webkit-line-clamp: 4 !important;
+}
+.flyer-canvas.canvas-roles-2 .candidate-qualifier {
+  -webkit-line-clamp: 3 !important;
+}
+
 .flyer-canvas.canvas-roles-4 {
   font-size: 13.0px;
 }

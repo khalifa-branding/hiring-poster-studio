@@ -156,8 +156,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const showNumbers = showNumbersToggle ? showNumbersToggle.checked : true;
 
     // Dynamic Auto Layout Adjustments based on role count
-    flyerCanvas.classList.remove('canvas-roles-3', 'canvas-roles-4', 'canvas-roles-5');
-    if (activeRoles.length <= 3) {
+    flyerCanvas.classList.remove('canvas-roles-1', 'canvas-roles-2', 'canvas-roles-3', 'canvas-roles-4', 'canvas-roles-5');
+    if (activeRoles.length === 1) {
+      flyerCanvas.classList.add('canvas-roles-1');
+    } else if (activeRoles.length === 2) {
+      flyerCanvas.classList.add('canvas-roles-2');
+    } else if (activeRoles.length === 3) {
       flyerCanvas.classList.add('canvas-roles-3');
     } else if (activeRoles.length === 4) {
       flyerCanvas.classList.add('canvas-roles-4');
