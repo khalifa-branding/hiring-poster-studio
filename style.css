@@ -513,14 +513,26 @@ select.form-input option,
   position: relative;
 }
 
+/* Dynamic Canvas Scaler Container (Figma / Canva Footprint Wrapper) */
+.canvas-scaler {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: auto;
+  flex-shrink: 0;
+}
+
 /* Preview Canvas Container */
 .flyer-canvas-wrapper {
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
   overflow: hidden;
   position: relative;
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: #fff;
+  flex-shrink: 0;
 }
 
 /* Poster Aspect Ratio Presets */

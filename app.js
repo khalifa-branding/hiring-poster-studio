@@ -469,6 +469,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Floating Zoom Controls & Smart Viewport Auto-Fit
   let currentZoom = 100;
   const previewWorkspace = document.getElementById('preview-workspace');
+  const canvasScaler = document.getElementById('canvas-scaler');
   const zoomText = document.getElementById('zoom-value-text');
   const btnZoomIn = document.getElementById('btn-zoom-in');
   const btnZoomOut = document.getElementById('btn-zoom-out');
@@ -477,9 +478,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const updateZoom = (newZoom) => {
     currentZoom = Math.min(Math.max(Math.round(newZoom), 40), 160);
     if (zoomText) zoomText.textContent = `${currentZoom}%`;
+    const scale = currentZoom / 100;
+
+    let baseWidth = 560;
+    let baseHeight = 700;
+
     if (flyerWrapper) {
-      flyerWrapper.style.transform = `scale(${currentZoom / 100})`;
+      if (flyerWrapper.classList.contains('ratio-square')) {
+        baseWidth = 600; baseHeight = 600;
+      } else if (flyerWrapper.classList.contains('ratio-story')) {
+        baseWidth = 410; baseHeight = 728;
+      }
+      flyerWrapper.style.transform = `scale(${scale})`;
       flyerWrapper.style.transformOrigin = 'center center';
+    }
+
+    if (canvasScaler) {
+      canvasScaler.style.width = `${baseWidth * scale}px`;
+      canvasScaler.style.height = `${baseHeight * scale}px`;
     }
   };
 
@@ -488,7 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Measure workspace container dimensions minus safe padding for dock and margins
     const workspaceWidth = previewWorkspace.clientWidth - 40; // 20px padding left/right
-    const workspaceHeight = previewWorkspace.clientHeight - 90; // 45px padding top/bottom
+    const workspaceHeight = previewWorkspace.clientHeight - 80; // 40px padding top/bottom
     
     let wrapperWidth = 560; // Portrait default
     let wrapperHeight = 700;
@@ -507,8 +523,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const scaleY = workspaceHeight / wrapperHeight;
     
     let autoScale = Math.min(scaleX, scaleY);
-    // Clamp fit scale smoothly between 0.45 and 1.05
-    autoScale = Math.max(0.45, Math.min(autoScale, 1.05));
+    // Clamp fit scale smoothly between 0.45 and 1.0
+    autoScale = Math.max(0.45, Math.min(autoScale, 1.0));
     
     return autoScale;
   };
