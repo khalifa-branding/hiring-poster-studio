@@ -547,43 +547,43 @@ select.form-input option,
   display: flex;
   flex-direction: column;
   justify-content: space-between !important;
-  padding: 1.5em 1.75em 1.5em 1.75em !important;
+  padding: 1.25em 1.5em 1.25em 1.5em !important;
   overflow: hidden;
   user-select: none;
-  font-size: 16.5px; /* Base size */
+  font-size: 14.5px; /* Base size for 100% full CTA visibility */
   box-sizing: border-box;
 }
 
 /* Senior Design System: Viewport Base Font-Size Scaling */
 .ratio-portrait .flyer-canvas {
-  font-size: 16.5px; /* Fills 700px height gracefully */
+  font-size: 14.5px; /* Fills 700px height gracefully with zero CTA cutoff */
 }
 .ratio-square .flyer-canvas {
-  font-size: 14.2px; /* Fills 600px height gracefully */
+  font-size: 12.5px; /* Fills 600px height gracefully */
 }
 .ratio-story .flyer-canvas {
-  font-size: 15.2px; /* Fills 728px mobile height gracefully, zero empty voids! */
+  font-size: 13.8px; /* Fills 728px mobile height gracefully */
 }
 
 /* Density-Based Auto-Scaling overrides */
 .flyer-canvas.canvas-roles-4 {
-  font-size: 14.2px;
+  font-size: 13.0px;
 }
 .ratio-square .flyer-canvas.canvas-roles-4 {
-  font-size: 12.2px;
+  font-size: 11.2px;
 }
 .ratio-story .flyer-canvas.canvas-roles-4 {
-  font-size: 12.8px;
+  font-size: 12.0px;
 }
 
 .flyer-canvas.canvas-roles-5 {
-  font-size: 12.5px;
+  font-size: 11.5px;
 }
 .ratio-square .flyer-canvas.canvas-roles-5 {
-  font-size: 10.8px;
+  font-size: 9.8px;
 }
 .ratio-story .flyer-canvas.canvas-roles-5 {
-  font-size: 11.0px;
+  font-size: 10.5px;
 }
 
 /* Organic Tactile Noise Texture Overlay */
