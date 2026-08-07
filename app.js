@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { title: "Community Executive - Delegates", type: "2-4 Yrs" }
   ];
 
-  // Real-time synchronization function for all basic text inputs with fallbacks
+  // Real-time synchronization function for all basic text inputs with fallbacks & length safety
   const syncTextFields = () => {
     const defaultTitle = "We're growing our team at Trescon Manipal!";
     const defaultSubtitle = "We're looking for enthusiastic individuals to join us in these key roles:";
@@ -53,14 +53,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const defaultCtaLabel = "APPLY DIRECTLY VIA EMAIL";
 
     if (titleInput && flyerTitle) {
+      if (titleInput.value.length > 85) titleInput.value = titleInput.value.substring(0, 85);
       flyerTitle.textContent = titleInput.value.trim() !== '' ? titleInput.value : defaultTitle;
     }
     if (subtitleInput && flyerSubtitle) {
+      if (subtitleInput.value.length > 140) subtitleInput.value = subtitleInput.value.substring(0, 140);
       flyerSubtitle.textContent = subtitleInput.value.trim() !== '' ? subtitleInput.value : defaultSubtitle;
     }
     
     // CUSTOMIZABLE & REMOVABLE QUALIFIER QUOTE
     if (qualifierInput && flyerQualifier) {
+      if (qualifierInput.value.length > 185) qualifierInput.value = qualifierInput.value.substring(0, 185);
       const quoteVal = qualifierInput.value.trim();
       if (quoteVal !== '') {
         flyerQualifier.textContent = quoteVal;
@@ -71,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (locationInput && flyerLocation) {
+      if (locationInput.value.length > 35) locationInput.value = locationInput.value.substring(0, 35);
       flyerLocation.textContent = locationInput.value.trim() !== '' ? locationInput.value : defaultLocation;
     }
     
@@ -78,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const targetBadge = flyerHighlightBadge || (flyerHighlight ? flyerHighlight.parentElement : null);
     const switchInputContainer = highlightInput ? highlightInput.closest('.switch-input-container') : null;
     const isPriorityEnabled = showPriorityToggle ? showPriorityToggle.checked : true;
+    if (highlightInput && highlightInput.value.length > 45) highlightInput.value = highlightInput.value.substring(0, 45);
     const highlightVal = highlightInput ? highlightInput.value.trim() : '';
 
     if (switchInputContainer) {
@@ -100,9 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (emailInput && flyerEmail) {
+      if (emailInput.value.length > 45) emailInput.value = emailInput.value.substring(0, 45);
       flyerEmail.textContent = emailInput.value.trim() !== '' ? emailInput.value : defaultEmail;
     }
     if (ctaLabelInput && flyerCtaLabel) {
+      if (ctaLabelInput.value.length > 40) ctaLabelInput.value = ctaLabelInput.value.substring(0, 40);
       flyerCtaLabel.textContent = ctaLabelInput.value.trim() !== '' ? ctaLabelInput.value : defaultCtaLabel;
     }
     

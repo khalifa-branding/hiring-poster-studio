@@ -922,11 +922,11 @@ select.form-input option,
   pointer-events: none;
 }
 
-/* Headings */
+/* Headings & Text Overload Guards */
 .flyer-intro {
   display: flex;
   flex-direction: column;
-  gap: 0.75em;
+  gap: 0.5em;
 }
 
 .flyer-title {
@@ -936,17 +936,46 @@ select.form-input option,
   line-height: 1.18; 
   text-transform: uppercase;
   letter-spacing: -0.015em;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 .flyer-subtitle {
-  font-size: 1.15em; /* Scaled to base em */
+  font-size: 1.08em; /* Scaled to base em */
   font-weight: 600; 
-  line-height: 1.4;
-  max-width: 95%;
+  line-height: 1.35;
+  max-width: 98%;
   text-transform: none; /* Sentence Case */
   letter-spacing: 0.1px;
-  margin-top: 0.4em; 
-  margin-bottom: 0.4em !important; 
+  margin-top: 0.25em; 
+  margin-bottom: 0.25em !important; 
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Character Count & Label Row Styles */
+.label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.label-row label {
+  margin-bottom: 0 !important;
+}
+
+.char-counter {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #94A3B8;
+  opacity: 0.85;
 }
 
 /* Positions Section */
@@ -1249,6 +1278,11 @@ select.form-input option,
   border-top: 1px solid rgba(255, 255, 255, 0.04);
   font-style: normal;
   letter-spacing: 0.2px;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 .theme-corporate-light .candidate-qualifier {

@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=32.0">
+  <link rel="stylesheet" href="style.css?v=33.0">
 </head>
 <body>
 
@@ -60,17 +60,26 @@
             
             <div class="accordion-body" id="acc-body-headings">
               <div class="form-group">
-                <label for="title-input">Headline Banner</label>
-                <input type="text" id="title-input" class="form-input" value="We're growing our team at Trescon Manipal!" placeholder="Headline banner text">
+                <div class="label-row">
+                  <label for="title-input">Headline Banner</label>
+                  <span class="char-counter" id="title-counter">Max 85</span>
+                </div>
+                <input type="text" id="title-input" class="form-input" maxlength="85" value="We're growing our team at Trescon Manipal!" placeholder="Headline banner text">
               </div>
               <div class="form-group" style="margin-top: 0.5rem;">
-                <label for="subtitle-input">Sub-Headline Text</label>
-                <input type="text" id="subtitle-input" class="form-input" value="We're looking for enthusiastic individuals to join us in these key roles:" placeholder="Sub-headline text">
+                <div class="label-row">
+                  <label for="subtitle-input">Sub-Headline Text</label>
+                  <span class="char-counter" id="subtitle-counter">Max 140</span>
+                </div>
+                <input type="text" id="subtitle-input" class="form-input" maxlength="140" value="We're looking for enthusiastic individuals to join us in these key roles:" placeholder="Sub-headline text">
               </div>
               <!-- CANDIDATE QUALIFIER QUOTE -->
               <div class="form-group" style="margin-top: 0.5rem;">
-                <label for="qualifier-input">Candidate Qualifier Quote (Optional)</label>
-                <input type="text" id="qualifier-input" class="form-input" value="Whether you're a fresher eager to kickstart your career or someone experienced looking for your next opportunity, we'd love to hear from you." placeholder="Leave blank to remove quote">
+                <div class="label-row">
+                  <label for="qualifier-input">Candidate Qualifier Quote (Optional)</label>
+                  <span class="char-counter" id="qualifier-counter">Max 185</span>
+                </div>
+                <input type="text" id="qualifier-input" class="form-input" maxlength="185" value="Whether you're a fresher eager to kickstart your career or someone experienced looking for your next opportunity, we'd love to hear from you." placeholder="Leave blank to remove quote">
               </div>
               <!-- SINGLE-ROW EDITABLE CANDIDATE PRIORITY TOGGLE CONTROL -->
               <div class="form-group" style="margin-top: 0.6rem; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 0.5rem;">
@@ -79,7 +88,7 @@
                     <input type="checkbox" id="show-priority-toggle" checked>
                     <span class="slider"></span>
                   </label>
-                  <input type="text" id="highlight-input" class="form-input switch-form-input" value="Immediate Joiners Preferred" placeholder="Candidate Priority (e.g. Immediate Joiners Preferred)">
+                  <input type="text" id="highlight-input" class="form-input switch-form-input" maxlength="45" value="Immediate Joiners Preferred" placeholder="Candidate Priority (Max 45)">
                 </div>
               </div>
             </div>
@@ -253,16 +262,25 @@
 
             <div class="accordion-body" id="acc-body-contact">
               <div class="form-group">
-                <label for="location-input">Office Location</label>
-                <input type="text" id="location-input" class="form-input" value="Manipal" placeholder="Manipal">
+                <div class="label-row">
+                  <label for="location-input">Office Location</label>
+                  <span class="char-counter" id="location-counter">Max 35</span>
+                </div>
+                <input type="text" id="location-input" class="form-input" maxlength="35" value="Manipal" placeholder="Manipal">
               </div>
               <div class="form-group" style="margin-top: 0.5rem;">
-                <label for="email-input">Recruitment Email</label>
-                <input type="email" id="email-input" class="form-input" value="hr@tresconglobal.com" placeholder="hr@tresconglobal.com">
+                <div class="label-row">
+                  <label for="email-input">Recruitment Email</label>
+                  <span class="char-counter" id="email-counter">Max 45</span>
+                </div>
+                <input type="email" id="email-input" class="form-input" maxlength="45" value="hr@tresconglobal.com" placeholder="hr@tresconglobal.com">
               </div>
               <div class="form-group" style="margin-top: 0.5rem;">
-                <label for="cta-label-input">CTA Prompt</label>
-                <input type="text" id="cta-label-input" class="form-input" value="APPLY DIRECTLY VIA EMAIL" placeholder="APPLY DIRECTLY VIA EMAIL">
+                <div class="label-row">
+                  <label for="cta-label-input">CTA Prompt</label>
+                  <span class="char-counter" id="cta-counter">Max 40</span>
+                </div>
+                <input type="text" id="cta-label-input" class="form-input" maxlength="40" value="APPLY DIRECTLY VIA EMAIL" placeholder="APPLY DIRECTLY VIA EMAIL">
               </div>
             </div>
           </div>
@@ -362,6 +380,6 @@
 
   <!-- HTML2Canvas Image Export Library -->
   <script src="html2canvas.min.js"></script>
-  <script src="app.js?v=32.0"></script>
+  <script src="app.js?v=33.0"></script>
 </body>
 </html>
