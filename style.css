@@ -192,9 +192,12 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
+  overflow: auto;
   background: radial-gradient(circle at center, #0f1823 0%, #06090d 100%);
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 5.5rem 1.5rem;
+  box-sizing: border-box;
+  min-height: 0;
+  min-width: 0;
 }
 
 /* Right Panel: Style, Theme & Format (290px) */

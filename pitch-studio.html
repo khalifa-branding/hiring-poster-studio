@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trescon Global - Corporate Pitch Designer</title>
+  <meta name="description" content="Official Trescon Global presentation designer interface. Customize slide layouts, drag elements, edit text styles, and export PDF/PPTX.">
+  
+  <link rel="stylesheet" href="pitch-studio.css?v=2.0">
+</head>
+<body>
+
+  <div class="studio-app-container">
+
+    <!-- 1. TOP APPLICATION MENU BAR -->
+    <header class="app-header-bar no-print">
+      <div class="header-left">
+        <img src="brand_assets/trescon-logo-white-2025.png" alt="Trescon Logo">
+        <div class="divider"></div>
+        <div class="document-title-block">
+          <h1 class="document-title">Trescon Corporate Pitch Deck v7</h1>
+          <nav class="app-menu-bar">
+            <button class="menu-item" id="btn-menu-pdf">File (Export PDF)</button>
+            <button class="menu-item" id="btn-menu-pptx">Download (.pptx)</button>
+            <button class="menu-item" id="btn-menu-undo">Undo</button>
+            <button class="menu-item" id="btn-menu-redo">Redo</button>
+            <button class="menu-item" id="btn-menu-text">Insert Textbox</button>
+            <button class="menu-item" id="btn-menu-card">Insert Card Shape</button>
+          </nav>
+        </div>
+      </div>
+      <div class="header-right">
+        <button type="button" class="btn btn-lime" id="btn-present-mode" style="padding: 6px 14px; font-size: 0.76rem; width: auto; height: 28px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:2px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Present (F5)
+        </button>
+      </div>
+    </header>
+
+    <!-- 2. TOP FORMATTING TOOLBELT -->
+    <section class="app-toolbelt no-print">
+      
+      <!-- History Actions -->
+      <button class="tool-btn" id="btn-tool-undo" title="Undo (Ctrl+Z)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+      </button>
+      <button class="tool-btn" id="btn-tool-redo" title="Redo (Ctrl+Y)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/></svg>
+      </button>
+      <button class="tool-btn" id="btn-tool-pdf" title="Print / Export to PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      </button>
+
+      <div class="toolbelt-divider"></div>
+
+      <!-- Pointer & Tool selections -->
+      <button class="tool-btn active" id="tool-select" title="Select Element (Esc)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 3 10.07 19.97 12.58 12.58 19.97 10.07 3 3"/><line x1="13" y1="13" x2="19" y2="19"/></svg>
+      </button>
+      <button class="tool-btn" id="tool-textbox" title="Add Textbox">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="21" x2="9" y2="9"/><line x1="15" y1="21" x2="15" y2="9"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+      </button>
+      <button class="tool-btn" id="tool-shape" title="Add Card Shape">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+      </button>
+      <div class="color-picker-wrapper tool-btn" title="Upload & Swap Image">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <input type="file" id="image-swapper-input" class="color-input-hidden" accept="image/*">
+      </div>
+
+      <div class="toolbelt-divider"></div>
+
+      <!-- Contextual Font Controls -->
+      <select class="tool-select font-family-select" id="ctrl-font-family" title="Font Family">
+        <option value="Manrope" selected>Manrope (Body)</option>
+        <option value="Anek Devanagari">Anek Devanagari (Display)</option>
+        <option value="Arial">Arial (Sleek)</option>
+        <option value="Calibri">Calibri (Neutral)</option>
+        <option value="Georgia">Georgia (Serif)</option>
+        <option value="Impact">Impact (Heavy)</option>
+        <option value="Courier New">Courier New (Mono)</option>
+      </select>
+
+      <div class="font-size-container">
+        <button class="size-adjust-btn" id="btn-font-dec" title="Decrease size">-</button>
+        <input type="text" class="size-input" id="ctrl-font-size" value="12" title="Font Size">
+        <button class="size-adjust-btn" id="btn-font-inc" title="Increase size">+</button>
+      </div>
+
+      <button class="tool-btn" id="ctrl-bold" title="Bold (Ctrl+B)">
+        <span style="font-weight:800; font-family:sans-serif;">B</span>
+      </button>
+      <button class="tool-btn" id="ctrl-italic" title="Italic (Ctrl+I)">
+        <span style="font-style:italic; font-family:serif; font-weight:700;">I</span>
+      </button>
+      <button class="tool-btn" id="ctrl-underline" title="Underline (Ctrl+U)">
+        <span style="text-decoration:underline; font-weight:700;">U</span>
+      </button>
+
+      <!-- Text Color Picker -->
+      <div class="color-picker-wrapper tool-btn" title="Text Color">
+        <span style="font-weight:700; font-family:serif; font-size:1.05rem;">A</span>
+        <div class="color-indicator-line" id="indicator-text-color" style="background-color: #ffffff;"></div>
+        <input type="color" class="color-input-hidden" id="ctrl-text-color" value="#ffffff">
+      </div>
+
+      <div class="toolbelt-divider"></div>
+
+      <!-- Contextual Shape Controls -->
+      <!-- Shape Fill Picker -->
+      <div class="color-picker-wrapper tool-btn" title="Shape Fill / Background Color">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-4.3-7-11-7-11S5 10.7 5 15a7 7 0 0 0 7 7z"/></svg>
+        <div class="color-indicator-line" id="indicator-fill-color" style="background-color: transparent;"></div>
+        <input type="color" class="color-input-hidden" id="ctrl-fill-color" value="#01373D">
+      </div>
+
+      <!-- Shape Border Picker -->
+      <div class="color-picker-wrapper tool-btn" title="Border Color">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        <div class="color-indicator-line" id="indicator-border-color" style="background-color: transparent;"></div>
+        <input type="color" class="color-input-hidden" id="ctrl-border-color" value="#00A5A3">
+      </div>
+
+      <select class="tool-select" id="ctrl-border-width" style="width: 54px;" title="Border Thickness">
+        <option value="0">0px</option>
+        <option value="1" selected>1px</option>
+        <option value="2">2px</option>
+        <option value="3">3px</option>
+        <option value="4">4px</option>
+        <option value="6">6px</option>
+      </select>
+
+      <!-- Corner Roundness Slider -->
+      <div style="display:flex; align-items:center; gap:4px; margin-left:4px;" title="Corner Roundedness">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#64748b;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+        <input type="range" id="ctrl-roundness" min="0" max="25" value="4" style="width:50px; accent-color: var(--color-teal); height:4px; outline:none; cursor:pointer;">
+      </div>
+
+      <div class="toolbelt-divider"></div>
+
+      <!-- Action Layering & Grid Layouts -->
+      <button class="tool-btn" id="ctrl-layer-up" title="Bring to Front">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+      </button>
+      <button class="tool-btn" id="ctrl-layer-down" title="Send to Back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 13 12 18 17 13"/><polyline points="7 6 12 11 17 6"/></svg>
+      </button>
+      <button class="tool-btn" id="ctrl-snap-grid" title="Snap selection to Brand Margin Grid">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3z"/><path d="M9 3v18"/><path d="M15 3v18"/><path d="M3 9h18"/><path d="M3 15h18"/></svg>
+      </button>
+      <button class="tool-btn" id="ctrl-delete" title="Delete Selected Element (Backspace)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+      </button>
+
+    </section>
+
+    <!-- 3. MAIN WORKSPACE WITH SPLIT VIEW -->
+    <div class="main-workspace">
+
+      <!-- LEFT SIDEBAR: VISUAL SLIDE PREVIEWS -->
+      <aside class="slide-thumbnails-sidebar no-print" id="slide-thumbnails-list">
+        <!-- Visual Thumbnails stacked dynamically from pitch-studio.js -->
+      </aside>
+
+      <!-- CENTER DISPLAY WORKSPACE AREA (16:9 RATIO CANVAS SHEET) -->
+      <main class="canvas-preview-area" id="canvas-main-viewport">
+        
+        <!-- Left Chevron overlay -->
+        <button type="button" class="nav-arrow-btn nav-arrow-left no-print" id="btn-prev-slide">
+          &larr;
+        </button>
+
+        <!-- Slide Dashboard Container -->
+        <div class="canvas-viewport-container">
+          
+          <div class="slide-container-wrapper" id="slide-wrapper-element">
+            
+            <!-- Renders dynamically from pitch-studio.js -->
+            <article class="slide-canvas slide-theme-dark" id="render-canvas-body">
+              <!-- Rendered template contents -->
+            </article>
+            
+          </div>
+
+        </div>
+
+        <!-- Right Chevron overlay -->
+        <button type="button" class="nav-arrow-btn nav-arrow-right no-print" id="btn-next-slide">
+          &rarr;
+        </button>
+
+        <!-- Bottom Zoom & Status indicator no-print -->
+        <div class="app-zoom-status-bar no-print" id="zoom-percentage">
+          Slide 1 of 14  |  100% Zoom
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- Loaded Libraries for PDF vector downloads -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="pitch-studio.js?v=2.0"></script>
+</body>
+</html>

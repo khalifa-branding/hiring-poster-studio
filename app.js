@@ -304,6 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (selectedSize === 'story') {
       flyerWrapper.classList.add('ratio-story');
     }
+    if (typeof autoFitCanvas === 'function') autoFitCanvas();
     triggerAutoSavePulse();
   };
   sizeRadios.forEach(radio => radio.addEventListener('change', handleSizeChange));
@@ -465,15 +466,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Floating Zoom Controls
+  // Floating Zoom Controls & Smart Viewport Auto-Fit
   let currentZoom = 100;
+  const previewWorkspace = document.getElementById('preview-workspace');
   const zoomText = document.getElementById('zoom-value-text');
   const btnZoomIn = document.getElementById('btn-zoom-in');
   const btnZoomOut = document.getElementById('btn-zoom-out');
   const btnZoomFit = document.getElementById('btn-zoom-fit');
 
   const updateZoom = (newZoom) => {
-    currentZoom = Math.min(Math.max(newZoom, 60), 160);
+    currentZoom = Math.min(Math.max(Math.round(newZoom), 40), 160);
     if (zoomText) zoomText.textContent = `${currentZoom}%`;
     if (flyerWrapper) {
       flyerWrapper.style.transform = `scale(${currentZoom / 100})`;
@@ -481,9 +483,53 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  const calculateAutoFitScale = () => {
+    if (!flyerWrapper || !previewWorkspace) return 1.0;
+    
+    // Measure workspace container dimensions minus safe padding for dock and margins
+    const workspaceWidth = previewWorkspace.clientWidth - 40; // 20px padding left/right
+    const workspaceHeight = previewWorkspace.clientHeight - 90; // 45px padding top/bottom
+    
+    let wrapperWidth = 560; // Portrait default
+    let wrapperHeight = 700;
+    
+    if (flyerWrapper.classList.contains('ratio-square')) {
+      wrapperWidth = 600;
+      wrapperHeight = 600;
+    } else if (flyerWrapper.classList.contains('ratio-story')) {
+      wrapperWidth = 410;
+      wrapperHeight = 728;
+    }
+
+    if (workspaceWidth <= 0 || workspaceHeight <= 0) return 1.0;
+    
+    const scaleX = workspaceWidth / wrapperWidth;
+    const scaleY = workspaceHeight / wrapperHeight;
+    
+    let autoScale = Math.min(scaleX, scaleY);
+    // Clamp fit scale smoothly between 0.45 and 1.05
+    autoScale = Math.max(0.45, Math.min(autoScale, 1.05));
+    
+    return autoScale;
+  };
+
+  function autoFitCanvas() {
+    const fitScale = calculateAutoFitScale();
+    updateZoom(fitScale * 100);
+  }
+
   if (btnZoomIn) btnZoomIn.addEventListener('click', () => updateZoom(currentZoom + 10));
   if (btnZoomOut) btnZoomOut.addEventListener('click', () => updateZoom(currentZoom - 10));
-  if (btnZoomFit) btnZoomFit.addEventListener('click', () => updateZoom(100));
+  if (btnZoomFit) btnZoomFit.addEventListener('click', autoFitCanvas);
+
+  // Trigger auto-fit on window resize
+  window.addEventListener('resize', () => {
+    autoFitCanvas();
+  });
+
+  // Initial auto-fit calculations after DOM load
+  setTimeout(autoFitCanvas, 60);
+  setTimeout(autoFitCanvas, 300);
 
   // Auto-Save Status Pulse Feedback
   const statusText = document.getElementById('status-text');
